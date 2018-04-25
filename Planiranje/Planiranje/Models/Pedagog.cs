@@ -7,14 +7,14 @@ namespace Planiranje.Models
 {
     public class Pedagog
     {
-        public int Id;
-        public string ime;
-        public string prezime;
-        public string email;
-        public int lozinka;
-        public DateTime licenca; //datum trajanja pristupa
-        public int id_skola;
-        public bool aktivan;
-        public string titula;
+        public int Id { get; set; }
+        public string Ime { get; set; }
+        public string Prezime { get; set; }
+        public string Email { get; set; }
+        public int Lozinka { get; set; }
+        public DateTime Licenca { get; set; } //datum trajanja pristupa
+        public int Id_skola { get; set; }
+        public bool Aktivan { get; set; }
+        public string Titula { get; set; }
     }
 }

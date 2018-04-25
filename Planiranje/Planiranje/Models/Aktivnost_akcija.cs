@@ -7,8 +7,8 @@ namespace Planiranje.Models
 {
     public class Aktivnost_akcija
     {
-        public id_akcija;
-        public string naziv;
-        public id_aktivnost;
+        public int Id_akcija { get; set; }
+        public string Naziv { get; set; }
+        public int Id_aktivnost { get; set; }
     }
 }

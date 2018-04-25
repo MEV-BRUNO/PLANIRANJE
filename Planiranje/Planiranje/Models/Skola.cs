@@ -7,12 +7,12 @@ namespace Planiranje.Models
 {
     public class Skola
     {
-        public int id_skola;
-        public string naziv;
-        public string adresa;
-        public string grad;
-        public int tel;
-        public string URL;
-        public int kontakt;
+        public int Id_skola { get; set; }
+        public string Naziv { get; set; }
+        public string Adresa { get; set; }
+        public string Grad { get; set; }
+        public int Tel { get; set; }
+        public string URL { get; set; }
+        public int Kontakt { get; set; }
     }
 }

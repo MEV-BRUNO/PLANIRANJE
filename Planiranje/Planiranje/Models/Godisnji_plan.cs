@@ -7,12 +7,12 @@ namespace Planiranje.Models
 {
     public class Godisnji_plan
     {
-        public int id_god;
-        public int ak_godina;
-        public int aid_pedagog;
-        public int br_radnih_dana;
-        public int br_dana_godina_odmor;
-        public int ukupni_rad_dana;
-        public int god_fonf_sati;
+        public int Id_god { get; set; }
+        public int Ak_godina { get; set; }
+        public int Id_pedagog { get; set; }
+        public int Br_radnih_dana { get; set; }
+        public int Br_dana_godina_odmor { get; set; }
+        public int Ukupni_rad_dana { get; set; }
+        public int God_fond_sati { get; set; }
     }
 }

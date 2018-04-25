@@ -7,22 +7,22 @@ namespace Planiranje.Models
 {
     public class Godisnji_detalji
     {
-        public int id_god;
-        public int mjesec;
-        public string naziv_mjesec;
-        public int ukupno_dana;
-        public int radnih_dana;
-        public int subota_dana;
-        public int blagdana_dana;
-        public int nastavnih_dana;
-        public int praznika_dana;
-        public int br_sati;
-        public int odmor_dana;
-        public int odmor_sati;
-        public int mj_fond_sati;
-        public int br_rad_dana_sk_god;
-        public int br_dana_god_odmor;
-        public int ukupno_rad_dana;
-        public int god_fond_sati;
+        public int Id_god { get; set; }
+        public int Mjesec { get; set; }
+        public string Naziv_mjesec { get; set; }
+        public int Ukupno_dana { get; set; }
+        public int Radnih_dana { get; set; }
+        public int Subota_dana { get; set; }
+        public int Blagdana_dana { get; set; }
+        public int Nastavnih_dana { get; set; }
+        public int Praznika_dana { get; set; }
+        public int Br_sati { get; set; }
+        public int Odmor_dana { get; set; }
+        public int Odmor_sati { get; set; }
+        public int Mj_fond_sati { get; set; }
+        public int Br_rad_dana_sk_god { get; set; }
+        public int Br_dana_god_odmor { get; set; }
+        public int Ukupno_rad_dana { get; set; }
+        public int God_fond_sati { get; set; }
     }
 }

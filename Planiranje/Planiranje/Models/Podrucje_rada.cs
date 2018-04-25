@@ -7,7 +7,7 @@ namespace Planiranje.Models
 {
     public class Podrucje_rada
     {
-        public int id_podrucje;
-        public string naziv;
+        public int Id_podrucje { get; set; }
+        public string Naziv { get; set; }
     }
 }
