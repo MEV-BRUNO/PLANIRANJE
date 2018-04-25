@@ -7,13 +7,13 @@ namespace Planiranje.Models
 {
     public class Mjesecni_detalji
     {
-        int ID_plan { get; set; }
-        int Red_broj { get; set; }
-        int Podrucje { get; set; }
-        int Aktivnost { get; set; }
-        string Suradnici { get; set; }
-        DateTime Vrijeme { get; set; }
-        double Br_sati { get; set; }
-        string Biljeska { get; set; }
+        public int ID_plan { get; set; }
+        public int Red_broj { get; set; }
+        public int Podrucje { get; set; }
+        public int Aktivnost { get; set; }
+        public string Suradnici { get; set; }
+        public DateTime Vrijeme { get; set; }
+        public double Br_sati { get; set; }
+        public string Biljeska { get; set; }
     }
 }

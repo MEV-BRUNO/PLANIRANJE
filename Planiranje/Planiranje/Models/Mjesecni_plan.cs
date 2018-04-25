@@ -7,10 +7,10 @@ namespace Planiranje.Models
 {
     public class Mjesecni_plan
     {
-        int ID_plan { get; set; }
-        int ID_pedagog { get; set; }
-        string Akademska_godina { get; set; }
-        string Naziv { get; set; }
-        string Opis { get; set; }
+        public int ID_plan { get; set; }
+        public int ID_pedagog { get; set; }
+        public string Akademska_godina { get; set; }
+        public string Naziv { get; set; }
+        public string Opis { get; set; }
     }
 }

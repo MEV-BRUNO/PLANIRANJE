@@ -7,7 +7,7 @@ namespace Planiranje.Models
 {
     public class Zadaci
     {
-        int ID_zadatak { get; set; }
-        string Naziv { get; set; }
+        public int ID_zadatak { get; set; }
+        public string Naziv { get; set; }
     }
 }

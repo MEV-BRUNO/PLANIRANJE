@@ -7,7 +7,7 @@ namespace Planiranje.Models
 {
     public class Subjekti
     {
-        int ID_subjekt { get; set; }
-        string Naziv { get; set; }
+        public int ID_subjekt { get; set; }
+        public string Naziv { get; set; }
     }
 }

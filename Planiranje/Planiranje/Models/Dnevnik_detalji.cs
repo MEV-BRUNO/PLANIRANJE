@@ -7,13 +7,13 @@ namespace Planiranje.Models
 {
     public class Dnevnik_detalji
     {
-        int ID_dnevnik { get; set; }
-        string Subjekt { get; set; }
-        DateTime Vrijeme_od { get; set; }
-        DateTime Vrijeme_do { get; set; }
-        int Aktivnost { get; set; }
-        string Suradnja { get; set; }
-        string Zakljucak { get; set; }
+        public int ID_dnevnik { get; set; }
+        public string Subjekt { get; set; }
+        public DateTime Vrijeme_od { get; set; }
+        public DateTime Vrijeme_do { get; set; }
+        public int Aktivnost { get; set; }
+        public string Suradnja { get; set; }
+        public string Zakljucak { get; set; }
 
     }
 }

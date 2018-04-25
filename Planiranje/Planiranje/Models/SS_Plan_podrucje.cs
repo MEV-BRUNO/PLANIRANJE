@@ -7,17 +7,17 @@ namespace Planiranje.Models
 {
     public class SS_Plan_podrucje
     {
-        int ID_plan { get; set; }
-        int Red_br_podrucje { get; set; }
-        int Opis_podrucje { get; set; }
-        string Svrha { get; set; }
-        string Zadaca { get; set; }
-        string Sadrzaj { get; set; }
-        string Oblici { get; set; }
-        string Suradnici { get; set; }
-        string Mjesto { get; set; }
-        DateTime Vrijeme { get; set; }
-        string Ishodi { get; set; }
-        double Sati { get; set; }
+        public int ID_plan { get; set; }
+        public int Red_br_podrucje { get; set; }
+        public int Opis_podrucje { get; set; }
+        public string Svrha { get; set; }
+        public string Zadaca { get; set; }
+        public string Sadrzaj { get; set; }
+        public string Oblici { get; set; }
+        public string Suradnici { get; set; }
+        public string Mjesto { get; set; }
+        public DateTime Vrijeme { get; set; }
+        public string Ishodi { get; set; }
+        public double Sati { get; set; }
     }
 }
