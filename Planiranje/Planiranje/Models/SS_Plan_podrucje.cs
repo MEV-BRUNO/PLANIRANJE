@@ -9,7 +9,7 @@ namespace Planiranje.Models
     {
         int ID_plan { get; set; }
         int Red_br_podrucje { get; set; }
-        string Opis_podrucje { get; set; }
+        int Opis_podrucje { get; set; }
         string Svrha { get; set; }
         string Zadaca { get; set; }
         string Sadrzaj { get; set; }
