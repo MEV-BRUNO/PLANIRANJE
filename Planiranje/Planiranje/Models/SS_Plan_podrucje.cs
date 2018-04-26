@@ -13,7 +13,7 @@ namespace Planiranje.Models
         public string Svrha { get; set; }
         public string Zadaca { get; set; }
         public string Sadrzaj { get; set; }
-        public string Oblici { get; set; }
+        public int Oblici { get; set; }
         public string Suradnici { get; set; }
         public string Mjesto { get; set; }
         public DateTime Vrijeme { get; set; }

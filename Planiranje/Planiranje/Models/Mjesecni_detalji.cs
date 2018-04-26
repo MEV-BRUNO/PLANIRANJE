@@ -8,7 +8,7 @@ namespace Planiranje.Models
     public class Mjesecni_detalji
     {
         public int ID_plan { get; set; }
-        public int Red_broj { get; set; }
+        public int Red_br { get; set; }
         public int Podrucje { get; set; }
         public int Aktivnost { get; set; }
         public string Suradnici { get; set; }

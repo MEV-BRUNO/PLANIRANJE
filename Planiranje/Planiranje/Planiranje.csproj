@@ -158,6 +158,7 @@
     </Compile>
     <Compile Include="Models\Ciljevi.cs" />
     <Compile Include="Models\Dnevnik_detalji.cs" />
+    <Compile Include="Models\Dnevnik_rada.cs" />
     <Compile Include="Models\Mjesecni_detalji.cs" />
     <Compile Include="Models\Mjesecni_plan.cs" />
     <Compile Include="Models\SS_Plan.cs" />
