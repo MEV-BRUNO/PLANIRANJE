@@ -164,6 +164,14 @@
     <Compile Include="Models\OS_Plan_2_akcija.cs" />
     <Compile Include="Models\OS_Plan_2_aktivnost.cs" />
     <Compile Include="Models\OS_Plan_2_Podrucje.cs" />
+    <Compile Include="Models\Aktivnost.cs" />
+    <Compile Include="Models\Aktivnost_akcija.cs" />
+    <Compile Include="Models\Godisnji_detalji.cs" />
+    <Compile Include="Models\Godisnji_plan.cs" />
+    <Compile Include="Models\OS_Plan_1.cs" />
+    <Compile Include="Models\Pedagog.cs" />
+    <Compile Include="Models\Podrucje_rada.cs" />
+    <Compile Include="Models\Skola.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
