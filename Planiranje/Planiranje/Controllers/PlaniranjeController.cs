@@ -8,10 +8,14 @@ namespace Planiranje.Controllers
 {
     public class PlaniranjeController : Controller
     {
-        // GET: Planiranje
-        public ActionResult Prijava()
-        {
-            return View();
-        }
-    }
+		// GET: Planiranje
+		public ActionResult Index()
+		{
+			return View();
+		}
+		public ActionResult Prijava()
+		{
+			return View();
+		}
+	}
 }
