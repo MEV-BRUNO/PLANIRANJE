@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,24 +8,42 @@ namespace Planiranje.Models
 {
     public class OS_Plan_1_Podrucje
     {
+        [Required]
         public int Id_plan { get; set; }
+        [Required]
         public int Red_br_podrucje { get; set; }
+        [Required]
         public int Opis_Podrucje { get; set; }
-        public double Potrebno_sati { get; set; }
+        [Required]
+        public int Potrebno_sati { get; set; }
+        [Required]
         public string Cilj { get; set; }
-        public double Br_sati { get; set; }
-        public double Deveti_mjesec { get; set; }
-        public double Deseti_mjesec { get; set; }
-        public double Jedanaesti_mjesec { get; set; }
-        public double Dvanaesti_mjesec { get; set; }
-        public double Prvi_mjesec { get; set; }
-        public double Drugi_mjesec { get; set; }
-        public double Treci_mjesec { get; set; }
-        public double Cetvrti_mjesec { get; set; }
-        public double Peti_Mjesec { get; set; }
-        public double Sesti_mjesec { get; set; }
-        public double Sedmi_mjesec { get; set; }
-        public double Osmi_mjesec { get; set; }
+        [Required]
+        public int Br_sati { get; set; }
+        [Required]
+        public int Deveti_mjesec { get; set; }
+        [Required]
+        public int Deseti_mjesec { get; set; }
+        [Required]
+        public int Jedanaesti_mjesec { get; set; }
+        [Required]
+        public int Dvanaesti_mjesec { get; set; }
+        [Required]
+        public int Prvi_mjesec { get; set; }
+        [Required]
+        public int Drugi_mjesec { get; set; }
+        [Required]
+        public int Treci_mjesec { get; set; }
+        [Required]
+        public int Cetvrti_mjesec { get; set; }
+        [Required]
+        public int Peti_Mjesec { get; set; }
+        [Required]
+        public int Sesti_mjesec { get; set; }
+        [Required]
+        public int Sedmi_mjesec { get; set; }
+        [Required]
+        public int Osmi_mjesec { get; set; }
 
     }
 }
