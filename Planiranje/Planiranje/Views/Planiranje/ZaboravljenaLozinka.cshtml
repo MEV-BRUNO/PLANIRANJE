@@ -1,0 +1,38 @@
+﻿@model Planiranje.Models.Pedagog
+@using System.Web.Mvc;
+
+@using (Html.BeginForm())
+{
+
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<div style="margin-bottom:10px" class="text-center">
+						<img src="../assets/img/logo.png" id="logoimg" alt=" Logo" />
+					</div>
+					<div class="alert alert-info text-center" role="alert">
+						Upišite vašu email adresu
+					</div>
+					@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail adresa", style = "max-width:100%; margin:10px auto;" } })
+					@Html.ValidationMessageFor(model => model.Ime, "", new { @class = "text-danger" })
+					<br>
+					<div class="col-md-12 text-center">
+						<input type="submit" value="Resetiraj lozinku" class="btn btn-danger" />
+					</div>
+					<br>
+					<div class="col-md-12 text-center">
+						@Html.ActionLink("Prijava", "Prijava", new { @class = "btn btn-link" }) |
+						@Html.ActionLink("Registracija", "Registracija", new { @class = "btn btn-link" })
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}

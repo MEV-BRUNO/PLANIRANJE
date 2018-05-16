@@ -17,5 +17,13 @@ namespace Planiranje.Controllers
 		{
 			return View();
 		}
+		public ActionResult ZaboravljenaLozinka()
+		{
+			return View();
+		}
+		public ActionResult Registracija()
+		{
+			return View();
+		}
 	}
 }

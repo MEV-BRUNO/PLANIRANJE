@@ -231,6 +231,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Planiranje\Prijava.cshtml" />
     <Content Include="Views\Planiranje\Index.cshtml" />
+    <Content Include="Views\Planiranje\ZaboravljenaLozinka.cshtml" />
+    <Content Include="Views\Planiranje\Registracija.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
