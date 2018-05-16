@@ -16,23 +16,20 @@
 				<div class="alert alert-info text-center" role="alert">
 					Upišite korisničko ime i lozinku
 				</div>
-				@Html.LabelFor(model => model.Email, new { @class = "control-label" })
-				@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", style = "max-width:100%;" } })
-				@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+				@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail adresa", style = "max-width:100%; margin:10px auto;" } })
+				@Html.ValidationMessageFor(model => model.Ime, "", new { @class = "text-danger" })
 
-				@Html.LabelFor(model => model.Lozinka, new { @class = "control-label" })
-				@Html.EditorFor(model => model.Lozinka, new { htmlAttributes = new { @class = "form-control", style = "max-width:100%;" } })
-				@Html.ValidationMessageFor(model => model.Lozinka, "", new { @class = "text-danger" })
+				@Html.EditorFor(model => model.Lozinka, new { htmlAttributes = new { @class = "form-control", @type = "password", placeholder = "Lozinka", style = "max-width:100%; margin:10px auto;" } })
+				@Html.ValidationMessageFor(model => model.Prezime, "", new { @class = "text-danger" })
 				<br>
 				<div class="col-md-12 text-center">
 					<input type="submit" value="Prijavi se" class="btn btn-danger" />
 				</div>
 				<br>
 				<div class="col-md-12 text-center">
-					@Html.ActionLink("Prijava", "Prijava", new { @class = "btn btn-link" }) |
-					@Html.ActionLink("Ponovi lozinku", "ZaboravljenaLozinka", new { @class = "btn btn-link" }) |
+					@Html.ActionLink("Zaboravljena lozinka", "ZaboravljenaLozinka", new { @class = "btn btn-link" }) |
 					@Html.ActionLink("Registracija", "Registracija", new { @class = "btn btn-link" })
-				</div>	
+				</div>
 			</div>
 		</div>
 	</div>
