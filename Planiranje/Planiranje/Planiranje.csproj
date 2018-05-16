@@ -233,6 +233,8 @@
     <Content Include="Views\Planiranje\Index.cshtml" />
     <Content Include="Views\Planiranje\ZaboravljenaLozinka.cshtml" />
     <Content Include="Views\Planiranje\Registracija.cshtml" />
+    <Content Include="Views\Planiranje\MjesecniPlan.cshtml" />
+    <Content Include="Views\Planiranje\GodisnjiPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
