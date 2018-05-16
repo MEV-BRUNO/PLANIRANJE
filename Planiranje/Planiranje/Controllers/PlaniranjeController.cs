@@ -25,5 +25,13 @@ namespace Planiranje.Controllers
 		{
 			return View();
 		}
+		public ActionResult MjesecniPlan()
+		{
+			return View();
+		}
+		public ActionResult GodisnjiPlan()
+		{
+			return View();
+		}
 	}
 }
