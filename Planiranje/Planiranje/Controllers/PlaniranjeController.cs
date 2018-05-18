@@ -52,5 +52,33 @@ namespace Planiranje.Controllers
 		{
 			return View();
 		}
+		public ActionResult PodrucjaDjelovanja()
+		{
+			return View();
+		}
+		public ActionResult Aktivnosti()
+		{
+			return View();
+		}
+		public ActionResult Akcije()
+		{
+			return View();
+		}
+		public ActionResult ObliciMetode()
+		{
+			return View();
+		}
+		public ActionResult Subjekti()
+		{
+			return View();
+		}
+		public ActionResult Zadaci()
+		{
+			return View();
+		}
+		public ActionResult Ciljevi()
+		{
+			return View();
+		}
 	}
 }
