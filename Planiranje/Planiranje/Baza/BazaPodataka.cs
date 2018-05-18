@@ -16,6 +16,5 @@ namespace Planiranje.Controllers
 		{
 			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 		}
-
 	}
 }
