@@ -455,7 +455,8 @@ DROP TABLE IF EXISTS `pedagog`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `pedagog` (
   `id_pedagog` int(11) NOT NULL AUTO_INCREMENT,
-  `ime_prezime` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `ime` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `prezime` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `lozinka` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `licenca` datetime NOT NULL,
