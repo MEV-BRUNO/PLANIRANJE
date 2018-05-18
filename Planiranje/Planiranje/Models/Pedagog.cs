@@ -6,10 +6,11 @@ using System.Web;
 
 namespace Planiranje.Models
 {
-    public class Pedagog
-    {
+	public class Pedagog
+	{
+		[Key]
         [Required]
-        public int Id { get; set; }
+        public int Id_Pedagog { get; set; }
         [Required]
         public string Ime { get; set; }
         [Required]
