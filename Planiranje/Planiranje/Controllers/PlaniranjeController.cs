@@ -22,14 +22,15 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult Prijava(Pedagog p)
 		{
-			foreach (Pedagog pedagog in baza.Pedagog)
+			Pedagog pedagog = baza.Pedagog.SingleOrDefault(ped => ped.Email == p.Email && ped.Lozinka == p.Lozinka);
+			if (pedagog != null)
 			{
-				if (pedagog.Lozinka == p.Lozinka && pedagog.Email == p.Email)
-				{
-					return RedirectToAction("Index");
-				}
+				return RedirectToAction("Index");
 			}
-			return RedirectToAction("Prijava");
+			else
+			{
+				return View("Prijava");
+			}
 		}
 		public ActionResult Index()
 		{
