@@ -1,0 +1,360 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="UTF-8" />
+    <title>BCORE Admin Dashboard Template | Data Tables</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!--[if IE]>
+       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+       <![endif]-->
+    <!-- GLOBAL STYLES -->
+    <!-- GLOBAL STYLES -->
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+    <link rel="stylesheet" href="~/assets/css/theme.css" />
+    <link rel="stylesheet" href="~/assets/css/MoneAdmin.css" />
+    <link rel="stylesheet" href="~/assets/plugins/Font-Awesome/css/font-awesome.css" />
+    <!--END GLOBAL STYLES -->
+    <!-- PAGE LEVEL STYLES -->
+    <link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <!-- END PAGE LEVEL  STYLES -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="~/https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="~/https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="padTop53">
+    <!-- MAIN WRAPPER -->
+    <div id="wrap">
+
+        <!-- HEADER SECTION -->
+        <div id="top">
+            <nav class="navbar navbar-inverse navbar-fixed-top " style="padding-top: 10px;">
+                <a data-original-title="Show/Hide Menu" data-placement="bottom" data-tooltip="tooltip" class="accordion-toggle btn btn-primary btn-sm visible-xs" data-toggle="collapse" href="~/#menu" id="menu-toggle">
+                    <i class="icon-align-justify"></i>
+                </a>
+                <!-- LOGO SECTION -->
+                <header class="navbar-header">
+                    <a href="~/index.html" class="navbar-brand">
+                        <img src="~/assets/img/logo.png" alt="" />
+                    </a>
+                </header>
+                <!-- END LOGO SECTION -->
+                <ul class="nav navbar-top-links navbar-right">
+                    <!--ADMIN SETTINGS SECTIONS -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="~/#">
+                            <i class="icon-user "></i>&nbsp; <i class="icon-chevron-down "></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="~/#"><i class="icon-user"></i> Korisničk profil </a>
+                            </li>
+                            <li>
+                                <a href="~/#"><i class="icon-gear"></i> Osobne postavke </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="~/login.html"><i class="icon-signout"></i> Odjava </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--END ADMIN SETTINGS -->
+                </ul>
+            </nav>
+        </div>
+        <!-- END HEADER SECTION -->
+        <!-- MENU SECTION -->
+        <div id="left">
+            <div class="media user-media well-small">
+                <a class="user-link" href="~/#">
+                    <img class="media-object img-thumbnail user-img" alt="User Picture" src="~/assets/img/user.png" />
+                </a>
+                <br />
+                <div class="media-body">
+                    <h5 class="media-heading"> PEDAGOG</h5>
+                </div>
+                <br />
+            </div>
+            <ul id="menu" class="collapse">
+
+                <li class="panel">
+                    <a href="~/#">
+                        <i class="icon-table"></i> Početna stranica
+                    </a>
+                </li>
+                <li class="panel">
+                    <a href="~/#">
+                        <i class="icon-table"></i> KALENDAR
+                    </a>
+                </li>
+                <li class="panel ">
+                    <a href="~/#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav">
+                        <i class="icon-tasks"> </i> UČENICI
+
+                        <span class="pull-right">
+                            <i class="icon-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="collapse" id="component-nav">
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Popis učenika </a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Osobni podaci </a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Bilješke o radu s učenikom </a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Lista praćenja</a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Protokol promatranja </a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Procjena suradnje </a></li>
+                    </ul>
+                </li>
+                <li class="panel ">
+                    <a href="~/#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-rod">
+                        <i class="icon-tasks"> </i> RODITELJI
+
+                        <span class="pull-right">
+                            <i class="icon-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="collapse" id="component-rod">
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Procjena roditelja </a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Radni list</a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Razgovor s roditeljem </a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Bilješke o radu</a></li>
+                    </ul>
+                </li>
+                <li class="panel">
+                    <a href="~/#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#DDL-nav">
+                        <i class=" icon-sitemap"></i>&nbsp; NASTAVNICI
+
+                        <span class="pull-right">
+                            <i class="icon-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="collapse" id="DDL-nav">
+                        <li>
+                            <a href="~/#" data-parent="#DDL-nav" data-toggle="collapse" class="accordion-toggle" data-target="#DDL1-nav">
+                                <i class="icon-sitemap"></i>&nbsp; Neposredni rad
+
+                                <span class="pull-right" style="margin-right: 20px;">
+                                    <i class="icon-angle-left"></i>
+                                </span>
+
+                            </a>
+                            <ul class="collapse" id="DDL1-nav">
+                                <li>
+                                    <a href="~/#"><i class="icon-angle-right"></i> Analiza nastavnog sata </a>
+                                </li>
+                                <li>
+                                    <a href="~/#"><i class="icon-angle-right"></i> Protokol praćenja </a>
+                                </li>
+                                <li>
+                                    <a href="~/#"><i class="icon-angle-right"></i> Uvid u neposredni rad </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="~/#" data-parent="#DDL-nav" data-toggle="collapse" class="accordion-toggle" data-target="#DDL2-nav">
+                                <i class="icon-sitemap"></i>&nbsp; Razrednici
+
+                                <span class="pull-right" style="margin-right: 20px;">
+                                    <i class="icon-angle-left"></i>
+                                </span>
+
+                            </a>
+                            <ul class="collapse" id="DDL2-nav">
+                                <li class=""><a href="~/#"><i class="icon-angle-right"></i> Profil razrednog odjela </a></li>
+                                <li class=""><a href="~/#"><i class="icon-angle-right"></i> Analiza odgojne situacije razreda</a></li>
+                                <li class=""><a href="~/#"><i class="icon-angle-right"></i> Procjena uspjeha učenika </a></li>
+                            </ul>
+                        </li>
+                        <li><a href="~/#"><i class="icon-angle-right"></i> Stručno usavršavanje </a></li>
+                    </ul>
+                </li>
+                <li class="panel">
+                    <a href="~/#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#DDLP-nav">
+                        <i class=" icon-sitemap"></i>&nbsp; PLANIRANJE
+
+                        <span class="pull-right">
+                            <i class="icon-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="collapse" id="DDLP-nav">
+                        <li><a href="~/#"><i class="icon-angle-right"></i> Godišnji plan </a></li>
+                        <li><a href="~/#"><i class="icon-angle-right"></i> Mjesečni plan </a></li>
+                        <li>
+                            <a href="~/#" data-parent="#DDLP-nav" data-toggle="collapse" class="accordion-toggle" data-target="#DDL3-nav">
+                                <i class="icon-sitemap"></i>&nbsp; Planovi i program
+
+                                <span class="pull-right" style="margin-right: 20px;">
+                                    <i class="icon-angle-left"></i>
+                                </span>
+
+                            </a>
+                            <ul class="collapse" id="DDL3-nav">
+                                <li>
+                                    <a href="~/#"><i class="icon-angle-right"></i> Plan osnovna škola - 1 </a>
+                                </li>
+                                <li>
+                                    <a href="~/#"><i class="icon-angle-right"></i> Plan osnovna škola - 2 </a>
+                                </li>
+                                <li>
+                                    <a href="~/#"><i class="icon-angle-right"></i> Srednja škola </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="~/#" data-parent="#DDLP-nav" data-toggle="collapse" class="accordion-toggle" data-target="#DDL4-nav">
+                                <i class="icon-sitemap"></i>&nbsp; Sadržaji
+
+                                <span class="pull-right" style="margin-right: 20px;">
+                                    <i class="icon-angle-left"></i>
+                                </span>
+
+                            </a>
+                            <ul class="collapse" id="DDL4-nav">
+                                <li class=""><a href="~/#"><i class="icon-angle-right"></i> Područja djelovanja </a></li>
+                                <li class=""><a href="~/#"><i class="icon-angle-right"></i> Aktivnosti</a></li>
+                                <li class=""><a href="~/#"><i class="icon-angle-right"></i> Akcije </a></li>
+                                <li class=""><a href="~/#"><i class="icon-angle-right"></i> Oblici i metode </a></li>
+                                <li class=""><a href="~/#"><i class="icon-angle-right"></i> Subjekti </a></li>
+                                <li class=""><a href="~/#"><i class="icon-angle-right"></i> Zadaci </a></li>
+                                <li class=""><a href="~/#"><i class="icon-angle-right"></i> Ciljevi </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="panel">
+                    <a href="~/#">
+                        <i class="icon-table"></i> ADRESAR
+                    </a>
+                </li>
+                <li class="panel ">
+                    <a href="~/#" data-parent="#menu1" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav1">
+                        <i class="icon-tasks"> </i> OPĆI PODACI
+
+                        <span class="pull-right">
+                            <i class="icon-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="collapse" id="component-nav1">
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Razredni odjeli </a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Popis učenika </a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Popis nastavnika </a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Školska godina</a></li>
+                        <li class=""><a href="~/#"><i class="icon-angle-right"></i> Podaci o školi </a></li>
+                    </ul>
+                </li>
+                <li class="panel">
+                    <a href="~/#">
+                        <i class="icon-table"></i> DOKUMENTI
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--END MENU SECTION -->
+        <!--PAGE CONTENT -->
+        <div id="content">
+            <div class="inner">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3> Popis učenika u razrednom odjelu</h3>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Podaci iz baze
+                            </div>
+                            <div class="panel-body">
+                                <br>
+                                <div class="table-responsive">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="text1" class="control-label col-lg-4">Naziv popisa</label>
+                                            <div class="col-lg-8">
+                                                <input type="text" id="text1" placeholder="Naziv popisa" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4">Razredni odjel:</label>
+                                            <div class="col-lg-8">
+                                                <select class="form-control">
+                                                    <option>5C</option>
+                                                    <option>6A</option>
+                                                    <option>6B</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4">Razrednik:</label>
+                                            <div class="col-lg-8">
+                                                <select class="form-control">
+                                                    <option>Nikola Horvat</option>
+                                                    <option>Ivana Marcijuš</option>
+                                                    <option>Svjetlana Vinković</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="text1" class="control-label col-lg-4">Školska godina</label>
+                                            <div class="col-lg-8">
+                                                <input type="text" id="text1" placeholder="Šk. godina" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="text4" class="control-label col-lg-4"></label>
+                                            <div class="col-lg-8">
+                                                <button type="submit" class="btn btn-default">Potvrdi</button>
+                                                <button type="reset" class="btn btn-default">Odustani</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                    </div>
+                </div><!--END ROW -->
+            </div>
+
+
+        </div>
+        <!--END PAGE CONTENT -->
+
+    </div>
+    <!--END MAIN WRAPPER -->
+    <!-- FOOTER -->
+    <div id="footer">
+        <p>&copy;  binarytheme &nbsp;2014 &nbsp;</p>
+    </div>
+    <!--END FOOTER -->
+    <!-- GLOBAL SCRIPTS -->
+    <script src="~/assets/plugins/jquery-2.0.3.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <!-- END GLOBAL SCRIPTS -->
+    <!-- PAGE LEVEL SCRIPTS -->
+    <script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>
+
