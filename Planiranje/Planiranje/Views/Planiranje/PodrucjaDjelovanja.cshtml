@@ -21,7 +21,7 @@
 					<i class="icon-align-justify"></i>
 				</a>
 				<header class="navbar-header">
-					<a href="index.html" class="navbar-brand">
+					<a href="Index" class="navbar-brand">
 						<img src="~/assets/img/logo.png" alt="" />
 					</a>
 				</header>
@@ -39,7 +39,7 @@
 							</li>
 							<li class="divider"></li>
 							<li>
-								<a href="login.html"><i class="icon-signout"></i> Odjava </a>
+								<a href="Prijava"><i class="icon-signout"></i> Odjava </a>
 							</li>
 						</ul>
 
@@ -222,23 +222,62 @@
 				</li>
 			</ul>
 
-		</div>
-		<div id="content">
+        </div>
+        <div id="content">
+            <div class="inner">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3> Pregled područja djelovanja </h3>
+                    </div>
+                </div>
 
-		</div>
-	</div>
-	<div id="footer">
-		<p>&copy;  binarytheme &nbsp;2014 &nbsp;</p>
-	</div>
-	<script src="~/assets/plugins/jquery-2.0.3.min.js"></script>
-	<script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="~/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-	<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
-	<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-	<script>
-		$(document).ready(function () {
-			$('#dataTables-example').dataTable();
-		});
-	</script>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Podaci iz baze
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover" id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Naziv područja</th>
+                                                <th>Aktivnost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="col-md-1">1.</td>
+                                                <td class="col-md-9">Organizacijski poslovi - planiranje</td>
+                                                <td class="col-md-2">
+                                                    <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>                                                    
+                                                    <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <p>&copy;  binarytheme &nbsp;2014 &nbsp;</p>
+        </div>
+        <script src="~/assets/plugins/jquery-2.0.3.min.js"></script>
+        <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
+        <script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
 </body>
 </html>
