@@ -276,6 +276,7 @@
     <Content Include="Views\Planiranje\Subjekti.cshtml" />
     <Content Include="Views\Planiranje\Zadaci.cshtml" />
     <Content Include="Views\Planiranje\Ciljevi.cshtml" />
+    <Content Include="Views\Planiranje\Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
