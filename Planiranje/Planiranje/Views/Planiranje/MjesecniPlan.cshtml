@@ -1,119 +1,51 @@
 ﻿@model  List<Planiranje.Models.Mjesecni_plan>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8" />
-	<title>BCORE Admin Dashboard Template | Data Tables</title>
-	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-	<meta content="" name="description" />
-	<meta content="" name="author" />
-	<link rel="stylesheet" href="../assets/plugins/bootstrap/css/bootstrap.css" />
-	<link rel="stylesheet" href="../assets/css/main.css" />
-	<link rel="stylesheet" href="../assets/css/theme.css" />
-	<link rel="stylesheet" href="../assets/css/MoneAdmin.css" />
-	<link rel="stylesheet" href="../assets/plugins/Font-Awesome/css/font-awesome.css" />
-	<link href="../assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
-</head>
-<body class="padTop53 ">
-	<div id="wrap">
-		<div id="top">
-			<nav class="navbar navbar-inverse navbar-fixed-top " style="padding-top: 10px;">
-				<a data-original-title="Show/Hide Menu" data-placement="bottom" data-tooltip="tooltip" class="accordion-toggle btn btn-primary btn-sm visible-xs" data-toggle="collapse" href="#menu" id="menu-toggle">
-					<i class="icon-align-justify"></i>
-				</a>
-				<header class="navbar-header">
-					<a href="Index" class="navbar-brand">
-						<img src="../assets/img/logo.png" alt="" />
-					</a>
-				</header>
-				<ul class="nav navbar-top-links navbar-right">
-					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-							<i class="icon-user "></i>&nbsp; <i class="icon-chevron-down "></i>
-						</a>
-						<ul class="dropdown-menu dropdown-user">
-							<li>
-								<a href="#"><i class="icon-user"></i> Korisnički profil </a>
-							</li>
-							<li>
-								<a href="#"><i class="icon-gear"></i> Osobne postavke </a>
-							</li>
-							<li class="divider"></li>
-							<li>
-								<a href="Login"><i class="icon-signout"></i> Odjava </a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</nav>
+<div class="inner">
+	<div class="row">
+		<div class="col-md-12">
+			<h3> Pregled mjesečnih planova </h3>
 		</div>
-		@Html.Partial("Navigation")
-		<div id="content">
-
-			<div class="inner">
-				<div class="row">
-					<div class="col-md-12">
-						<h3> Pregled mjesečnih planova </h3>
-					</div>
-				</div>
-				<hr />
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="panel panel-default">
-							<div class="panel-heading">Podaci iz baze</div>
-							<div class="panel-body">
-								<p>
-									<a href="#" class="btn btn-primary btn-xs btn-grad">Novi plan</a>
-								</p>
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover" id="dataTables-example">
-										<thead>
-											<tr>
-												<th class="col-md-1">#</th>
-												<th class="col-md-3">Naziv mjesečnog plana</th>
-												<th class="col-md-1">Šk. godina</th>
-												<th class="col-md-5">Opis</th>
-												<th class="col-md-2">Aktivnost</th>
-											</tr>
-										</thead>
-										<tbody>
-											@foreach (var plan in Model)
-											{
-												<tr>
-													<td>@Html.DisplayFor(planItem => plan.ID_plan)</td>
-													<td>@Html.DisplayFor(planItem => plan.Naziv)</td>
-													<td>@Html.DisplayFor(planItem => plan.Ak_godina)</td>
-													<td>@Html.DisplayFor(planItem => plan.Opis)</td>
-													<td class="text-right">
-														<a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-														<a href="#" class="btn btn-info btn-xs btn-grad">Prikaži</a>
-														<a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
-													</td>
-												</tr>
-											}
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-1">
+	</div>
+	<hr />
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">Podaci iz baze</div>
+				<div class="panel-body">
+					<p>
+						<a href="#" class="btn btn-primary btn-xs btn-grad">Novi plan</a>
+					</p>
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover" id="dataTables-example">
+							<thead>
+								<tr>
+									<th class="col-md-1">#</th>
+									<th class="col-md-3">Naziv mjesečnog plana</th>
+									<th class="col-md-1">Šk. godina</th>
+									<th class="col-md-5">Opis</th>
+									<th class="col-md-2">Aktivnost</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var plan in Model)
+								{
+									<tr>
+										<td>@Html.DisplayFor(planItem => plan.ID_plan)</td>
+										<td>@Html.DisplayFor(planItem => plan.Naziv)</td>
+										<td>@Html.DisplayFor(planItem => plan.Ak_godina)</td>
+										<td>@Html.DisplayFor(planItem => plan.Opis)</td>
+										<td class="text-right">
+											<a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+											<a href="#" class="btn btn-info btn-xs btn-grad">Prikaži</a>
+											<a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	@Html.Partial("Footer")
-	<script src="../assets/plugins/jquery-2.0.3.min.js"></script>
-	<script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="../assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-	<script src="../assets/plugins/dataTables/jquery.dataTables.js"></script>
-	<script src="../assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-	<script>
-		$(document).ready(function () {
-			$('#dataTables-example').dataTable();
-		});
-	</script>
-</body>
-</html>
+</div>
