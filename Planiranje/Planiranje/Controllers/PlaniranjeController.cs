@@ -80,5 +80,9 @@ namespace Planiranje.Controllers
 		{
 			return View();
 		}
+        public ActionResult NovaAkcija()
+        {
+            return View();
+        }
 	}
 }
