@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model  List<Planiranje.Models.Mjesecni_plan>
+
+<!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
@@ -312,41 +314,31 @@
 									<table class="table table-bordered table-hover" id="dataTables-example">
 										<thead>
 											<tr>
-												<th>#</th>
-												<th>Naziv mjesečnog plana</th>
-												<th>Šk. god.</th>
-												<th>Opis</th>
-												<th>Aktivnost</th>
+												<th class="col-md-1">#</th>
+												<th class="col-md-3">Naziv mjesečnog plana</th>
+												<th class="col-md-1">Šk. godina</th>
+												<th class="col-md-5">Opis</th>
+												<th class="col-md-2">Aktivnost</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td class="col-md-1">1.</td>
-												<td class="col-md-4">Mjesečni plan OŠ - Vladimira Nazora</td>
-												<td class="col-md-1">2017./2018.</td>
-												<td class="col-md-4">OPIS .... abc</td>
-												<td class="col-md-2">
-													<a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-													<a href="#" class="btn btn-info btn-xs btn-grad">Prikaži</a>
-													<a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
-												</td>
-											</tr>
-											<tr>
-												<td>2.</td>
-												<td>Mjesečni plan OŠ - Vladimira Nazora</td>
-												<td>2018/2019.</td>
-												<td>OPIS .... abc</td>
-												<td>
-													<a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-													<a href="#" class="btn btn-info btn-xs btn-grad">Prikaži</a>
-													<a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
-												</td>
-											</tr>
-
+											@foreach (var plan in Model)
+											{
+												<tr>
+													<td>@Html.DisplayFor(planItem => plan.ID_plan)</td>
+													<td>@Html.DisplayFor(planItem => plan.Naziv)</td>
+													<td>@Html.DisplayFor(planItem => plan.Ak_godina)</td>
+													<td>@Html.DisplayFor(planItem => plan.Opis)</td>
+													<td class="text-right">
+														<a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+														<a href="#" class="btn btn-info btn-xs btn-grad">Prikaži</a>
+														<a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+													</td>
+												</tr>
+											}
 										</tbody>
 									</table>
 								</div>
-
 							</div>
 						</div>
 					</div>

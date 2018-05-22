@@ -1,42 +1,49 @@
-CREATE DATABASE  IF NOT EXISTS `planiranje` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `planiranje`;
 -- MySQL dump 10.13  Distrib 8.0.11, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: planiranje
+-- Host: localhost    Database: planiranje
 -- ------------------------------------------------------
 -- Server version	8.0.11
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+#!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+#!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+#!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
  SET NAMES utf8 ;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+#!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+#!40103 SET TIME_ZONE='+00:00' */;
+#!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+#!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+#!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+#!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
 -- Table structure for table `aktivnost`
 --
 
 DROP TABLE IF EXISTS `aktivnost`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `aktivnost` (
   `id_aktivnost` int(11) NOT NULL AUTO_INCREMENT,
   `naziv` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id_aktivnost`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `aktivnost`
+--
+
+LOCK TABLES `aktivnost` WRITE;
+#!40000 ALTER TABLE `aktivnost` DISABLE KEYS */;
+#!40000 ALTER TABLE `aktivnost` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `aktivnost_akcija`
 --
 
 DROP TABLE IF EXISTS `aktivnost_akcija`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `aktivnost_akcija` (
   `id_akcija` int(11) NOT NULL AUTO_INCREMENT,
@@ -46,28 +53,46 @@ CREATE TABLE `aktivnost_akcija` (
   KEY `id_aktivnost` (`id_aktivnost`),
   CONSTRAINT `aktivnost_akcija_ibfk_1` FOREIGN KEY (`id_aktivnost`) REFERENCES `aktivnost` (`id_aktivnost`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `aktivnost_akcija`
+--
+
+LOCK TABLES `aktivnost_akcija` WRITE;
+#!40000 ALTER TABLE `aktivnost_akcija` DISABLE KEYS */;
+#!40000 ALTER TABLE `aktivnost_akcija` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ciljevi`
 --
 
 DROP TABLE IF EXISTS `ciljevi`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `ciljevi` (
   `id_cilj` int(11) NOT NULL AUTO_INCREMENT,
   `naziv` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_cilj`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ciljevi`
+--
+
+LOCK TABLES `ciljevi` WRITE;
+#!40000 ALTER TABLE `ciljevi` DISABLE KEYS */;
+#!40000 ALTER TABLE `ciljevi` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `dnevnik_detalji`
 --
 
 DROP TABLE IF EXISTS `dnevnik_detalji`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `dnevnik_detalji` (
   `id_dnevnik` int(11) NOT NULL AUTO_INCREMENT,
@@ -85,14 +110,23 @@ CREATE TABLE `dnevnik_detalji` (
   CONSTRAINT `dnevnik_detalji_ibfk_2` FOREIGN KEY (`subjekt`) REFERENCES `subjekti` (`id_subjekt`),
   CONSTRAINT `dnevnik_detalji_ibfk_3` FOREIGN KEY (`suradnja`) REFERENCES `pedagog` (`id_pedagog`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dnevnik_detalji`
+--
+
+LOCK TABLES `dnevnik_detalji` WRITE;
+#!40000 ALTER TABLE `dnevnik_detalji` DISABLE KEYS */;
+#!40000 ALTER TABLE `dnevnik_detalji` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `dnevnik_rada`
 --
 
 DROP TABLE IF EXISTS `dnevnik_rada`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `dnevnik_rada` (
   `id_dnevnik` int(11) NOT NULL AUTO_INCREMENT,
@@ -105,14 +139,23 @@ CREATE TABLE `dnevnik_rada` (
   KEY `id_pedagog` (`id_pedagog`),
   CONSTRAINT `dnevnik_rada_ibfk_1` FOREIGN KEY (`id_pedagog`) REFERENCES `pedagog` (`id_pedagog`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dnevnik_rada`
+--
+
+LOCK TABLES `dnevnik_rada` WRITE;
+#!40000 ALTER TABLE `dnevnik_rada` DISABLE KEYS */;
+#!40000 ALTER TABLE `dnevnik_rada` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `godisnji_detalji`
 --
 
 DROP TABLE IF EXISTS `godisnji_detalji`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `godisnji_detalji` (
   `id_god` int(11) NOT NULL AUTO_INCREMENT,
@@ -133,14 +176,23 @@ CREATE TABLE `godisnji_detalji` (
   `br_rad_dana` smallint(6) NOT NULL,
   PRIMARY KEY (`id_god`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `godisnji_detalji`
+--
+
+LOCK TABLES `godisnji_detalji` WRITE;
+#!40000 ALTER TABLE `godisnji_detalji` DISABLE KEYS */;
+#!40000 ALTER TABLE `godisnji_detalji` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `godisnji_plan`
 --
 
 DROP TABLE IF EXISTS `godisnji_plan`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `godisnji_plan` (
   `id_god` int(11) NOT NULL AUTO_INCREMENT,
@@ -154,14 +206,23 @@ CREATE TABLE `godisnji_plan` (
   KEY `id_pedagog` (`id_pedagog`),
   CONSTRAINT `godisnji_plan_ibfk_1` FOREIGN KEY (`id_pedagog`) REFERENCES `pedagog` (`id_pedagog`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `godisnji_plan`
+--
+
+LOCK TABLES `godisnji_plan` WRITE;
+#!40000 ALTER TABLE `godisnji_plan` DISABLE KEYS */;
+#!40000 ALTER TABLE `godisnji_plan` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `mjesecni_detalji`
 --
 
 DROP TABLE IF EXISTS `mjesecni_detalji`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `mjesecni_detalji` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -180,14 +241,23 @@ CREATE TABLE `mjesecni_detalji` (
   CONSTRAINT `mjesecni_detalji_ibfk_2` FOREIGN KEY (`aktivnost`) REFERENCES `aktivnost` (`id_aktivnost`),
   CONSTRAINT `mjesecni_detalji_ibfk_3` FOREIGN KEY (`suradnici`) REFERENCES `pedagog` (`id_pedagog`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mjesecni_detalji`
+--
+
+LOCK TABLES `mjesecni_detalji` WRITE;
+#!40000 ALTER TABLE `mjesecni_detalji` DISABLE KEYS */;
+#!40000 ALTER TABLE `mjesecni_detalji` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `mjesecni_plan`
 --
 
 DROP TABLE IF EXISTS `mjesecni_plan`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `mjesecni_plan` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -199,28 +269,46 @@ CREATE TABLE `mjesecni_plan` (
   KEY `id_pedagog` (`id_pedagog`),
   CONSTRAINT `mjesecni_plan_ibfk_1` FOREIGN KEY (`id_pedagog`) REFERENCES `pedagog` (`id_pedagog`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mjesecni_plan`
+--
+
+LOCK TABLES `mjesecni_plan` WRITE;
+#!40000 ALTER TABLE `mjesecni_plan` DISABLE KEYS */;
+#!40000 ALTER TABLE `mjesecni_plan` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `oblici`
 --
 
 DROP TABLE IF EXISTS `oblici`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `oblici` (
   `id_oblici` int(11) NOT NULL AUTO_INCREMENT,
   `naziv` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_oblici`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `oblici`
+--
+
+LOCK TABLES `oblici` WRITE;
+#!40000 ALTER TABLE `oblici` DISABLE KEYS */;
+#!40000 ALTER TABLE `oblici` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `os_plan_1`
 --
 
 DROP TABLE IF EXISTS `os_plan_1`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `os_plan_1` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -232,14 +320,23 @@ CREATE TABLE `os_plan_1` (
   KEY `id_pedagog` (`id_pedagog`),
   CONSTRAINT `os_plan_1_ibfk_1` FOREIGN KEY (`id_pedagog`) REFERENCES `pedagog` (`id_pedagog`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `os_plan_1`
+--
+
+LOCK TABLES `os_plan_1` WRITE;
+#!40000 ALTER TABLE `os_plan_1` DISABLE KEYS */;
+#!40000 ALTER TABLE `os_plan_1` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `os_plan_1_akcija`
 --
 
 DROP TABLE IF EXISTS `os_plan_1_akcija`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `os_plan_1_akcija` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -270,14 +367,23 @@ CREATE TABLE `os_plan_1_akcija` (
   CONSTRAINT `os_plan_1_akcija_ibfk_2` FOREIGN KEY (`red_broj_aktivnost`) REFERENCES `aktivnost` (`id_aktivnost`),
   CONSTRAINT `os_plan_1_akcija_ibfk_3` FOREIGN KEY (`red_broj_akcija`) REFERENCES `aktivnost_akcija` (`id_akcija`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `os_plan_1_akcija`
+--
+
+LOCK TABLES `os_plan_1_akcija` WRITE;
+#!40000 ALTER TABLE `os_plan_1_akcija` DISABLE KEYS */;
+#!40000 ALTER TABLE `os_plan_1_akcija` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `os_plan_1_aktivnost`
 --
 
 DROP TABLE IF EXISTS `os_plan_1_aktivnost`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `os_plan_1_aktivnost` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -305,14 +411,23 @@ CREATE TABLE `os_plan_1_aktivnost` (
   CONSTRAINT `os_plan_1_aktivnost_ibfk_1` FOREIGN KEY (`red_broj_podrucje`) REFERENCES `podrucje_rada` (`id_podrucje`),
   CONSTRAINT `os_plan_1_aktivnost_ibfk_2` FOREIGN KEY (`red_broj_aktivnost`) REFERENCES `aktivnost` (`id_aktivnost`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `os_plan_1_aktivnost`
+--
+
+LOCK TABLES `os_plan_1_aktivnost` WRITE;
+#!40000 ALTER TABLE `os_plan_1_aktivnost` DISABLE KEYS */;
+#!40000 ALTER TABLE `os_plan_1_aktivnost` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `os_plan_1_podrucje`
 --
 
 DROP TABLE IF EXISTS `os_plan_1_podrucje`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `os_plan_1_podrucje` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -339,14 +454,23 @@ CREATE TABLE `os_plan_1_podrucje` (
   CONSTRAINT `os_plan_1_podrucje_ibfk_1` FOREIGN KEY (`red_broj_podrucje`) REFERENCES `podrucje_rada` (`id_podrucje`),
   CONSTRAINT `os_plan_1_podrucje_ibfk_2` FOREIGN KEY (`cilj`) REFERENCES `ciljevi` (`id_cilj`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `os_plan_1_podrucje`
+--
+
+LOCK TABLES `os_plan_1_podrucje` WRITE;
+#!40000 ALTER TABLE `os_plan_1_podrucje` DISABLE KEYS */;
+#!40000 ALTER TABLE `os_plan_1_podrucje` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `os_plan_2`
 --
 
 DROP TABLE IF EXISTS `os_plan_2`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `os_plan_2` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -358,14 +482,23 @@ CREATE TABLE `os_plan_2` (
   KEY `id_pedagog` (`id_pedagog`),
   CONSTRAINT `os_plan_2_ibfk_1` FOREIGN KEY (`id_pedagog`) REFERENCES `pedagog` (`id_pedagog`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `os_plan_2`
+--
+
+LOCK TABLES `os_plan_2` WRITE;
+#!40000 ALTER TABLE `os_plan_2` DISABLE KEYS */;
+#!40000 ALTER TABLE `os_plan_2` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `os_plan_2_akcija`
 --
 
 DROP TABLE IF EXISTS `os_plan_2_akcija`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `os_plan_2_akcija` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -382,14 +515,23 @@ CREATE TABLE `os_plan_2_akcija` (
   CONSTRAINT `os_plan_2_akcija_ibfk_2` FOREIGN KEY (`red_br_aktivnost`) REFERENCES `aktivnost` (`id_aktivnost`),
   CONSTRAINT `os_plan_2_akcija_ibfk_3` FOREIGN KEY (`red_br_akcija`) REFERENCES `aktivnost_akcija` (`id_akcija`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `os_plan_2_akcija`
+--
+
+LOCK TABLES `os_plan_2_akcija` WRITE;
+#!40000 ALTER TABLE `os_plan_2_akcija` DISABLE KEYS */;
+#!40000 ALTER TABLE `os_plan_2_akcija` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `os_plan_2_aktivnost`
 --
 
 DROP TABLE IF EXISTS `os_plan_2_aktivnost`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `os_plan_2_aktivnost` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -414,14 +556,23 @@ CREATE TABLE `os_plan_2_aktivnost` (
   CONSTRAINT `os_plan_2_aktivnost_ibfk_4` FOREIGN KEY (`subjekti`) REFERENCES `subjekti` (`id_subjekt`),
   CONSTRAINT `os_plan_2_aktivnost_ibfk_5` FOREIGN KEY (`zadaci`) REFERENCES `zadaci` (`id_zadatak`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `os_plan_2_aktivnost`
+--
+
+LOCK TABLES `os_plan_2_aktivnost` WRITE;
+#!40000 ALTER TABLE `os_plan_2_aktivnost` DISABLE KEYS */;
+#!40000 ALTER TABLE `os_plan_2_aktivnost` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `os_plan_2_podrucje`
 --
 
 DROP TABLE IF EXISTS `os_plan_2_podrucje`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `os_plan_2_podrucje` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -444,14 +595,23 @@ CREATE TABLE `os_plan_2_podrucje` (
   CONSTRAINT `os_plan_2_podrucje_ibfk_4` FOREIGN KEY (`oblici`) REFERENCES `oblici` (`id_oblici`),
   CONSTRAINT `os_plan_2_podrucje_ibfk_5` FOREIGN KEY (`zadaci`) REFERENCES `zadaci` (`id_zadatak`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `os_plan_2_podrucje`
+--
+
+LOCK TABLES `os_plan_2_podrucje` WRITE;
+#!40000 ALTER TABLE `os_plan_2_podrucje` DISABLE KEYS */;
+#!40000 ALTER TABLE `os_plan_2_podrucje` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `pedagog`
 --
 
 DROP TABLE IF EXISTS `pedagog`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `pedagog` (
   `id_pedagog` int(11) NOT NULL AUTO_INCREMENT,
@@ -468,28 +628,46 @@ CREATE TABLE `pedagog` (
   KEY `id_skola` (`id_skola`),
   CONSTRAINT `pedagog_ibfk_1` FOREIGN KEY (`id_skola`) REFERENCES `skola` (`id_skola`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pedagog`
+--
+
+LOCK TABLES `pedagog` WRITE;
+#!40000 ALTER TABLE `pedagog` DISABLE KEYS */;
+#!40000 ALTER TABLE `pedagog` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `podrucje_rada`
 --
 
 DROP TABLE IF EXISTS `podrucje_rada`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `podrucje_rada` (
   `id_podrucje` int(11) NOT NULL AUTO_INCREMENT,
   `naziv` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id_podrucje`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `podrucje_rada`
+--
+
+LOCK TABLES `podrucje_rada` WRITE;
+#!40000 ALTER TABLE `podrucje_rada` DISABLE KEYS */;
+#!40000 ALTER TABLE `podrucje_rada` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `skola`
 --
 
 DROP TABLE IF EXISTS `skola`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `skola` (
   `id_skola` int(11) NOT NULL AUTO_INCREMENT,
@@ -501,14 +679,23 @@ CREATE TABLE `skola` (
   `kontakt` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_skola`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `skola`
+--
+
+LOCK TABLES `skola` WRITE;
+#!40000 ALTER TABLE `skola` DISABLE KEYS */;
+#!40000 ALTER TABLE `skola` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ss_plan`
 --
 
 DROP TABLE IF EXISTS `ss_plan`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `ss_plan` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -520,14 +707,23 @@ CREATE TABLE `ss_plan` (
   KEY `id_pedagog` (`id_pedagog`),
   CONSTRAINT `ss_plan_ibfk_1` FOREIGN KEY (`id_pedagog`) REFERENCES `pedagog` (`id_pedagog`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ss_plan`
+--
+
+LOCK TABLES `ss_plan` WRITE;
+#!40000 ALTER TABLE `ss_plan` DISABLE KEYS */;
+#!40000 ALTER TABLE `ss_plan` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ss_plan_podrucje`
 --
 
 DROP TABLE IF EXISTS `ss_plan_podrucje`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `ss_plan_podrucje` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
@@ -550,43 +746,70 @@ CREATE TABLE `ss_plan_podrucje` (
   CONSTRAINT `ss_plan_podrucje_ibfk_2` FOREIGN KEY (`oblici`) REFERENCES `oblici` (`id_oblici`),
   CONSTRAINT `ss_plan_podrucje_ibfk_3` FOREIGN KEY (`suradnici`) REFERENCES `pedagog` (`id_pedagog`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ss_plan_podrucje`
+--
+
+LOCK TABLES `ss_plan_podrucje` WRITE;
+#!40000 ALTER TABLE `ss_plan_podrucje` DISABLE KEYS */;
+#!40000 ALTER TABLE `ss_plan_podrucje` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `subjekti`
 --
 
 DROP TABLE IF EXISTS `subjekti`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `subjekti` (
   `id_subjekt` int(11) NOT NULL AUTO_INCREMENT,
   `naziv` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_subjekt`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subjekti`
+--
+
+LOCK TABLES `subjekti` WRITE;
+#!40000 ALTER TABLE `subjekti` DISABLE KEYS */;
+#!40000 ALTER TABLE `subjekti` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `zadaci`
 --
 
 DROP TABLE IF EXISTS `zadaci`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+#!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `zadaci` (
   `id_zadatak` int(11) NOT NULL AUTO_INCREMENT,
   `naziv` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_zadatak`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+#!40101 SET character_set_client = @saved_cs_client */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+--
+-- Dumping data for table `zadaci`
+--
 
--- Dump completed on 2018-04-25 19:28:52
+LOCK TABLES `zadaci` WRITE;
+#!40000 ALTER TABLE `zadaci` DISABLE KEYS */;
+#!40000 ALTER TABLE `zadaci` ENABLE KEYS */;
+UNLOCK TABLES;
+#!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+#!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+#!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+#!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+#!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+#!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+#!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+#!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-05-22 17:46:21

@@ -187,6 +187,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Mjesecni_plan_DBHandle.cs" />
     <Compile Include="Models\Oblici.cs" />
     <Compile Include="Models\OS_Plan_1_akcija.cs" />
     <Compile Include="Models\OS_Plan_1_aktivnost.cs" />
