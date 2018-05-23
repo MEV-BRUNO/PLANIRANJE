@@ -21,33 +21,33 @@ namespace Planiranje.Models
         [Required]
         public int Red_broj { get; set; }
         [Required]
-        public double Potrebno_sati { get; set; }
+        public int Potrebno_sati { get; set; }
         [Required]
-        public double Br_sati { get; set; }
+        public int Br_sati { get; set; }
         [Required]
-        public double Deveti_mjesec { get; set; }
+        public int Deveti_mjesec { get; set; }
         [Required]
-        public double Deseti_mjesec { get; set; }
+        public int Deseti_mjesec { get; set; }
         [Required]
-        public double Jedanaesti_mjesec { get; set; }
+        public int Jedanaesti_mjesec { get; set; }
         [Required]
-        public double Dvanaesti_mjesec { get; set; }
+        public int Dvanaesti_mjesec { get; set; }
         [Required]
-        public double Prvi_mjesec { get; set; }
+        public int Prvi_mjesec { get; set; }
         [Required]
-        public double Drugi_mjesec{get;set;}
+        public int Drugi_mjesec {get;set;}
         [Required]
-        public double Treci_mjesec { get; set; }
+        public int Treci_mjesec { get; set; }
         [Required]
-        public double Cetvrti_mjesec { get; set; }
+        public int Cetvrti_mjesec { get; set; }
         [Required]
-        public double Peti_Mjesec { get; set; }
+        public int Peti_Mjesec { get; set; }
         [Required]
-        public double Sesti_mjesec { get; set; }
+        public int Sesti_mjesec { get; set; }
         [Required]
-        public double Sedmi_mjesec { get; set; }
+        public int Sedmi_mjesec { get; set; }
         [Required]
-        public double Osmi_mjesec { get; set; }
+        public int Osmi_mjesec { get; set; }
 
 
     }

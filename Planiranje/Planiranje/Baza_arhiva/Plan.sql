@@ -75,7 +75,7 @@ CREATE TABLE `dnevnik_detalji` (
   `vrijeme_od` datetime NOT NULL,
   `vrijeme_do` datetime NOT NULL,
   `aktivnost` int(11) NOT NULL,
-  `suradnja` int(11) DEFAULT NULL,
+  `suradnja` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `zakljucak` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   PRIMARY KEY (`id_dnevnik`),
   KEY `aktivnost` (`aktivnost`),
@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS `dnevnik_rada`;
 CREATE TABLE `dnevnik_rada` (
   `id_dnevnik` int(11) NOT NULL AUTO_INCREMENT,
   `id_pedagog` int(11) NOT NULL,
-  `ak_godina` int(11) NOT NULL,
+  `ak_godina` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `naziv` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `opis` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `datum` datetime NOT NULL,
@@ -130,7 +130,8 @@ CREATE TABLE `godisnji_detalji` (
   `mj_fond_sati` smallint(6) DEFAULT NULL,
   `br_rad_dana_sk_god` smallint(6) DEFAULT NULL,
   `br_dana_god_odmor` smallint(6) NOT NULL,
-  `br_rad_dana` smallint(6) NOT NULL,
+  `ukupno_rad_dana` smallint(6) NOT NULL,
+  `god_fond_sati` smallint(6) NOT NULL,
   PRIMARY KEY (`id_god`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -147,7 +148,7 @@ CREATE TABLE `godisnji_plan` (
   `ak_godina` tinyint(4) NOT NULL,
   `id_pedagog` int(11) NOT NULL,
   `br_radnih_dana` int(11) DEFAULT NULL,
-  `broj_dana_godina_odmor` int(11) DEFAULT NULL,
+  `br_dana_godina_odmor` int(11) DEFAULT NULL,
   `ukupni_rad_dana` int(11) DEFAULT NULL,
   `god_fond_sati` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_god`),
@@ -168,7 +169,7 @@ CREATE TABLE `mjesecni_detalji` (
   `red_br` int(11) NOT NULL,
   `podrucje` int(11) NOT NULL,
   `aktivnost` int(11) NOT NULL,
-  `suradnici` int(11) DEFAULT NULL,
+  `suradnici` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `vrijeme` datetime NOT NULL,
   `br_sati` int(11) NOT NULL,
   `biljeska` text CHARACTER SET utf8 COLLATE utf8_general_ci,
@@ -192,7 +193,7 @@ DROP TABLE IF EXISTS `mjesecni_plan`;
 CREATE TABLE `mjesecni_plan` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
   `id_pedagog` int(11) NOT NULL,
-  `ak_godina` int(11) NOT NULL,
+  `ak_godina` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `naziv` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `opis` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   PRIMARY KEY (`id_plan`),
@@ -243,9 +244,9 @@ DROP TABLE IF EXISTS `os_plan_1_akcija`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `os_plan_1_akcija` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
-  `red_broj_podrucje` int(11) NOT NULL,
-  `red_broj_aktivnost` int(11) NOT NULL,
-  `red_broj_akcija` int(11) NOT NULL,
+  `red_br_podrucje` int(11) NOT NULL,
+  `red_br_aktivnost` int(11) NOT NULL,
+  `red_br_akcija` int(11) NOT NULL,
   `opis_akcija` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `red_br` int(11) NOT NULL,
   `potrebno_sati` int(11) NOT NULL,
@@ -319,7 +320,7 @@ CREATE TABLE `os_plan_1_podrucje` (
   `red_broj_podrucje` int(11) NOT NULL,
   `opis_podrucje` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `potrebno_sati` int(11) NOT NULL,
-  `cilj` int(11) NOT NULL,
+  `cilj` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `br_sati` int(11) NOT NULL,
   `mj_1` int(11) DEFAULT NULL,
   `mj_2` int(11) DEFAULT NULL,
@@ -426,6 +427,7 @@ DROP TABLE IF EXISTS `os_plan_2_podrucje`;
 CREATE TABLE `os_plan_2_podrucje` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
   `red_br_podrucje` int(11) NOT NULL,
+  `opis_podrucje` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `cilj` int(11) NOT NULL,
   `zadaci` int(11) DEFAULT NULL,
   `subjekti` int(11) NOT NULL,
@@ -513,7 +515,7 @@ DROP TABLE IF EXISTS `ss_plan`;
 CREATE TABLE `ss_plan` (
   `id_plan` int(11) NOT NULL AUTO_INCREMENT,
   `id_pedagog` int(11) NOT NULL,
-  `ak_godina` tinyint(4) NOT NULL,
+  `ak_godina` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `naziv` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `opis` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   PRIMARY KEY (`id_plan`),
@@ -537,7 +539,7 @@ CREATE TABLE `ss_plan_podrucje` (
   `zadaca` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `sadrzaj` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `oblici` int(11) NOT NULL,
-  `suradnici` int(11) NOT NULL,
+  `suradnici` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `mjesto` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `vrijeme` datetime NOT NULL,
   `ishodi` text CHARACTER SET utf8 COLLATE utf8_general_ci,
