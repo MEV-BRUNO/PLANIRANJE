@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using MySql.Data.MySqlClient;
+using Planiranje.Controllers;
 
 namespace Planiranje.Models
 {
@@ -26,7 +27,7 @@ namespace Planiranje.Models
 			using (MySqlCommand cmd = new MySqlCommand())
 			{
 				cmd.Connection = con;
-				cmd.CommandText = "SELECT id_plan, naziv, ak_godina, opis  FROM mjesecni_plan ORDER BY id_plan ASC";
+				cmd.CommandText = "SELECT id_plan, naziv, ak_godina, opis FROM mjesecni_plan where id_pedagog = " + AppSession.Current.UserId + " ORDER BY id_plan ASC";
 				con.Open();
 				using (MySqlDataReader sdr = cmd.ExecuteReader())
 				{
