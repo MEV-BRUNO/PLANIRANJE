@@ -621,7 +621,7 @@ CREATE TABLE `pedagog` (
   `lozinka` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `licenca` datetime NOT NULL,
   `id_skola` int(11) NOT NULL,
-  `aktivan` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `aktivan` tinyint(1) NOT NULL,
   `titula` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id_pedagog`),
   UNIQUE KEY `email` (`email`),
