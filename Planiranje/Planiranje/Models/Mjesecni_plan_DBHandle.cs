@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace Planiranje.Models
 		public List<Mjesecni_plan> DohvatiMjesecnePlanove()
 		{
 			connection();
-			List<Mjesecni_plan> gradovi = new List<Mjesecni_plan>();
+			List<Mjesecni_plan> planovi = new List<Mjesecni_plan>();
 			con.ConnectionString = str;
 			using (MySqlCommand cmd = new MySqlCommand())
 			{
@@ -42,13 +42,13 @@ namespace Planiranje.Models
 								Opis = sdr["opis"].ToString(),
 							};
 							if (plan.Naziv.Length > 0)
-								gradovi.Add(plan);
+								planovi.Add(plan);
 						}
 					}
 				}
 				con.Close();
 			}
-			return gradovi;
+			return planovi;
 		}
 	}
 }
