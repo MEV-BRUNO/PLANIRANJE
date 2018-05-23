@@ -79,6 +79,33 @@ namespace Planiranje.Controllers
 			}
 			return RedirectToAction("Prijava");
 		}
+		public ActionResult PlanOs1()
+		{
+			if (AppSession.Current.UserId > 0)
+			{
+				ViewBag.Title = "Plan - osnovna skola 1";
+				return View();
+			}
+			return RedirectToAction("Prijava");
+		}
+		public ActionResult PlanOs2()
+		{
+			if (AppSession.Current.UserId > 0)
+			{
+				ViewBag.Title = "Plan - osnovna skola 1";
+				return View();
+			}
+			return RedirectToAction("Prijava");
+		}
+		public ActionResult PlanSs()
+		{
+			if (AppSession.Current.UserId > 0)
+			{
+				ViewBag.Title = "Plan - srednja skola";
+				return View();
+			}
+			return RedirectToAction("Prijava");
+		}
 		public ActionResult PodrucjaDjelovanja()
 		{
 			if (AppSession.Current.UserId > 0)

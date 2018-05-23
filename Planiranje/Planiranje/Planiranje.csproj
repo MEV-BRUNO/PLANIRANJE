@@ -278,6 +278,9 @@
     <Content Include="Views\Planiranje\Ciljevi.cshtml" />
     <Content Include="Views\Planiranje\Footer.cshtml" />
     <Content Include="Views\Planiranje\Navigation.cshtml" />
+    <Content Include="Views\Planiranje\PlanOs1.cshtml" />
+    <Content Include="Views\Planiranje\PlanOs2.cshtml" />
+    <Content Include="Views\Planiranje\PlanSs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
