@@ -13,10 +13,10 @@ namespace Planiranje.Models
         [Required]
         public int Subjekt { get; set; }
         [Required]
-        [DataType(DataType.Time)]
+        [DataType(DataType.DateTime)]
         public DateTime Vrijeme_od { get; set; }
         [Required]
-        [DataType(DataType.Time)]
+        [DataType(DataType.DateTime)]
         public DateTime Vrijeme_do { get; set; }
         [Required]
         public int Aktivnost { get; set; }

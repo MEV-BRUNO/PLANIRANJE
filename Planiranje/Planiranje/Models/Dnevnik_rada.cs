@@ -19,7 +19,7 @@ namespace Planiranje.Models
         [Required]
         public string Opis { get; set; }
         [Required]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime Datum { get; set; }
     }
 }

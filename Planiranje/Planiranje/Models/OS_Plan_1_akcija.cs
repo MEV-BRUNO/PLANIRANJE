@@ -19,7 +19,7 @@ namespace Planiranje.Models
         [Required]
         public string Opis_akcija { get; set; }
         [Required]
-        public int Red_broj { get; set; }
+        public int Red_br { get; set; }
         [Required]
         public int Potrebno_sati { get; set; }
         [Required]
