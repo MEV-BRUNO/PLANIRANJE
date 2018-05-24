@@ -25,29 +25,29 @@ namespace Planiranje.Models
         [Required]
         public int Br_sati { get; set; }
         [Required]
-        public int Deveti_mjesec { get; set; }
+        public int Mj_1 { get; set; }
         [Required]
-        public int Deseti_mjesec { get; set; }
+        public int Mj_2 { get; set; }
         [Required]
-        public int Jedanaesti_mjesec { get; set; }
+        public int Mj_3 { get; set; }
         [Required]
-        public int Dvanaesti_mjesec { get; set; }
+        public int Mj_4 { get; set; }
         [Required]
-        public int Prvi_mjesec { get; set; }
+        public int Mj_5 { get; set; }
         [Required]
-        public int Drugi_mjesec {get;set;}
+        public int Mj_6 { get;set;}
         [Required]
-        public int Treci_mjesec { get; set; }
+        public int Mj_7 { get; set; }
         [Required]
-        public int Cetvrti_mjesec { get; set; }
+        public int Mj_8 { get; set; }
         [Required]
-        public int Peti_Mjesec { get; set; }
+        public int Mj_9 { get; set; }
         [Required]
-        public int Sesti_mjesec { get; set; }
+        public int Mj_10 { get; set; }
         [Required]
-        public int Sedmi_mjesec { get; set; }
+        public int Mj_11 { get; set; }
         [Required]
-        public int Osmi_mjesec { get; set; }
+        public int Mj_12 { get; set; }
 
 
     }

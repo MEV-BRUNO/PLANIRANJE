@@ -10,10 +10,10 @@ namespace Planiranje.Models
     {
         [Required]
         public int Id_god { get; set; }
-        [Required]
-        public int Ak_godina { get; set; }
-        [Required]
-        public int Id_pedagog { get; set; }
+		[Required]
+		public int Id_pedagog { get; set; }
+		[Required]
+        public string Ak_godina { get; set; }
         [Required]
         public int Br_radnih_dana { get; set; }
         [Required]

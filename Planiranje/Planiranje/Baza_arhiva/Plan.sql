@@ -89,7 +89,7 @@ CREATE TABLE pedagog (
 CREATE TABLE os_plan_1 (
   id_plan int(11) NOT NULL AUTO_INCREMENT,
   id_pedagog int(11) NOT NULL,
-  ak_godina int(11) NOT NULL,
+  ak_godina varchar(25) NOT NULL,
   naziv varchar(50) NOT NULL,
   opis text,
   PRIMARY KEY (id_plan),
@@ -100,7 +100,7 @@ CREATE TABLE os_plan_1 (
 CREATE TABLE os_plan_2 (
   id_plan int(11) NOT NULL AUTO_INCREMENT,
   id_pedagog int(11) NOT NULL,
-  ak_godina int(11) NOT NULL,
+  ak_godina varchar(25) NOT NULL,
   naziv varchar(50) NOT NULL,
   opis text,
   PRIMARY KEY (id_plan),
@@ -274,7 +274,7 @@ CREATE TABLE os_plan_1_aktivnost (
 
 CREATE TABLE os_plan_1_podrucje (
   id_plan int(11) NOT NULL AUTO_INCREMENT,
-  red_broj_podrucje int(11) NOT NULL,
+  red_br_podrucje int(11) NOT NULL,
   opis_podrucje text,
   potrebno_sati int(11) NOT NULL,
   cilj int(11) NOT NULL,
@@ -292,9 +292,9 @@ CREATE TABLE os_plan_1_podrucje (
   mj_11 int(11) DEFAULT NULL,
   mj_12 int(11) DEFAULT NULL,
   PRIMARY KEY (id_plan),
-  KEY red_broj_podrucje (red_broj_podrucje),
+  KEY red_br_podrucje (red_br_podrucje),
   KEY cilj (cilj),
-  CONSTRAINT os_plan_1_podrucje_ibfk_1 FOREIGN KEY (red_broj_podrucje) REFERENCES podrucje_rada (id_podrucje),
+  CONSTRAINT os_plan_1_podrucje_ibfk_1 FOREIGN KEY (red_br_podrucje) REFERENCES podrucje_rada (id_podrucje),
   CONSTRAINT os_plan_1_podrucje_ibfk_2 FOREIGN KEY (cilj) REFERENCES ciljevi (id_cilj)
 );
 
@@ -349,8 +349,8 @@ CREATE TABLE ss_plan_podrucje (
   id_plan int(11) NOT NULL AUTO_INCREMENT,
   red_br_podrucje int(11) NOT NULL,
   opis_podrucje text,
-  svrha varchar(50),
-  zadaca varchar(50),
+  svrha text,
+  zadaca text,
   sadrzaj text,
   oblici int(11) NOT NULL,
   suradnici int(11) NOT NULL,

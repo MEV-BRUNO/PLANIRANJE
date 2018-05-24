@@ -26,7 +26,7 @@ namespace Planiranje.Models
         [Required]
         public int Id_skola { get; set; }
         [Required]
-        public bool Aktivan { get; set; }
+        public char Aktivan { get; set; }
         [Required]
         public string Titula { get; set; }
     }

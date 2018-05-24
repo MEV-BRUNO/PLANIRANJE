@@ -191,11 +191,11 @@
     <Compile Include="Models\Oblici.cs" />
     <Compile Include="Models\OS_Plan_1_akcija.cs" />
     <Compile Include="Models\OS_Plan_1_aktivnost.cs" />
-    <Compile Include="Models\OS_Plan_1_Podrucje.cs" />
+    <Compile Include="Models\OS_Plan_1_podrucje.cs" />
     <Compile Include="Models\OS_Plan_2.cs" />
     <Compile Include="Models\OS_Plan_2_akcija.cs" />
     <Compile Include="Models\OS_Plan_2_aktivnost.cs" />
-    <Compile Include="Models\OS_Plan_2_Podrucje.cs" />
+    <Compile Include="Models\OS_Plan_2_podrucje.cs" />
     <Compile Include="Models\Aktivnost.cs" />
     <Compile Include="Models\Aktivnost_akcija.cs" />
     <Compile Include="Models\Godisnji_detalji.cs" />

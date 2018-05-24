@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Planiranje.Models
 {
-    public class OS_Plan_2_Podrucje
+    public class OS_Plan_2_podrucje
     {
         [Required]
         public int Id_plan { get; set; }

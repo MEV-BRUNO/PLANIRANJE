@@ -21,7 +21,7 @@ namespace Planiranje.Models
         [Required]
         public int Aktivnost { get; set; }
         [Required]
-        public string Suradnja { get; set; }
+        public int Suradnja { get; set; }
         [Required]
         public string Zakljucak { get; set; }
 

@@ -15,35 +15,37 @@ namespace Planiranje.Models
         [Required]
         public int Red_br_aktivnost { get; set; }
         [Required]
-        public int Opis_aktivnost { get; set; }
+        public string Opis_aktivnost { get; set; }
         [Required]
-        public int Red_broj { get; set; }
+        public int Red_br { get; set; }
         [Required]
         public int Potrebno_sati { get; set; }
         [Required]
         public int Br_sati { get; set; }
-        [Required]
-        public int Deveti_mjesec { get; set; }
-        [Required]
-        public int Deseti_mjesec { get; set; }
-        [Required]
-        public int Jedanaesti_mjesec { get; set; }
-        [Required]
-        public int Dvanaesti_mjesec { get; set; }
-        [Required]
-        public int Prvi_mjesec { get; set; }
-        [Required]
-        public int Drugi_mjesec { get; set; }
-        [Required]
-        public int Treci_mjesec { get; set; }
-        [Required]
-        public int Cetvrti_mjesec { get; set; }
-        [Required]
-        public int Peti_Mjesec { get; set; }
-        [Required]
-        public int Sesti_mjesec { get; set; }
-        [Required]
-        public int Sedmi_mjesec { get; set; }
-      
-    }
+		[Required]
+		public int Mj_1 { get; set; }
+		[Required]
+		public int Mj_2 { get; set; }
+		[Required]
+		public int Mj_3 { get; set; }
+		[Required]
+		public int Mj_4 { get; set; }
+		[Required]
+		public int Mj_5 { get; set; }
+		[Required]
+		public int Mj_6 { get; set; }
+		[Required]
+		public int Mj_7 { get; set; }
+		[Required]
+		public int Mj_8 { get; set; }
+		[Required]
+		public int Mj_9 { get; set; }
+		[Required]
+		public int Mj_10 { get; set; }
+		[Required]
+		public int Mj_11 { get; set; }
+		[Required]
+		public int Mj_12 { get; set; }
+
+	}
 }

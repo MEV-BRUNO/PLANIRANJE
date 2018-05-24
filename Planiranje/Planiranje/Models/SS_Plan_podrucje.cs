@@ -23,7 +23,7 @@ namespace Planiranje.Models
         [Required]
         public int Oblici { get; set; }
         [Required]
-        public string Suradnici { get; set; }
+        public int Suradnici { get; set; }
         [Required]
         public string Mjesto { get; set; }
         [Required]

@@ -13,7 +13,7 @@ namespace Planiranje.Models
         [Required]
         public int Id_pedagog { get; set; }
         [Required]
-        public int Ak_godina { get; set; }
+        public string Ak_godina { get; set; }
         [Required]
         public string Naziv { get; set; }
         [Required]

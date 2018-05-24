@@ -17,7 +17,7 @@ namespace Planiranje.Models
         [Required]
         public int Aktivnost { get; set; }
         [Required]
-        public string Suradnici { get; set; }
+        public int Suradnici { get; set; }
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime Vrijeme { get; set; }
