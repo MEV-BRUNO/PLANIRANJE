@@ -169,6 +169,16 @@ namespace Planiranje.Controllers
 			}
 			return RedirectToAction("Prijava");
 		}
+
+		public ActionResult NovaAkcija()
+		{
+			if (AppSession.Current.UserId > 0)
+			{
+				ViewBag.Title = "Nova akcija";
+				return View();
+			}
+			return RedirectToAction("Prijava");
+		}
 	}
 	public class AppSession
 	{

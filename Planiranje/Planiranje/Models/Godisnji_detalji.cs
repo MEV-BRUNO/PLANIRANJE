@@ -13,7 +13,7 @@ namespace Planiranje.Models
         [Required]
         public int Mjesec { get; set; }
         [Required]
-        public string Naziv_mjesec { get; set; }
+        public string Naziv_mjeseca { get; set; }
         [Required]
         public int Ukupno_dana { get; set; }
         [Required]

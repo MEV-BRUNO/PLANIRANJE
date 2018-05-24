@@ -17,13 +17,13 @@ namespace Planiranje.Models
         [Required]
         public string Opis_aktivnost { get; set; }
         [Required]
-        public string Cilj { get; set; }
+        public int Cilj { get; set; }
         [Required]
-        public string Zadaci { get; set; }
+        public int Zadaci { get; set; }
         [Required]
-        public string Subjekti { get; set; }
+        public int Subjekti { get; set; }
         [Required]
-        public string Oblici { get; set; }
+        public int Oblici { get; set; }
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime Vrijeme { get; set; }

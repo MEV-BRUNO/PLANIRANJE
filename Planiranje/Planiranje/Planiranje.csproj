@@ -281,6 +281,7 @@
     <Content Include="Views\Planiranje\PlanOs1.cshtml" />
     <Content Include="Views\Planiranje\PlanOs2.cshtml" />
     <Content Include="Views\Planiranje\PlanSs.cshtml" />
+    <Content Include="Views\Planiranje\NovaAkcija.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,7 +13,7 @@ namespace Planiranje.Models
         [Required]
         public int Red_br_podrucje { get; set; }
         [Required]
-        public int Opis_podrucje { get; set; }
+        public string Opis_podrucje { get; set; }
         [Required]
         public string Svrha { get; set; }
         [Required]

@@ -366,6 +366,3 @@ CREATE TABLE ss_plan_podrucje (
   CONSTRAINT ss_plan_podrucje_ibfk_2 FOREIGN KEY (oblici) REFERENCES oblici (id_oblici),
   CONSTRAINT ss_plan_podrucje_ibfk_3 FOREIGN KEY (suradnici) REFERENCES pedagog (id_pedagog)
 );
-
-
-

@@ -22,7 +22,7 @@ namespace Planiranje.Models
         [DataType(DataType.DateTime)]
         public DateTime Vrijeme { get; set; }
         [Required]
-        public double Br_sati { get; set; }
+        public int Br_sati { get; set; }
         [Required]
         public string Biljeska { get; set; }
     }
