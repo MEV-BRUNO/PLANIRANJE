@@ -186,17 +186,15 @@ CREATE TABLE mjesecni_detalji (
   red_br int(11) NOT NULL,
   podrucje int(11) NOT NULL,
   aktivnost int(11) NOT NULL,
-  suradnici int(11) DEFAULT NULL,
+  suradnici text,
   vrijeme datetime NOT NULL,
   br_sati int(11) NOT NULL,
   biljeska text,
   PRIMARY KEY (id_plan),
   KEY podrucje (podrucje),
   KEY aktivnost (aktivnost),
-  KEY suradnici (suradnici),
   CONSTRAINT mjesecni_detalji_ibfk_1 FOREIGN KEY (podrucje) REFERENCES podrucje_rada (id_podrucje),
-  CONSTRAINT mjesecni_detalji_ibfk_2 FOREIGN KEY (aktivnost) REFERENCES aktivnost (id_aktivnost),
-  CONSTRAINT mjesecni_detalji_ibfk_3 FOREIGN KEY (suradnici) REFERENCES pedagog (id_pedagog)
+  CONSTRAINT mjesecni_detalji_ibfk_2 FOREIGN KEY (aktivnost) REFERENCES aktivnost (id_aktivnost)
 );
 
 CREATE TABLE os_plan_2_akcija (
@@ -353,7 +351,7 @@ CREATE TABLE ss_plan_podrucje (
   zadaca text,
   sadrzaj text,
   oblici int(11) NOT NULL,
-  suradnici int(11) NOT NULL,
+  suradnici text,
   mjesto varchar(30),
   vrijeme datetime NOT NULL,
   ishodi text,
@@ -361,8 +359,6 @@ CREATE TABLE ss_plan_podrucje (
   PRIMARY KEY (id_plan),
   KEY red_br_podrucje (red_br_podrucje),
   KEY oblici (oblici),
-  KEY suradnici (suradnici),
   CONSTRAINT ss_plan_podrucje_ibfk_1 FOREIGN KEY (red_br_podrucje) REFERENCES podrucje_rada (id_podrucje),
-  CONSTRAINT ss_plan_podrucje_ibfk_2 FOREIGN KEY (oblici) REFERENCES oblici (id_oblici),
-  CONSTRAINT ss_plan_podrucje_ibfk_3 FOREIGN KEY (suradnici) REFERENCES pedagog (id_pedagog)
+  CONSTRAINT ss_plan_podrucje_ibfk_2 FOREIGN KEY (oblici) REFERENCES oblici (id_oblici)
 );
