@@ -1,20 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace Planiranje.Models
 {
-    public class Pedagog
-    {
-        public int Id { get; set; }
+	public class Pedagog
+	{
+		[Key]
+        [Required]
+        public int Id_Pedagog { get; set; }
+        [Required]
         public string Ime { get; set; }
+        [Required]
         public string Prezime { get; set; }
+        [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-        public int Lozinka { get; set; }
+        [Required]
+		public string Lozinka { get; set; }
+		[Required]
+        [DataType(DataType.DateTime)]
         public DateTime Licenca { get; set; } //datum trajanja pristupa
+        [Required]
         public int Id_skola { get; set; }
-        public bool Aktivan { get; set; }
+        [Required]
+        public char Aktivan { get; set; }
+        [Required]
         public string Titula { get; set; }
     }
 }

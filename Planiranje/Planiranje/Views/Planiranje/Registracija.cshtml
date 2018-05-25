@@ -1,0 +1,61 @@
+﻿@model Planiranje.Models.Pedagog
+@using System.Web.Mvc;
+@{
+	Page.Title = ViewBag.Title;
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title</title>
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+	@using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
+	<div class="form-horizontal">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<div style="margin-bottom:10px" class="text-center">
+						<img src="../assets/img/logo.png" id="logoimg" alt=" Logo" />
+					</div>
+					<div class="alert alert-info text-center" role="alert">Unesite podatke za registraciju</div>
+					@Html.EditorFor(model => model.Ime, new { htmlAttributes = new { @class = "form-control", placeholder = "Ime", style = "max-width:100%; margin:10px auto;" } })
+					@Html.ValidationMessageFor(model => model.Ime, "", new { @class = "text-danger" })
+					
+					@Html.EditorFor(model => model.Prezime, new { htmlAttributes = new { @class = "form-control", placeholder = "Prezime", style = "max-width:100%; margin:10px auto;" } })
+					@Html.ValidationMessageFor(model => model.Prezime, "", new { @class = "text-danger" })
+					
+					@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail adresa", style = "max-width:100%; margin:10px auto;" } })
+					@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+					
+					@Html.EditorFor(model => model.Lozinka, new { htmlAttributes = new { @class = "form-control", @type = "password", placeholder = "Lozinka", style = "max-width:100%; margin:10px auto;" } })
+					@Html.ValidationMessageFor(model => model.Lozinka, "", new { @class = "text-danger" })
+					
+					@Html.EditorFor(model => model.Lozinka, new { htmlAttributes = new { @class = "form-control", @type = "password", placeholder = "Lozinka ponovno", style = "max-width:100%; margin:10px auto;" } })
+					@Html.ValidationMessageFor(model => model.Lozinka, "", new { @class = "text-danger" })
+					<br>
+					<div class="col-md-12 text-center">
+						<input type="submit" value="Registriraj se" class="btn btn-danger" />
+					</div>
+					<br>
+					<div class="col-md-12 text-center">
+						@Html.ActionLink("Prijava", "Prijava", new { @class = "btn btn-link" }) |
+						@Html.ActionLink("Zaboravljena lozinka", "ZaboravljenaLozinka", new { @class = "btn btn-link" })
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	}
+	@section Scripts {
+		@Scripts.Render("~/bundles/jqueryval")
+	}
+</body>
+</html>
