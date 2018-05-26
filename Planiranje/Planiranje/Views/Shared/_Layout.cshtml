@@ -40,12 +40,28 @@
 							</li>
 							<li class="divider"></li>
 							<li>
-								<a onclick="location.href='@Url.Action("Prijava", "Planiranje")'" class="pointer"><i class="icon-signout"></i> Odjava </a>
+								<a data-toggle="modal" data-target="#odjava" class="pointer"><i class="icon-signout"></i> Odjava </a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 			</nav>
+			<a class="btn btn-primary" data-toggle="modal" data-target="#odjava">
+				Launch demo modal
+			</a>
+			<div class="modal fade" id="odjava" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-body">
+							<h4 class="modal-title" id="exampleModalLongTitle">Jeste li sigurni da se želite odjaviti?</h4>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+							<button onclick="location.href='@Url.Action("Prijava", "Planiranje")'" type="button" class="btn btn-danger">Odjavi</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		@Html.Partial("../Shared/Navigation")
 		<div id="content">
