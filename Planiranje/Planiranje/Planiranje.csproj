@@ -183,7 +183,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Baza\BazaPodataka.cs" />
+    <Compile Include="Controllers\AkcijeController.cs" />
+    <Compile Include="Controllers\AktivnostiController.cs" />
+    <Compile Include="Controllers\CiljeviController.cs" />
+    <Compile Include="Controllers\GodisnjiPlanController.cs" />
+    <Compile Include="Controllers\MjesecniPlanController.cs" />
+    <Compile Include="Controllers\ObliciMetodeController.cs" />
     <Compile Include="Controllers\PlaniranjeController.cs" />
+    <Compile Include="Controllers\PlaniranjeSession.cs" />
+    <Compile Include="Controllers\PlanOs1Controller.cs" />
+    <Compile Include="Controllers\PlanOs2Controller.cs" />
+    <Compile Include="Controllers\PlanSsController.cs" />
+    <Compile Include="Controllers\PodrucjaDjelovanjaController.cs" />
+    <Compile Include="Controllers\SubjektiController.cs" />
+    <Compile Include="Controllers\ZadaciController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -267,21 +280,20 @@
     <Content Include="Views\Planiranje\Index.cshtml" />
     <Content Include="Views\Planiranje\ZaboravljenaLozinka.cshtml" />
     <Content Include="Views\Planiranje\Registracija.cshtml" />
-    <Content Include="Views\Planiranje\MjesecniPlan.cshtml" />
-    <Content Include="Views\Planiranje\GodisnjiPlan.cshtml" />
-    <Content Include="Views\Planiranje\PodrucjaDjelovanja.cshtml" />
-    <Content Include="Views\Planiranje\Aktivnosti.cshtml" />
-    <Content Include="Views\Planiranje\Akcije.cshtml" />
-    <Content Include="Views\Planiranje\ObliciMetode.cshtml" />
-    <Content Include="Views\Planiranje\Subjekti.cshtml" />
-    <Content Include="Views\Planiranje\Zadaci.cshtml" />
-    <Content Include="Views\Planiranje\Ciljevi.cshtml" />
-    <Content Include="Views\Planiranje\Footer.cshtml" />
-    <Content Include="Views\Planiranje\Navigation.cshtml" />
-    <Content Include="Views\Planiranje\PlanOs1.cshtml" />
-    <Content Include="Views\Planiranje\PlanOs2.cshtml" />
-    <Content Include="Views\Planiranje\PlanSs.cshtml" />
-    <Content Include="Views\Planiranje\NovaAkcija.cshtml" />
+    <Content Include="Views\MjesecniPlan\Index.cshtml" />
+    <Content Include="Views\GodisnjiPlan\Index.cshtml" />
+    <Content Include="Views\PodrucjaDjelovanja\Index.cshtml" />
+    <Content Include="Views\Aktivnosti\Index.cshtml" />
+    <Content Include="Views\Akcije\Index.cshtml" />
+    <Content Include="Views\ObliciMetode\Index.cshtml" />
+    <Content Include="Views\Subjekti\Index.cshtml" />
+    <Content Include="Views\Zadaci\Index.cshtml" />
+    <Content Include="Views\Ciljevi\Index.cshtml" />
+    <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Shared\Navigation.cshtml" />
+    <Content Include="Views\PlanOs1\Index.cshtml" />
+    <Content Include="Views\PlanOs2\Index.cshtml" />
+    <Content Include="Views\PlanSs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

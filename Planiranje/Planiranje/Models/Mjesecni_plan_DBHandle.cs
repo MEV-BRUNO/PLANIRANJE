@@ -27,7 +27,7 @@ namespace Planiranje.Models
 			using (MySqlCommand cmd = new MySqlCommand())
 			{
 				cmd.Connection = con;
-				cmd.CommandText = "SELECT id_plan, naziv, ak_godina, opis FROM mjesecni_plan where id_pedagog = " + AppSession.Current.UserId + " ORDER BY id_plan ASC";
+				cmd.CommandText = "SELECT id_plan, naziv, ak_godina, opis FROM mjesecni_plan where id_pedagog = " + PlaniranjeSession.Trenutni.PedagogId + " ORDER BY id_plan ASC";
 				con.Open();
 				using (MySqlDataReader sdr = cmd.ExecuteReader())
 				{
