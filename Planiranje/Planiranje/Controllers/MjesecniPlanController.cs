@@ -21,7 +21,7 @@ namespace Planiranje.Controllers
 				ViewBag.Title = "Mjesecni plan";
 				return View(mjesecni_p);
 			}
-			return RedirectToAction("Prijava");
+			return RedirectToAction("Prijava", "Planiranje");
 		}
     }
 }

@@ -39,7 +39,7 @@ namespace Planiranje.Controllers
 				ViewBag.Title = "Pocetna";
 				return View();
 			}
-			return RedirectToAction("Prijava");
+			return RedirectToAction("Prijava", "Planiranje");
 		}
 		public ActionResult ZaboravljenaLozinka()
 		{
@@ -48,7 +48,7 @@ namespace Planiranje.Controllers
 				ViewBag.Title = "Zaboravljena lozinka";
 				return View();
 			}
-			return RedirectToAction("Prijava");
+			return RedirectToAction("Prijava", "Planiranje");
 		}
 		public ActionResult Registracija()
 		{
@@ -57,7 +57,7 @@ namespace Planiranje.Controllers
 				ViewBag.Title = "Registracija";
 				return View();
 			}
-			return RedirectToAction("Prijava");
+			return RedirectToAction("Prijava", "Planiranje");
 		}
 	}
 }

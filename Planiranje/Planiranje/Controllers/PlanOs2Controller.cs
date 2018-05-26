@@ -16,7 +16,7 @@ namespace Planiranje.Controllers
 				ViewBag.Title = "Plan - osnovna skola 1";
 				return View();
 			}
-			return RedirectToAction("Prijava");
+			return RedirectToAction("Prijava", "Planiranje");
 		}
     }
 }

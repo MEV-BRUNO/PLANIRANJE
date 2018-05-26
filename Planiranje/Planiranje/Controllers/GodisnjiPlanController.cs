@@ -16,7 +16,7 @@ namespace Planiranje.Controllers
 			{
 				return View();
 			}
-			return RedirectToAction("Prijava");
+			return RedirectToAction("Prijava", "Planiranje");
 		}
     }
 }
