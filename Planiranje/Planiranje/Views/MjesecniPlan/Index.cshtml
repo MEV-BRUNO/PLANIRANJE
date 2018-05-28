@@ -1,6 +1,7 @@
 ﻿@model  List<Planiranje.Models.Mjesecni_plan>
 @{
 	Page.Title = ViewBag.Title;
+	int test;
 }
 
 <div class="inner">
@@ -38,11 +39,12 @@
 										<td>@Html.DisplayFor(planItem => plan.Ak_godina)</td>
 										<td>@Html.DisplayFor(planItem => plan.Opis)</td>
 										<td class="text-right">
-											<a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-											<a href="#" class="btn btn-info btn-xs btn-grad">Prikaži</a>
-											<a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+											<a data-toggle="modal" data-target="#uredi"  class="btn btn-primary btn-xs btn-grad">Uredi</a>
+											<a data-toggle="modal" data-target="#prikazi" class="btn btn-info btn-xs btn-grad">Prikaži</a>
+											<a data-toggle="modal" data-target="#brisi" class="btn btn-danger btn-xs btn-grad">Briši</a>
 										</td>
 									</tr>
+									test = plan.ID_plan;
 								}
 							</tbody>
 						</table>
@@ -51,4 +53,57 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="brisi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				</div>
+				<div class="modal-body">
+					<p>Jeste li sigurni da želite obrisati mjesečni plan "@Html.DisplayFor(planItem => Model[5].Naziv)"?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+					<button onclick="location.href='@Url.Action("Obrisi", "MjesecniPlan", new { id = 1 })'" type="button" class="btn btn-danger">Obriši</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="prikazi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title" id="exampleModalLabel">@Html.DisplayFor(id => Model[3].Naziv)</h3>
+				</div>
+				<div class="modal-body">
+					<p>@Html.DisplayFor(planItem => Model[0].Opis)</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-info" data-dismiss="modal">Zatvori</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+<div class="modal fade" id="uredi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="exampleModalLabel">Uredi mjesecni plan</h3>
+			</div>
+			<div class="modal-body">
+				@Html.TextBoxFor(id => Model[3].Naziv, new { placeholder = "Naziv mjesecnog plana", @class = "edit-naziv" })
+				@Html.TextAreaFor(planItem => Model[3].Opis, new { placeholder = "Opis mjesecnog plana", @class = "edit-opis" })
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+				<button onclick="location.href='@Url.Action("Obrisi", "MjesecniPlan", new { id = 1 })'" type="button" class="btn btn-primary">Spremi</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+

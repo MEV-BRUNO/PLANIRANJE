@@ -23,5 +23,18 @@ namespace Planiranje.Controllers
 			}
 			return RedirectToAction("Prijava", "Planiranje");
 		}
+
+		public ActionResult Obrisi(int id)
+		{
+			mjesecni_planovi.ObrisiMjesecniPlan(id);
+			if (mjesecni_planovi.ObrisiMjesecniPlan(id))
+			{
+				return RedirectToAction("Index", "MjesecniPlan");
+			}
+			else
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+		}
     }
 }

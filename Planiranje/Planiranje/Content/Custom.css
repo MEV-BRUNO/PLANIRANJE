@@ -1,3 +1,30 @@
 ﻿.pointer {
 	cursor : pointer;
 }
+
+.edit-naziv {
+	min-width: 100%;
+	max-width: 100%;
+	width: 100%;
+	border-style: solid;
+	border-width: 1px;
+	border-color: lightgray;
+	border-radius: 5px;
+	padding: 8px;
+	margin : 10px 0;
+	font-size : 1.2em;
+}
+
+.edit-opis {
+	min-width: 100%;
+	max-width: 100%;
+	width: 100%;
+	min-height: 200px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: lightgray;
+	border-radius: 5px;
+	padding: 8px;
+	margin: 10px 0;
+}
+
