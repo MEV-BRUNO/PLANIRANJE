@@ -14,9 +14,21 @@ namespace Planiranje.Controllers
         {
 			if (PlaniranjeSession.Trenutni.PedagogId > 0)
 			{
-				return View();
+                List<Godisnji_plan> lista = new List<Godisnji_plan>();
+                Godisnji_plan g = new Godisnji_plan
+                {
+                    Ak_godina = "2017/2018",
+                    Br_dana_godina_odmor = 4,
+                    God_fond_sati = 450,
+                    Id_god = 3,
+                    Id_pedagog = PlaniranjeSession.Trenutni.PedagogId,
+                    Br_radnih_dana = 40,
+                    Ukupni_rad_dana = 66
+                };
+                lista.Add(g);
+				return View(lista);
 			}
 			return RedirectToAction("Prijava");
-		}
+		}        
     }
 }
