@@ -20,7 +20,7 @@ namespace Planiranje.Controllers
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
-				return RedirectToAction("Index");
+				return RedirectToAction("Index", "Planiranje");
 			}
 			ViewBag.Title = "Pregled mjesecnih planova";
 			ViewBag.CurrentSortOrder = Sorting_Order;
@@ -72,6 +72,10 @@ namespace Planiranje.Controllers
 
 		public ActionResult NoviPlan()
 		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
 			if (Request.IsAjaxRequest())
 			{
 				ViewBag.IsUpdate = false;
@@ -85,6 +89,10 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult NoviPlan(Mjesecni_plan gr)
 		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
 			Mjesecni_plan grObj = new Mjesecni_plan();
 			grObj.ID_pedagog = PlaniranjeSession.Trenutni.PedagogId;
 			grObj.Ak_godina = gr.Ak_godina;
@@ -103,6 +111,10 @@ namespace Planiranje.Controllers
 
 		public ActionResult Edit(int id)
 		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
 			Mjesecni_plan gr = new Mjesecni_plan();
 			gr = mjesecni_planovi.DohvatiMjesecniPlan(id);
 			if (Request.IsAjaxRequest())
@@ -117,6 +129,10 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult Edit(Mjesecni_plan gr)
 		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
 			string IsSuccess = mjesecni_planovi.updateGrad(gr);
 
 			if (!IsSuccess.Equals("OK"))
@@ -134,6 +150,10 @@ namespace Planiranje.Controllers
 		
 		public ActionResult Delete(int id)
 		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
 			Mjesecni_plan gr = new Mjesecni_plan();
 			gr = mjesecni_planovi.DohvatiMjesecniPlan(id);
 			if (Request.IsAjaxRequest())
@@ -149,6 +169,10 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult Delete(Mjesecni_plan gr)
 		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
 			string IsSuccess = mjesecni_planovi.deleteGrad(gr.ID_plan);
 			if (!IsSuccess.Equals("OK"))
 			{
