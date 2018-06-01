@@ -3,10 +3,10 @@
 <table class="table" id="dataTables-example">
 	<tr>
 		<th>
-			@Html.ActionLink("Naziv", "GradView", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+			@Html.ActionLink("Naziv", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
 		</th>
 		<th>
-			Županija
+			@Html.ActionLink("Zupanija", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
 		</th>
 		<th></th>
 	</tr>
