@@ -1,0 +1,31 @@
+﻿@model PagedList.IPagedList<Planiranje.Models.Mjesecni_plan>
+
+<table class="table" id="dataTables-example">
+	<tr>
+		<th>
+			@Html.ActionLink("Naziv", "GradView", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+		</th>
+		<th>
+			Županija
+		</th>
+		<th></th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Naziv)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Opis)
+			</td>
+			<td>
+				<a href="#" data-toggle="modal" data-url="@Url.Action("Edit","MjesecniPlan",new { id = item.ID_plan })" id="editAsset" class="btn btn-info btn-xs ">Uredi</a>
+				<a href="#" data-toggle="modal" data-url="@Url.Action("Delete","MjesecniPlan",new { id = item.ID_plan })" id="deleteAsset" class="btn btn-info btn-xs ">Briši</a>
+			</td>
+		</tr>
+	}
+
+</table>
+
