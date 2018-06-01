@@ -1,109 +1,108 @@
-﻿@model  List<Planiranje.Models.Mjesecni_plan>
+﻿
+@model PagedList.IPagedList<Planiranje.Models.Mjesecni_plan>
+@using PagedList.Mvc;
+
 @{
-	Page.Title = ViewBag.Title;
-	int test;
+	ViewBag.Title = "View";
 }
 
-<div class="inner">
-	<div class="row">
-		<div class="col-md-12">
-			<h3> Pregled mjesečnih planova </h3>
-		</div>
-	</div>
-	<hr />
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">Podaci iz baze</div>
-				<div class="panel-body">
-					<p>
-						<a href="#" class="btn btn-primary btn-xs btn-grad">Novi plan</a>
-					</p>
-					<div class="table-responsive">
-						<table class="table table-bordered table-hover" id="dataTables-example">
-							<thead>
-								<tr>
-									<th class="col-md-1">#</th>
-									<th class="col-md-3">Naziv mjesečnog plana</th>
-									<th class="col-md-1">Šk. godina</th>
-									<th class="col-md-5">Opis</th>
-									<th class="col-md-2">Aktivnost</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach (var plan in Model)
-								{
-									<tr>
-										<td>@Html.DisplayFor(planItem => plan.ID_plan)</td>
-										<td>@Html.DisplayFor(planItem => plan.Naziv)</td>
-										<td>@Html.DisplayFor(planItem => plan.Ak_godina)</td>
-										<td>@Html.DisplayFor(planItem => plan.Opis)</td>
-										<td class="text-right">
-											<a data-toggle="modal" data-target="#uredi"  class="btn btn-primary btn-xs btn-grad">Uredi</a>
-											<a data-toggle="modal" data-target="#prikazi" class="btn btn-info btn-xs btn-grad">Prikaži</a>
-											<a data-toggle="modal" data-target="#brisi" class="btn btn-danger btn-xs btn-grad">Briši</a>
-										</td>
-									</tr>
-									test = plan.ID_plan;
-								}
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<div class="modal fade" id="brisi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-				</div>
-				<div class="modal-body">
-					<p>Jeste li sigurni da želite obrisati mjesečni plan "@Html.DisplayFor(planItem => Model[5].Naziv)"?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
-					<button onclick="location.href='@Url.Action("Obrisi", "MjesecniPlan", new { id = 1 })'" type="button" class="btn btn-danger">Obriši</button>
-				</div>
-			</div>
-		</div>
-	</div>
+<h2>View</h2>
+<button type="button" class="btn btn-default btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "MjesecniPlan")" id="btnCreateAsset">
+	<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Dodaj kontakt
+</button>
 
-	<div class="modal fade" id="prikazi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h3 class="modal-title" id="exampleModalLabel">@Html.DisplayFor(id => Model[3].Naziv)</h3>
-				</div>
-				<div class="modal-body">
-					<p>@Html.DisplayFor(planItem => Model[0].Opis)</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-info" data-dismiss="modal">Zatvori</button>
-				</div>
-			</div>
-		</div>
+@using (Html.BeginForm("Index", "MjesecniPlan", FormMethod.Get))
+{
+	<p>
+		Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+		<input type="submit" value="Find" />
+	</p>
+}
+<!-- Partial View -->
+@Html.Partial("Table", Model)
+<br />
+<div id="Paginator">
+	Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+	@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+										new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+
+</div>
+<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
+	<div id="assetContainer">
 	</div>
 </div>
 
-<div class="modal fade" id="uredi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="modal-title" id="exampleModalLabel">Uredi mjesecni plan</h3>
-			</div>
-			<div class="modal-body">
-				@Html.TextBoxFor(id => Model[3].Naziv, new { placeholder = "Naziv mjesecnog plana", @class = "edit-naziv" })
-				@Html.TextAreaFor(planItem => Model[3].Opis, new { placeholder = "Opis mjesecnog plana", @class = "edit-opis" })
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
-				<button onclick="location.href='@Url.Action("Obrisi", "MjesecniPlan", new { id = 1 })'" type="button" class="btn btn-primary">Spremi</button>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
 
+
+
+
+<script>
+	var rowDelete;
+	$(document).ready(function () {
+
+		$("#btnCreateAsset").click(function (e) {
+			var url = $(this).attr("data-url");
+			$.ajax({
+				url: url,
+				success: function (data) {
+					$('#assetContainer').html(data);
+					$('#assetModal').modal('show');
+				},
+				error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+			});
+		});
+
+		$('#dataTables-example').on("click", "#editAsset", function (event) {
+			event.preventDefault();
+
+			var url = $(this).attr("data-url");
+			$.get(url, function (data) {
+				$('#assetContainer').html(data);
+
+				$('#assetModal').modal('show');
+			});
+		});
+
+		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
+			event.preventDefault();
+			var url = $(this).attr("data-url");
+
+			$.get(url, function (data) {
+				$('#assetContainer').html(data);
+
+				$('#assetModal').modal('show');
+			});
+
+		});
+
+
+
+	});
+
+</script>
+
+<script type="text/javascript">
+
+	function CreateSuccess() {
+		$('#assetModal').modal('hide');
+		$('#assetContainer').html("");
+		location.reload(true);
+	}
+
+
+	function EditSuccess() {
+		$('#assetModal').modal('hide');
+		$('#assetContainer').html("");
+		location.reload(true);
+
+
+	}
+
+	function DeleteSuccess() {
+		location.reload(true);
+
+	}
+
+
+</script>
