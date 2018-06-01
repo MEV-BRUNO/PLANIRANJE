@@ -160,12 +160,13 @@ namespace Planiranje.Models
 				using (MySqlCommand cmd = new MySqlCommand())
 				{
 					cmd.Connection = con;
-					cmd.CommandText = "INSERT INTO grad(id,naziv,zupanija) " +
-						" VALUES(@id,@naziv,@zupanija)";
+					cmd.CommandText = "INSERT INTO mjesecni_plan (id_pedagog, ak_godina, naziv, opis) " +
+						" VALUES(@id_pedagog, @ak_godina, @naziv, @opis)";
 					cmd.CommandType = CommandType.Text;
-					cmd.Parameters.AddWithValue("@id", plan.ID_pedagog);
+					cmd.Parameters.AddWithValue("@id_pedagog", plan.ID_pedagog);
+					cmd.Parameters.AddWithValue("@ak_godina", plan.Ak_godina);
 					cmd.Parameters.AddWithValue("@naziv", plan.Naziv);
-					cmd.Parameters.AddWithValue("@zupanija", plan.Opis);
+					cmd.Parameters.AddWithValue("@opis", plan.Opis);
 					con.Open();
 					cmd.ExecuteNonQuery();
 					con.Close();
