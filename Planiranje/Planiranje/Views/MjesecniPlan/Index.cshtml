@@ -1,46 +1,51 @@
-﻿
-@model PagedList.IPagedList<Planiranje.Models.Mjesecni_plan>
+﻿@model PagedList.IPagedList<Planiranje.Models.Mjesecni_plan>
 @using PagedList.Mvc;
 
 @{
-	ViewBag.Title = "View";
+	Page.Title = ViewBag.Title;
 }
 
-
-<h2>View</h2>
-<button type="button" class="btn btn-default btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "MjesecniPlan")" id="btnCreateAsset">
-	<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Dodaj kontakt
-</button>
-
-@using (Html.BeginForm("Index", "MjesecniPlan", FormMethod.Get))
-{
-	<p>
-		Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
-		<input type="submit" value="Find" />
-	</p>
-}
-<!-- Partial View -->
-@Html.Partial("Table", Model)
-<br />
-<div id="Paginator">
-	Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-	@Html.PagedListPager(Model, Page_No => Url.Action("Index",
-										new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
-
-</div>
-<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
-	<div id="assetContainer">
+<div class="inner">
+	<div class="row">
+		<div class="col-md-12">
+			<h3> Pregled mjesečnih planova </h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">Podaci iz baze</div>
+				<div class="panel-body">
+					<div class="col-md-12">
+						<button type="button" class="btn btn-default btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "MjesecniPlan")" id="btnCreateAsset">
+							<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Dodaj kontakt
+						</button>
+						@using (Html.BeginForm("Index", "MjesecniPlan", FormMethod.Get))
+						{
+							<p>
+								Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+								<input type="submit" value="Find" />
+							</p>
+						}
+					</div>
+					@Html.Partial("Table", Model)
+					<div id="Paginator">
+						Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
+						@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+					   new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+					</div>
+					<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
+						<div id="assetContainer"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
-
-
-
-
 
 <script>
 	var rowDelete;
 	$(document).ready(function () {
-
 		$("#btnCreateAsset").click(function (e) {
 			var url = $(this).attr("data-url");
 			$.ajax({
@@ -55,11 +60,9 @@
 
 		$('#dataTables-example').on("click", "#editAsset", function (event) {
 			event.preventDefault();
-
 			var url = $(this).attr("data-url");
 			$.get(url, function (data) {
 				$('#assetContainer').html(data);
-
 				$('#assetModal').modal('show');
 			});
 		});
@@ -67,42 +70,28 @@
 		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
 			event.preventDefault();
 			var url = $(this).attr("data-url");
-
 			$.get(url, function (data) {
 				$('#assetContainer').html(data);
-
 				$('#assetModal').modal('show');
 			});
-
 		});
-
-
-
 	});
-
 </script>
 
 <script type="text/javascript">
-
 	function CreateSuccess() {
 		$('#assetModal').modal('hide');
 		$('#assetContainer').html("");
 		location.reload(true);
 	}
 
-
 	function EditSuccess() {
 		$('#assetModal').modal('hide');
 		$('#assetContainer').html("");
 		location.reload(true);
-
-
 	}
 
 	function DeleteSuccess() {
 		location.reload(true);
-
 	}
-
-
 </script>
