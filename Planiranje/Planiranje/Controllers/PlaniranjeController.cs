@@ -24,7 +24,7 @@ namespace Planiranje.Controllers
 			Pedagog pedagog = baza.Pedagog.SingleOrDefault(ped => ped.Email == p.Email && ped.Lozinka == p.Lozinka);
 			if (pedagog != null)
 			{
-				PlaniranjeSession.Trenutni.PedagogId = 1;
+				PlaniranjeSession.Trenutni.PedagogId = pedagog.Id_Pedagog;
 				return RedirectToAction("Index");
 			}
 			else
