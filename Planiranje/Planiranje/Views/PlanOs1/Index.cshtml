@@ -1,6 +1,11 @@
-﻿@{
-	Page.Title = ViewBag.Title;
-}
+﻿@{model  List<Planiranje.Models.OS_Plan_1>
+@{
+Page.Title = ViewBag.Title;
+int test;
+}    
+	
+    
+
 <div class="inner">
 	<div class="row">
 		<div class="col-md-12">
@@ -53,6 +58,23 @@
 										<a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
 									</td>
 								</tr>
+
+                                @foreach (var plan in Model)
+								{
+                                    <tr>
+                                        <td>@Html.DisplayFor(planItem => plan.Id_plan)</td>
+                                        <td>@Html.DisplayFor(planItem => plan.Naziv)</td>
+                                        <td>@Html.DisplayFor(planItem => plan.Ak_godina)</td>
+                                        <td>@Html.DisplayFor(planItem => plan.Opis)</td>
+
+                                        <td class="text-right">
+                                            <a data-toggle="modal" data-target="#uredi" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                            <a data-toggle="modal" data-target="#prikazi" class="btn btn-info btn-xs btn-grad">Prikaži</a>
+                                            <a data-toggle="modal" data-target="#brisi" class="btn btn-danger btn-xs btn-grad">Briši</a>
+                                        </td>
+                                    </tr>
+									test = plan.Id_plan;
+								}
 							</tbody>
 						</table>
 					</div>
