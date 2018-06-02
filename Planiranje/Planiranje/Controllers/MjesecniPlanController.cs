@@ -15,52 +15,51 @@ namespace Planiranje.Controllers
 		private Mjesecni_plan_DBHandle mjesecni_planovi = new Mjesecni_plan_DBHandle();
 		int Page_No_Master = 1;
 
-		// GET: MjesecniPlan
-		public ActionResult Index(string Sorting_Order, string Search_Data, string Filter_Value, int? Page_No)
+		public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
 			ViewBag.Title = "Pregled mjesecnih planova";
-			ViewBag.CurrentSortOrder = Sorting_Order;
-			ViewBag.SortingName = String.IsNullOrEmpty(Sorting_Order) ? "Naziv" : "";
+			ViewBag.CurrentSortOrder = Sort;
+			ViewBag.SortingName = String.IsNullOrEmpty(Sort) ? "Naziv" : "";
 
 			ViewBag.Message = "Grad";
 
-			ViewBag.FilterValue = Search_Data;
-			if (Search_Data != null)
+			ViewBag.FilterValue = Search;
+			if (Search != null)
 			{
 				Page_No = 1;
 			}
 			else
 			{
-				Search_Data = Filter_Value;
+				Search = Filter;
 			}
 			ViewBag.CurrentPage = 1;
 			if (Page_No != null)
 				ViewBag.CurrentPage = Page_No;
 
 			
-			int Size_Of_Page = 20;
+			int Size_Of_Page = 10;
 			int No_Of_Page = (Page_No ?? 1);
-			if (Search_Data == null || Search_Data.Length == 0)
+			if (Search == null || Search.Length == 0)
 			{
 
 				if (Request.IsAjaxRequest())
 				{
 					int noP = (int)Page_No_Master;
-					var Popis2 = mjesecni_planovi.DohvatiMjesecnePlanove().ToPagedList(No_Of_Page, Size_Of_Page);
+					var Popis2 = mjesecni_planovi.ReadMjesecnePlanove().ToPagedList(No_Of_Page, Size_Of_Page);
 					return PartialView("_GradView", Popis2);
 				}
 				Page_No_Master = No_Of_Page;
-				var Popis = mjesecni_planovi.DohvatiMjesecnePlanove().ToPagedList(No_Of_Page, Size_Of_Page);
+				var Popis = mjesecni_planovi.ReadMjesecnePlanove().ToPagedList(No_Of_Page, Size_Of_Page);
 				return View(Popis);
 			}
 			else
 			{
 				Page_No_Master = No_Of_Page;
-				var Popis = mjesecni_planovi.DohvatiMjesecnePlanove(Search_Data).ToPagedList(No_Of_Page, Size_Of_Page);
+				var Popis = mjesecni_planovi.ReadMjesecnePlanove(Search).ToPagedList(No_Of_Page, Size_Of_Page);
 				if (Request.IsAjaxRequest())
 				{
 					return PartialView("_GradView", Popis);
@@ -81,9 +80,7 @@ namespace Planiranje.Controllers
 				ViewBag.IsUpdate = false;
 				return View("NoviPlan");
 			}
-			else
-
-				return View("NoviPlan");
+			return View("NoviPlan");
 		}
 
 		[HttpPost]
@@ -93,15 +90,12 @@ namespace Planiranje.Controllers
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			Mjesecni_plan grObj = new Mjesecni_plan();
-			grObj.ID_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-			grObj.Ak_godina = gr.Ak_godina;
-			grObj.Naziv = gr.Naziv;
-			grObj.Opis = gr.Opis;
-
-			string IsSuccess = mjesecni_planovi.DodajMjesecniPlan(grObj);
-
-			if (!IsSuccess.Equals("OK"))
+			Mjesecni_plan mjesecni_plan = new Mjesecni_plan();
+			mjesecni_plan.ID_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+			mjesecni_plan.Ak_godina = gr.Ak_godina;
+			mjesecni_plan.Naziv = gr.Naziv;
+			mjesecni_plan.Opis = gr.Opis;
+			if (!mjesecni_planovi.CreateMjesecniPlan(mjesecni_plan))
 			{
 				ModelState.Clear();
 				return PartialView("NoviPlan", gr);
@@ -115,36 +109,31 @@ namespace Planiranje.Controllers
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			Mjesecni_plan gr = new Mjesecni_plan();
-			gr = mjesecni_planovi.DohvatiMjesecniPlan(id);
+			Mjesecni_plan mjesecni_plan = new Mjesecni_plan();
+			mjesecni_plan = mjesecni_planovi.ReadMjesecniPlan(id);
 			if (Request.IsAjaxRequest())
 			{
 				ViewBag.IsUpdate = false;
-				return View("Uredi", gr);
+				return View("Uredi", mjesecni_plan);
 			}
-			else
-
-				return View("Uredi", gr);
+			return View("Uredi", mjesecni_plan);
 		}
 		[HttpPost]
-		public ActionResult Edit(Mjesecni_plan gr)
+		public ActionResult Edit(Mjesecni_plan mjesecni_plan)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			string IsSuccess = mjesecni_planovi.updateGrad(gr);
-
-			if (!IsSuccess.Equals("OK"))
+			if (!mjesecni_planovi.UpdateMjesecniPlan(mjesecni_plan))
 			{
 				ModelState.Clear();
-				return PartialView("Uredi", gr);
+				return PartialView("Uredi", mjesecni_plan);
 			}
 			if (Request.IsAjaxRequest())
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.OK);
 			}
-
 			return RedirectToAction("Index");
 		}
 		
@@ -154,27 +143,24 @@ namespace Planiranje.Controllers
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			Mjesecni_plan gr = new Mjesecni_plan();
-			gr = mjesecni_planovi.DohvatiMjesecniPlan(id);
+			Mjesecni_plan mjesecni_plan = new Mjesecni_plan();
+			mjesecni_plan = mjesecni_planovi.ReadMjesecniPlan(id);
 			if (Request.IsAjaxRequest())
 			{
 				ViewBag.IsUpdate = false;
-				return View("Obrisi", gr);
+				return View("Obrisi", mjesecni_plan);
 			}
-			else
-
-				return View("Obrisi");
+			return View("Obrisi");
 		}
 
 		[HttpPost]
-		public ActionResult Delete(Mjesecni_plan gr)
+		public ActionResult Delete(Mjesecni_plan mjesecni_plan)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			string IsSuccess = mjesecni_planovi.deleteGrad(gr.ID_plan);
-			if (!IsSuccess.Equals("OK"))
+			if (!mjesecni_planovi.DeleteMjesecniPlan(mjesecni_plan.ID_plan))
 			{
 				ModelState.Clear();
 				return PartialView("Obrisi");
@@ -183,7 +169,6 @@ namespace Planiranje.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.OK);
 			}
-
 			return RedirectToAction("Index");
 		}
 	}
