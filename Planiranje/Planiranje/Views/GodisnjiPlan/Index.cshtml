@@ -1,111 +1,101 @@
-﻿@model List<Planiranje.Models.Godisnji_plan>
+﻿@model PagedList.IPagedList<Planiranje.Models.Godisnji_plan>
+@using PagedList.Mvc;
+
 @{
     Page.Title = ViewBag.Title;
 }
 
 <div class="inner">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <h3> Pregled godišnjih planova </h3>
         </div>
     </div>
-    <hr />
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Podaci iz baze</div>
                 <div class="panel-body">
-                    <p>
-                        <a href="#" class="btn btn-primary btn-xs btn-grad">Novi plan</a>
-                    </p>
-
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover" id="dataTables-example">
-                            <thead>
-                                <tr>
-                                    <th class="col-md-1">ID pedagog</th>
-                                    <th class="col-md-2">Akademska god.</th>
-                                    <th class="col-md-1">Broj radnih dana</th>
-                                    <th class="col-md-1">Broj dana godišnjeg odmora</th>
-                                    <th class="col-md-1">Ukupno radnih dana</th>
-                                    <th class="col-md-1">Godišnji fond sati</th>
-                                    <th class="col-md-4">Aktivnost</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (Planiranje.Models.Godisnji_plan plan in Model)
-                                {
-                                    <tr>
-                                        <td>@Html.DisplayFor(p => plan.Id_pedagog)</td>
-                                        <td>@Html.DisplayFor(p => plan.Ak_godina) </td>
-                                        <td>@Html.DisplayFor(p => plan.Br_radnih_dana)</td>
-                                        <td>@Html.DisplayFor(p => plan.Br_dana_godina_odmor)</td>
-                                        <td>@Html.DisplayFor(p => plan.Ukupni_rad_dana)</td>
-                                        <td>@Html.DisplayFor(p => plan.God_fond_sati)</td>
-                                        <td class="text-right">
-                                            <a data-toggle="modal" data-target="#uredi" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                            <a data-toggle="modal" data-target="#prikazi" class="btn btn-info btn-xs btn-grad">Prikaži</a>
-                                            <a data-toggle="modal" data-target="#brisi" class="btn btn-danger btn-xs btn-grad">Briši</a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                    <div>
+                        <div class="pull-left">
+                            <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "GodisnjiPlan")" id="btnCreateAsset">
+                                Novi plan
+                            </button>
+                        </div>
+                        <div class="pull-right">
+                            @using (Html.BeginForm("Index", "GodisnjiPlan", FormMethod.Get))
+                            {
+                                <p>
+                                    @Html.TextBox("Search", ViewBag.FilterValue as string, new { @class = "search-bar" })
+                                    <input class="btn btn-primary btn-md" type="submit" value="Trazi" />
+                                </p>
+                            }
+                        </div>
+                        <br>
+                    </div>
+                    @Html.Partial("Table", Model)
+                    <div id="Paginator">
+                        Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
+                        @Html.PagedListPager(Model, Page_No => Url.Action("Index",
+                             new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+                    </div>
+                    <div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
+                        <div id="assetContainer"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="brisi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                </div>
-                <div class="modal-body">
-                    <p>Jeste li sigurni da želite obrisati godišnji plan "@Html.DisplayFor(planItem => Model[0].Id_pedagog)"?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
-                    <button onclick="location.href='@Url.Action("Obrisi", "GodisnjiPlan", new { id = 1 })'" type="button" class="btn btn-danger">Obriši</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="prikazi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel">@Html.DisplayFor(id => Model[0].Id_pedagog)</h3>
-                </div>
-                <div class="modal-body">
-                    <p>@Html.DisplayFor(planItem => Model[0].Ak_godina)</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-dismiss="modal">Zatvori</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
-<div class="modal fade" id="uredi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLabel">Uredi godišnji plan</h3>
-            </div>
-            <div class="modal-body">
-                @Html.TextBoxFor(id => Model[0].Ak_godina, new { placeholder = "Akademska godina", @class = "edit-godina" })
-                @Html.TextBoxFor(planItem => Model[0].Br_dana_godina_odmor, new { placeholder = "Broj dana godišnjeg odmora", @class = "edit-br_dana_god_odmora" })
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
-                <button onclick="location.href='@Url.Action("Obrisi", "GodisnjiPlan", new { id = 1 })'" type="button" class="btn btn-primary">Spremi</button>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+    var rowDelete;
+    $(document).ready(function () {
+        $("#btnCreateAsset").click(function (e) {
+            var url = $(this).attr("data-url");
+            $.ajax({
+                url: url,
+                success: function (data) {
+                    $('#assetContainer').html(data);
+                    $('#assetModal').modal('show');
+                },
+                error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+            });
+        });
 
+        $('#dataTables-example').on("click", "#editAsset", function (event) {
+            event.preventDefault();
+            var url = $(this).attr("data-url");
+            $.get(url, function (data) {
+                $('#assetContainer').html(data);
+                $('#assetModal').modal('show');
+            });
+        });
 
+        $('#dataTables-example').on("click", "#deleteAsset", function (event) {
+            event.preventDefault();
+            var url = $(this).attr("data-url");
+            $.get(url, function (data) {
+                $('#assetContainer').html(data);
+                $('#assetModal').modal('show');
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    function CreateSuccess() {
+        $('#assetModal').modal('hide');
+        $('#assetContainer').html("");
+        location.reload(true);
+    }
+
+    function EditSuccess() {
+        $('#assetModal').modal('hide');
+        $('#assetContainer').html("");
+        location.reload(true);
+    }
+
+    function DeleteSuccess() {
+        location.reload(true);
+    }
+</script>
