@@ -4,16 +4,22 @@
     <thead>
         <tr>
             <td class="col-lg-1">
-                @Html.ActionLink("Id", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-            </td>
-            <td class="col-lg-3">
-                @Html.ActionLink("Naziv", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-            </td>
+                @Html.ActionLink("Id god", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            </td>            
             <td class="col-lg-1">
                 @Html.ActionLink("Ak. godina", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
             </td>
-            <td class="col-lg-6">
-                @Html.ActionLink("Opis", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            <td class="col-lg-2">
+                @Html.ActionLink("Br. dana god. odmora", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            </td>
+            <td class="col-lg-2">
+                @Html.ActionLink("Br. radnih dana", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            </td>
+            <td class="col-lg-2">
+                @Html.ActionLink("God. fond sati", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            </td>
+            <td class="col-lg-2">
+                @Html.ActionLink("Ukupno radnih dana", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
             </td>
             <td class="col-lg-2">
                 Akcija
@@ -27,10 +33,7 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelitem => item.Id_god)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_pedagog)
-            </td>
+            </td>            
             <td>
                 @Html.DisplayFor(modelItem => item.Ak_godina)
             </td>
