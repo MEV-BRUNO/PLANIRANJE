@@ -196,8 +196,8 @@ namespace Planiranje.Models
                         "SET " +
                         "ak_godina = @ak_godina, " +
                         "br_radnih_dana = @br_radnih_dana, " +
-                        "br_dana_godina_odmor = @br_dana_godina_odmor " +
-                        "ukupni_rad_dana = @ukupni_rad_dana " +
+                        "br_dana_godina_odmor = @br_dana_godina_odmor, " +
+                        "ukupni_rad_dana = @ukupni_rad_dana, " +
                         "god_fond_sati = @god_fond_sati "+
                         "WHERE id_god = @id_god " +
                         "AND id_pedagog = @id_pedagog";
