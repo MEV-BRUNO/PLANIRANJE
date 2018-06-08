@@ -28,7 +28,7 @@ namespace Planiranje.Models
             {
                 command.Connection = connection;
                 command.CommandText = "SELECT id_god, id_pedagog, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati" +
-                    "FROM godisnji_plan " +
+                    " FROM godisnji_plan " +
                     "WHERE id_pedagog = @id_pedagog " +
                     "ORDER BY id_god ASC";
                 command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
