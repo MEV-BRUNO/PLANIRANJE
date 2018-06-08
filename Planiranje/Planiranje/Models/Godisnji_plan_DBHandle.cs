@@ -74,7 +74,7 @@ namespace Planiranje.Models
                 //    "OR naziv like '%" + search_string + "%' " +
                 //    "OR opis like '%" + search_string + "%') " +
                 //    "ORDER BY id_plan ASC";
-                command.CommandText = "SELECT id_god, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati" +
+                command.CommandText = "SELECT id_god, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati " +
                     "FROM godisnji_plan " +
                     "WHERE id_pedagog = @id_pedagog " +
                     "AND (ak_godina like '%" + search_string + "%' " +
@@ -115,7 +115,7 @@ namespace Planiranje.Models
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_god, id_pedagog, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati" +
+                command.CommandText = "SELECT id_god, id_pedagog, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati " +
                     "FROM godisnji_plan " +
                     "WHERE id_pedagog = @id_pedagog " +
                     "AND id_god = @id "+
@@ -197,8 +197,8 @@ namespace Planiranje.Models
                         "ak_godina = @ak_godina, " +
                         "br_radnih_dana = @br_radnih_dana, " +
                         "br_dana_godina_odmor = @br_dana_godina_odmor " +
-                        "ukupni_rad_dana = @ukupni_rad_dana" +
-                        "god_fond_sati = @god_fond_sati"+
+                        "ukupni_rad_dana = @ukupni_rad_dana " +
+                        "god_fond_sati = @god_fond_sati "+
                         "WHERE id_god = @id_god " +
                         "AND id_pedagog = @id_pedagog";
                     command.CommandType = CommandType.Text;

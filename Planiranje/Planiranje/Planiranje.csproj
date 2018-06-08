@@ -306,6 +306,7 @@
     <Content Include="Views\GodisnjiPlan\Table.cshtml" />
     <Content Include="Views\GodisnjiPlan\Obrisi.cshtml" />
     <Content Include="Views\GodisnjiPlan\NoviPlan.cshtml" />
+    <Content Include="Views\GodisnjiPlan\Uredi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
