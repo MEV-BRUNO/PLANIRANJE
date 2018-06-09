@@ -223,6 +223,7 @@
     <Compile Include="Models\Mjesecni_detalji.cs" />
     <Compile Include="Models\Mjesecni_plan.cs" />
     <Compile Include="Models\SS_Plan.cs" />
+    <Compile Include="Models\SS_Plan_DBHandle.cs" />
     <Compile Include="Models\SS_Plan_podrucje.cs" />
     <Compile Include="Models\Subjekti.cs" />
     <Compile Include="Models\Zadaci.cs" />
