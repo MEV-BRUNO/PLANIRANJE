@@ -1,0 +1,49 @@
+﻿@model PagedList.IPagedList<Planiranje.Models.OS_Plan_2>
+
+<table class="table table-bordered table-hover" id="dataTables-example">
+    <thead>
+        <tr>
+            <td class="col-lg-1">
+                @Html.ActionLink("Id", "Index", "OS_Plan_2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            </td>
+            <td class="col-lg-3">
+                @Html.ActionLink("Naziv", "Index", "OS_Plan_2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            </td>
+            <td class="col-lg-1">
+                @Html.ActionLink("Ak. godina", "Index", "OS_Plan_2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            </td>
+            <td class="col-lg-6">
+                @Html.ActionLink("Opis", "Index", "OS_Plan_2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            </td>
+            <td class="col-lg-2">
+                Akcija
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+	{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_plan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ak_godina)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opis)
+            </td>
+            <td>
+                <div class="pull-right">
+                    <a data-toggle="modal" data-url="@Url.Action("Edit","OS_Plan_2",new { id = item.ID_plan })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
+                    <a data-toggle="modal" data-url="@Url.Action("Delete","OS_Plan_2",new { id = item.ID_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
