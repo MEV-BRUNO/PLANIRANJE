@@ -13,19 +13,7 @@ namespace Planiranje.Controllers
     public class PlanSsController : Controller
 
     {
-        // GET: PlanSs
-        public ActionResult Index()
-        {
-            if (PlaniranjeSession.Trenutni.PedagogId > 0)
-            {
-                ViewBag.Title = "Plan - srednja skola";
-                return View();
-            }
-            return RedirectToAction("Prijava");
-        }
-    }
-
-    private SS_Plan_DBHandle SS_Plan = new SS_Plan_DBHandle();
+       private SS_Plan_DBHandle SS_Plan = new SS_Plan_DBHandle();
         int Page_No_Master = 1;
 
         public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
@@ -97,13 +85,13 @@ namespace Planiranje.Controllers
         }
 
         [HttpPost]
-        public ActionResult NoviPlan(Ss_plan gr)
+        public ActionResult NoviPlan(SS_plan gr)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            SS_Plan ss_plan = new Ss_plan();
+            SS_Plan ss_plan = new SS_plan();
             ss_plan.ID_pedagog = PlaniranjeSession.Trenutni.PedagogId;
             ss_plan.Ak_godina = gr.Ak_godina;
             ss_plan.Naziv = gr.Naziv;
@@ -122,7 +110,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Ss_Plan ss_plan = new SS_Plan();
+            SS_Plan ss_plan = new SS_Plan();
             ss_plan = ss_planovi.ReadSSPlan(id);
             if (Request.IsAjaxRequest())
             {
@@ -156,7 +144,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            SS_Pla nss_plan = new SS_Plan();
+            SS_Plan ss_plan = new SS_Plan();
             ss_plan = ss_planovi.ReadSSPlan(id);
             if (Request.IsAjaxRequest())
             {
@@ -184,5 +172,6 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Index");
         }
+
     }
 }
