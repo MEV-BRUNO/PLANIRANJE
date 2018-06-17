@@ -12,12 +12,12 @@ namespace Planiranje.Controllers
 		{
 			get
 			{
-				PlaniranjeSession session = (PlaniranjeSession)HttpContext.Current.Session["__Session__"];
-
+				PlaniranjeSession session = (PlaniranjeSession)HttpContext.Current.Session["id_pedagog"];
+				HttpContext.Current.Session.Timeout = 60;
 				if (session == null)
 				{
 					session = new PlaniranjeSession();
-					HttpContext.Current.Session["__Session__"] = session;
+					HttpContext.Current.Session["id_pedagog"] = session;
 				}
 				return session;
 			}

@@ -13,6 +13,11 @@
 	<link rel="stylesheet" href="~/assets/plugins/Font-Awesome/css/font-awesome.css" />
 	<link rel="stylesheet" href="~/assets/plugins/dataTables/dataTables.bootstrap.css" />
 	<link rel="stylesheet" href="~/Content/Custom.css" />
+	<script src="~/assets/plugins/jquery-2.0.3.min.js"></script>
+	<script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="~/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+	<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
+	<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
 </head>
 <body class="padTop53 ">
 	<div id="wrap">
@@ -40,12 +45,25 @@
 							</li>
 							<li class="divider"></li>
 							<li>
-								<a onclick="location.href='@Url.Action("Prijava", "Planiranje")'" class="pointer"><i class="icon-signout"></i> Odjava </a>
+								<a data-toggle="modal" data-target="#odjava" class="pointer"><i class="icon-signout"></i> Odjava </a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 			</nav>
+			<div class="modal fade" id="odjava" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-body">
+							<h4 class="modal-title" id="exampleModalLongTitle">Jeste li sigurni da se želite odjaviti?</h4>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+							<button onclick="location.href='@Url.Action("Prijava", "Planiranje")'" type="button" class="btn btn-danger">Odjavi</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		@Html.Partial("../Shared/Navigation")
 		<div id="content">
@@ -53,15 +71,5 @@
 		</div>
 	</div>
 	@Html.Partial("../Shared/Footer")
-	<script src="~/assets/plugins/jquery-2.0.3.min.js"></script>
-	<script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="~/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-	<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
-	<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-	<script>
-		$(document).ready(function () {
-			$('#dataTables-example').dataTable();
-		});
-	</script>
 </body>
 </html>

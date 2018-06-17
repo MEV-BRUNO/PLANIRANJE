@@ -24,7 +24,7 @@ namespace Planiranje.Controllers
 			Pedagog pedagog = baza.Pedagog.SingleOrDefault(ped => ped.Email == p.Email && ped.Lozinka == p.Lozinka);
 			if (pedagog != null)
 			{
-				PlaniranjeSession.Trenutni.PedagogId = 1;
+				PlaniranjeSession.Trenutni.PedagogId = pedagog.Id_Pedagog;
 				return RedirectToAction("Index");
 			}
 			else
@@ -39,7 +39,7 @@ namespace Planiranje.Controllers
 				ViewBag.Title = "Pocetna";
 				return View();
 			}
-			return RedirectToAction("Prijava");
+			return RedirectToAction("Prijava", "Planiranje");
 		}
 		public ActionResult ZaboravljenaLozinka()
 		{
@@ -48,7 +48,7 @@ namespace Planiranje.Controllers
 				ViewBag.Title = "Zaboravljena lozinka";
 				return View();
 			}
-			return RedirectToAction("Prijava");
+			return RedirectToAction("Prijava", "Planiranje");
 		}
 		public ActionResult Registracija()
 		{
@@ -57,7 +57,7 @@ namespace Planiranje.Controllers
 				ViewBag.Title = "Registracija";
 				return View();
 			}
-			return RedirectToAction("Prijava");
+			return RedirectToAction("Prijava", "Planiranje");
 		}
 	}
 }

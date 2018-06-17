@@ -67,6 +67,12 @@
     <Reference Include="MySql.Web, Version=6.10.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Web.6.10.7\lib\net452\MySql.Web.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.Configuration.Install" />
@@ -200,14 +206,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Godisnji_plan_DBHandle.cs" />
     <Compile Include="Models\Mjesecni_plan_DBHandle.cs" />
     <Compile Include="Models\Oblici.cs" />
     <Compile Include="Models\OS_Plan_1_akcija.cs" />
     <Compile Include="Models\OS_Plan_1_aktivnost.cs" />
+    <Compile Include="Models\OS_Plan_1_DBHandle.cs" />
     <Compile Include="Models\OS_Plan_1_podrucje.cs" />
     <Compile Include="Models\OS_Plan_2.cs" />
     <Compile Include="Models\OS_Plan_2_akcija.cs" />
     <Compile Include="Models\OS_Plan_2_aktivnost.cs" />
+    <Compile Include="Models\OS_Plan_2_DBHandle.cs" />
     <Compile Include="Models\OS_Plan_2_podrucje.cs" />
     <Compile Include="Models\Aktivnost.cs" />
     <Compile Include="Models\Aktivnost_akcija.cs" />
@@ -223,6 +232,7 @@
     <Compile Include="Models\Mjesecni_detalji.cs" />
     <Compile Include="Models\Mjesecni_plan.cs" />
     <Compile Include="Models\SS_Plan.cs" />
+    <Compile Include="Models\SS_Plan_DBHandle.cs" />
     <Compile Include="Models\SS_Plan_podrucje.cs" />
     <Compile Include="Models\Subjekti.cs" />
     <Compile Include="Models\Zadaci.cs" />
@@ -244,6 +254,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -281,8 +292,6 @@
     <Content Include="Views\Planiranje\Index.cshtml" />
     <Content Include="Views\Planiranje\ZaboravljenaLozinka.cshtml" />
     <Content Include="Views\Planiranje\Registracija.cshtml" />
-    <Content Include="Views\MjesecniPlan\Index.cshtml" />
-    <Content Include="Views\GodisnjiPlan\Index.cshtml" />
     <Content Include="Views\PodrucjaDjelovanja\Index.cshtml" />
     <Content Include="Views\Aktivnosti\Index.cshtml" />
     <Content Include="Views\Akcije\Index.cshtml" />
@@ -292,9 +301,31 @@
     <Content Include="Views\Ciljevi\Index.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\Navigation.cshtml" />
+    <Content Include="Views\MjesecniPlan\Index.cshtml" />
+    <Content Include="Views\MjesecniPlan\Table.cshtml" />
+    <Content Include="Views\MjesecniPlan\Uredi.cshtml" />
+    <Content Include="Views\MjesecniPlan\NoviPlan.cshtml" />
+    <Content Include="Views\MjesecniPlan\Obrisi.cshtml" />
     <Content Include="Views\PlanOs1\Index.cshtml" />
+    <Content Include="Views\PlanOs1\NoviPlan.cshtml" />
+    <Content Include="Views\PlanOs1\Obrisi.cshtml" />
+    <Content Include="Views\PlanOs1\Table.cshtml" />
+    <Content Include="Views\PlanOs1\Uredi.cshtml" />
     <Content Include="Views\PlanOs2\Index.cshtml" />
+    <Content Include="Views\PlanOs2\NoviPlan.cshtml" />
+    <Content Include="Views\PlanOs2\Obrisi.cshtml" />
+    <Content Include="Views\PlanOs2\Table.cshtml" />
+    <Content Include="Views\PlanOs2\Uredi.cshtml" />
     <Content Include="Views\PlanSs\Index.cshtml" />
+    <Content Include="Views\PlanSs\NoviPlan.cshtml" />
+    <Content Include="Views\PlanSs\Obrisi.cshtml" />
+    <Content Include="Views\PlanSs\Table.cshtml" />
+    <Content Include="Views\PlanSs\Uredi.cshtml" />
+    <Content Include="Views\GodisnjiPlan\Index.cshtml" />
+    <Content Include="Views\GodisnjiPlan\Table.cshtml" />
+    <Content Include="Views\GodisnjiPlan\Obrisi.cshtml" />
+    <Content Include="Views\GodisnjiPlan\NoviPlan.cshtml" />
+    <Content Include="Views\GodisnjiPlan\Uredi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

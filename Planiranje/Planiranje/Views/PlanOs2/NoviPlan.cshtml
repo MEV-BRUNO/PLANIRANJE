@@ -1,0 +1,50 @@
+﻿@model Planiranje.Models.OS_Plan_2
+
+@{
+	Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Novi OS_Plan_2 plan</h4>
+        </div>
+        @using (Ajax.BeginForm("NoviPlan", "PlanOs2", new AjaxOptions
+		{
+			HttpMethod = "Post",
+			OnSuccess = "CreateSuccess"
+		}, new { @class = "form-horizontal", role = "form" }))
+		{
+        <div class="modal-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id_plan, new { Value = 0 })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Ak_godina, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Ak_godina, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Ak_godina, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Opis, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextAreaFor(model => model.Opis, new { @class = "edit-opis" })
+                    @Html.ValidationMessageFor(model => model.Opis, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                <input type="submit" class="btn btn-primary" value="Spremi" />
+            </div>
+        </div>
+		}
+    </div>
+</div>
