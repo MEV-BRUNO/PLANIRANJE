@@ -231,6 +231,7 @@
     <Compile Include="Models\Mjesecni_detalji.cs" />
     <Compile Include="Models\Mjesecni_plan.cs" />
     <Compile Include="Models\SS_Plan.cs" />
+    <Compile Include="Models\SS_Plan_DBHandle.cs" />
     <Compile Include="Models\SS_Plan_podrucje.cs" />
     <Compile Include="Models\Subjekti.cs" />
     <Compile Include="Models\Zadaci.cs" />
@@ -290,7 +291,6 @@
     <Content Include="Views\Planiranje\Index.cshtml" />
     <Content Include="Views\Planiranje\ZaboravljenaLozinka.cshtml" />
     <Content Include="Views\Planiranje\Registracija.cshtml" />
-    <Content Include="Views\MjesecniPlan\Index.cshtml" />
     <Content Include="Views\GodisnjiPlan\Index.cshtml" />
     <Content Include="Views\PodrucjaDjelovanja\Index.cshtml" />
     <Content Include="Views\Aktivnosti\Index.cshtml" />
@@ -301,21 +301,26 @@
     <Content Include="Views\Ciljevi\Index.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\Navigation.cshtml" />
-    <Content Include="Views\PlanOs1\Index.cshtml" />
-    <Content Include="Views\PlanOs2\Index.cshtml" />
-    <Content Include="Views\PlanSs\Index.cshtml" />
+    <Content Include="Views\MjesecniPlan\Index.cshtml" />
     <Content Include="Views\MjesecniPlan\Table.cshtml" />
     <Content Include="Views\MjesecniPlan\Uredi.cshtml" />
     <Content Include="Views\MjesecniPlan\NoviPlan.cshtml" />
     <Content Include="Views\MjesecniPlan\Obrisi.cshtml" />
+    <Content Include="Views\PlanOs1\Index.cshtml" />
     <Content Include="Views\PlanOs1\NoviPlan.cshtml" />
     <Content Include="Views\PlanOs1\Obrisi.cshtml" />
     <Content Include="Views\PlanOs1\Table.cshtml" />
     <Content Include="Views\PlanOs1\Uredi.cshtml" />
+    <Content Include="Views\PlanOs2\Index.cshtml" />
     <Content Include="Views\PlanOs2\NoviPlan.cshtml" />
     <Content Include="Views\PlanOs2\Obrisi.cshtml" />
     <Content Include="Views\PlanOs2\Table.cshtml" />
     <Content Include="Views\PlanOs2\Uredi.cshtml" />
+    <Content Include="Views\PlanSs\Index.cshtml" />
+    <Content Include="Views\PlanSs\NoviPlan.cshtml" />
+    <Content Include="Views\PlanSs\Obrisi.cshtml" />
+    <Content Include="Views\PlanSs\Table.cshtml" />
+    <Content Include="Views\PlanSs\Uredi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
