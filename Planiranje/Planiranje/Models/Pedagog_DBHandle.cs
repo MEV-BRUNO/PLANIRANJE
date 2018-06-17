@@ -38,7 +38,8 @@ namespace Planiranje.Models
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@lozinka", pedagog.Lozinka);
                     command.Parameters.AddWithValue("@ime", pedagog.Ime);
-                    command.Parameters.AddWithValue("@prezime", pedagog.Prezime);                    
+                    command.Parameters.AddWithValue("@prezime", pedagog.Prezime);
+                    command.Parameters.AddWithValue("@email", pedagog.Email);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
