@@ -10,14 +10,14 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Brisanje podatka</h4>
         </div>
-        @using (Ajax.BeginForm("Delete", "OS_Plan_2", new { id = Model.ID_plan }, new AjaxOptions
+        @using (Ajax.BeginForm("Delete", "PlanOs2", new { id = Model.Id_plan }, new AjaxOptions
 		{
 			HttpMethod = "Post",
 			OnSuccess = "DeleteSuccess"
 		}, new { @class = "form-horizontal", role = "form" }))
 		{
         <div class="modal-body">
-            @Html.HiddenFor(model => model.ID_plan)
+            @Html.HiddenFor(model => model.Id_plan)
             <div class="form-group">
                 <div class="col-md-10">
                     <h5>

@@ -95,12 +95,15 @@ namespace Planiranje.Controllers
             os_plan_2.Ak_godina = gr.Ak_godina;
             os_plan_2.Naziv = gr.Naziv;
             os_plan_2.Opis = gr.Opis;
-            if (!planovi_os2.CreateOS_Plan_2(os_plan_2))
-            {
-                ModelState.Clear();
-                return PartialView("NoviPlan", gr);
-            }
-            return RedirectToAction("Index");
+            if (planovi_os2.CreateOS_Plan_2(os_plan_2))
+			{
+				TempData["alert"] = "<script>alert('Novi plan za osnovnu skolu 2 je uspjesno spremljen!');</script>";
+			}
+			else
+			{
+				TempData["alert"] = "<script>alert('Novi plan nije spremljen');</script>";
+			}
+			return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int id)
@@ -126,20 +129,19 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             if (!planovi_os2.UpdateOS_Plan_2(os_plan_2))
-            {
-                ModelState.Clear();
-                return PartialView("Uredi", os_plan_2);
-            }
-            if (Request.IsAjaxRequest())
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
-            }
-            return RedirectToAction("Index");
+			{
+				TempData["alert"] = "<script>alert('Plan nije promjenjen!');</script>";
+			}
+			else
+			{
+				TempData["alert"] = "<script>alert('Plan je uspjesno promjenjen!');</script>";
+			}
+			return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -161,15 +163,14 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             if (!planovi_os2.DeleteOS_Plan_2(os_plan_2.Id_plan))
-            {
-                ModelState.Clear();
-                return PartialView("Obrisi");
-            }
-            if (Request.IsAjaxRequest())
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
-            }
-            return RedirectToAction("Index");
+			{
+				TempData["alert"] = "<script>alert('Plan nije obrisan, dogodila se greska!');</script>";
+			}
+			else
+			{
+				TempData["alert"] = "<script>alert('Plan je uspjesno obrisan!');</script>";
+			}
+			return RedirectToAction("Index");
         }
     }
 }

@@ -4,16 +4,16 @@
     <thead>
         <tr>
             <td class="col-lg-1">
-                @Html.ActionLink("Id", "Index", "OS_Plan_2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                @Html.ActionLink("Id", "Index", "PlanOs2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
             </td>
             <td class="col-lg-3">
-                @Html.ActionLink("Naziv", "Index", "OS_Plan_2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                @Html.ActionLink("Naziv", "Index", "PlanOs2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
             </td>
             <td class="col-lg-1">
-                @Html.ActionLink("Ak. godina", "Index", "OS_Plan_2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                @Html.ActionLink("Ak. godina", "Index", "PlanOs2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
             </td>
             <td class="col-lg-6">
-                @Html.ActionLink("Opis", "Index", "OS_Plan_2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                @Html.ActionLink("Opis", "Index", "PlanOs2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
             </td>
             <td class="col-lg-2">
                 Akcija
@@ -39,8 +39,8 @@
             </td>
             <td>
                 <div class="pull-right">
-                    <a data-toggle="modal" data-url="@Url.Action("Edit","OS_Plan_2",new { id = item.Id_plan })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
-                    <a data-toggle="modal" data-url="@Url.Action("Delete","OS_Plan_2",new { id = item.Id_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
+                    <a data-toggle="modal" data-url="@Url.Action("Edit","PlanOs2",new { id = item.Id_plan })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
+                    <a data-toggle="modal" data-url="@Url.Action("Delete","PlanOs2",new { id = item.Id_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
                 </div>
             </td>
         </tr>
