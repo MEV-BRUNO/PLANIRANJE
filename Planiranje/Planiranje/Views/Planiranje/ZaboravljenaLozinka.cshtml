@@ -27,7 +27,7 @@
 					</div>
 					<div class="alert alert-info text-center" role="alert">Upišite vašu email adresu</div>
 					@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail adresa", style = "max-width:100%; margin:10px auto;" } })
-					@Html.ValidationMessageFor(model => model.Ime, "", new { @class = "text-danger" })
+					@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 					<br>
 					<div class="col-md-12 text-center">
 						<input type="submit" value="Resetiraj lozinku" class="btn btn-danger" />
