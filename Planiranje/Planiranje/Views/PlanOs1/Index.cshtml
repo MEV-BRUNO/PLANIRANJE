@@ -1,63 +1,101 @@
-﻿@{
+﻿@model PagedList.IPagedList<Planiranje.Models.OS_Plan_1>
+@using PagedList.Mvc;
+
+@{
 	Page.Title = ViewBag.Title;
 }
+
 <div class="inner">
-	<div class="row">
-		<div class="col-md-12">
-			<h3> Plan - osnovna skola 1 </h3>
-		</div>
-	</div>
-	<hr />
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">Podaci iz baze</div>
-				<div class="panel-body">
-					<p>
-						<a href="#" class="btn btn-primary btn-xs btn-grad">Novi plan</a>
-					</p>
-					<div class="table-responsive">
-						<table class="table table-bordered table-hover" id="dataTables-example">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Naziv godišnjeg plana</th>
-									<th>Šk. god.</th>
-									<th>Radni dani</th>
-									<th>God. fond</th>
-									<th>Aktivnost</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="col-md-1">1.</td>
-									<td class="col-md-6">Godišnji plan OŠ - Vladimira Nazora</td>
-									<td class="col-md-1">2017./2018.</td>
-									<td class="col-md-1">248</td>
-									<td class="col-md-1">1744</td>
-									<td class="col-md-2">
-										<a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-										<a href="#" class="btn btn-info btn-xs btn-grad">Prikaži</a>
-										<a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
-									</td>
-								</tr>
-								<tr>
-									<td>2.</td>
-									<td>Godišnji plan OŠ - Vladimira Nazora</td>
-									<td>2018/2019.</td>
-									<td>248</td>
-									<td>1744</td>
-									<td>
-										<a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-										<a href="#" class="btn btn-info btn-xs btn-grad">Prikaži</a>
-										<a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h3> Plan - osnovna skola 1 </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <div class="pull-left">
+                            <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "PlanOs1")" id="btnCreateAsset">
+                                Novi plan
+                            </button>
+                        </div>
+                        <div class="pull-right">
+                            @using (Html.BeginForm("Index", "PlanOs1", FormMethod.Get))
+							{
+                            <p>
+                                @Html.TextBox("Search", ViewBag.FilterValue as string, new { @class = "search-bar" })
+                                <input class="btn btn-primary btn-md" type="submit" value="Trazi" />
+                            </p>
+							}
+                        </div>
+                        <br>
+                    </div>
+                    @Html.Partial("Table", Model)
+                    <div id="Paginator">
+                        Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
+                        @Html.PagedListPager(Model, Page_No => Url.Action("Index",
+                        new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+                    </div>
+                    <div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
+                        <div id="assetContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    var rowDelete;
+    $(document).ready(function () {
+        $("#btnCreateAsset").click(function (e) {
+            var url = $(this).attr("data-url");
+            $.ajax({
+                url: url,
+                success: function (data) {
+                    $('#assetContainer').html(data);
+                    $('#assetModal').modal('show');
+                },
+                error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+            });
+        });
+
+        $('#dataTables-example').on("click", "#editAsset", function (event) {
+            event.preventDefault();
+            var url = $(this).attr("data-url");
+            $.get(url, function (data) {
+                $('#assetContainer').html(data);
+                $('#assetModal').modal('show');
+            });
+        });
+
+        $('#dataTables-example').on("click", "#deleteAsset", function (event) {
+            event.preventDefault();
+            var url = $(this).attr("data-url");
+            $.get(url, function (data) {
+                $('#assetContainer').html(data);
+                $('#assetModal').modal('show');
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    function CreateSuccess() {
+        $('#assetModal').modal('hide');
+        $('#assetContainer').html("");
+        location.reload(true);
+    }
+
+    function EditSuccess() {
+        $('#assetModal').modal('hide');
+        $('#assetContainer').html("");
+        location.reload(true);
+    }
+
+    function DeleteSuccess() {
+        location.reload(true);
+    }
+</script>

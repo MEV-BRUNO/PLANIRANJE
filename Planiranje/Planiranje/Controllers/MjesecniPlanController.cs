@@ -130,12 +130,11 @@ namespace Planiranje.Controllers
 			}
 			if (!mjesecni_planovi.UpdateMjesecniPlan(mjesecni_plan))
 			{
-				ModelState.Clear();
-				return PartialView("Uredi", mjesecni_plan);
+				TempData["alert"] = "<script>alert('Mjesecni plan nije promjenjen!');</script>";
 			}
-			if (Request.IsAjaxRequest())
+			else
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.OK);
+				TempData["alert"] = "<script>alert('Mjesecni plan je uspjesno promjenjen!');</script>";
 			}
 			return RedirectToAction("Index");
 		}
@@ -165,12 +164,11 @@ namespace Planiranje.Controllers
 			}
 			if (!mjesecni_planovi.DeleteMjesecniPlan(mjesecni_plan.ID_plan))
 			{
-				ModelState.Clear();
-				return PartialView("Obrisi");
+				TempData["alert"] = "<script>alert('Mjesecni plan nije obrisan, dogodila se greska!');</script>";
 			}
-			if (Request.IsAjaxRequest())
+			else
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.OK);
+				TempData["alert"] = "<script>alert('Mjesecni plan je uspjesno obrisan!');</script>";
 			}
 			return RedirectToAction("Index");
 		}

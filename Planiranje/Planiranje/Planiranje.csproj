@@ -210,10 +210,12 @@
     <Compile Include="Models\Oblici.cs" />
     <Compile Include="Models\OS_Plan_1_akcija.cs" />
     <Compile Include="Models\OS_Plan_1_aktivnost.cs" />
+    <Compile Include="Models\OS_Plan_1_DBHandle.cs" />
     <Compile Include="Models\OS_Plan_1_podrucje.cs" />
     <Compile Include="Models\OS_Plan_2.cs" />
     <Compile Include="Models\OS_Plan_2_akcija.cs" />
     <Compile Include="Models\OS_Plan_2_aktivnost.cs" />
+    <Compile Include="Models\OS_Plan_2_DBHandle.cs" />
     <Compile Include="Models\OS_Plan_2_podrucje.cs" />
     <Compile Include="Models\Aktivnost.cs" />
     <Compile Include="Models\Aktivnost_akcija.cs" />
@@ -306,6 +308,14 @@
     <Content Include="Views\MjesecniPlan\Uredi.cshtml" />
     <Content Include="Views\MjesecniPlan\NoviPlan.cshtml" />
     <Content Include="Views\MjesecniPlan\Obrisi.cshtml" />
+    <Content Include="Views\PlanOs1\NoviPlan.cshtml" />
+    <Content Include="Views\PlanOs1\Obrisi.cshtml" />
+    <Content Include="Views\PlanOs1\Table.cshtml" />
+    <Content Include="Views\PlanOs1\Uredi.cshtml" />
+    <Content Include="Views\PlanOs2\NoviPlan.cshtml" />
+    <Content Include="Views\PlanOs2\Obrisi.cshtml" />
+    <Content Include="Views\PlanOs2\Table.cshtml" />
+    <Content Include="Views\PlanOs2\Uredi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
