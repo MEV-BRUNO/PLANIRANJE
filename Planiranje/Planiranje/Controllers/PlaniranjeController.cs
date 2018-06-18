@@ -78,6 +78,11 @@ namespace Planiranje.Controllers
                 MailMessage mail = new MailMessage("noreply@planiranje.com", pedagog.Email,
                     "Podaci o promjeni lozinke", "Vaša nova lozinka je " + lozinka + ". Molimo promijenite je u što kraćem roku.");
                 SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                smtp.Port = 25;
+                smtp.EnableSsl = true;
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.UseDefaultCredentials = true;
+                //smtp.Credentials = new System.Net.NetworkCredential()
                 try
                 {
                     smtp.Send(mail);
