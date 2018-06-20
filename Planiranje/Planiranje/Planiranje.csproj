@@ -226,6 +226,7 @@
     <Compile Include="Models\Pedagog.cs" />
     <Compile Include="Models\Pedagog_DBHandle.cs" />
     <Compile Include="Models\Podrucje_rada.cs" />
+    <Compile Include="Models\Podrucje_rada_DBHandle.cs" />
     <Compile Include="Models\Skola.cs" />
     <Compile Include="Models\Ciljevi.cs" />
     <Compile Include="Models\Dnevnik_detalji.cs" />
