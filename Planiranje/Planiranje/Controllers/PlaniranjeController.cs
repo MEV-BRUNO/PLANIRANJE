@@ -110,5 +110,27 @@ namespace Planiranje.Controllers
 			}
 			return RedirectToAction("Prijava", "Planiranje");
 		}
-	}
+
+        [HttpPost]
+        public ActionResult Registracija(Pedagog p)
+        {
+            Pedagog ped = baza.Pedagog.SingleOrDefault(pedagog => pedagog.Email == p.Email);
+            if (ped != null)
+            {
+                return RedirectToAction("Registracija");
+            }
+            p.Titula = "student";
+            p.Id_skola = 1;
+            p.Licenca = new DateTime(2020, 6, 14, 14, 55, 10);
+            p.Aktivan = '1';
+
+            if (pedagog_db.CreatePedagog(p))
+            {                               
+                //baza.Pedagog.Add(p);
+                //PlaniranjeSession.Trenutni.PedagogId = baza.Pedagog.SingleOrDefault(pedagog => pedagog.Email == p.Email).Id_Pedagog;
+                return RedirectToAction("Prijava");
+            }
+            return RedirectToAction("Registracija");
+        }
+    }
 }
