@@ -328,6 +328,10 @@
     <Content Include="Views\GodisnjiPlan\Obrisi.cshtml" />
     <Content Include="Views\GodisnjiPlan\NoviPlan.cshtml" />
     <Content Include="Views\GodisnjiPlan\Uredi.cshtml" />
+    <Content Include="Views\PodrucjaDjelovanja\NoviPlan.cshtml" />
+    <Content Include="Views\PodrucjaDjelovanja\Obrisi.cshtml" />
+    <Content Include="Views\PodrucjaDjelovanja\Table.cshtml" />
+    <Content Include="Views\PodrucjaDjelovanja\Uredi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
