@@ -333,6 +333,10 @@
     <Content Include="Views\PodrucjaDjelovanja\Obrisi.cshtml" />
     <Content Include="Views\PodrucjaDjelovanja\Table.cshtml" />
     <Content Include="Views\PodrucjaDjelovanja\Uredi.cshtml" />
+    <Content Include="Views\ObliciMetode\NoviPlan.cshtml" />
+    <Content Include="Views\ObliciMetode\Obrisi.cshtml" />
+    <Content Include="Views\ObliciMetode\Table.cshtml" />
+    <Content Include="Views\ObliciMetode\Uredi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

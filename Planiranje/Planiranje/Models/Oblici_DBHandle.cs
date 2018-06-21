@@ -105,7 +105,7 @@ namespace Planiranje.Models
                         {
                             oblik = new Oblici()
                             {
-                                Id_oblici = Convert.ToInt32(sdr["id_plan"]),                               
+                                Id_oblici = Convert.ToInt32(sdr["id_oblici"]),                               
                                 Naziv = sdr["naziv"].ToString()                                
                             };
                         }
@@ -155,7 +155,7 @@ namespace Planiranje.Models
                     command.Connection = connection;
                     command.CommandText = "UPDATE oblici " +
                         "SET " +
-                        "naziv = @naziv, " +
+                        "naziv = @naziv " +
                         "WHERE id_oblici = @id_oblici";                        
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@id_oblici", oblik.Id_oblici); 
