@@ -12,5 +12,10 @@ namespace Planiranje.Models
         public int ID_subjekt { get; set; }
         [Required]
         public string Naziv { get; set; }
+
+        internal bool CreateSubjekti(Subjekti subjekti)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
