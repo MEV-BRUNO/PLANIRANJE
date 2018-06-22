@@ -206,6 +206,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Aktivnost_akcija_DBHandle.cs" />
     <Compile Include="Models\Godisnji_plan_DBHandle.cs" />
     <Compile Include="Models\Mjesecni_plan_DBHandle.cs" />
     <Compile Include="Models\Oblici.cs" />
@@ -326,6 +327,10 @@
     <Content Include="Views\GodisnjiPlan\Obrisi.cshtml" />
     <Content Include="Views\GodisnjiPlan\NoviPlan.cshtml" />
     <Content Include="Views\GodisnjiPlan\Uredi.cshtml" />
+    <Content Include="Views\Akcije\NoviPlan.cshtml" />
+    <Content Include="Views\Akcije\Obrisi.cshtml" />
+    <Content Include="Views\Akcije\Table.cshtml" />
+    <Content Include="Views\Akcije\Uredi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
