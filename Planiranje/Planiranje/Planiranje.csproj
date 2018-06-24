@@ -236,7 +236,7 @@
     <Compile Include="Models\SS_Plan_DBHandle.cs" />
     <Compile Include="Models\SS_Plan_podrucje.cs" />
     <Compile Include="Models\Subjekti.cs" />
-    <Compile Include="Models\Subjekti_DBHandle.cs" />
+    <Compile Include="Models\Subjekt_DBHandle.cs" />
     <Compile Include="Models\Zadaci.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

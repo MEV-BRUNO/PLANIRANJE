@@ -7,9 +7,10 @@ using System.Web;
 using MySql.Data.MySqlClient;
 using Planiranje.Controllers;
 using PagedList;
+
 namespace Planiranje.Models
 {
-    public class Subjekti_DBHandle
+    public class Subjekt_DBHandle
     {
         private MySqlConnection connection;
 
@@ -39,7 +40,7 @@ namespace Planiranje.Models
                         {
                             Subjekti subj = new Subjekti()
                             {
-                                ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
+                                ID_subjekt = Convert.ToInt32(sdr["id_aktivnost"]),
                                 Naziv = sdr["naziv"].ToString()
                             };
                             subjekti.Add(subj);
@@ -106,7 +107,7 @@ namespace Planiranje.Models
                         {
                             subjekti = new Subjekti()
                             {
-                                ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
+                                ID_subjekt = Convert.ToInt32(sdr["id_aktivnost"]),
                                 Naziv = sdr["naziv"].ToString()
                             };
                         }
@@ -129,7 +130,7 @@ namespace Planiranje.Models
                         "(naziv) " +
                         " VALUES (@naziv)";
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@naziv",subjekti.Naziv);
+                    command.Parameters.AddWithValue("@naziv", subjekti.Naziv);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -159,7 +160,7 @@ namespace Planiranje.Models
                         "naziv = @naziv " +
                         "WHERE id_subjekt = @id_subjekt";
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@id_subjekt", subjekti.ID_subjekt);
+                    command.Parameters.AddWithValue("@id_aktivnost", subjekti.ID_subjekt);
                     command.Parameters.AddWithValue("@naziv", subjekti.Naziv);
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -187,7 +188,7 @@ namespace Planiranje.Models
                     command.Connection = connection;
                     connection.Open();
                     command.CommandText = "DELETE FROM subjekti " +
-                        "WHERE id_subjekt = @id_aktivnost";
+                        "WHERE id_subjekt = @id_subjekt";
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@id_subjekt", id);
                     command.ExecuteNonQuery();

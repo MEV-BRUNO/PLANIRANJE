@@ -13,24 +13,6 @@ namespace Planiranje.Models
         [Required]
         public string Naziv { get; set; }
 
-        internal bool CreateSubjekti(Subjekti subjekti)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal Subjekti ReadSubjekti(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal bool UpdateSubjekti(Subjekti subjekti)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal bool DeleteSubjekti(int iD_subjekt)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

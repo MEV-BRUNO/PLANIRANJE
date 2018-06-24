@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
+using MySql.Data.MySqlClient;
+using Planiranje.Controllers;
 using PagedList;
+using System.Web.Mvc;
 using Planiranje.Models;
 
 namespace Planiranje.Controllers
 {
     public class SubjektiController : Controller
     {
-        private Subjekti_DBHandle subjekti = new Subjekti_DBHandle();
+        private Subjekt_DBHandle subjekti = new Subjekt_DBHandle();
         int Page_No_Master = 1;
         // GET: Subjekti
         public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
@@ -112,7 +114,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Subjekti subjekti= new Subjekti();
+            Subjekti subjekti = new Subjekti();
             subjekti = subjekti.ReadSubjekti(id);
             if (Request.IsAjaxRequest())
             {
