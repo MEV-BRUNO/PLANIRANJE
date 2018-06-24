@@ -30,7 +30,7 @@ namespace Planiranje.Models
 				command.CommandText = "SELECT id_podrucje, naziv " +
 					"FROM podrucje_rada " +					
 					"ORDER BY id_podrucje ASC";
-				//command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+				
 				connection.Open();
 				using (MySqlDataReader sdr = command.ExecuteReader())
 				{
@@ -63,7 +63,7 @@ namespace Planiranje.Models
 					"FROM podrucje_rada " +					
 					"WHERE naziv like '%" + search_string + "%' " +					
 					"ORDER BY id_podrucje ASC";
-				command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+				
 				connection.Open();
 				using (MySqlDataReader sdr = command.ExecuteReader())
 				{
