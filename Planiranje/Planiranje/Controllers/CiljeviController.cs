@@ -133,7 +133,7 @@ namespace Planiranje.Controllers
             {
                 TempData["alert"] = "<script>alert('Cilj je uspjesno promijenjen!');</script>";
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Ciljevi");
         }
 
         public ActionResult Delete(int id)
