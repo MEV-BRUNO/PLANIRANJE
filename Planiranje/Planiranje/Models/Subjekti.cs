@@ -17,5 +17,20 @@ namespace Planiranje.Models
         {
             throw new NotImplementedException();
         }
+
+        internal Subjekti ReadSubjekti(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal bool UpdateSubjekti(Subjekti subjekti)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal bool DeleteSubjekti(int iD_subjekt)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

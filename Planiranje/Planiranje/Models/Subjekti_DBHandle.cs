@@ -146,7 +146,7 @@ namespace Planiranje.Models
             return true;
         }
 
-        public bool UpdateSubjekti(Subjekti asubjekti)
+        public bool UpdateSubjekti(Subjekti subjekti)
         {
             try
             {
@@ -159,7 +159,7 @@ namespace Planiranje.Models
                         "naziv = @naziv " +
                         "WHERE id_subjekt = @id_subjekt";
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@id_subjekt",subjekti.ID_subjekt);
+                    command.Parameters.AddWithValue("@id_subjekt", subjekti.ID_subjekt);
                     command.Parameters.AddWithValue("@naziv", subjekti.Naziv);
                     connection.Open();
                     command.ExecuteNonQuery();
