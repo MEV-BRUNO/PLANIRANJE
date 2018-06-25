@@ -342,7 +342,7 @@
     <Content Include="Views\Zadaci\Obrisi.cshtml" />
     <Content Include="Views\Zadaci\Table.cshtml" />
     <Content Include="Views\Zadaci\Uredi.cshtml" />
-    <Content Include="Views\Aktivnosti\NoviPlan.cshtml" />
+    <Content Include="Views\Aktivnosti\NovaAktivnost.cshtml" />
     <Content Include="Views\Aktivnosti\Obrisi.cshtml" />
     <Content Include="Views\Aktivnosti\Table.cshtml" />
     <Content Include="Views\Aktivnosti\Uredi.cshtml" />

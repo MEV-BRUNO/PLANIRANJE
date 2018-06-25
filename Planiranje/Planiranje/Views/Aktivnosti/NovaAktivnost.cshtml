@@ -10,7 +10,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Nova aktivnost</h4>
         </div>
-        @using (Ajax.BeginForm("NoviPlan", "Aktivnosti", new AjaxOptions
+        @using (Ajax.BeginForm("NovaAktivnost", "Aktivnosti", new AjaxOptions
         {
             HttpMethod = "Post",
             OnSuccess = "CreateSuccess"
@@ -18,7 +18,7 @@
         {
             <div class="modal-body">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.Id_akitvnost, new { Value = 0 })
+                @Html.HiddenFor(model => model.Id_aktivnost, new { Value = 0 })
                 <div class="form-group">
                     @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-10">

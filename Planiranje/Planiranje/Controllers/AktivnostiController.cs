@@ -70,7 +70,7 @@ namespace Planiranje.Controllers
             }
         }
 
-        public ActionResult NoviPlan()
+        public ActionResult NovaAktivnost()
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
@@ -79,13 +79,13 @@ namespace Planiranje.Controllers
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
-                return View("NoviPlan");
+                return View("NovaAktivnost");
             }
-            return View("NoviPlan");
+            return View("NovaAktivnost");
         }
 
         [HttpPost]
-        public ActionResult NoviPlan(Aktivnost aktivnost)
+        public ActionResult NovaAktivnost(Aktivnost aktivnost)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
