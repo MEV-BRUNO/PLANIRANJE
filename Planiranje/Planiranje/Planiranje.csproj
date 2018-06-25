@@ -207,9 +207,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Aktivnost_akcija_DBHandle.cs" />
+    <Compile Include="Models\Aktivnost_DBHandle.cs" />
+    <Compile Include="Models\Ciljevi_DBHandle.cs" />
     <Compile Include="Models\Godisnji_plan_DBHandle.cs" />
     <Compile Include="Models\Mjesecni_plan_DBHandle.cs" />
     <Compile Include="Models\Oblici.cs" />
+    <Compile Include="Models\Oblici_DBHandle.cs" />
     <Compile Include="Models\OS_Plan_1_akcija.cs" />
     <Compile Include="Models\OS_Plan_1_aktivnost.cs" />
     <Compile Include="Models\OS_Plan_1_DBHandle.cs" />
@@ -225,7 +228,9 @@
     <Compile Include="Models\Godisnji_plan.cs" />
     <Compile Include="Models\OS_Plan_1.cs" />
     <Compile Include="Models\Pedagog.cs" />
+    <Compile Include="Models\Pedagog_DBHandle.cs" />
     <Compile Include="Models\Podrucje_rada.cs" />
+    <Compile Include="Models\Podrucje_rada_DBHandle.cs" />
     <Compile Include="Models\Skola.cs" />
     <Compile Include="Models\Ciljevi.cs" />
     <Compile Include="Models\Dnevnik_detalji.cs" />
@@ -236,6 +241,7 @@
     <Compile Include="Models\SS_Plan_DBHandle.cs" />
     <Compile Include="Models\SS_Plan_podrucje.cs" />
     <Compile Include="Models\Subjekti.cs" />
+    <Compile Include="Models\Subjekt_DBHandle.cs" />
     <Compile Include="Models\Zadaci.cs" />
     <Compile Include="Models\Zadaci_DBHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -336,6 +342,26 @@
     <Content Include="Views\Zadaci\Obrisi.cshtml" />
     <Content Include="Views\Zadaci\Table.cshtml" />
     <Content Include="Views\Zadaci\Uredi.cshtml" />
+    <Content Include="Views\Aktivnosti\NoviPlan.cshtml" />
+    <Content Include="Views\Aktivnosti\Obrisi.cshtml" />
+    <Content Include="Views\Aktivnosti\Table.cshtml" />
+    <Content Include="Views\Aktivnosti\Uredi.cshtml" />
+    <Content Include="Views\Subjekti\NoviSubjekt.cshtml" />
+    <Content Include="Views\Subjekti\Uredi.cshtml" />
+    <Content Include="Views\Subjekti\Obrisi.cshtml" />
+    <Content Include="Views\Subjekti\Table.cshtml" />
+    <Content Include="Views\PodrucjaDjelovanja\NoviPlan.cshtml" />
+    <Content Include="Views\PodrucjaDjelovanja\Obrisi.cshtml" />
+    <Content Include="Views\PodrucjaDjelovanja\Table.cshtml" />
+    <Content Include="Views\PodrucjaDjelovanja\Uredi.cshtml" />
+    <Content Include="Views\ObliciMetode\NoviPlan.cshtml" />
+    <Content Include="Views\ObliciMetode\Obrisi.cshtml" />
+    <Content Include="Views\ObliciMetode\Table.cshtml" />
+    <Content Include="Views\ObliciMetode\Uredi.cshtml" />
+    <Content Include="Views\Ciljevi\NoviPlan.cshtml" />
+    <Content Include="Views\Ciljevi\Obrisi.cshtml" />
+    <Content Include="Views\Ciljevi\Table.cshtml" />
+    <Content Include="Views\Ciljevi\Uredi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
