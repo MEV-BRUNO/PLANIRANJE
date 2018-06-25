@@ -14,7 +14,7 @@ namespace Planiranje.Controllers
 {
     public class SubjektiController : Controller
     {
-        private Subjekt_DBHandle subjekti = new Subjekt_DBHandle();
+        private Subjekt_DBHandle _subjekti = new Subjekt_DBHandle();
         int Page_No_Master = 1;
         // GET: Subjekti
         public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
@@ -51,17 +51,17 @@ namespace Planiranje.Controllers
                 if (Request.IsAjaxRequest())
                 {
                     int noP = (int)Page_No_Master;
-                    var Popis2 = subjekti.ReadSubjekti().ToPagedList(No_Of_Page, Size_Of_Page);
+                    var Popis2 = _subjekti.ReadSubjekti().ToPagedList(No_Of_Page, Size_Of_Page);
                     return PartialView("_GradView", Popis2);
                 }
                 Page_No_Master = No_Of_Page;
-                var Popis = subjekti.ReadSubjekti().ToPagedList(No_Of_Page, Size_Of_Page);
+                var Popis = _subjekti.ReadSubjekti().ToPagedList(No_Of_Page, Size_Of_Page);
                 return View(Popis);
             }
             else
             {
                 Page_No_Master = No_Of_Page;
-                var Popis = subjekti.ReadSubjekti(Search).ToPagedList(No_Of_Page, Size_Of_Page);
+                var Popis = _subjekti.ReadSubjekti(Search).ToPagedList(No_Of_Page, Size_Of_Page);
                 if (Request.IsAjaxRequest())
                 {
                     return PartialView("_GradView", Popis);
@@ -71,7 +71,7 @@ namespace Planiranje.Controllers
             }
         }
 
-        public ActionResult NoviPlan()
+        public ActionResult NoviSubjekt()
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
@@ -80,13 +80,13 @@ namespace Planiranje.Controllers
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
-                return View("NoviPlan");
+                return View("NoviSubjekt");
             }
-            return View("NoviPlan");
+            return View("NoviSubjekt");
         }
 
         [HttpPost]
-        public ActionResult NoviPlan(Subjekti subjekti)
+        public ActionResult NoviSubjekt(Subjekti subjekti)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -97,7 +97,7 @@ namespace Planiranje.Controllers
             //mjesecni_plan.Ak_godina = _mjesecni_plan.Ak_godina;
             //mjesecni_plan.Naziv = _mjesecni_plan.Naziv;
             //mjesecni_plan.Opis = _mjesecni_plan.Opis;
-            if (subjekti.CreateSubjekti(subjekti))
+            if (_subjekti.CreateSubjekti(subjekti))
             {
                 TempData["alert"] = "<script>alert('Novi subjekt je uspjesno spremljen!');</script>";
             }
@@ -115,7 +115,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             Subjekti subjekti = new Subjekti();
-            subjekti = subjekti.ReadSubjekti(id);
+            subjekti = _subjekti.ReadSubjekti(id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
@@ -131,7 +131,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!subjekti.UpdateSubjekti(subjekti))
+            if (!_subjekti.UpdateSubjekti(subjekti))
             {
                 TempData["alert"] = "<script>alert('Subjekt nije promjenjen!');</script>";
             }
@@ -149,7 +149,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             Subjekti subjekti = new Subjekti();
-            subjekti = subjekti.ReadSubjekti(id);
+            subjekti = _subjekti.ReadSubjekti(id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
@@ -165,7 +165,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!subjekti.DeleteSubjekti(subjekti.ID_subjekt))
+            if (!_subjekti.DeleteSubjekti(subjekti.ID_subjekt))
             {
                 TempData["alert"] = "<script>alert('Subjekt nije obrisan, dogodila se greska!');</script>";
             }

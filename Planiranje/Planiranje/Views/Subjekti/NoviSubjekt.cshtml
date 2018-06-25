@@ -1,4 +1,4 @@
-﻿model Planiranje.Models.Subjekti
+﻿@model Planiranje.Models.Subjekti
 
 @{
     Layout = null;
@@ -10,7 +10,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Novi subjekt</h4>
         </div>
-        @using (Ajax.BeginForm("NoviPlan", "Subjekti", new AjaxOptions
+        @using (Ajax.BeginForm("NoviSubjekt", "Subjekti", new AjaxOptions
         {
             HttpMethod = "Post",
             OnSuccess = "CreateSuccess"

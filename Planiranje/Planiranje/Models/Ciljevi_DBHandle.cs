@@ -10,7 +10,7 @@ using PagedList;
 
 namespace Planiranje.Models
 {
-    public class Subjekt_DBHandle
+    public class Ciljevi_DBHandle
     {
         private MySqlConnection connection;
 
@@ -20,16 +20,16 @@ namespace Planiranje.Models
             connection = new MySqlConnection(connection_string);
         }
 
-        public List<Subjekti> ReadSubjekti()
+        public List<Ciljevi> ReadCiljevi()
         {
-            List<Subjekti> subjekti = new List<Subjekti>();
+            List<Ciljevi> ciljevi = new List<Ciljevi>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_subjekt, naziv " +
-                    "FROM subjekti " +
-                    "ORDER BY id_subjekt ASC";
+                command.CommandText = "SELECT id_cilj, naziv " +
+                    "FROM ciljevi " +
+                    "ORDER BY id_cilj ASC";
                 //command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
@@ -38,32 +38,31 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            Subjekti subj = new Subjekti()
+                            Ciljevi cilj = new Ciljevi()
                             {
-                                ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
+                                ID_cilj = Convert.ToInt32(sdr["id_cilj"]),
                                 Naziv = sdr["naziv"].ToString()
                             };
-                            subjekti.Add(subj);
+                            ciljevi.Add(cilj);
                         }
                     }
                 }
                 connection.Close();
             }
-            return subjekti;
+            return ciljevi;
         }
 
-        public List<Subjekti> ReadSubjekti(string search_string)
+        public List<Ciljevi> ReadCiljevi(string search_string)
         {
-            List<Subjekti> subjekti = new List<Subjekti>();
+            List<Ciljevi> ciljevi = new List<Ciljevi>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_subjekt, naziv " +
-                    "FROM subjekti " +
+                command.CommandText = "SELECT id_cilj, naziv " +
+                    "FROM ciljevi " +
                     "WHERE naziv like '%" + search_string + "%' " +
-                    "ORDER BY id_subjekt ASC";
-                command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+                    "ORDER BY id_cilj ASC";                
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {
@@ -71,33 +70,32 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            Subjekti subj = new Subjekti()
+                            Ciljevi cilj = new Ciljevi()
                             {
-                                ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
+                                ID_cilj = Convert.ToInt32(sdr["id_cilj"]),
                                 Naziv = sdr["naziv"].ToString()
                             };
-                            subjekti.Add(subj);
+                            ciljevi.Add(cilj);
                         }
                     }
                 }
                 connection.Close();
             }
-            return subjekti;
+            return ciljevi;
         }
 
-        public Subjekti ReadSubjekti(int _id)
+        public Ciljevi ReadCiljevi(int _id)
         {
-            Subjekti subjekti = new Subjekti();
+            Ciljevi ciljevi = new Ciljevi();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_subjekt, naziv " +
-                    "FROM subjekti " +
-                    "WHERE id_subjekt = @id ";
+                command.CommandText = "SELECT id_cilj, naziv " +
+                    "FROM ciljevi " +
+                    "WHERE id_cilj = @id ";
                 command.CommandType = CommandType.Text;
-                command.Parameters.AddWithValue("@id", _id);
-                //command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+                command.Parameters.AddWithValue("@id", _id);                
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {
@@ -105,9 +103,9 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            subjekti = new Subjekti()
+                            ciljevi = new Ciljevi()
                             {
-                                ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
+                                ID_cilj = Convert.ToInt32(sdr["id_cilj"]),
                                 Naziv = sdr["naziv"].ToString()
                             };
                         }
@@ -115,39 +113,10 @@ namespace Planiranje.Models
                 }
                 connection.Close();
             }
-            return subjekti;
+            return ciljevi;
         }
 
-		public bool CreateSubjekti(Subjekti subjekt)
-		{
-			try
-			{
-				this.Connect();
-				using (MySqlCommand command = new MySqlCommand())
-				{
-					command.Connection = connection;
-					command.CommandText = "INSERT INTO subjekti " +
-						"(naziv) " +
-						" VALUES (@naziv)";
-					command.CommandType = CommandType.Text;
-					command.Parameters.AddWithValue("@naziv", subjekt.Naziv);
-					connection.Open();
-					command.ExecuteNonQuery();
-				}
-			}
-			catch
-			{
-				connection.Close();
-				return false;
-			}
-			finally
-			{
-				connection.Close();
-			}
-			return true;
-        }
-
-        public bool UpdateSubjekti(Subjekti subjekti)
+        public bool CreateCiljevi(Ciljevi cilj)
         {
             try
             {
@@ -155,13 +124,11 @@ namespace Planiranje.Models
                 using (MySqlCommand command = new MySqlCommand())
                 {
                     command.Connection = connection;
-                    command.CommandText = "UPDATE subjekti " +
-                        "SET " +
-                        "naziv = @naziv " +
-                        "WHERE id_subjekt = @id_subjekt";
+                    command.CommandText = "INSERT INTO ciljevi " +
+                        "(naziv) " +
+                        " VALUES (@naziv)";
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@id_subjekt", subjekti.ID_subjekt);
-                    command.Parameters.AddWithValue("@naziv", subjekti.Naziv);
+                    command.Parameters.AddWithValue("@naziv", cilj.Naziv);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -178,7 +145,38 @@ namespace Planiranje.Models
             return true;
         }
 
-        public bool DeleteSubjekti(int id)
+        public bool UpdateCiljevi(Ciljevi cilj)
+        {
+            try
+            {
+                this.Connect();
+                using (MySqlCommand command = new MySqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "UPDATE ciljevi " +
+                        "SET " +
+                        "naziv = @naziv " +
+                        "WHERE id_cilj = @id_cilj";
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.AddWithValue("@id_cilj", cilj.ID_cilj);
+                    command.Parameters.AddWithValue("@naziv", cilj.Naziv);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                connection.Close();
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return true;
+        }
+
+        public bool DeleteCiljevi(int id)
         {
             try
             {
@@ -187,10 +185,10 @@ namespace Planiranje.Models
                 {
                     command.Connection = connection;
                     connection.Open();
-                    command.CommandText = "DELETE FROM subjekti " +
-                        "WHERE id_subjekt = @id_subjekt";
+                    command.CommandText = "DELETE FROM ciljevi " +
+                        "WHERE id_cilj = @id_cilj";
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@id_subjekt", id);
+                    command.Parameters.AddWithValue("@id_cilj", id);
                     command.ExecuteNonQuery();
                 }
             }

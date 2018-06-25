@@ -10,7 +10,7 @@ using PagedList;
 
 namespace Planiranje.Models
 {
-    public class Subjekt_DBHandle
+    public class Oblici_DBHandle
     {
         private MySqlConnection connection;
 
@@ -20,17 +20,17 @@ namespace Planiranje.Models
             connection = new MySqlConnection(connection_string);
         }
 
-        public List<Subjekti> ReadSubjekti()
+        public List<Oblici> ReadOblici()
         {
-            List<Subjekti> subjekti = new List<Subjekti>();
+            List<Oblici> oblici = new List<Oblici>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_subjekt, naziv " +
-                    "FROM subjekti " +
-                    "ORDER BY id_subjekt ASC";
-                //command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+                command.CommandText = "SELECT id_oblici, naziv " +
+                    "FROM oblici " +                    
+                    "ORDER BY id_oblici ASC";
+                
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {
@@ -38,32 +38,31 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            Subjekti subj = new Subjekti()
+                            Oblici oblik = new Oblici()
                             {
-                                ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
-                                Naziv = sdr["naziv"].ToString()
+                                Id_oblici = Convert.ToInt32(sdr["id_oblici"]),
+                                Naziv = sdr["naziv"].ToString()                              
                             };
-                            subjekti.Add(subj);
+                            oblici.Add(oblik);
                         }
                     }
                 }
                 connection.Close();
             }
-            return subjekti;
+            return oblici;
         }
 
-        public List<Subjekti> ReadSubjekti(string search_string)
+        public List<Oblici> ReadOblici(string search_string)
         {
-            List<Subjekti> subjekti = new List<Subjekti>();
+            List<Oblici> oblici = new List<Oblici>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_subjekt, naziv " +
-                    "FROM subjekti " +
-                    "WHERE naziv like '%" + search_string + "%' " +
-                    "ORDER BY id_subjekt ASC";
-                command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+                command.CommandText = "SELECT id_oblici, naziv " +
+                    "FROM oblici " +                    
+                    "WHERE naziv like '%" + search_string + "%' " +                    
+                    "ORDER BY id_oblici ASC";                
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {
@@ -71,33 +70,32 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            Subjekti subj = new Subjekti()
+                            Oblici oblik = new Oblici()
                             {
-                                ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
-                                Naziv = sdr["naziv"].ToString()
+                                Id_oblici = Convert.ToInt32(sdr["id_oblici"]),
+                                Naziv = sdr["naziv"].ToString()                               
                             };
-                            subjekti.Add(subj);
+                            oblici.Add(oblik);
                         }
                     }
                 }
                 connection.Close();
             }
-            return subjekti;
+            return oblici;
         }
 
-        public Subjekti ReadSubjekti(int _id)
+        public Oblici ReadOblici(int _id)
         {
-            Subjekti subjekti = new Subjekti();
+            Oblici oblik = new Oblici();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_subjekt, naziv " +
-                    "FROM subjekti " +
-                    "WHERE id_subjekt = @id ";
+                command.CommandText = "SELECT id_oblici, naziv " +
+                    "FROM oblici " +
+                    "WHERE id_oblici = @id";                    
                 command.CommandType = CommandType.Text;
-                command.Parameters.AddWithValue("@id", _id);
-                //command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+                command.Parameters.AddWithValue("@id", _id);                
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {
@@ -105,49 +103,20 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            subjekti = new Subjekti()
+                            oblik = new Oblici()
                             {
-                                ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
-                                Naziv = sdr["naziv"].ToString()
+                                Id_oblici = Convert.ToInt32(sdr["id_oblici"]),                               
+                                Naziv = sdr["naziv"].ToString()                                
                             };
                         }
                     }
                 }
                 connection.Close();
             }
-            return subjekti;
+            return oblik;
         }
 
-		public bool CreateSubjekti(Subjekti subjekt)
-		{
-			try
-			{
-				this.Connect();
-				using (MySqlCommand command = new MySqlCommand())
-				{
-					command.Connection = connection;
-					command.CommandText = "INSERT INTO subjekti " +
-						"(naziv) " +
-						" VALUES (@naziv)";
-					command.CommandType = CommandType.Text;
-					command.Parameters.AddWithValue("@naziv", subjekt.Naziv);
-					connection.Open();
-					command.ExecuteNonQuery();
-				}
-			}
-			catch
-			{
-				connection.Close();
-				return false;
-			}
-			finally
-			{
-				connection.Close();
-			}
-			return true;
-        }
-
-        public bool UpdateSubjekti(Subjekti subjekti)
+        public bool CreateOblici(Oblici oblik)
         {
             try
             {
@@ -155,13 +124,11 @@ namespace Planiranje.Models
                 using (MySqlCommand command = new MySqlCommand())
                 {
                     command.Connection = connection;
-                    command.CommandText = "UPDATE subjekti " +
-                        "SET " +
-                        "naziv = @naziv " +
-                        "WHERE id_subjekt = @id_subjekt";
-                    command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@id_subjekt", subjekti.ID_subjekt);
-                    command.Parameters.AddWithValue("@naziv", subjekti.Naziv);
+                    command.CommandText = "INSERT INTO oblici " +
+                        "(naziv) " +
+                        " VALUES (@naziv)";
+                    command.CommandType = CommandType.Text;                    
+                    command.Parameters.AddWithValue("@naziv", oblik.Naziv);                    
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -178,7 +145,38 @@ namespace Planiranje.Models
             return true;
         }
 
-        public bool DeleteSubjekti(int id)
+        public bool UpdateOblici(Oblici oblik)
+        {
+            try
+            {
+                this.Connect();
+                using (MySqlCommand command = new MySqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "UPDATE oblici " +
+                        "SET " +
+                        "naziv = @naziv " +
+                        "WHERE id_oblici = @id_oblici";                        
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.AddWithValue("@id_oblici", oblik.Id_oblici); 
+                    command.Parameters.AddWithValue("@naziv", oblik.Naziv);                    
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                connection.Close();
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return true;
+        }
+
+        public bool DeleteOblici(int id)
         {
             try
             {
@@ -187,10 +185,10 @@ namespace Planiranje.Models
                 {
                     command.Connection = connection;
                     connection.Open();
-                    command.CommandText = "DELETE FROM subjekti " +
-                        "WHERE id_subjekt = @id_subjekt";
+                    command.CommandText = "DELETE FROM oblici " +
+                        "WHERE id_oblici = @id_oblici";                        
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@id_subjekt", id);
+                    command.Parameters.AddWithValue("@id_oblici", id);                    
                     command.ExecuteNonQuery();
                 }
             }
