@@ -237,6 +237,7 @@
     <Compile Include="Models\SS_Plan_podrucje.cs" />
     <Compile Include="Models\Subjekti.cs" />
     <Compile Include="Models\Zadaci.cs" />
+    <Compile Include="Models\Zadaci_DBHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +332,10 @@
     <Content Include="Views\Akcije\Obrisi.cshtml" />
     <Content Include="Views\Akcije\Table.cshtml" />
     <Content Include="Views\Akcije\Uredi.cshtml" />
+    <Content Include="Views\Zadaci\NoviPlan.cshtml" />
+    <Content Include="Views\Zadaci\Obrisi.cshtml" />
+    <Content Include="Views\Zadaci\Table.cshtml" />
+    <Content Include="Views\Zadaci\Uredi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
