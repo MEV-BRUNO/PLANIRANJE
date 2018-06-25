@@ -1,5 +1,4 @@
-﻿
-@model PagedList.IPagedList<Planiranje.Models.Zadaci>
+﻿@model PagedList.IPagedList<Planiranje.Models.Zadaci>
 @using PagedList.Mvc;
 
 @{
@@ -19,12 +18,12 @@
                 <div class="panel-body">
                     <div>
                         <div class="pull-left">
-                            <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "PlanZadataka")" id="btnCreateAsset">
-                                Novi plan
+                            <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviZadatak", "Zadaci")" id="btnCreateAsset">
+                                Novi zadatak
                             </button>
                         </div>
                         <div class="pull-right">
-                            @using (Html.BeginForm("Index", "PlanZadataka", FormMethod.Get))
+                            @using (Html.BeginForm("Index", "Zadaci", FormMethod.Get))
                             {
                                 <p>
                                     @Html.TextBox("Search", ViewBag.FilterValue as string, new { @class = "search-bar" })

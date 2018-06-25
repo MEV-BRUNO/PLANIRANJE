@@ -12,7 +12,7 @@
             </td>
 
             <td class="col-lg-9">
-                @Html.ActionLink("Naziv", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                @Html.ActionLink("Naziv", "Index", "Zadaci", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
 
             </td>
 
@@ -29,15 +29,15 @@
 
         @foreach (var item in Model)
         {
-            < tr >
-            < td >
+            <tr>
+            <td>
             @Html.DisplayFor(modelItem => item.ID_zadatak)
-            </ td >
-            < td >
+            </td>
+            <td>
             @Html.DisplayFor(modelItem => item.Naziv)
-            </ td >
-            < td >
-            < div class="pull-right">
+            </td>
+            <td>
+            <div class="pull-right">
             <a data-toggle="modal" data-url="@Url.Action("Edit","Zadaci",new { id = item.ID_zadatak})" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
             <a data-toggle="modal" data-url="@Url.Action("Delete","Zadaci",new { id = item.ID_zadatak})" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
             </div>

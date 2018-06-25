@@ -16,7 +16,7 @@
             OnSuccess = "EditSuccess"
         }, new { @class = "form-horizontal", role = "form" }))
         {
-            < div class="modal-body">
+            <div class="modal-body">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.ID_zadatak)
             <div class="form-group">

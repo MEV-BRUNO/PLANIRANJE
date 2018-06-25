@@ -3,22 +3,20 @@
 @{
     Layout = null;
 }
-
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Brisanje podatka</h4>
-
         </div>
-        @using (Ajax.BeginForm("Delete", "Zadaci, new { id = Model.ID_zadatak}, new AjaxOptions
+        @using (Ajax.BeginForm("Delete", "Zadaci", new { id = Model.ID_zadatak}, new AjaxOptions
         {
             HttpMethod = "Post",
             OnSuccess = "DeleteSuccess"
         }, new { @class = "form-horizontal", role = "form" }))
         {
-            < div class="modal-body">
-            @Html.HiddenFor(model => model.Id_zadatak)
+            <div class="modal-body">
+            @Html.HiddenFor(model => model.ID_zadatak)
             <div class="form-group">
                 <div class="col-md-10">
                     <h5>
@@ -34,7 +32,5 @@
             </div>
         </div>
     }
-
     </div>
-
-    </div>
+</div>

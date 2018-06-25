@@ -16,18 +16,7 @@ namespace Planiranje.Controllers
         private Aktivnost_akcija_DBHandle akcije_planovi = new Aktivnost_akcija_DBHandle();
         int Page_No_Master = 1;
         // GET: PodrucjaDjelovanja
-
-        public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
-
-        {
-
-            if (PlaniranjeSession.Trenutni.PedagogId > 0)
-            {
-                ViewBag.Title = "Aktivnost akcije";
-                return View();
-            }
-            return RedirectToAction("Prijava", "Planiranje");
-        }
+		
         public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
@@ -103,13 +92,11 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             Aktivnost_akcija akcija_plan = new Aktivnost_akcija();
-            akcija_plan.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-
             akcija_plan.Naziv = akt.Naziv;
             akcija_plan.Id_akcija = akt.Id_akcija;
-            akcija_plan.Id_aktivnost = akt.aktivnost;
+            akcija_plan.Id_aktivnost = akt.Id_aktivnost;
 
-            if (akcija_plan.CreateAktivnostAkcija(akcija_plan))
+            if (akcije_planovi.CreateAktivnostAkcija(akcija_plan))
             {
                 TempData["alert"] = "<script>alert('Novi plan akcija je uspjesno spremljen!');</script>";
             }
@@ -126,8 +113,8 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Aktivnost_akcija akcija_plan = new Aktvnost_akcija();
-            akcija_plan = akcija_plan.ReadAktivnostAkcija(id);
+            Aktivnost_akcija akcija_plan = new Aktivnost_akcija();
+            akcija_plan = akcije_planovi.ReadAktivnostAkcija(id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
@@ -143,7 +130,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!akcija_plan.UpdateAktivnostAkcija(akcija_plan))
+            if (!akcije_planovi.UpdateAktivnostAkcija(akcija_plan))
             {
                 TempData["alert"] = "<script>alert('Plan akcije nije promjenjen!');</script>";
             }
@@ -161,7 +148,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             Aktivnost_akcija akcija_plan = new Aktivnost_akcija();
-            akcija_plan = akcija_plan.ReadAktivnostAkcija(id);
+            akcija_plan = akcije_planovi.ReadAktivnostAkcija(id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
@@ -177,7 +164,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!akcija_plan.DeleteAktivnostAkcija(akcija_plan.Id_god))
+            if (!akcije_planovi.DeleteAktivnostAkcija(akcija_plan.Id_akcija))
             {
                 TempData["alert"] = "<script>alert('Plan akcije nije obrisan, dogodila se greska!');</script>";
             }

@@ -23,7 +23,7 @@ namespace Planiranje.Models
 
         public List<Zadaci> ReadZadaci()
         {
-            List<Zadaci> zadaci = new List<zadaci>();
+            List<Zadaci> zadaci = new List<Zadaci>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
@@ -74,7 +74,7 @@ namespace Planiranje.Models
                         {
                             Zadaci zad = new Zadaci()
                             {
-                                ID_zadatakt = Convert.ToInt32(sdr["id_zadatak"]),
+                                ID_zadatak = Convert.ToInt32(sdr["id_zadatak"]),
                                 Naziv = sdr["naziv"].ToString()
                             };
                             zadaci.Add(zad);
@@ -161,7 +161,7 @@ namespace Planiranje.Models
                         "naziv = @naziv " +
                         "WHERE id_zadatak = @id_zadatak";
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@id_zadatak", zadaci.ID_zadaci);
+                    command.Parameters.AddWithValue("@id_zadatak", zadaci.ID_zadatak);
                     command.Parameters.AddWithValue("@naziv", zadaci.Naziv);
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -189,7 +189,7 @@ namespace Planiranje.Models
                     command.Connection = connection;
                     connection.Open();
                     command.CommandText = "DELETE FROM zadaci " +
-                        "WHERE id_zadatak = @id_aktivnost";
+						"WHERE id_zadatak = @id_zadatak";
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@id_zadatak", id);
                     command.ExecuteNonQuery();

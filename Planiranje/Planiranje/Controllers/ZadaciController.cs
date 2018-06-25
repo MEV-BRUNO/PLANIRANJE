@@ -70,7 +70,7 @@ namespace Planiranje.Controllers
             }
         }
 
-        public ActionResult NoviPlan()
+        public ActionResult NoviZadatak()
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
@@ -79,13 +79,13 @@ namespace Planiranje.Controllers
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
-                return View("NoviPlan");
+                return View("NoviZadatak");
             }
-            return View("NoviPlan");
+            return View("NoviZadatak");
         }
 
         [HttpPost]
-        public ActionResult NoviPlan(Zadaci zadaci)
+        public ActionResult NoviZadatak(Zadaci zadatak)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -96,7 +96,7 @@ namespace Planiranje.Controllers
             //mjesecni_plan.Ak_godina = _mjesecni_plan.Ak_godina;
             //mjesecni_plan.Naziv = _mjesecni_plan.Naziv;
             //mjesecni_plan.Opis = _mjesecni_plan.Opis;
-            if (zadaci.CreateZadaci(zadaci))
+            if (zadaci.CreateZadaci(zadatak))
             {
                 TempData["alert"] = "<script>alert('Novi zadatak je uspjesno spremljen!');</script>";
             }
@@ -113,24 +113,24 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Zadaci zadaci = new Zadaci();
-            zadaci = zadaci.ReadZadaci(id);
+            Zadaci zadatak = new Zadaci();
+			zadatak = zadaci.ReadZadaci(id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
-                return View("Uredi", zadaci);
+                return View("Uredi", zadatak);
             }
-            return View("Uredi", zadaci);
+            return View("Uredi", zadatak);
         }
 
         [HttpPost]
-        public ActionResult Edit(Zadaci zadaci)
+        public ActionResult Edit(Zadaci zadatak)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!subjekti.UpdateZadaci(zadaci))
+            if (!zadaci.UpdateZadaci(zadatak))
             {
                 TempData["alert"] = "<script>alert('Zadatak nije promjenjen!');</script>";
             }
@@ -147,24 +147,24 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Zadaci zadaci = new Zadaci();
-            zadaci = zadaci.ReadZadaci(id);
+            Zadaci zadatak = new Zadaci();
+            zadatak = zadaci.ReadZadaci(id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
-                return View("Obrisi", zadaci);
+                return View("Obrisi", zadatak);
             }
             return View("Obrisi");
         }
 
         [HttpPost]
-        public ActionResult Delete(Zadaci zadaci)
+        public ActionResult Delete(Zadaci zadatak)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!zadaci.DeleteZadaci(zadaci.ID_zadaci))
+            if (!zadaci.DeleteZadaci(zadatak.ID_zadatak))
             {
                 TempData["alert"] = "<script>alert('Zadatak nije obrisan, dogodila se greska!');</script>";
             }
