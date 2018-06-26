@@ -12,5 +12,7 @@ namespace Planiranje.Models
         public int ID_subjekt { get; set; }
         [Required]
         public string Naziv { get; set; }
+
+        
     }
 }

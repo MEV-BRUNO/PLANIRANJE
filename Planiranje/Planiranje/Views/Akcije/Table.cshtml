@@ -1,0 +1,36 @@
+﻿@model PagedList.IPagedList<Planiranje.Models.Aktivnost_akcija>
+
+<table class="table table-bordered table-hover" id="dataTables-example">
+    <thead>
+		<tr>
+			<td class="col-lg-1">
+				@Html.ActionLink("Id", "Index", "Akcije", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+			</td>
+			<td class="col-lg-9">
+				@Html.ActionLink("Naziv", "Index", "Akcija", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+			</td>
+			<td class="col-lg-2">
+				Akcija
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Id_akcija)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Naziv)
+				</td>
+				<td>
+					<div class="pull-right">
+                        <a data-toggle="modal" data-url="@Url.Action("Edit","Akcije",new { id = item.Id_akcija})" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
+                        <a data-toggle="modal" data-url="@Url.Action("Delete","Akcije",new { id = item.Id_akcija})" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> 
