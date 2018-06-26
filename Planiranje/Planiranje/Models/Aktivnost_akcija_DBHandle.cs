@@ -20,32 +20,32 @@ namespace Planiranje.Models
             connection = new MySqlConnection(connection_string);
         }
 
-        public List<Aktivnost_akcija> ReadAktivnostAkcija()
+        public List<Akt_Akc> ReadAktivnostAkcija()
         {
 
-            List<Aktivnost_akcija> aktivnost_akcija = new List<Aktivnost_akcija>();
+            List<Akt_Akc> aktivnost_akcija = new List<Akt_Akc>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_akcija, naziv,id_aktivnost " +
+                command.CommandText = "SELECT aktivnost_akcija.id_akcija, aktivnost_akcija.naziv as naziv_akcija, aktivnost.naziv as naziv_aktivnost " +
                     "FROM aktivnost_akcija " +
-                    "ORDER BY id_akcija ASC";
-                //command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
-                connection.Open();
+					"JOIN aktivnost on aktivnost_akcija.id_aktivnost = aktivnost.id_aktivnost " +
+					"ORDER BY id_akcija ASC";
+				//command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+				connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {
                     if (sdr.HasRows)
                     {
                         while (sdr.Read())
                         {
-                            Aktivnost_akcija akt = new Aktivnost_akcija()
-                            {
-
-                                Id_akcija = Convert.ToInt32(sdr["id_akcija"]),
-                                Naziv = sdr["naziv"].ToString(),
-                                Id_aktivnost = Convert.ToInt32(sdr["id_aktivnost"])
-                            };
+							Akt_Akc akt = new Akt_Akc()
+							{
+								Id_akcija = Convert.ToInt32(sdr["id_akcija"]),
+								Naziv_Akcija = sdr["naziv_akcija"].ToString(),
+								Naziv_Aktivnost = sdr["naziv_aktivnost"].ToString()
+							};
                             aktivnost_akcija.Add(akt);
                         }
                     }
@@ -55,15 +55,16 @@ namespace Planiranje.Models
             return aktivnost_akcija;
         }
 
-        public List<Aktivnost_akcija> ReadAktivnostAkcija(string search_string)
+        public List<Akt_Akc> ReadAktivnostAkcija(string search_string)
         {
-            List<Aktivnost_akcija> aktivnost_akcija = new List<Aktivnost_akcija>();
+            List<Akt_Akc> aktivnost_akcija = new List<Akt_Akc>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_akcija, naziv, id_aktivnost " +
+                command.CommandText = "SELECT aktivnost_akcija.id_akcija, aktivnost_akcija.naziv as naziv_akcija, aktivnost.naziv as naziv_aktivnost " +
                     "FROM aktivnost_akcija " +
+					"JOIN aktivnost on aktivnost_akcija.id_aktivnost = aktivnost.id_aktivnost " +
                     "WHERE naziv like '%" + search_string + "%' " +
                     "ORDER BY id_akcija ASC";
                 command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
@@ -74,13 +75,13 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            Aktivnost_akcija akt = new Aktivnost_akcija()
-                            {
-                                Id_akcija = Convert.ToInt32(sdr["id_akcija"]),
-                                Naziv = sdr["naziv"].ToString(),
-                                Id_aktivnost = Convert.ToInt32(sdr["id_aktivnost"])
+							Akt_Akc akt_akc = new Akt_Akc()
+							{
+								Id_akcija = Convert.ToInt32(sdr["id_akcija"]),
+								Naziv_Akcija = sdr["naziv_akcija"].ToString(),
+								Naziv_Aktivnost = sdr["naziv_aktivnost"].ToString()
                             };
-                            aktivnost_akcija.Add(akt);
+                            aktivnost_akcija.Add(akt_akc);
                         }
                     }
                 }

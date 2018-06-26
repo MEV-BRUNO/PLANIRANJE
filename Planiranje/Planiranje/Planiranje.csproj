@@ -208,6 +208,7 @@
     </Compile>
     <Compile Include="Models\Aktivnost_akcija_DBHandle.cs" />
     <Compile Include="Models\Aktivnost_DBHandle.cs" />
+    <Compile Include="Models\Akt_Akc.cs" />
     <Compile Include="Models\Ciljevi_DBHandle.cs" />
     <Compile Include="Models\Godisnji_plan_DBHandle.cs" />
     <Compile Include="Models\Mjesecni_plan_DBHandle.cs" />
