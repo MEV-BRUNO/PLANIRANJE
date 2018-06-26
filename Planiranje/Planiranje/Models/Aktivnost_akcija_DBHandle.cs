@@ -30,7 +30,7 @@ namespace Planiranje.Models
                 command.Connection = connection;
                 command.CommandText = "SELECT id_akcija, naziv,id_aktivnost " +
                     "FROM aktivnost_akcija " +
-                    "ORDER BY id_aktivnost ASC";
+                    "ORDER BY id_akcija ASC";
                 //command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
@@ -62,10 +62,10 @@ namespace Planiranje.Models
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_akcija, naziv,id_aktivnost " +
+                command.CommandText = "SELECT id_akcija, naziv, id_aktivnost " +
                     "FROM aktivnost_akcija " +
                     "WHERE naziv like '%" + search_string + "%' " +
-                    "ORDER BY id_aktivnost ASC";
+                    "ORDER BY id_akcija ASC";
                 command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
@@ -98,10 +98,9 @@ namespace Planiranje.Models
                 command.Connection = connection;
                 command.CommandText = "SELECT id_akcija, naziv,id_aktivnost " +
                     "FROM aktivnost_akcija " +
-                    "WHERE id_aktivnost = @id ";
+                    "WHERE id_akcija = @id ";
                 command.CommandType = CommandType.Text;
                 command.Parameters.AddWithValue("@id", _id);
-                //command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {
@@ -132,11 +131,12 @@ namespace Planiranje.Models
                 {
                     command.Connection = connection;
                     command.CommandText = "INSERT INTO aktivnost_akcija " +
-                        "(naziv) " +
-                        " VALUES (@naziv)";
+						"(id_aktivnost, naziv) " +
+						" VALUES (@id_aktivnost, @naziv)";
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@naziv", akcija.Naziv);
-                    connection.Open();
+					command.Parameters.AddWithValue("@id_aktivnost", akcija.Id_aktivnost);
+					command.Parameters.AddWithValue("@naziv", akcija.Naziv);
+					connection.Open();
                     command.ExecuteNonQuery();
                 }
             }
@@ -162,8 +162,9 @@ namespace Planiranje.Models
                     command.Connection = connection;
                     command.CommandText = "UPDATE aktivnost_akcija " +
                         "SET " +
-                        "naziv = @naziv " +
-                        "WHERE id_podrucje = @id_aktivnost";
+						"naziv = @naziv, " +
+						"id_aktivnost = @id_aktivnost " +
+						"WHERE id_akcija = @id_akcija";
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@id_akcija", akcija.Id_akcija);
                     command.Parameters.AddWithValue("@naziv", akcija.Naziv);
@@ -211,5 +212,35 @@ namespace Planiranje.Models
             }
             return true;
         }
-    }
+		public List<Aktivnost> ReadAktivnosti()
+		{
+			List<Aktivnost> aktivnosti = new List<Aktivnost>();
+			this.Connect();
+			using (MySqlCommand command = new MySqlCommand())
+			{
+				command.Connection = connection;
+				command.CommandText = "SELECT id_aktivnost, naziv " +
+					"FROM aktivnost " +
+					"ORDER BY naziv ASC";
+				connection.Open();
+				using (MySqlDataReader sdr = command.ExecuteReader())
+				{
+					if (sdr.HasRows)
+					{
+						while (sdr.Read())
+						{
+							Aktivnost akt = new Aktivnost()
+							{
+								Naziv = sdr["naziv"].ToString(),
+								Id_aktivnost = Convert.ToInt32(sdr["id_aktivnost"])
+							};
+							aktivnosti.Add(akt);
+						}
+					}
+				}
+				connection.Close();
+			}
+			return aktivnosti;
+		}
+	}
 }

@@ -2,7 +2,7 @@
 
 @{
     Layout = null;
-    }
+}
 
 <div class="modal-dialog">
         <div class="modal-content">
@@ -11,14 +11,14 @@
                         <h4 class="modal-title">Brisanje podatka</h4>
             
         </div>
-                @using (Ajax.BeginForm("Delete", "AktivnostAkcija", new { id = Model.Id_aktivnost_akcija }, new AjaxOptions
+                @using (Ajax.BeginForm("Delete", "Akcije", new { id = Model.Id_akcija }, new AjaxOptions
         {
             HttpMethod = "Post",
 OnSuccess = "DeleteSuccess"
         }, new { @class = "form-horizontal", role = "form" }))
         {
-                        < div class="modal-body">
-                @Html.HiddenFor(model => model.Id_aktivnost_akcije)
+                        <div class="modal-body">
+                @Html.HiddenFor(model => model.Id_akcija)
                 <div class="form-group">
                     <div class="col-md-10">
                         <h5>

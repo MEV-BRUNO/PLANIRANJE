@@ -10,7 +10,7 @@
 <div class="inner">
     <div class="row">
         <div class="col-lg-12">
-            <h3> Pregled plan akcije </h3>
+            <h3> Pregled akcija </h3>
         </div>
     </div>
     <div class="row">
@@ -19,12 +19,12 @@
                 <div class="panel-body">
                     <div>
                         <div class="pull-left">
-                            <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "PlanAkcije")" id="btnCreateAsset">
-                                Novi plan
+                            <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NovaAkcija", "Akcije")" id="btnCreateAsset">
+                                Nova akcija
                             </button>
                         </div>
                         <div class="pull-right">
-                            @using (Html.BeginForm("Index", "PlanAkcije", FormMethod.Get))
+                            @using (Html.BeginForm("Index", "Akcije", FormMethod.Get))
                             {
                                 <p>
                                     @Html.TextBox("Search", ViewBag.FilterValue as string, new { @class = "search-bar" })

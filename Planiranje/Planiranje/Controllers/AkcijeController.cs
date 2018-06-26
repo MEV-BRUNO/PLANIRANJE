@@ -70,22 +70,23 @@ namespace Planiranje.Controllers
             }
 
         }
-        public ActionResult NoviPlan()
+        public ActionResult NovaAkcija()
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+			ViewBag.Aktivnosti = akcije_planovi.ReadAktivnosti();
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
-                return View("NoviPlan");
+                return View("NovaAkcija");
             }
-            return View("NoviPlan");
+            return View("NovaAkcija");
         }
 
         [HttpPost]
-        public ActionResult NoviPlan(Aktivnost_akcija akt)
+        public ActionResult NovaAkcija(Aktivnost_akcija akt)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -98,11 +99,11 @@ namespace Planiranje.Controllers
 
             if (akcije_planovi.CreateAktivnostAkcija(akcija_plan))
             {
-                TempData["alert"] = "<script>alert('Novi plan akcija je uspjesno spremljen!');</script>";
+                TempData["alert"] = "<script>alert('Nova akcija je uspjesno spremljena!');</script>";
             }
             else
             {
-                TempData["alert"] = "<script>alert('Novi plan akcija nije spremljen');</script>";
+                TempData["alert"] = "<script>alert('Nova akcija nije spremljena');</script>";
             }
             return RedirectToAction("Index");
         }
@@ -116,8 +117,9 @@ namespace Planiranje.Controllers
             Aktivnost_akcija akcija_plan = new Aktivnost_akcija();
             akcija_plan = akcije_planovi.ReadAktivnostAkcija(id);
             if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
+			{
+				ViewBag.Aktivnosti = akcije_planovi.ReadAktivnosti();
+				ViewBag.IsUpdate = false;
                 return View("Uredi", akcija_plan);
             }
             return View("Uredi", akcija_plan);
@@ -132,11 +134,11 @@ namespace Planiranje.Controllers
             }
             if (!akcije_planovi.UpdateAktivnostAkcija(akcija_plan))
             {
-                TempData["alert"] = "<script>alert('Plan akcije nije promjenjen!');</script>";
+                TempData["alert"] = "<script>alert('Akcija nije promjenjena!');</script>";
             }
             else
             {
-                TempData["alert"] = "<script>alert('Plan akcije je uspjesno promjenjen!');</script>";
+                TempData["alert"] = "<script>alert('Akcija je uspjesno promjenjena!');</script>";
             }
             return RedirectToAction("Index");
         }
@@ -166,11 +168,11 @@ namespace Planiranje.Controllers
             }
             if (!akcije_planovi.DeleteAktivnostAkcija(akcija_plan.Id_akcija))
             {
-                TempData["alert"] = "<script>alert('Plan akcije nije obrisan, dogodila se greska!');</script>";
+                TempData["alert"] = "<script>alert('Akcija nije obrisana, dogodila se greska!');</script>";
             }
             else
             {
-                TempData["alert"] = "<script>alert('Plan akcije je uspjesno obrisan!');</script>";
+                TempData["alert"] = "<script>alert('Akcija je uspjesno obrisana!');</script>";
             }
             return RedirectToAction("Index");
         }
