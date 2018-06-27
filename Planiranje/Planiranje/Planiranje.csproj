@@ -252,6 +252,7 @@
     <Compile Include="Reports\GodisnjiPlanReport.cs" />
     <Compile Include="Reports\MjesecniPlanReport.cs" />
     <Compile Include="Reports\PlanOs1Report.cs" />
+    <Compile Include="Reports\PlanOs2Report.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Baza_arhiva\Plan\dnevnik_rada_42_A.JPG" />
