@@ -249,6 +249,7 @@
     <Compile Include="Models\Zadaci.cs" />
     <Compile Include="Models\Zadaci_DBHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\GodisnjiPlanReport.cs" />
     <Compile Include="Reports\MjesecniPlanReport.cs" />
   </ItemGroup>
   <ItemGroup>
