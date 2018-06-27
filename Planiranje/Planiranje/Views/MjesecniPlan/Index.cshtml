@@ -22,6 +22,11 @@
 								Novi plan
 							</button>
 						</div>
+                        <div class="pull-left">
+                            <span class="glyphicon glyphicon-print"></span>
+                            @Html.ActionLink("Ispiši listu", "Ispis",
+                            new { target = "blank" })
+                        </div>
 						<div class="pull-right">
 							@using (Html.BeginForm("Index", "MjesecniPlan", FormMethod.Get))
 							{

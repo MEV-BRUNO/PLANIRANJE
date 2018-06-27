@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Planiranje.Models;
+using Planiranje.Reports;
 
 namespace Planiranje.Controllers
 {
@@ -172,5 +174,14 @@ namespace Planiranje.Controllers
 			}
 			return RedirectToAction("Index");
 		}
+
+        public FileStreamResult Ispis()
+        {
+            List<Mjesecni_plan> planovi = mjesecni_planovi.ReadMjesecnePlanove();
+
+            MjesecniPlanReport report = new MjesecniPlanReport(planovi);
+
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+        }
 	}
 }
