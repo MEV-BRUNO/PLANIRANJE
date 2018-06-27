@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Planiranje.Models;
+using Planiranje.Reports;
 
 namespace Planiranje.Controllers
 {
@@ -171,6 +173,15 @@ namespace Planiranje.Controllers
 				TempData["alert"] = "<script>alert('Plan je uspjesno obrisan!');</script>";
 			}
 			return RedirectToAction("Index");
-        }
-    }
+		}
+
+		public FileStreamResult Ispis()
+		{
+			List<OS_Plan_1> planovi = planovi_os1.ReadOS_Plan_1();
+
+			PlanOs1Report report = new PlanOs1Report(planovi);
+
+			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+		}
+	}
 }
