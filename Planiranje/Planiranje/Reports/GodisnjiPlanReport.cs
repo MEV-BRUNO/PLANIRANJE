@@ -16,65 +16,39 @@ namespace Planiranje.Reports
 
         public GodisnjiPlanReport(List<Godisnji_plan> godisnji_plan)
         {
-            // generiranje pdf-a
-
-            // novi dokument, sa veličinom stranice i marginama
-            // mjere u iText# -> point = 1/72 inch
             Document pdfDokument = new Document(
                 PageSize.A4, 50, 50, 20, 50);
 
             MemoryStream memStream = new MemoryStream();
             PdfWriter.GetInstance(pdfDokument, memStream).
                 CloseStream = false;
-
-            // otvaranje dokumenta
             pdfDokument.Open();
-
-            // dodamo neki sadržaj za test
-            //pdfDokument.Add(new Paragraph("Test 123..."));
-
-            // fontovi
             BaseFont font = BaseFont.CreateFont(BaseFont.HELVETICA,
                 BaseFont.CP1250, false);
             Font header = new Font(font, 12, Font.NORMAL, BaseColor.DARK_GRAY);
             Font naslov = new Font(font, 14, Font.BOLDITALIC, BaseColor.BLACK);
             Font tekst = new Font(font, 10, Font.NORMAL, BaseColor.BLACK);
-
-            // logo
-            /*
-            var logo = iTextSharp.text.Image.GetInstance(
-                HostingEnvironment.MapPath("~/Content/MEV_LOGO.jpg"));
-            logo.Alignment = Element.ALIGN_LEFT;
-            logo.ScaleAbsoluteHeight(100);
-            logo.ScaleAbsoluteWidth(100);
-            pdfDokument.Add(logo);*/
-
-            // header
+			
             Paragraph p = new Paragraph("IZVJEŠTAJ", header);
             pdfDokument.Add(p);
-
-            // naslov 
+			
             p = new Paragraph("Godisnji plan", naslov);
             p.Alignment = Element.ALIGN_CENTER;
             p.SpacingBefore = 30;
             p.SpacingAfter = 30;
             pdfDokument.Add(p);
-
-            // tablica sa popisom studenata
-            PdfPTable t = new PdfPTable(6); // 5 kolona
-            t.WidthPercentage = 100; // širina tablice
+			
+            PdfPTable t = new PdfPTable(6);
+            t.WidthPercentage = 100;
             t.SetWidths(new float[] { 1, 2, 2, 2, 2, 3 });
-
-            // dodati zaglavlje
+			
             t.AddCell(VratiCeliju("R.br.", tekst, true, BaseColor.LIGHT_GRAY));
             t.AddCell(VratiCeliju("Ak. godina", tekst, false, BaseColor.LIGHT_GRAY));
-            t.AddCell(VratiCeliju("Naziv", tekst, true, BaseColor.LIGHT_GRAY));
-			t.AddCell(VratiCeliju("Opis", tekst, true, BaseColor.LIGHT_GRAY));
-			t.AddCell(VratiCeliju("Opis", tekst, true, BaseColor.LIGHT_GRAY));
-			t.AddCell(VratiCeliju("Opis", tekst, true, BaseColor.LIGHT_GRAY));
+            t.AddCell(VratiCeliju("Br. rad. dana", tekst, true, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("God. odmor", tekst, true, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("Ukupno dana", tekst, true, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("God. fond sati", tekst, true, BaseColor.LIGHT_GRAY));
 
-
-			// dodajemo popis studenata
 			int i = 1;
             foreach (Godisnji_plan plan in godisnji_plan)
             {
