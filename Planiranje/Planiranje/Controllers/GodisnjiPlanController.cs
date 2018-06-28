@@ -168,7 +168,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!godisnji_planovi.DeleteGodisnjiPlan(godisnji_plan.Id_god))
+            if (!godisnji_planovi.DeleteGodisnjiPlan(godisnji_plan.Id_god) && !godisnji_planovi.DeleteGodisnjiDetalji(godisnji_plan.Id_god))
 			{
 				TempData["alert"] = "<script>alert('Godisnji plan nije obrisan, dogodila se greska!');</script>";
 			}
@@ -187,5 +187,48 @@ namespace Planiranje.Controllers
 
 			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
 		}
-	}
+
+        public ActionResult Details(int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Godisnji_detalji detalji = new Godisnji_detalji();
+            detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
+            detalji.Id_god = id;
+            if (Request.IsAjaxRequest())
+            {
+                ViewBag.IsUpdate = false;
+                return View("Detalji", detalji);
+            }
+            return View("Detalji", detalji);
+        }
+
+        [HttpPost]
+        public ActionResult Details(Godisnji_detalji detalji)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Godisnji_detalji g = godisnji_planovi.ReadGodisnjiDetalji(detalji.Id_god);
+            if (g == null)
+            {
+                if (!godisnji_planovi.CreateGodisnjiDetalji(detalji))
+                {
+                    TempData["alert"] = "<script>alert('Detalji nisu dodani zbog greske!');</script>";
+                }
+                else
+                {
+                    TempData["alert"] = "<script>alert('Detalji su uspjesno dodani!');</script>";
+                }
+                return RedirectToAction("Index");
+            }
+            else
+            {
+
+            }
+        }
+    }
 }
