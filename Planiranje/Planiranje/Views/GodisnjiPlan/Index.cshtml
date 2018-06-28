@@ -21,15 +21,17 @@
 							<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "GodisnjiPlan")" id="btnCreateAsset">
 								Novi plan
 							</button>
+							<span class="glyphicon glyphicon-print"></span>
+							@Html.ActionLink("Ispiši listu", "Ispis", new { target = "blank" })
 						</div>
 						<div class="pull-right">
 							@using (Html.BeginForm("Index", "GodisnjiPlan", FormMethod.Get))
-							{
-								<p>
-									@Html.TextBox("Search", ViewBag.FilterValue as string, new { @class = "search-bar" })
-									<input class="btn btn-primary btn-md" type="submit" value="Trazi" />
-								</p>
-							}
+		{
+					<p>
+						@Html.TextBox("Search", ViewBag.FilterValue as string, new { @class = "search-bar" })
+						<input class="btn btn-primary btn-md" type="submit" value="Trazi" />
+					</p>
+}
 						</div>
 						<br>
 					</div>

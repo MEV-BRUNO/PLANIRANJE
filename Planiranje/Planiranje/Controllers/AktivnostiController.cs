@@ -26,8 +26,6 @@ namespace Planiranje.Controllers
             ViewBag.CurrentSortOrder = Sort;
             ViewBag.SortingName = String.IsNullOrEmpty(Sort) ? "Naziv" : "";
 
-            ViewBag.Message = "Grad";
-
             ViewBag.FilterValue = Search;
             if (Search != null)
             {
@@ -44,7 +42,7 @@ namespace Planiranje.Controllers
 
             int Size_Of_Page = 10;
             int No_Of_Page = (Page_No ?? 1);
-            if (Search == null || Search.Length == 0)
+			if (Search == null || Search.Length == 0)
             {
 
                 if (Request.IsAjaxRequest())
@@ -91,11 +89,6 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            //Aktivnost akt = new Aktivnost();
-            //mjesecni_plan.ID_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-            //mjesecni_plan.Ak_godina = _mjesecni_plan.Ak_godina;
-            //mjesecni_plan.Naziv = _mjesecni_plan.Naziv;
-            //mjesecni_plan.Opis = _mjesecni_plan.Opis;
             if (aktivnosti.CreateAktivnost(aktivnost))
             {
                 TempData["alert"] = "<script>alert('Nova akitvnost je uspjesno spremljena!');</script>";

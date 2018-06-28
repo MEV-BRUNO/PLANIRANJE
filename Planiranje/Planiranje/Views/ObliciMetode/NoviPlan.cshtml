@@ -21,7 +21,7 @@
             @Html.HiddenFor(model => model.Id_oblici, new { Value = 0 })
             <div class="form-group">
                 @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-10">
+                <div class="col-md-9">
                     @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
                 </div>

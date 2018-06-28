@@ -21,6 +21,8 @@
 							<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "MjesecniPlan")" id="btnCreateAsset">
 								Novi plan
 							</button>
+							<span class="glyphicon glyphicon-print"></span>
+							@Html.ActionLink("Ispiši listu", "Ispis", new { target = "blank" })
 						</div>
 						<div class="pull-right">
 							@using (Html.BeginForm("Index", "MjesecniPlan", FormMethod.Get))
