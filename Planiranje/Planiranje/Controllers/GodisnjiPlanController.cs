@@ -168,13 +168,18 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!godisnji_planovi.DeleteGodisnjiPlan(godisnji_plan.Id_god) && !godisnji_planovi.DeleteGodisnjiDetalji(godisnji_plan.Id_god))
+            
+            if (!godisnji_planovi.DeleteGodisnjiPlan(godisnji_plan.Id_god))
 			{
 				TempData["alert"] = "<script>alert('Godisnji plan nije obrisan, dogodila se greska!');</script>";
 			}
 			else
 			{
-				TempData["alert"] = "<script>alert('Godisnji plan je uspjesno obrisan!');</script>";
+                if (!godisnji_planovi.DeleteGodisnjiDetalji(godisnji_plan.Id_god))
+                {
+                    TempData["alert"] = "<script>alert('Godisnji plan nije obrisan, dogodila se greska!');</script>";
+                }
+                TempData["alert"] = "<script>alert('Godisnji plan je uspjesno obrisan!');</script>";
 			}
 			return RedirectToAction("Index");
 		}
@@ -213,10 +218,15 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             Godisnji_detalji g = godisnji_planovi.ReadGodisnjiDetalji(detalji.Id_god);
-            if (g == null)
+            if (g.Id_god==0)
             {
                 if (!godisnji_planovi.CreateGodisnjiDetalji(detalji))
                 {
+                    if (godisnji_planovi.UpdateGodisnjiDetalji(detalji))
+                    {
+                        TempData["alert"] = "<script>alert('Detalji su uspjesno promijenjeni!');</script>";
+                        return RedirectToAction("Index");
+                    }
                     TempData["alert"] = "<script>alert('Detalji nisu dodani zbog greske!');</script>";
                 }
                 else
@@ -227,7 +237,15 @@ namespace Planiranje.Controllers
             }
             else
             {
-
+                if (!godisnji_planovi.UpdateGodisnjiDetalji(detalji))
+                {
+                    TempData["alert"] = "<script>alert('Detalji nisu promijenjeni zbog greske!');</script>";
+                }
+                else
+                {
+                    TempData["alert"] = "<script>alert('Detalji su uspjesno promijenjeni!');</script>";
+                }
+                return RedirectToAction("Index");
             }
         }
     }
