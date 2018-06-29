@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -11,36 +12,52 @@ namespace Planiranje.Models
         [Required]
         public int Id_god { get; set; }
         [Required]
-        public int Mjesec { get; set; }
+		[DisplayName("Mjesec")]
+		public int Mjesec { get; set; }
         [Required]
-        public string Naziv_mjeseca { get; set; }
+		[DisplayName("Naziv mjeseca")]
+		public string Naziv_mjeseca { get; set; }
         [Required]
-        public int Ukupno_dana { get; set; }
+		[DisplayName("Ukupno dana")]
+		public int Ukupno_dana { get; set; }
         [Required]
-        public int Radnih_dana { get; set; }
+		[DisplayName("Radnih dana")]
+		public int Radnih_dana { get; set; }
         [Required]
-        public int Subota_dana { get; set; }
+		[DisplayName("Subota")]
+		public int Subota_dana { get; set; }
         [Required]
-        public int Blagdana_dana { get; set; }
+		[DisplayName("Blagdana")]
+		public int Blagdana_dana { get; set; }
         [Required]
-        public int Nastavnih_dana { get; set; }
+		[DisplayName("Nastavnih dana")]
+		public int Nastavnih_dana { get; set; }
         [Required]
-        public int Praznika_dana { get; set; }
+		[DisplayName("Praznika")]
+		public int Praznika_dana { get; set; }
         [Required]
-        public int Br_sati { get; set; }
+		[DisplayName("Broj sati")]
+		public int Br_sati { get; set; }
         [Required]
-        public int Odmor_dana { get; set; }
+		[DisplayName("Odmor dana")]
+		public int Odmor_dana { get; set; }
         [Required]
-        public int Odmor_sati { get; set; }
+		[DisplayName("Odmor sati")]
+		public int Odmor_sati { get; set; }
         [Required]
-        public int Mj_fond_sati { get; set; }
+		[DisplayName("Fond sati")]
+		public int Mj_fond_sati { get; set; }
         [Required]
-        public int Br_rad_dana_sk_god { get; set; }
+		[DisplayName("Sk. godina dana")]
+		public int Br_rad_dana_sk_god { get; set; }
         [Required]
-        public int Br_dana_god_odmor { get; set; }
+		[DisplayName("Godisnji odmor")]
+		public int Br_dana_god_odmor { get; set; }
         [Required]
-        public int Ukupno_rad_dana { get; set; }
+		[DisplayName("Ukupno dana")]
+		public int Ukupno_rad_dana { get; set; }
         [Required]
-        public int God_fond_sati { get; set; }
+		[DisplayName("G. fond sati")]
+		public int God_fond_sati { get; set; }
     }
 }
