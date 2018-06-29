@@ -54,7 +54,7 @@ namespace Planiranje.Models
 		[DisplayName("Godisnji odmor")]
 		public int Br_dana_god_odmor { get; set; }
         [Required]
-		[DisplayName("Ukupno dana")]
+		[DisplayName("Ukupno rad. dana")]
 		public int Ukupno_rad_dana { get; set; }
         [Required]
 		[DisplayName("G. fond sati")]
