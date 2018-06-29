@@ -187,8 +187,9 @@ namespace Planiranje.Controllers
 		public FileStreamResult Ispis()
 		{
 			List<Godisnji_plan> planovi = godisnji_planovi.ReadGodisnjePlanove();
+            List<Godisnji_detalji> detalji = godisnji_planovi.ReadGodisnjeDetalje();
 
-			GodisnjiPlanReport report = new GodisnjiPlanReport(planovi);
+			GodisnjiPlanReport report = new GodisnjiPlanReport(planovi, detalji);
 
 			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
 		}

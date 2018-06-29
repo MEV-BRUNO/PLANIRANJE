@@ -436,5 +436,55 @@ namespace Planiranje.Models
             }
             return true;
         }
+
+        public List<Godisnji_detalji> ReadGodisnjeDetalje()
+        {
+            List<Godisnji_detalji> detalji = new List<Godisnji_detalji>();
+            this.Connect();
+            using (MySqlCommand command = new MySqlCommand())
+            {
+                command.Connection = connection;
+                command.CommandText = "SELECT id_god, mjesec, naziv_mjeseca, ukupno_dana, radnih_dana, subota_dana, blagdana_dana, " +
+                    "nastavnih_dana, praznika_dana, br_sati, odmor_dana, mj_fond_sati, br_rad_dana_sk_god, br_dana_god_odmor, " +
+                    "ukupno_rad_dana, god_fond_sati " +
+                    "FROM godisnji_detalji " +                    
+                    "ORDER BY id_god ASC";
+                
+                connection.Open();
+                using (MySqlDataReader sdr = command.ExecuteReader())
+                {
+                    if (sdr.HasRows)
+                    {
+                        while (sdr.Read())
+                        {
+                            Godisnji_detalji d = new Godisnji_detalji()
+                            {
+                                Id_god = Convert.ToInt32(sdr["id_god"]),
+                                //Naziv = sdr["naziv"].ToString(),
+                                Naziv_mjeseca = sdr["naziv_mjeseca"].ToString(),
+                                //Opis = sdr["opis"].ToString(),
+                                Mjesec = Convert.ToInt32(sdr["mjesec"]),
+                                Ukupno_dana = Convert.ToInt32(sdr["ukupno_dana"]),
+                                Radnih_dana = Convert.ToInt32(sdr["radnih_dana"]),
+                                Subota_dana = Convert.ToInt32(sdr["subota_dana"]),
+                                Blagdana_dana = Convert.ToInt32(sdr["blagdana_dana"]),
+                                Nastavnih_dana = Convert.ToInt32(sdr["nastavnih_dana"]),
+                                Praznika_dana = Convert.ToInt32(sdr["praznika_dana"]),
+                                Br_sati = Convert.ToInt32(sdr["br_sati"]),
+                                Odmor_dana = Convert.ToInt32(sdr["odmor_dana"]),
+                                Mj_fond_sati = Convert.ToInt32(sdr["mj_fond_sati"]),
+                                Br_rad_dana_sk_god = Convert.ToInt32(sdr["br_rad_dana_sk_god"]),
+                                Br_dana_god_odmor = Convert.ToInt32(sdr["br_dana_god_odmor"]),
+                                Ukupno_rad_dana = Convert.ToInt32(sdr["ukupno_rad_dana"]),
+                                God_fond_sati = Convert.ToInt32(sdr["god_fond_sati"]),
+                            };
+                            detalji.Add(d);
+                        }
+                    }
+                }
+                connection.Close();
+            }
+            return detalji;
+        }
     }
 }
