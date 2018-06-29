@@ -81,7 +81,16 @@
 				$('#assetContainer').html(data);
 				$('#assetModal').modal('show');
 			});
-		});
+        });
+
+        $('#dataTables-example').on("click", "#detailsAsset", function (event) {
+            event.preventDefault();
+            var url = $(this).attr("data-url");
+            $.get(url, function (data) {
+                $('#assetContainer').html(data);
+                $('#assetModal').modal('show');
+            });
+        });
 	});
 </script>
 
@@ -100,5 +109,11 @@
 
 	function DeleteSuccess() {
 		location.reload(true);
-	}
+    }
+
+    function DetailsSuccess() {
+        $('#assetModal').modal('hide');
+        $('#assetContainer').html("");
+        location.reload(true);
+    }
 </script>
