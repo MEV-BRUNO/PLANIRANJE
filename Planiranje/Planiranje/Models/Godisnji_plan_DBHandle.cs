@@ -410,7 +410,7 @@ namespace Planiranje.Models
 						command.ExecuteNonQuery();
 					}
 				}
-				catch (MySqlException e)
+				catch
 				{
 					connection.Close();
 					return false;

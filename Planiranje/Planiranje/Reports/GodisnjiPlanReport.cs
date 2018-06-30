@@ -16,15 +16,11 @@ namespace Planiranje.Reports
 
         public GodisnjiPlanReport(ViewModel model)
         {
-            Document pdfDokument = new Document(PageSize.A4.Rotate(),10,10,10,10);
-            
-
-            MemoryStream memStream = new MemoryStream();
-            PdfWriter.GetInstance(pdfDokument, memStream).
-                CloseStream = false;
+			Document pdfDokument = new Document(PageSize.A4.Rotate(),10,10,10,10);
+			MemoryStream memStream = new MemoryStream();
+            PdfWriter.GetInstance(pdfDokument, memStream).CloseStream = false;
             pdfDokument.Open();
-            BaseFont font = BaseFont.CreateFont(BaseFont.HELVETICA,
-                BaseFont.CP1250, false);
+            BaseFont font = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1250, false);
             Font header = new Font(font, 12, Font.NORMAL, BaseColor.DARK_GRAY);
             Font naslov = new Font(font, 14, Font.BOLDITALIC, BaseColor.BLACK);
             Font tekst = new Font(font, 10, Font.NORMAL, BaseColor.BLACK);
@@ -67,22 +63,20 @@ namespace Planiranje.Reports
 			pdfDokument.Add(tt);
 			foreach (Godisnji_detalji detalj in model.GodisnjiDetalji)
 			{
-                 tt = new PdfPTable(12);
+				tt = new PdfPTable(12);
 				tt.SetWidths(new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
-
-
 				tt.AddCell(VratiCeliju(detalj.Naziv_mjeseca.ToString(), tekst, false, BaseColor.WHITE));
-                    tt.AddCell(VratiCeliju(detalj.Ukupno_dana.ToString(), tekst, true, BaseColor.WHITE));
-                    tt.AddCell(VratiCeliju(detalj.Radnih_dana.ToString(), tekst, true, BaseColor.WHITE));
-                    tt.AddCell(VratiCeliju(detalj.Subota_dana.ToString(), tekst, true, BaseColor.WHITE));
+				tt.AddCell(VratiCeliju(detalj.Ukupno_dana.ToString(), tekst, true, BaseColor.WHITE));
+				tt.AddCell(VratiCeliju(detalj.Radnih_dana.ToString(), tekst, true, BaseColor.WHITE));
+				tt.AddCell(VratiCeliju(detalj.Subota_dana.ToString(), tekst, true, BaseColor.WHITE));
 				tt.AddCell(VratiCeliju(detalj.Nedjelja_dana.ToString(), tekst, true, BaseColor.WHITE));
 				tt.AddCell(VratiCeliju(detalj.Blagdana_dana.ToString(), tekst, true, BaseColor.WHITE));
-                    tt.AddCell(VratiCeliju(detalj.Nastavnih_dana.ToString(), tekst, true, BaseColor.WHITE));
-                    tt.AddCell(VratiCeliju(detalj.Praznika_dana.ToString(), tekst, true, BaseColor.WHITE));
-                    tt.AddCell(VratiCeliju(detalj.Br_sati.ToString(), tekst, true, BaseColor.WHITE));
-                    tt.AddCell(VratiCeliju(detalj.Odmor_dana.ToString(), tekst, true, BaseColor.WHITE));
-                    tt.AddCell(VratiCeliju(detalj.Odmor_sati.ToString(), tekst, true, BaseColor.WHITE));
-                    tt.AddCell(VratiCeliju(detalj.Mj_fond_sati.ToString(), tekst, true, BaseColor.WHITE));
+				tt.AddCell(VratiCeliju(detalj.Nastavnih_dana.ToString(), tekst, true, BaseColor.WHITE));
+				tt.AddCell(VratiCeliju(detalj.Praznika_dana.ToString(), tekst, true, BaseColor.WHITE));
+				tt.AddCell(VratiCeliju(detalj.Br_sati.ToString(), tekst, true, BaseColor.WHITE));
+				tt.AddCell(VratiCeliju(detalj.Odmor_dana.ToString(), tekst, true, BaseColor.WHITE));
+				tt.AddCell(VratiCeliju(detalj.Odmor_sati.ToString(), tekst, true, BaseColor.WHITE));
+				tt.AddCell(VratiCeliju(detalj.Mj_fond_sati.ToString(), tekst, true, BaseColor.WHITE));
 
 				uk_dana += detalj.Ukupno_dana;
 				uk_rad_dana += detalj.Radnih_dana;
