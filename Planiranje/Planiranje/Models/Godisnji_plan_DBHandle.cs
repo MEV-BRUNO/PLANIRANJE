@@ -149,7 +149,7 @@ namespace Planiranje.Models
             return godisnji_plan;
         }
 
-        public bool CreateGodisnjiPlan(Godisnji_plan godisnji_plan)
+        public bool CreateGodisnjiPlan(ViewModel model)
         {
             try
             {
@@ -161,13 +161,13 @@ namespace Planiranje.Models
                         "(id_god, id_pedagog, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati) " +
                         " VALUES (@id_god, @id_pedagog, @ak_godina, @br_radnih_dana, @br_dana_godina_odmor, @ukupni_rad_dana, @god_fond_sati)";
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@id_god", godisnji_plan.Id_god);
+                    command.Parameters.AddWithValue("@id_god", model.GodisnjiPlan.Id_god);
                     command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
-                    command.Parameters.AddWithValue("@ak_godina", godisnji_plan.Ak_godina);
-                    command.Parameters.AddWithValue("@br_radnih_dana", godisnji_plan.Br_radnih_dana);
-                    command.Parameters.AddWithValue("@br_dana_godina_odmor", godisnji_plan.Br_dana_godina_odmor);
-                    command.Parameters.AddWithValue("@ukupni_rad_dana", godisnji_plan.Ukupni_rad_dana);
-                    command.Parameters.AddWithValue("@god_fond_sati", godisnji_plan.God_fond_sati);
+                    command.Parameters.AddWithValue("@ak_godina", model.GodisnjiPlan.Ak_godina);
+                    command.Parameters.AddWithValue("@br_radnih_dana", model.GodisnjiPlan.Br_radnih_dana);
+                    command.Parameters.AddWithValue("@br_dana_godina_odmor", model.GodisnjiPlan.Br_dana_godina_odmor);
+                    command.Parameters.AddWithValue("@ukupni_rad_dana", model.GodisnjiPlan.Ukupni_rad_dana);
+                    command.Parameters.AddWithValue("@god_fond_sati", model.GodisnjiPlan.God_fond_sati);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -181,8 +181,81 @@ namespace Planiranje.Models
             {
                 connection.Close();
             }
-            return true;
-        }
+
+			int id = 0;
+			this.Connect();
+			using (MySqlCommand command = new MySqlCommand())
+			{
+				command.Connection = connection;
+				command.CommandText = "SELECT id_god FROM godisnji_plan ORDER BY id_god DESC LIMIT 1";
+				command.CommandType = CommandType.Text;
+				connection.Open();
+				using (MySqlDataReader sdr = command.ExecuteReader())
+				{
+					if (sdr.HasRows && sdr.FieldCount == 1)
+					{
+						while (sdr.Read())
+						{
+							id = Convert.ToInt32(sdr["id_god"]);
+						}
+					}
+					else
+					{
+						return false;
+					}
+				}
+				connection.Close();
+			}
+
+			foreach (Godisnji_detalji detalj in model.GodisnjiDetalji)
+			{
+				try
+				{
+					this.Connect();
+					using (MySqlCommand command = new MySqlCommand())
+					{
+						command.Connection = connection;
+						command.CommandText = "INSERT INTO godisnji_detalji " +
+							" (id_god, mjesec, naziv_mjeseca, ukupno_dana, radnih_dana, subota_dana, blagdana_dana, nastavnih_dana" +
+							", praznika_dana, br_sati, odmor_dana, odmor_sati, mj_fond_sati, br_rad_dana_sk_god, br_dana_god_odmor, ukupno_rad_dana" +
+							", god_fond_sati)" +
+							" VALUES (@id_god, @mjesec, @naziv_mjeseca, @ukupno_dana, @radnih_dana, @subota_dana, @blagdana_dana, @nastavnih_dana" +
+							", @praznika_dana, @br_sati, @odmor_dana, @odmor_sati, @mj_fond_sati, @br_rad_dana_sk_god, @br_dana_god_odmor, @ukupno_rad_dana" +
+							", @god_fond_sati)";
+						command.CommandType = CommandType.Text;
+						command.Parameters.AddWithValue("@id_god", id);
+						command.Parameters.AddWithValue("@mjesec", detalj.Mjesec);
+						command.Parameters.AddWithValue("@naziv_mjeseca", detalj.Naziv_mjeseca);
+						command.Parameters.AddWithValue("@ukupno_dana", detalj.Ukupno_dana);
+						command.Parameters.AddWithValue("@radnih_dana", detalj.Radnih_dana);
+						command.Parameters.AddWithValue("@subota_dana", detalj.Subota_dana);
+						command.Parameters.AddWithValue("@blagdana_dana", detalj.Blagdana_dana);
+						command.Parameters.AddWithValue("@nastavnih_dana", detalj.Nastavnih_dana);
+						command.Parameters.AddWithValue("@praznika_dana", detalj.Praznika_dana);
+						command.Parameters.AddWithValue("@br_sati", detalj.Br_sati);
+						command.Parameters.AddWithValue("@odmor_dana", detalj.Odmor_dana);
+						command.Parameters.AddWithValue("@odmor_sati", detalj.Odmor_sati);
+						command.Parameters.AddWithValue("@mj_fond_sati", detalj.Mj_fond_sati);
+						command.Parameters.AddWithValue("@br_rad_dana_sk_god", detalj.Br_rad_dana_sk_god);
+						command.Parameters.AddWithValue("@br_dana_god_odmor", detalj.Br_dana_god_odmor);
+						command.Parameters.AddWithValue("@ukupno_rad_dana", detalj.Ukupno_rad_dana);
+						command.Parameters.AddWithValue("@god_fond_sati", detalj.God_fond_sati);
+						connection.Open();
+						command.ExecuteNonQuery();
+					}
+				}
+				catch
+				{
+					connection.Close();
+					return false;
+				}
+				finally
+				{
+					connection.Close();
+				}
+			}
+			return true;
+		}
 
         public bool UpdateGodisnjiPlan(Godisnji_plan godisnji_plan)
         {
@@ -322,54 +395,6 @@ namespace Planiranje.Models
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@id_god", id);
                     
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch
-            {
-                connection.Close();
-                return false;
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return true;
-        }
-
-        public bool CreateGodisnjiDetalji(Godisnji_detalji detalji)
-        {
-            try
-            {
-                this.Connect();
-                using (MySqlCommand command = new MySqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandText = "INSERT INTO godisnji_detalji " +
-                        /*"(id_god, id_pedagog, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati) " +*/
-                        " VALUES (@id_god, @mjesec, @naziv_mjeseca, @ukupno_dana, @radnih_dana, @subota_dana, @blagdana_dana, @nastavnih_dana" +
-                        ", @praznika_dana, @br_sati, @odmor_dana, @odmor_sati, @mj_fond_sati, @br_rad_dana_sk_god, @br_dana_god_odmor, @ukupno_rad_dana" +
-                        ", @god_fond_sati)";
-                    command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@id_god", detalji.Id_god);
-                    
-                    command.Parameters.AddWithValue("@mjesec", detalji.Mjesec);
-                    command.Parameters.AddWithValue("@naziv_mjeseca", detalji.Naziv_mjeseca);
-                    command.Parameters.AddWithValue("@ukupno_dana", detalji.Ukupno_dana);
-                    command.Parameters.AddWithValue("@radnih_dana", detalji.Radnih_dana);
-                    command.Parameters.AddWithValue("@subota_dana", detalji.Subota_dana);
-                    command.Parameters.AddWithValue("@blagdana_dana", detalji.Blagdana_dana);
-                    command.Parameters.AddWithValue("@nastavnih_dana", detalji.Nastavnih_dana);
-                    command.Parameters.AddWithValue("@praznika_dana", detalji.Praznika_dana);
-                    command.Parameters.AddWithValue("@br_sati", detalji.Br_sati);
-                    command.Parameters.AddWithValue("@odmor_dana", detalji.Odmor_dana);
-                    command.Parameters.AddWithValue("@odmor_sati", detalji.Odmor_sati);
-                    command.Parameters.AddWithValue("@mj_fond_sati", detalji.Mj_fond_sati);
-                    command.Parameters.AddWithValue("@br_rad_dana_sk_god", detalji.Br_rad_dana_sk_god);
-                    command.Parameters.AddWithValue("@br_dana_god_odmor", detalji.Br_dana_god_odmor);
-                    command.Parameters.AddWithValue("@ukupno_rad_dana", detalji.Ukupno_rad_dana);
-                    command.Parameters.AddWithValue("@god_fond_sati", detalji.God_fond_sati);
-                    connection.Open();
                     command.ExecuteNonQuery();
                 }
             }

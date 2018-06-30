@@ -1,64 +1,483 @@
-﻿@model Planiranje.Models.Godisnji_plan
+﻿@model Planiranje.Models.ViewModel
 
 @{
-    Layout = null;
+	Page.Title = ViewBag.Title;
 }
 
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Novi godišnji plan</h4>
-        </div>
-        @using (Ajax.BeginForm("NoviPlan", "GodisnjiPlan", new AjaxOptions
-            {
-                HttpMethod = "Post",
-                OnSuccess = "CreateSuccess"
-            }, new { @class = "form-horizontal", role = "form" }))
-        {
-        <div class="modal-body">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id_god, new { Value = 0 })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Br_dana_godina_odmor, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Br_dana_godina_odmor, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Br_dana_godina_odmor, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Ak_godina, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Ak_godina, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Ak_godina, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Br_radnih_dana, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Br_radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Br_radnih_dana, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.God_fond_sati, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.God_fond_sati, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.God_fond_sati, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Ukupni_rad_dana, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Ukupni_rad_dana, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Ukupni_rad_dana, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                <input type="submit" class="btn btn-primary" value="Spremi" />
-            </div>
-        </div>
-        }
-    </div>
+@Html.Raw(TempData["alert"])
+<div class="inner" style="margin-top:55px;">
+	<div class="row">
+		<div class="col-lg-12">
+			<h3> Novi godisnji plan </h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					@using (Ajax.BeginForm("NoviPlan", "MjesecniPlan", new AjaxOptions
+	{
+		HttpMethod = "Post",
+		OnSuccess = "CreateSuccess"
+	}, new { @class = "form-horizontal", role = "form" }))
+	{
+
+
+
+				<div class="modal-body">
+					@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+					@Html.HiddenFor(model => model.GodisnjiPlan.Id_god, new { Value = 0 })
+					<div class="form-group">
+						@Html.LabelFor(model => model.GodisnjiPlan.Br_dana_godina_odmor, htmlAttributes: new { @class = "control-label col-md-4" })
+						<div class="col-md-8">
+							@Html.EditorFor(model => model.GodisnjiPlan.Br_dana_godina_odmor, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.GodisnjiPlan.Br_dana_godina_odmor, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.GodisnjiPlan.Ak_godina, htmlAttributes: new { @class = "control-label col-md-4" })
+						<div class="col-md-8">
+							@Html.EditorFor(model => model.GodisnjiPlan.Ak_godina, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.GodisnjiPlan.Ak_godina, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.GodisnjiPlan.Br_radnih_dana, htmlAttributes: new { @class = "control-label col-md-4" })
+						<div class="col-md-8">
+							@Html.EditorFor(model => model.GodisnjiPlan.Br_radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.GodisnjiPlan.Br_radnih_dana, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.GodisnjiPlan.God_fond_sati, htmlAttributes: new { @class = "control-label col-md-4" })
+						<div class="col-md-8">
+							@Html.EditorFor(model => model.GodisnjiPlan.God_fond_sati, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.GodisnjiPlan.God_fond_sati, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.GodisnjiPlan.Ukupni_rad_dana, htmlAttributes: new { @class = "control-label col-md-4" })
+						<div class="col-md-8">
+							@Html.EditorFor(model => model.GodisnjiPlan.Ukupni_rad_dana, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.GodisnjiPlan.Ukupni_rad_dana, "", new { @class = "text-danger" })
+						</div>
+					</div>
+				</div>
+				<hr>
+
+				<div id="exTab2" class="">
+					<ul class="nav nav-tabs">
+						<li class="active">
+							<a href="#1" data-toggle="tab">Sijecanj</a>
+						</li>
+						<li>
+							<a href="#2" data-toggle="tab">Veljaca</a>
+						</li>
+						<li>
+							<a href="#3" data-toggle="tab">Ozujak</a>
+						</li>
+						<li>
+							<a href="#4" data-toggle="tab">Travanj</a>
+						</li>
+						<li>
+							<a href="#5" data-toggle="tab">Svibanj</a>
+						</li>
+						<li>
+							<a href="#6" data-toggle="tab">Lipanj</a>
+						</li>
+						<li>
+							<a href="#7" data-toggle="tab">Srpanj</a>
+						</li>
+						<li>
+							<a href="#8" data-toggle="tab">Kolovoz</a>
+						</li>
+						<li>
+							<a href="#9" data-toggle="tab">Rujan</a>
+						</li>
+						<li>
+							<a href="#10" data-toggle="tab">Listopad</a>
+						</li>
+						<li>
+							<a href="#11" data-toggle="tab">Studeni</a>
+						</li>
+						<li>
+							<a href="#12" data-toggle="tab">Prosinac</a>
+						</li>
+					</ul>
+
+					<div class="tab-content ">
+						<div class="tab-pane active" id="1">
+							<div class="row">
+
+								@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+								<div class="form-group">
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Blagdana_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Br_dana_god_odmor, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Br_dana_god_odmor, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Br_dana_god_odmor, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Br_rad_dana_sk_god, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Br_rad_dana_sk_god, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Br_rad_dana_sk_god, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].God_fond_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].God_fond_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].God_fond_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Br_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Br_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Br_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Mjesec, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Mjesec, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Mjesec, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Mj_fond_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Mj_fond_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Mj_fond_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Nastavnih_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Naziv_mjeseca, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Naziv_mjeseca, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Naziv_mjeseca, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Odmor_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Odmor_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Odmor_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Odmor_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Praznika_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Radnih_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Subota_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Ukupno_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Ukupno_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Ukupno_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[0].Ukupno_rad_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[0].Ukupno_rad_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Ukupno_rad_dana, "", new { @class = "text-danger" })
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="2">
+							<div class="row">
+
+								@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+								<div class="form-group">
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Blagdana_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Br_dana_god_odmor, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Br_dana_god_odmor, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Br_dana_god_odmor, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Br_rad_dana_sk_god, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Br_rad_dana_sk_god, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Br_rad_dana_sk_god, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].God_fond_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].God_fond_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].God_fond_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Br_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Br_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Br_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Mjesec, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Mjesec, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Mjesec, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Mj_fond_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Mj_fond_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Mj_fond_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Nastavnih_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Naziv_mjeseca, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Naziv_mjeseca, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Naziv_mjeseca, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Odmor_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Odmor_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Odmor_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Odmor_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Praznika_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Radnih_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Subota_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Ukupno_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Ukupno_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Ukupno_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[1].Ukupno_rad_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[1].Ukupno_rad_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Ukupno_rad_dana, "", new { @class = "text-danger" })
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="3">
+							<div class="row">
+
+								@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+								<div class="form-group">
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Blagdana_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Br_dana_god_odmor, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Br_dana_god_odmor, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Br_dana_god_odmor, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Br_rad_dana_sk_god, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Br_rad_dana_sk_god, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Br_rad_dana_sk_god, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].God_fond_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].God_fond_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].God_fond_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Br_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Br_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Br_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Mjesec, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Mjesec, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Mjesec, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Mj_fond_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Mj_fond_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Mj_fond_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Nastavnih_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Naziv_mjeseca, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Naziv_mjeseca, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Naziv_mjeseca, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Odmor_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Odmor_sati, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Odmor_sati, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Odmor_sati, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Praznika_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Radnih_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Subota_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Ukupno_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Ukupno_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Ukupno_dana, "", new { @class = "text-danger" })
+									</div>
+									@Html.LabelFor(model => model.GodisnjiDetalji[2].Ukupno_rad_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+									<div class="col-md-2">
+										@Html.EditorFor(model => model.GodisnjiDetalji[2].Ukupno_rad_dana, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Ukupno_rad_dana, "", new { @class = "text-danger" })
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="4">
+							<h3>add clearfix to tab-content (see the css)</h3>
+						</div>
+						<div class="tab-pane" id="5">
+							<h3>add clearfix to tab-content (see the css)</h3>
+						</div>
+						<div class="tab-pane" id="6">
+							<h3>add clearfix to tab-content (see the css)</h3>
+						</div>
+						<div class="tab-pane" id="7">
+							<h3>add clearfix to tab-content (see the css)</h3>
+						</div>
+						<div class="tab-pane" id="8">
+							<h3>add clearfix to tab-content (see the css)</h3>
+						</div>
+						<div class="tab-pane" id="9">
+							<h3>add clearfix to tab-content (see the css)</h3>
+						</div>
+						<div class="tab-pane" id="10">
+							<h3>add clearfix to tab-content (see the css)</h3>
+						</div>
+						<div class="tab-pane" id="11">
+							<h3>add clearfix to tab-content (see the css)</h3>
+						</div>
+						<div class="tab-pane" id="12">
+							<h3>add clearfix to tab-content (see the css)</h3>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+					<input type="submit" class="btn btn-primary" value="Spremi" />
+				</div>
+
+}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+		<script>
+			var rowDelete;
+			$(document).ready(function () {
+				$("#btnCreateAsset").click(function (e) {
+					var url = $(this).attr("data-url");
+					$.ajax({
+						url: url,
+						success: function (data) {
+							$('#assetContainer').html(data);
+							$('#assetModal').modal('show');
+						},
+						error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+					});
+				});
+
+				$('#dataTables-example').on("click", "#editAsset", function (event) {
+					event.preventDefault();
+					var url = $(this).attr("data-url");
+					$.get(url, function (data) {
+						$('#assetContainer').html(data);
+						$('#assetModal').modal('show');
+					});
+				});
+
+				$('#dataTables-example').on("click", "#deleteAsset", function (event) {
+					event.preventDefault();
+					var url = $(this).attr("data-url");
+					$.get(url, function (data) {
+						$('#assetContainer').html(data);
+						$('#assetModal').modal('show');
+					});
+				});
+
+				$('#dataTables-example').on("click", "#detailsAsset", function (event) {
+					event.preventDefault();
+					var url = $(this).attr("data-url");
+					$.get(url, function (data) {
+						$('#assetContainer').html(data);
+						$('#assetModal').modal('show');
+					});
+				});
+			});
+		</script>
+
+		<script type="text/javascript">
+			function CreateSuccess() {
+				$('#assetModal').modal('hide');
+				$('#assetContainer').html("");
+				location.reload(true);
+			}
+
+			function EditSuccess() {
+				$('#assetModal').modal('hide');
+				$('#assetContainer').html("");
+				location.reload(true);
+			}
+
+			function DeleteSuccess() {
+				location.reload(true);
+			}
+
+			function DetailsSuccess() {
+				$('#assetModal').modal('hide');
+				$('#assetContainer').html("");
+				location.reload(true);
+			}
+		</script>
