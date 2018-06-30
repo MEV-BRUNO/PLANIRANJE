@@ -23,10 +23,13 @@ namespace Planiranje.Models
         [Required]
 		[DisplayName("Radnih dana")]
 		public int Radnih_dana { get; set; }
-        [Required]
+		[Required]
 		[DisplayName("Subota")]
 		public int Subota_dana { get; set; }
-        [Required]
+		[Required]
+		[DisplayName("Nedjelja")]
+		public int Nedjelja_dana { get; set; }
+		[Required]
 		[DisplayName("Blagdana")]
 		public int Blagdana_dana { get; set; }
         [Required]
@@ -47,17 +50,5 @@ namespace Planiranje.Models
         [Required]
 		[DisplayName("Fond sati")]
 		public int Mj_fond_sati { get; set; }
-        [Required]
-		[DisplayName("Sk. godina dana")]
-		public int Br_rad_dana_sk_god { get; set; }
-        [Required]
-		[DisplayName("Godisnji odmor")]
-		public int Br_dana_god_odmor { get; set; }
-        [Required]
-		[DisplayName("Ukupno rad. dana")]
-		public int Ukupno_rad_dana { get; set; }
-        [Required]
-		[DisplayName("G. fond sati")]
-		public int God_fond_sati { get; set; }
     }
 }
