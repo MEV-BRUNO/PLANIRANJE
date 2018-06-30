@@ -14,27 +14,6 @@ CREATE TABLE ciljevi (
   PRIMARY KEY (id_cilj)
 );
 
-CREATE TABLE godisnji_detalji (
-  id_god int(11) NOT NULL AUTO_INCREMENT,
-  mjesec int(11) NOT NULL,
-  naziv_mjeseca varchar(25) NOT NULL,
-  ukupno_dana int(11) NOT NULL,
-  radnih_dana int(11) NOT NULL,
-  subota_dana int(11) NOT NULL,
-  blagdana_dana int(11) NOT NULL,
-  nastavnih_dana int(11) NOT NULL,
-  praznika_dana int(11) NOT NULL,
-  br_sati int(11) DEFAULT NULL,
-  odmor_dana int(11) DEFAULT NULL,
-  odmor_sati int(11) DEFAULT NULL,
-  mj_fond_sati int(11) DEFAULT NULL,
-  br_rad_dana_sk_god int(11) DEFAULT NULL,
-  br_dana_god_odmor int(11) NOT NULL,
-  ukupno_rad_dana int(11) NOT NULL,
-  god_fond_sati int(11) NOT NULL,
-  PRIMARY KEY (id_god)
-);
-
 CREATE TABLE oblici (
   id_oblici int(11) NOT NULL AUTO_INCREMENT,
   naziv varchar(50),
@@ -141,6 +120,29 @@ CREATE TABLE godisnji_plan (
   PRIMARY KEY (id_god),
   KEY id_pedagog (id_pedagog),
   CONSTRAINT godisnji_plan_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
+);
+
+CREATE TABLE godisnji_detalji (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  id_god int(11) NOT NULL,
+  mjesec int(11) NOT NULL,
+  naziv_mjeseca varchar(25) NOT NULL,
+  ukupno_dana int(11) NOT NULL,
+  radnih_dana int(11) NOT NULL,
+  subota_dana int(11) NOT NULL,
+  blagdana_dana int(11) NOT NULL,
+  nastavnih_dana int(11) NOT NULL,
+  praznika_dana int(11) NOT NULL,
+  br_sati int(11) DEFAULT NULL,
+  odmor_dana int(11) DEFAULT NULL,
+  odmor_sati int(11) DEFAULT NULL,
+  mj_fond_sati int(11) DEFAULT NULL,
+  br_rad_dana_sk_god int(11) DEFAULT NULL,
+  br_dana_god_odmor int(11) NOT NULL,
+  ukupno_rad_dana int(11) NOT NULL,
+  god_fond_sati int(11) NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT g_plan_det FOREIGN KEY (id_god) REFERENCES godisnji_plan(id_god)
 );
 
 CREATE TABLE aktivnost_akcija (
