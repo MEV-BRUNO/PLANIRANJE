@@ -8,10 +8,12 @@ using System.Web;
 namespace Planiranje.Models
 {
     public class Godisnji_detalji
-    {
-        [Required]
-        public int Id_god { get; set; }
-        [Required]
+	{
+		[Required]
+		public int Id { get; set; }
+		[Required]
+		public int Id_god { get; set; }
+		[Required]
 		[DisplayName("Mjesec")]
 		public int Mjesec { get; set; }
         [Required]
