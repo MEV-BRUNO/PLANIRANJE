@@ -108,24 +108,23 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Godisnji_plan godisnji_plan = new Godisnji_plan();
-            godisnji_plan = godisnji_planovi.ReadGodisnjiPlan(id);
+			ViewModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
-                return View("Uredi", godisnji_plan);
+                return View("Uredi", detalji);
             }
-            return View("Uredi", godisnji_plan);
+            return View("Uredi", detalji);
         }
 
         [HttpPost]
-        public ActionResult Edit(Godisnji_plan godisnji_plan)
+        public ActionResult Edit(ViewModel model)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!godisnji_planovi.UpdateGodisnjiPlan(godisnji_plan))
+            if (!godisnji_planovi.UpdateGodisnjiPlan(model))
 			{
 				TempData["alert"] = "<script>alert('Godisnji plan nije promjenjen!');</script>";
 			}
@@ -175,12 +174,9 @@ namespace Planiranje.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public FileStreamResult Ispis()
+		public FileStreamResult Ispis(int id)
 		{
-			List<Godisnji_plan> planovi = godisnji_planovi.ReadGodisnjePlanove();
-            List<Godisnji_detalji> detalji = godisnji_planovi.ReadGodisnjeDetalje();
-
-			GodisnjiPlanReport report = new GodisnjiPlanReport(planovi, detalji);
+			GodisnjiPlanReport report = new GodisnjiPlanReport(godisnji_planovi.ReadGodisnjiDetalji(id));
 
 			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
 		}
@@ -191,9 +187,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Godisnji_detalji detalji = new Godisnji_detalji();
-            detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
-            detalji.Id_god = id;
+			ViewModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
@@ -203,30 +197,31 @@ namespace Planiranje.Controllers
         }
 
         [HttpPost]
-        public ActionResult Details(Godisnji_detalji detalji)
+        public ActionResult Details(List<Godisnji_detalji> detalji)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Godisnji_detalji g = godisnji_planovi.ReadGodisnjiDetalji(detalji.Id_god);
-            if (g.Id_god==0)
-            {
-                /*if (!godisnji_planovi.CreateGodisnjiDetalji(detalji))
-                {
-                    if (godisnji_planovi.UpdateGodisnjiDetalji(detalji))
-                    {
-                        TempData["alert"] = "<script>alert('Detalji su uspjesno promijenjeni!');</script>";
-                        return RedirectToAction("Index");
-                    }
-                    TempData["alert"] = "<script>alert('Detalji nisu dodani zbog greske!');</script>";
-                }
-                else
-                {
-                    TempData["alert"] = "<script>alert('Detalji su uspjesno dodani!');</script>";
-                }*/
-                return RedirectToAction("Index");
-            }
+            //List<Godisnji_detalji> det = godisnji_planovi.ReadGodisnjiDetalji(detalji.Id_god);
+			//if (g.Id_god==0)
+			//{
+			/*if (!godisnji_planovi.CreateGodisnjiDetalji(detalji))
+			{
+				if (godisnji_planovi.UpdateGodisnjiDetalji(detalji))
+				{
+					TempData["alert"] = "<script>alert('Detalji su uspjesno promijenjeni!');</script>";
+					return RedirectToAction("Index");
+				}
+				TempData["alert"] = "<script>alert('Detalji nisu dodani zbog greske!');</script>";
+			}
+			else
+			{
+				TempData["alert"] = "<script>alert('Detalji su uspjesno dodani!');</script>";
+			}*/
+
+			return View("Index");
+			/*}
             else
             {
                 if (!godisnji_planovi.UpdateGodisnjiDetalji(detalji))
@@ -238,7 +233,7 @@ namespace Planiranje.Controllers
                     TempData["alert"] = "<script>alert('Detalji su uspjesno promijenjeni!');</script>";
                 }
                 return RedirectToAction("Index");
-            }
-        }
+            }*/
+		}
     }
 }
