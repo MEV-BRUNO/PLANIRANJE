@@ -291,7 +291,7 @@ namespace Planiranje.Models
 						command.Parameters.AddWithValue("@blagdana_dana", detalj.Blagdana_dana);
 						command.Parameters.AddWithValue("@nastavnih_dana", detalj.Nastavnih_dana);
 						command.Parameters.AddWithValue("@praznika_dana", detalj.Praznika_dana);
-						command.Parameters.AddWithValue("@ukupno_dana", (detalj.Radnih_dana + detalj.Subota_dana + detalj.Nedjelja_dana + detalj.Blagdana_dana + detalj.Nastavnih_dana + detalj.Praznika_dana));
+						command.Parameters.AddWithValue("@ukupno_dana", (detalj.Radnih_dana + detalj.Subota_dana + detalj.Nedjelja_dana + detalj.Blagdana_dana));
 						command.Parameters.AddWithValue("@br_sati", detalj.Radnih_dana * 8);
 						command.Parameters.AddWithValue("@odmor_dana", detalj.Odmor_dana);
 						command.Parameters.AddWithValue("@odmor_sati", detalj.Odmor_dana * 8);
@@ -401,7 +401,7 @@ namespace Planiranje.Models
 						command.Parameters.AddWithValue("@blagdana_dana", detalj.Blagdana_dana);
 						command.Parameters.AddWithValue("@nastavnih_dana", detalj.Nastavnih_dana);
 						command.Parameters.AddWithValue("@praznika_dana", detalj.Praznika_dana);
-						command.Parameters.AddWithValue("@ukupno_dana", (detalj.Radnih_dana + detalj.Subota_dana + detalj.Nedjelja_dana + detalj.Blagdana_dana + detalj.Nastavnih_dana + detalj.Praznika_dana));
+						command.Parameters.AddWithValue("@ukupno_dana", (detalj.Radnih_dana + detalj.Subota_dana + detalj.Nedjelja_dana + detalj.Blagdana_dana));
 						command.Parameters.AddWithValue("@br_sati", detalj.Radnih_dana * 8);
 						command.Parameters.AddWithValue("@odmor_dana", detalj.Odmor_dana);
 						command.Parameters.AddWithValue("@odmor_sati", detalj.Odmor_dana * 8);
