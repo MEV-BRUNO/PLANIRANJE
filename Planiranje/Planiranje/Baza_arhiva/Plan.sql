@@ -130,6 +130,7 @@ CREATE TABLE godisnji_detalji (
   ukupno_dana int(11) NOT NULL,
   radnih_dana int(11) NOT NULL,
   subota_dana int(11) NOT NULL,
+  nedjelja_dana int(11) NOT NULL,
   blagdana_dana int(11) NOT NULL,
   nastavnih_dana int(11) NOT NULL,
   praznika_dana int(11) NOT NULL,
@@ -137,12 +138,8 @@ CREATE TABLE godisnji_detalji (
   odmor_dana int(11) DEFAULT NULL,
   odmor_sati int(11) DEFAULT NULL,
   mj_fond_sati int(11) DEFAULT NULL,
-  br_rad_dana_sk_god int(11) DEFAULT NULL,
-  br_dana_god_odmor int(11) NOT NULL,
-  ukupno_rad_dana int(11) NOT NULL,
-  god_fond_sati int(11) NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT g_plan_det FOREIGN KEY (id_god) REFERENCES godisnji_plan(id_god)
+  CONSTRAINT g_plan_det FOREIGN KEY (id_god) REFERENCES godisnji_plan(id_god) ON DELETE CASCADE
 );
 
 CREATE TABLE aktivnost_akcija (
