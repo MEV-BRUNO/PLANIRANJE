@@ -21,8 +21,6 @@
 							<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "GodisnjiPlan")" id="btnCreateAsset">
 								Novi plan
 							</button>
-							<span class="glyphicon glyphicon-print"></span>
-							@Html.ActionLink("Ispiši listu", "Ispis", new { target = "blank" })
 						</div>
 						<div class="pull-right">
 							@using (Html.BeginForm("Index", "GodisnjiPlan", FormMethod.Get))
@@ -81,7 +79,16 @@
 				$('#assetContainer').html(data);
 				$('#assetModal').modal('show');
 			});
-		});
+        });
+
+        $('#dataTables-example').on("click", "#detailsAsset", function (event) {
+            event.preventDefault();
+            var url = $(this).attr("data-url");
+            $.get(url, function (data) {
+                $('#assetContainer').html(data);
+                $('#assetModal').modal('show');
+            });
+        });
 	});
 </script>
 
@@ -100,5 +107,11 @@
 
 	function DeleteSuccess() {
 		location.reload(true);
-	}
+    }
+
+    function DetailsSuccess() {
+        $('#assetModal').modal('hide');
+        $('#assetContainer').html("");
+        location.reload(true);
+    }
 </script>

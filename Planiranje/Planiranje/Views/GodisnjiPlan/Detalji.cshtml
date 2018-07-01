@@ -1,0 +1,155 @@
+﻿@model Planiranje.Models.ViewModel
+
+@{
+	Page.Title = ViewBag.Title;
+}
+
+
+@Html.Raw(TempData["alert"])
+<div class="inner" style="margin-top:55px;">
+	<div class="row">
+		<div class="col-lg-11">
+			<h3> Detalji @Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Ak_godina) </h3>
+		</div>
+
+		<div class="pull-right col-lg-1">
+			<span class="glyphicon glyphicon-print"></span>
+			@Html.ActionLink("Ispiši listu", "Ispis", new { id = @Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Id_god) })
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<table style="width:100%; border:solid">
+						<tr>
+							<th class="col-lg-1">Mjesec</th>
+							<th class="col-lg-1">Ukupno</th>
+							<th class="col-lg-1">Radnih</th>
+							<th class="col-lg-1">Subota</th>
+							<th class="col-lg-1">Nedjelja</th>
+							<th class="col-lg-1">Blagdana</th>
+							<th class="col-lg-1">Nastavnih</th>
+							<th class="col-lg-1">Praznika</th>
+							<th class="col-lg-1">Sati</th>
+							<th class="col-lg-1">Dani odmora</th>
+							<th class="col-lg-1">Sati odmora</th>
+							<th class="col-lg-1">Mjesecni fond sati</th>
+						</tr>
+						@foreach (var item in Model.GodisnjiDetalji)
+		{
+				<tr>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Naziv_mjeseca)</td>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Ukupno_dana)</td>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Radnih_dana)</td>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Subota_dana)</td>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Nedjelja_dana)</td>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Blagdana_dana)</td>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Nastavnih_dana)</td>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Praznika_dana)</td>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Br_sati)</td>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Odmor_dana)</td>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Odmor_sati)</td>
+					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Mj_fond_sati)</td>
+				</tr>
+}
+					</table>
+					<br><br>
+					<table style="width:33%; border:solid">
+						<tr>
+							<th class="col-lg-1">Broj dana GO</th>
+							<td class="col-lg-1">@Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Br_dana_godina_odmor)</td>
+						</tr>
+						<tr>
+							<th class="col-lg-1">Broj radnih dana</th>
+							<td class="col-lg-1">@Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Br_radnih_dana)</td>
+						</tr>
+						<tr>
+							<th class="col-lg-1">Ukupno radnih dana</th>
+							<td class="col-lg-1">@Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Ukupni_rad_dana)</td>
+						</tr>
+						<tr>
+							<th class="col-lg-1">Godisnji fond sati</th>
+							<td class="col-lg-1">@Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.God_fond_sati)</td>
+						</tr>
+
+					</table>
+
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	var rowDelete;
+	$(document).ready(function () {
+		$("#btnCreateAsset").click(function (e) {
+			var url = $(this).attr("data-url");
+			$.ajax({
+				url: url,
+				success: function (data) {
+					$('#assetContainer').html(data);
+					$('#assetModal').modal('show');
+				},
+				error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+			});
+		});
+
+		$('#dataTables-example').on("click", "#editAsset", function (event) {
+			event.preventDefault();
+			var url = $(this).attr("data-url");
+			$.get(url, function (data) {
+				$('#assetContainer').html(data);
+				$('#assetModal').modal('show');
+			});
+		});
+
+		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
+			event.preventDefault();
+			var url = $(this).attr("data-url");
+			$.get(url, function (data) {
+				$('#assetContainer').html(data);
+				$('#assetModal').modal('show');
+			});
+		});
+
+		$('#dataTables-example').on("click", "#detailsAsset", function (event) {
+			event.preventDefault();
+			var url = $(this).attr("data-url");
+			$.get(url, function (data) {
+				$('#assetContainer').html(data);
+				$('#assetModal').modal('show');
+			});
+		});
+	});
+</script>
+
+<script type="text/javascript">
+	function CreateSuccess() {
+		$('#assetModal').modal('hide');
+		$('#assetContainer').html("");
+		location.reload(true);
+	}
+
+	function EditSuccess() {
+		$('#assetModal').modal('hide');
+		$('#assetContainer').html("");
+		location.reload(true);
+	}
+
+	function DeleteSuccess() {
+		location.reload(true);
+	}
+
+	function DetailsSuccess() {
+		$('#assetModal').modal('hide');
+		$('#assetContainer').html("");
+		location.reload(true);
+	}
+</script>

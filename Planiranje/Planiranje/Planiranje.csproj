@@ -246,6 +246,7 @@
     <Compile Include="Models\SS_Plan_podrucje.cs" />
     <Compile Include="Models\Subjekti.cs" />
     <Compile Include="Models\Subjekt_DBHandle.cs" />
+    <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Models\Zadaci.cs" />
     <Compile Include="Models\Zadaci_DBHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -371,6 +372,7 @@
     <Content Include="Views\Ciljevi\Obrisi.cshtml" />
     <Content Include="Views\Ciljevi\Table.cshtml" />
     <Content Include="Views\Ciljevi\Uredi.cshtml" />
+    <Content Include="Views\GodisnjiPlan\Detalji.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

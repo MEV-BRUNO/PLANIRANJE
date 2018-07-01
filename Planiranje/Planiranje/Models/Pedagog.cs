@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -15,10 +16,12 @@ namespace Planiranje.Models
         public string Ime { get; set; }
         [Required]
         public string Prezime { get; set; }
-        [Required]
-        [DataType(DataType.EmailAddress)]
+		[Required(ErrorMessage = "Email adresa je obavezna.")]
+		[DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-        [Required]
+		[DisplayName("Password")]
+		[Required(ErrorMessage = "Lozinka je obavezna.")]
+		[StringLength(12, MinimumLength = 6, ErrorMessage = "Lozinka mora biti izmedju 6 i 12 znakova")]
 		public string Lozinka { get; set; }
 		[Required]
         [DataType(DataType.DateTime)]
