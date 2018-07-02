@@ -26,6 +26,7 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult Prijava(Pedagog p)
 		{
+			ViewBag.Message = null;
 			Pedagog pedagog = baza.Pedagog.SingleOrDefault(ped => ped.Email == p.Email && ped.Lozinka == p.Lozinka);
 			if (pedagog != null)
 			{
@@ -34,6 +35,7 @@ namespace Planiranje.Controllers
 			}
 			else
 			{
+				ViewBag.Message = "Korisnik nije pronadjen!";
 				return View("Prijava");
 			}
 		}
