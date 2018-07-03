@@ -26,7 +26,14 @@
 					<div style="margin-bottom:10px" class="text-center">
 						<img src="../assets/img/logo.png" id="logoimg" alt=" Logo" />
 					</div>
-					<div class="alert alert-info text-center" role="alert">Upišite korisničko ime i lozinku</div>
+					@if (ViewBag.Message != null)
+					{
+						<div class="alert alert-danger text-center" role="alert">@ViewBag.Message</div>
+					}
+					else
+					{
+						<div class="alert alert-info text-center" role="alert">Upišite korisničko ime i lozinku</div>
+					}
 					@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 					@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail adresa", style = "max-width:100%; margin:10px auto;" } })
 
