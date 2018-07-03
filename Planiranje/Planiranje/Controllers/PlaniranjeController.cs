@@ -64,7 +64,7 @@ namespace Planiranje.Controllers
             Pedagog pedagog = baza.Pedagog.SingleOrDefault(ped => ped.Email == p.Email);
             if (pedagog == null)
             {
-                ViewBag.Title = "Zaboravljena lozinka";
+                ViewBag.Message = "Korisnik ne postoji";
                 return View();
             }
             string[] abeceda = { "a","b", "c", "d", "e", "f", "g" };
@@ -98,7 +98,7 @@ namespace Planiranje.Controllers
                 }            
 
             baza.SaveChanges();
-            return View("Prijava");
+            return RedirectToAction("Prijava");
         }
 		public ActionResult Registracija()
 		{
