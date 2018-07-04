@@ -232,7 +232,6 @@
     <Compile Include="Models\Godisnji_plan.cs" />
     <Compile Include="Models\OS_Plan_1.cs" />
     <Compile Include="Models\Pedagog.cs" />
-    <Compile Include="Models\Pedagog_DBHandle.cs" />
     <Compile Include="Models\Podrucje_rada.cs" />
     <Compile Include="Models\Podrucje_rada_DBHandle.cs" />
     <Compile Include="Models\Skola.cs" />

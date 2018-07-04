@@ -6,14 +6,14 @@ using Planiranje.Models;
 using System.Web.Security;
 using System.Runtime.Remoting.Messaging;
 using System.Net.Mail;
-
+using System.Data.SqlClient;
 
 namespace Planiranje.Controllers
 {
 	public class PlaniranjeController : Controller
     {
 		private BazaPodataka baza = new BazaPodataka();
-        private Pedagog_DBHandle pedagog_db = new Pedagog_DBHandle();
+        
 
 		[HttpGet]
 		public ActionResult Prijava()
@@ -64,7 +64,7 @@ namespace Planiranje.Controllers
             Pedagog pedagog = baza.Pedagog.SingleOrDefault(ped => ped.Email == p.Email);
             if (pedagog == null)
             {
-                ViewBag.Title = "Zaboravljena lozinka";
+                ViewBag.Message = "Korisnik ne postoji";
                 return View();
             }
             string[] abeceda = { "a","b", "c", "d", "e", "f", "g" };
@@ -75,8 +75,11 @@ namespace Planiranje.Controllers
                 lozinka += abeceda[r.Next(0, abeceda.Length-1)];
             }
             pedagog.Lozinka = lozinka;
-            if (pedagog_db.UpdatePedagog(pedagog))
-            {
+
+            baza.Pedagog.SqlQuery("UPDATE pedagog SET lozinka = @lozinka WHERE email = @email", new SqlParameter("@email",pedagog.Email)
+                ,new SqlParameter("@lozinka",pedagog.Lozinka));
+            
+
                 MailMessage mail = new MailMessage("noreply@planiranje.com", pedagog.Email,
                     "Podaci o promjeni lozinke", "Vaša nova lozinka je " + lozinka + ". Molimo promijenite je u što kraćem roku.");
                 SmtpClient smtp = new SmtpClient("smtp.gmail.com");
@@ -92,16 +95,10 @@ namespace Planiranje.Controllers
                 catch
                 {
 
-                }
-            }
-            else
-            {
-                ViewBag.Title = "Zaboravljena lozinka";
-                return View();
-            }
+                }            
 
             baza.SaveChanges();
-            return View("Prijava");
+            return RedirectToAction("Prijava");
         }
 		public ActionResult Registracija()
 		{
@@ -126,13 +123,10 @@ namespace Planiranje.Controllers
             p.Licenca = new DateTime(2020, 6, 14, 14, 55, 10);
             p.Aktivan = '1';
 
-            if (pedagog_db.CreatePedagog(p))
-            {                               
-                //baza.Pedagog.Add(p);
-                //PlaniranjeSession.Trenutni.PedagogId = baza.Pedagog.SingleOrDefault(pedagog => pedagog.Email == p.Email).Id_Pedagog;
-                return RedirectToAction("Prijava");
-            }
-            return RedirectToAction("Registracija");
+            baza.Pedagog.Add(p);
+            baza.SaveChanges();
+            
+            return RedirectToAction("Prijava");
         }
     }
 }
