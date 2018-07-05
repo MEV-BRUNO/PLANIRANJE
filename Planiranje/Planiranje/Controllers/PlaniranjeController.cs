@@ -104,6 +104,7 @@ namespace Planiranje.Controllers
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId == 0)
 			{
+                ViewBag.poruka = null;
 				ViewBag.Title = "Registracija";
 				return View();
 			}
@@ -130,10 +131,12 @@ namespace Planiranje.Controllers
             }
             catch
             {
+                ViewBag.poruka = "Registracija nije uspjela. Pokušajte ponovno";
                 return View("Registracija");
             }
-            
-            return RedirectToAction("Prijava");
+            ViewBag.poruka = "Registracija je uspješna. Možete se prijaviti";
+            return View();
+            //return RedirectToAction("Prijava");
         }
     }
 }
