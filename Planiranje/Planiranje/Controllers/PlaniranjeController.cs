@@ -123,8 +123,15 @@ namespace Planiranje.Controllers
             p.Licenca = new DateTime(2020, 6, 14, 14, 55, 10);
             p.Aktivan = '1';
 
-            baza.Pedagog.Add(p);
-            baza.SaveChanges();
+            try
+            {
+                baza.Pedagog.Add(p);
+                baza.SaveChanges();
+            }
+            catch
+            {
+                return View("Registracija");
+            }
             
             return RedirectToAction("Prijava");
         }
