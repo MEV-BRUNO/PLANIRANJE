@@ -94,6 +94,8 @@ namespace Planiranje.Reports
 
 			}
 
+			tt = new PdfPTable(12);
+			tt.SetWidths(new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
 			tt.AddCell(VratiCeliju("Ukupno" , tekst, false, BaseColor.WHITE));
 			tt.AddCell(VratiCeliju(uk_dana.ToString(), tekst, true, BaseColor.WHITE));
 			tt.AddCell(VratiCeliju(uk_rad_dana.ToString(), tekst, true, BaseColor.WHITE));
@@ -109,6 +111,8 @@ namespace Planiranje.Reports
 
 			pdfDokument.Add(tt);
 
+			tt = new PdfPTable(12);
+			tt.SetWidths(new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
 			tt.AddCell(VratiCeliju("Sati" , tekst, false, BaseColor.WHITE));
 			tt.AddCell(VratiCeliju((uk_dana * 8).ToString(), tekst, true, BaseColor.WHITE));
 			tt.AddCell(VratiCeliju((uk_rad_dana * 8).ToString(), tekst, true, BaseColor.WHITE));
