@@ -84,7 +84,7 @@ namespace Planiranje.Controllers
 		}
 
 		[HttpPost]
-        public ActionResult NoviPlan(ViewModel model)
+        public ActionResult NoviPlan(GodisnjiModel model)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -102,13 +102,14 @@ namespace Planiranje.Controllers
 			return RedirectToAction("Index");
         }
 
+		// UREĐIVANJE
         public ActionResult Edit(int id)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-			ViewModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
+			GodisnjiModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
@@ -118,7 +119,7 @@ namespace Planiranje.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(ViewModel model)
+        public ActionResult Edit(GodisnjiModel model)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {

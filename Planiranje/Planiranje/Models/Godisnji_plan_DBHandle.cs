@@ -108,9 +108,9 @@ namespace Planiranje.Models
             return godisnji_planovi;
 		}
 
-		public ViewModel ReadGodisnjiDetalji(int _id)
+		public GodisnjiModel ReadGodisnjiDetalji(int _id)
 		{
-			ViewModel god_detalji = new ViewModel();
+			GodisnjiModel god_detalji = new GodisnjiModel();
 			god_detalji.GodisnjiDetalji = new List<Godisnji_detalji>();
 			god_detalji.GodisnjiPlan = new Godisnji_plan();
 
@@ -199,7 +199,7 @@ namespace Planiranje.Models
 			return plan;
 		}
 
-		public bool CreateGodisnjiPlan(ViewModel model)
+		public bool CreateGodisnjiPlan(GodisnjiModel model)
 		{
 			int br_radnih_dana = 0;
 			int br_dana_godina_odmor = 0;
@@ -313,7 +313,7 @@ namespace Planiranje.Models
 			return true;
 		}
 
-        public bool UpdateGodisnjiPlan(ViewModel model)
+        public bool UpdateGodisnjiPlan(GodisnjiModel model)
         {
 
 			int br_radnih_dana = 0;

@@ -1,68 +1,70 @@
-﻿@model Planiranje.Models.ViewModel
-
+﻿@model Planiranje.Models.GodisnjiModel
 @{
 	Page.Title = ViewBag.Title;
 }
 
-
 @Html.Raw(TempData["alert"])
-<div class="inner" style="margin-top:55px;">
-	<div class="row">
-		<div class="col-lg-11">
+<div class="inner">
+	<div class="panel-body">
+		<div class="pull-left">
 			<h3> Detalji @Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Ak_godina) </h3>
 		</div>
-
-		<div class="pull-right col-lg-1">
-			<span class="glyphicon glyphicon-print"></span>
-			@Html.ActionLink("Ispiši listu", "Ispis", new { id = @Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Id_god) })
+		<div class="pull-right">
+			<input type="button" class="btn btn-danger btn-md" value="Ispiši" style="margin-top:15px" 
+				   onclick="location.href='@Url.Action("Ispis", "GodisnjiPlan", new { id = @Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Id_god) })'" />
 		</div>
+		<br>
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<table style="width:100%; border:solid">
-						<tr>
-							<th class="col-lg-1">Mjesec</th>
-							<th class="col-lg-1">Ukupno</th>
-							<th class="col-lg-1">Radnih</th>
-							<th class="col-lg-1">Subota</th>
-							<th class="col-lg-1">Nedjelja</th>
-							<th class="col-lg-1">Blagdana</th>
-							<th class="col-lg-1">Nastavnih</th>
-							<th class="col-lg-1">Praznika</th>
-							<th class="col-lg-1">Sati</th>
-							<th class="col-lg-1">Dani odmora</th>
-							<th class="col-lg-1">Sati odmora</th>
-							<th class="col-lg-1">Mjesecni fond sati</th>
-						</tr>
-						@foreach (var item in Model.GodisnjiDetalji)
-		{
-				<tr>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Naziv_mjeseca)</td>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Ukupno_dana)</td>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Radnih_dana)</td>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Subota_dana)</td>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Nedjelja_dana)</td>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Blagdana_dana)</td>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Nastavnih_dana)</td>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Praznika_dana)</td>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Br_sati)</td>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Odmor_dana)</td>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Odmor_sati)</td>
-					<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Mj_fond_sati)</td>
-				</tr>
-}
+					<table class="table table-bordered text-center" id="dataTables-example">
+						<thead>
+							<tr>
+								<td class="col-lg-1">Mjesec</td>
+								<td class="col-lg'1">Ukupno</td>
+								<td class="col-lg-1">Radnih</td>
+								<td class="col-lg-1">Subota</td>
+								<td class="col-lg-1">Nedjelja</td>
+								<td class="col-lg-1">Blagdana</td>
+								<td class="col-lg-1">Nastavnih</td>
+								<td class="col-lg'1">Praznika</td>
+								<td class="col-lg-1">Sati</td>
+								<td class="col-lg-1">Dani odmora</td>
+								<td class="col-lg-1">Sati odmora</td>
+								<td class="col-lg-1">Mj. fond sati</td>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model.GodisnjiDetalji)
+							{
+								<tr>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Naziv_mjeseca)</td>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Ukupno_dana)</td>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Radnih_dana)</td>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Subota_dana)</td>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Nedjelja_dana)</td>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Blagdana_dana)</td>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Nastavnih_dana)</td>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Praznika_dana)</td>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Br_sati)</td>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Odmor_dana)</td>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Odmor_sati)</td>
+									<td class="col-lg-1">@Html.DisplayFor(modelitem => item.Mj_fond_sati)</td>
+								</tr>
+							}
+						</tbody>
 					</table>
-					<br><br>
-					<table style="width:33%; border:solid">
-						<tr>
-							<th class="col-lg-1">Broj dana GO</th>
-							<td class="col-lg-1">@Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Br_dana_godina_odmor)</td>
-						</tr>
+					<hr>
+					<table class="table table-bordered" id="dataTables-example" style="width:33%; min-width:200px">
 						<tr>
 							<th class="col-lg-1">Broj radnih dana</th>
 							<td class="col-lg-1">@Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Br_radnih_dana)</td>
+						</tr>
+						<tr>
+							<th class="col-lg-1">Broj dana GO</th>
+							<td class="col-lg-1">@Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Br_dana_godina_odmor)</td>
 						</tr>
 						<tr>
 							<th class="col-lg-1">Ukupno radnih dana</th>

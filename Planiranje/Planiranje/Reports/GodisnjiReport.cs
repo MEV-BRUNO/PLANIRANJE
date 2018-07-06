@@ -14,7 +14,7 @@ namespace Planiranje.Reports
     {
         public byte[] Podaci { get; private set; }
 
-        public GodisnjiReport(ViewModel model)
+        public GodisnjiReport(GodisnjiModel model)
         {
 			Document document = new Document(PageSize.A4.Rotate(), 10, 10, 10, 10);
 			MemoryStream memoryStream = new MemoryStream();
