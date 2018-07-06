@@ -69,18 +69,17 @@ namespace Planiranje.Controllers
                 return View(Popis);
             }
 
-        }
-        public ActionResult NoviPlan()
-        {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
-            {
-                return RedirectToAction("Index", "Planiranje");
-            }
-            if (Request.IsAjaxRequest())
+		}
+
+		// NOVI PLAN
+		public ActionResult NoviPlan()
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
-				return View("NoviPlan");
+				return RedirectToAction("Index", "Planiranje");
 			}
-			return RedirectToAction("NoviPlan", "GodisnjiPlan");
+			ViewBag.Title = "Zaboravljena lozinka";
+			return View("NoviPlan");
 		}
 
 		[HttpPost]
@@ -136,6 +135,7 @@ namespace Planiranje.Controllers
 			return RedirectToAction("Index");
         }
 
+		// BRISANJE
         public ActionResult Delete(int id)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
@@ -175,66 +175,23 @@ namespace Planiranje.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public FileStreamResult Ispis(int id)
-		{
-			GodisnjiPlanReport report = new GodisnjiPlanReport(godisnji_planovi.ReadGodisnjiDetalji(id));
-
-			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
-		}
-
+		// DETALJI
         public ActionResult Details(int id)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-			ViewModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("Detalji", detalji);
-            }
-            return View("Detalji", detalji);
-        }
-
-        [HttpPost]
-        public ActionResult Details(List<Godisnji_detalji> detalji)
-        {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
-            {
-                return RedirectToAction("Index", "Planiranje");
-            }
-            //List<Godisnji_detalji> det = godisnji_planovi.ReadGodisnjiDetalji(detalji.Id_god);
-			//if (g.Id_god==0)
-			//{
-			/*if (!godisnji_planovi.CreateGodisnjiDetalji(detalji))
-			{
-				if (godisnji_planovi.UpdateGodisnjiDetalji(detalji))
-				{
-					TempData["alert"] = "<script>alert('Detalji su uspjesno promijenjeni!');</script>";
-					return RedirectToAction("Index");
-				}
-				TempData["alert"] = "<script>alert('Detalji nisu dodani zbog greske!');</script>";
-			}
-			else
-			{
-				TempData["alert"] = "<script>alert('Detalji su uspjesno dodani!');</script>";
-			}*/
-
-			return View("Index");
-			/*}
-            else
-            {
-                if (!godisnji_planovi.UpdateGodisnjiDetalji(detalji))
-                {
-                    TempData["alert"] = "<script>alert('Detalji nisu promijenjeni zbog greske!');</script>";
-                }
-                else
-                {
-                    TempData["alert"] = "<script>alert('Detalji su uspjesno promijenjeni!');</script>";
-                }
-                return RedirectToAction("Index");
-            }*/
+			GodisnjiModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
+			ViewBag.Title = "Detalji " + detalji.GodisnjiPlan.Ak_godina.ToString();
+			return View("Detalji", detalji);
 		}
-    }
+
+		// ISPIS
+		public FileStreamResult Ispis(int id)
+		{
+			GodisnjiReport report = new GodisnjiReport(godisnji_planovi.ReadGodisnjiDetalji(id));
+			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+		}
+	}
 }
