@@ -50,11 +50,11 @@
                 @Html.DisplayFor(modelItem => item.Ukupni_rad_dana)
             </td>
             <td>
-                <div class="pull-right">
-                    <a data-toggle="modal" data-url="@Url.Action("Edit","GodisnjiPlan",new { id = item.Id_god })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
-                    <a data-toggle="modal" data-url="@Url.Action("Delete","GodisnjiPlan",new { id = item.Id_god })" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
-                    <a data-toggle="modal" data-url="@Url.Action("Details","GodisnjiPlan",new { id = item.Id_god })" id="detailsAsset" class="btn btn-primary btn-xs ">Detalji</a>
-                </div>
+				<div class="pull-right">
+					<input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick="location.href='@Url.Action("Edit","GodisnjiPlan",new { id = item.Id_god })'" />
+					<a data-toggle="modal" data-url="@Url.Action("Delete","GodisnjiPlan",new { id = item.Id_god })" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
+					<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick="location.href='@Url.Action("Details","GodisnjiPlan",new { id = item.Id_god })'" />
+				</div>
             </td>
         </tr>
         }

@@ -18,9 +18,7 @@
 				<div class="panel-body">
 					<div>
 						<div class="pull-left">
-							<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "GodisnjiPlan")" id="btnCreateAsset">
-								Novi plan
-							</button>
+							<input type="button" class="btn btn-primary btn-md" value="Novi plan" onclick="location.href='@Url.Action("NoviPlan", "GodisnjiPlan")'" />
 						</div>
 						<div class="pull-right">
 							@using (Html.BeginForm("Index", "GodisnjiPlan", FormMethod.Get))
