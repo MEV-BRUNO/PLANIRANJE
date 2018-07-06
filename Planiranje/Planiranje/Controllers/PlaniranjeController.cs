@@ -119,7 +119,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Registracija");
             }
-            p.Titula = "student";
+            
             p.Id_skola = 1;
             p.Licenca = new DateTime(2020, 6, 14, 14, 55, 10);
             p.Aktivan = '1';
