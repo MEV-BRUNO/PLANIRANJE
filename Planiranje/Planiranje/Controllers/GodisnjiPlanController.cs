@@ -14,8 +14,26 @@ namespace Planiranje.Controllers
 {
 	public class GodisnjiPlanController : Controller
 	{
-		private Godisnji_plan_DBHandle godisnji_planovi = new Godisnji_plan_DBHandle();     
-        int Page_No_Master = 1;
+		private Godisnji_plan_DBHandle godisnji_planovi = new Godisnji_plan_DBHandle();
+		//private List<String> mjeseci_ime = new List<string>(new String[] { "Rujan", "Listopad", "Studeni", "Prosinac", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj", "Srpanj", "Kolovoz" });
+		//private List<int> mjeseci_broj = new List<int>(new int[] { 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8 });
+
+		private List<KeyValuePair<int, String>> mjeseci = new List<KeyValuePair<int, String>>() {
+			new KeyValuePair<int, String>(9, "Rujan"),
+			new KeyValuePair<int, String>(10, "Listopad"),
+			new KeyValuePair<int, String>(11, "Studeni"),
+			new KeyValuePair<int, String>(12, "Prosinac"),
+			new KeyValuePair<int, String>(1, "Siječanj"),
+			new KeyValuePair<int, String>(2, "Veljača"),
+			new KeyValuePair<int, String>(3, "Ožujak"),
+			new KeyValuePair<int, String>(4, "Travanj"),
+			new KeyValuePair<int, String>(5, "Svibanj"),
+			new KeyValuePair<int, String>(6, "Lipanj"),
+			new KeyValuePair<int, String>(7, "Srpanj"),
+			new KeyValuePair<int, String>(8, "Kolovoz"),
+		};
+
+		int Page_No_Master = 1;
 
         public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
         {
@@ -78,8 +96,23 @@ namespace Planiranje.Controllers
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			ViewBag.Title = "Zaboravljena lozinka";
-			return View("NoviPlan");
+			GodisnjiModel model = new GodisnjiModel();
+			model.GodisnjiDetalji = new List<Godisnji_detalji>();
+			for (int i = 0; i < 12; i++)
+			{
+				model.GodisnjiDetalji.Add(new Godisnji_detalji{
+					Radnih_dana = 0,
+					Subota_dana = 0,
+					Nedjelja_dana = 0,
+					Blagdana_dana = 0,
+					Nastavnih_dana = 0,
+					Praznika_dana = 0,
+					Odmor_dana = 0
+				});
+			}
+			ViewBag.Mjeseci = mjeseci;
+			ViewBag.Title = "Novi godišnji plan";
+			return View("NoviPlan", model);
 		}
 
 		[HttpPost]
@@ -89,6 +122,13 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+
+			if (model.GodisnjiPlan.Ak_godina == null)
+			{
+				ViewBag.Mjeseci = mjeseci;
+				ViewBag.Title = "Novi godišnji plan";
+				return View("NoviPlan", model);
+			}
             
             if (godisnji_planovi.CreateGodisnjiPlan(model))
 			{
@@ -109,12 +149,9 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
 			GodisnjiModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("Uredi", detalji);
-            }
-            return View("Uredi", detalji);
+           ViewBag.Mjeseci = mjeseci;
+			ViewBag.Title = "Novi godišnji plan";
+			return View("Uredi", detalji);
         }
 
         [HttpPost]
@@ -124,7 +161,16 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!godisnji_planovi.UpdateGodisnjiPlan(model))
+
+
+			if (model.GodisnjiPlan.Ak_godina == null)
+			{
+				ViewBag.Mjeseci = mjeseci;
+				ViewBag.Title = "Novi godišnji plan";
+				return View("Uredi", model);
+			}
+
+			if (!godisnji_planovi.UpdateGodisnjiPlan(model))
 			{
 				TempData["alert"] = "<script>alert('Godisnji plan nije promjenjen!');</script>";
 			}

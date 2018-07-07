@@ -49,27 +49,6 @@
 <script>
 	var rowDelete;
 	$(document).ready(function () {
-		$("#btnCreateAsset").click(function (e) {
-			var url = $(this).attr("data-url");
-			$.ajax({
-				url: url,
-				success: function (data) {
-					$('#assetContainer').html(data);
-					$('#assetModal').modal('show');
-				},
-				error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
-			});
-		});
-
-		$('#dataTables-example').on("click", "#editAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-
 		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
 			event.preventDefault();
 			var url = $(this).attr("data-url");
@@ -78,38 +57,11 @@
 				$('#assetModal').modal('show');
 			});
         });
-
-        $('#dataTables-example').on("click", "#detailsAsset", function (event) {
-            event.preventDefault();
-            var url = $(this).attr("data-url");
-            $.get(url, function (data) {
-                $('#assetContainer').html(data);
-                $('#assetModal').modal('show');
-            });
-        });
 	});
 </script>
 
 <script type="text/javascript">
-	function CreateSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function EditSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
 	function DeleteSuccess() {
 		location.reload(true);
-    }
-
-    function DetailsSuccess() {
-        $('#assetModal').modal('hide');
-        $('#assetContainer').html("");
-        location.reload(true);
     }
 </script>
