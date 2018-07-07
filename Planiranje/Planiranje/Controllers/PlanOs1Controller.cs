@@ -183,5 +183,14 @@ namespace Planiranje.Controllers
 
 			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
 		}
-	}
+
+        public ActionResult Details(int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            return View("Details");
+        }
+    }
 }
