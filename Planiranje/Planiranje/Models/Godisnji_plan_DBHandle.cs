@@ -42,12 +42,9 @@ namespace Planiranje.Models
                         {
 							Godisnji_plan plan = new Godisnji_plan()
 							{
-								//Id_pedagog = Convert.ToInt32(sdr["id_pedagog"]),
 								Redni_broj = ++id,
 								Id_god = Convert.ToInt32(sdr["id_god"]),
-                                //Naziv = sdr["naziv"].ToString(),
                                 Ak_godina = sdr["ak_godina"].ToString(),
-                                //Opis = sdr["opis"].ToString(),
                                 Br_radnih_dana = Convert.ToInt32(sdr["br_radnih_dana"]),
                                 Br_dana_godina_odmor = Convert.ToInt32(sdr["br_dana_godina_odmor"]),
                                 Ukupni_rad_dana = Convert.ToInt32(sdr["ukupni_rad_dana"]),
@@ -69,13 +66,6 @@ namespace Planiranje.Models
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                //command.CommandText = "SELECT id_plan, ak_godina, naziv, opis " +
-                //    "FROM mjesecni_plan " +
-                //    "WHERE id_pedagog = @id_pedagog " +
-                //    "AND (ak_godina like '%" + search_string + "%' " +
-                //    "OR naziv like '%" + search_string + "%' " +
-                //    "OR opis like '%" + search_string + "%') " +
-                //    "ORDER BY id_plan ASC";
                 command.CommandText = "SELECT id_god, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati " +
                     "FROM godisnji_plan " +
                     "WHERE id_pedagog = @id_pedagog " +
@@ -93,9 +83,7 @@ namespace Planiranje.Models
                             Godisnji_plan plan = new Godisnji_plan()
                             {
                                 Id_god = Convert.ToInt32(sdr["id_god"]),
-                                //Naziv = sdr["naziv"].ToString(),
                                 Ak_godina = sdr["ak_godina"].ToString(),
-                                //Opis = sdr["opis"].ToString(),
                                 Br_radnih_dana = Convert.ToInt32(sdr["br_radnih_dana"]),
                                 Br_dana_godina_odmor = Convert.ToInt32(sdr["br_dana_godina_odmor"]),
                                 Ukupni_rad_dana = Convert.ToInt32(sdr["ukupni_rad_dana"]),

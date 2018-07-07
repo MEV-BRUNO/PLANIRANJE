@@ -22,12 +22,12 @@
 						</div>
 						<div class="pull-right">
 							@using (Html.BeginForm("Index", "GodisnjiPlan", FormMethod.Get))
-		{
-					<p>
-						@Html.TextBox("Search", ViewBag.FilterValue as string, new { @class = "search-bar" })
-						<input class="btn btn-primary btn-md" type="submit" value="Trazi" />
-					</p>
-}
+							{
+								<p>
+									@Html.TextBox("Search", ViewBag.FilterValue as string, new { @class = "search-bar" })
+									<input class="btn btn-primary btn-md" type="submit" value="Trazi" />
+								</p>
+							}
 						</div>
 						<br>
 					</div>
@@ -35,7 +35,7 @@
 					<div id="Paginator">
 						Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
 						@Html.PagedListPager(Model, Page_No => Url.Action("Index",
-								  new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+									   new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
 					</div>
 					<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
 						<div id="assetContainer"></div>
@@ -45,6 +45,8 @@
 		</div>
 	</div>
 </div>
+
+
 
 <script>
 	var rowDelete;
@@ -56,12 +58,12 @@
 				$('#assetContainer').html(data);
 				$('#assetModal').modal('show');
 			});
-        });
+		});
 	});
 </script>
 
 <script type="text/javascript">
 	function DeleteSuccess() {
 		location.reload(true);
-    }
+	}
 </script>
