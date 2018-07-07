@@ -42,7 +42,7 @@
             </td>
             <td>
                 <div class="pull-right">
-                    <a data-toggle="modal" data-url="@Url.Action("Details","PlanOs1",new { id = item.Id_plan })" id="editAsset" class="btn btn-primary btn-xs ">Detalji</a>
+                    <a onclick="location.href='@Url.Action("Details","PlanOs1",new { id=item.Id_plan})'" class="btn btn-primary btn-xs ">Detalji</a>
                     <a data-toggle="modal" data-url="@Url.Action("Edit","PlanOs1",new { id = item.Id_plan })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
                     <a data-toggle="modal" data-url="@Url.Action("Delete","PlanOs1",new { id = item.Id_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
                 </div>
