@@ -35,3 +35,7 @@
 	border-style: solid;
 	margin: auto 10px;
 }
+
+.inner {
+	min-height:0px;
+}
