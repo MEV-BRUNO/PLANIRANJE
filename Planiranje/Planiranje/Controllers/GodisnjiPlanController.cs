@@ -15,8 +15,6 @@ namespace Planiranje.Controllers
 	public class GodisnjiPlanController : Controller
 	{
 		private Godisnji_plan_DBHandle godisnji_planovi = new Godisnji_plan_DBHandle();
-		//private List<String> mjeseci_ime = new List<string>(new String[] { "Rujan", "Listopad", "Studeni", "Prosinac", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj", "Srpanj", "Kolovoz" });
-		//private List<int> mjeseci_broj = new List<int>(new int[] { 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8 });
 
 		private List<KeyValuePair<int, String>> mjeseci = new List<KeyValuePair<int, String>>() {
 			new KeyValuePair<int, String>(9, "Rujan"),
@@ -149,8 +147,8 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
 			GodisnjiModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
-           ViewBag.Mjeseci = mjeseci;
-			ViewBag.Title = "Novi godišnji plan";
+			ViewBag.Mjeseci = mjeseci;
+			ViewBag.Title = "Uredi godišnji plan " + detalji.GodisnjiPlan.Ak_godina;
 			return View("Uredi", detalji);
         }
 
@@ -161,12 +159,11 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-
-
+			
 			if (model.GodisnjiPlan.Ak_godina == null)
 			{
 				ViewBag.Mjeseci = mjeseci;
-				ViewBag.Title = "Novi godišnji plan";
+				ViewBag.Title = "Uredi godišnji plan " + model.GodisnjiPlan.Ak_godina;
 				return View("Uredi", model);
 			}
 
