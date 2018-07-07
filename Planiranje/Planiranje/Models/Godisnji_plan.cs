@@ -14,7 +14,7 @@ namespace Planiranje.Models
         public int Id_god { get; set; }
 		[Required]
 		public int Id_pedagog { get; set; }
-		[Required]
+		[Required(ErrorMessage = "Obavezno polje.")]
 		[DisplayName("Akademska godina")]
 		public string Ak_godina { get; set; }
         [Required]
