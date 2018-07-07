@@ -22,6 +22,7 @@ namespace Planiranje.Models
 
         public List<Godisnji_plan> ReadGodisnjePlanove()
         {
+			int id = 0;
             List<Godisnji_plan> godisnji_planovi = new List<Godisnji_plan>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
@@ -39,10 +40,11 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            Godisnji_plan plan = new Godisnji_plan()
-                            {
-                                //Id_pedagog = Convert.ToInt32(sdr["id_pedagog"]),
-                                Id_god = Convert.ToInt32(sdr["id_god"]),
+							Godisnji_plan plan = new Godisnji_plan()
+							{
+								//Id_pedagog = Convert.ToInt32(sdr["id_pedagog"]),
+								Redni_broj = ++id,
+								Id_god = Convert.ToInt32(sdr["id_god"]),
                                 //Naziv = sdr["naziv"].ToString(),
                                 Ak_godina = sdr["ak_godina"].ToString(),
                                 //Opis = sdr["opis"].ToString(),

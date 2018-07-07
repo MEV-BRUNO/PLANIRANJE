@@ -4,7 +4,7 @@
     <thead>
         <tr>
             <td class="col-lg-1">
-                @Html.ActionLink("Id god", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                @Html.ActionLink("#", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
             </td>            
             <td class="col-lg-1">
                 @Html.ActionLink("Ak. godina", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
@@ -32,7 +32,7 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelitem => item.Id_god)
+                @Html.DisplayFor(modelitem => item.Redni_broj)
             </td>            
             <td>
                 @Html.DisplayFor(modelItem => item.Ak_godina)
