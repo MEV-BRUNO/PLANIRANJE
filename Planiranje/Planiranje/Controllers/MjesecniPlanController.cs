@@ -25,7 +25,7 @@ namespace Planiranje.Controllers
 				return RedirectToAction("Index", "Planiranje");
 			}
 			MjesecniModel mjesecniModel = new MjesecniModel();
-			ViewBag.Title = "Pregled mjesecnih planova";
+			ViewBag.Title = "Pregled mjesečnih planova";
 			ViewBag.CurrentSortOrder = Sort;
 			ViewBag.SortingName = String.IsNullOrEmpty(Sort) ? "Naziv" : "";
 
