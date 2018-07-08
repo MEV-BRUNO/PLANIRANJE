@@ -1,19 +1,19 @@
-﻿@model PagedList.IPagedList<Planiranje.Models.Mjesecni_plan>
+﻿@model Planiranje.Models.MjesecniModel
 
 <table class="table table-bordered table-hover" id="dataTables-example">
 	<thead>
 		<tr>
 			<td class="col-lg-1">
-				@Html.ActionLink("Id", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				#
 			</td>
 			<td class="col-lg-3">
-				@Html.ActionLink("Naziv", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				Naslov dokumenta
 			</td>
 			<td class="col-lg-1">
-				@Html.ActionLink("Ak. godina", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				Šk. godina
 			</td>
 			<td class="col-lg-6">
-				@Html.ActionLink("Opis", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				Aktivnost
 			</td>
 			<td class="col-lg-2">
 				Akcija
@@ -22,7 +22,7 @@
 	</thead>
 	<tbody>
 
-		@foreach (var item in Model)
+		@foreach (var item in Model.MjesecniPlanovi)
 	{
 		<tr>
 			<td>
@@ -39,7 +39,7 @@
 			</td>
 			<td>
 				<div class="pull-right">
-					<a data-toggle="modal" data-url="@Url.Action("Edit","MjesecniPlan",new { id = item.ID_plan })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
+					<input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick="location.href='@Url.Action("Edit","MjesecniPlan",new { id = item.ID_plan })'" />
 					<a data-toggle="modal" data-url="@Url.Action("Delete","MjesecniPlan",new { id = item.ID_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
 				</div>
 			</td>

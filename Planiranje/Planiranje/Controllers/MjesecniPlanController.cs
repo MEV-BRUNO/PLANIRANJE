@@ -15,19 +15,19 @@ namespace Planiranje.Controllers
     public class MjesecniPlanController : Controller
 	{
 		private Mjesecni_plan_DBHandle mjesecni_planovi = new Mjesecni_plan_DBHandle();
+		private Godisnji_plan_DBHandle godisnji_planovi = new Godisnji_plan_DBHandle();
 		int Page_No_Master = 1;
 
-		public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
+		public ActionResult Index(string Sort, string Search, string Plan, string Filter, int? Page_No)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
+			MjesecniModel mjesecniModel = new MjesecniModel();
 			ViewBag.Title = "Pregled mjesecnih planova";
 			ViewBag.CurrentSortOrder = Sort;
 			ViewBag.SortingName = String.IsNullOrEmpty(Sort) ? "Naziv" : "";
-
-			ViewBag.Message = "Grad";
 
 			ViewBag.FilterValue = Search;
 			if (Search != null)
@@ -55,8 +55,30 @@ namespace Planiranje.Controllers
 					return PartialView("_GradView", Popis2);
 				}
 				Page_No_Master = No_Of_Page;
-				var Popis = mjesecni_planovi.ReadMjesecnePlanove().ToPagedList(No_Of_Page, Size_Of_Page);
-				return View(Popis);
+				//var Popis = mjesecni_planovi.ReadMjesecnePlanove().ToPagedList(No_Of_Page, Size_Of_Page);
+				string AkGodina = "";
+				int idPlan = 0;
+				mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
+				{
+					Text = i.Ak_godina,
+					Value = i.Id_god.ToString()
+				}));
+
+				if (Plan != null)
+				{
+					Godisnji_plan plan = godisnji_planovi.ReadGodisnjiPlan((Int32.Parse(Plan)));
+					AkGodina = plan.Ak_godina;
+					idPlan = mjesecniModel.GodisnjiPlanovi.FindIndex(i => i.Text == AkGodina);
+				}
+				else
+				{
+					AkGodina = mjesecniModel.GodisnjiPlanovi.ElementAt(0).Text;
+				}
+
+				mjesecniModel.MjesecniPlanovi = mjesecni_planovi.ReadMjesecnePlanove(AkGodina).ToPagedList(No_Of_Page, Size_Of_Page).ToList();
+
+				mjesecniModel.GodisnjiPlanovi.ElementAt(idPlan).Selected = true;
+				return View(mjesecniModel);
 			}
 			else
 			{
