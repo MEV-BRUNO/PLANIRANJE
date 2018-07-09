@@ -15,6 +15,9 @@ namespace Planiranje.Controllers
     public class PlanOs1Controller : Controller
     {
         private OS_Plan_1_DBHandle planovi_os1 = new OS_Plan_1_DBHandle();
+        private Ciljevi_DBHandle ciljevi_db = new Ciljevi_DBHandle();
+        private Podrucje_rada_DBHandle podrucje_rada_db = new Podrucje_rada_DBHandle();
+        private Aktivnost_DBHandle aktivnost_db = new Aktivnost_DBHandle();
         int Page_No_Master = 1;
 
         public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
@@ -190,7 +193,10 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            return View("Details");
+            PlanOs1View plan = new PlanOs1View();
+            OS_Plan_1 p = planovi_os1.ReadOS_Plan_1(id);
+            plan.OsPlan1 = p;
+            return View("Details",plan);
         }
     }
 }
