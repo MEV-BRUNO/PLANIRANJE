@@ -122,13 +122,7 @@ namespace Planiranje.Controllers
                     "u suprotnom pokušajte ponovno";
                 return View("Registracija");
             }
-            else if (p.Lozinka != ViewBag.lozinka)
-            {
-                ViewBag.poruka = "Lozinke se ne podudaraju";
-                ViewBag.lozinka = "";
-                p.Lozinka = "";
-                return View("Registracija");
-            }
+            
             p.Id_skola = 1;
             p.Licenca = new DateTime(2020, 6, 14, 14, 55, 10);
             p.Aktivan = '1';
