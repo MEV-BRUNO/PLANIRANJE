@@ -106,6 +106,7 @@ namespace Planiranje.Controllers
 			{
                 ViewBag.poruka = null;
 				ViewBag.Title = "Registracija";
+                ViewBag.lozinka = "";
 				return View();
 			}
 			return RedirectToAction("Prijava", "Planiranje");
@@ -117,9 +118,17 @@ namespace Planiranje.Controllers
             Pedagog ped = baza.Pedagog.SingleOrDefault(pedagog => pedagog.Email == p.Email);
             if (ped != null)
             {
-                return RedirectToAction("Registracija");
+                ViewBag.poruka = "Korisnik s tom E-Mail adresom već postoji. Ako ste već registrirani, možete ponovno postaviti lozinku, " +
+                    "u suprotnom pokušajte ponovno";
+                return View("Registracija");
             }
-            
+            else if (p.Lozinka != ViewBag.lozinka)
+            {
+                ViewBag.poruka = "Lozinke se ne podudaraju";
+                ViewBag.lozinka = "";
+                p.Lozinka = "";
+                return View("Registracija");
+            }
             p.Id_skola = 1;
             p.Licenca = new DateTime(2020, 6, 14, 14, 55, 10);
             p.Aktivan = '1';

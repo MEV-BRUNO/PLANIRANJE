@@ -37,6 +37,7 @@
     </style>
 </head>
 <body>
+    @{ string lozinka=ViewBag.lozinka;}
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -63,9 +64,10 @@
                         @Html.EditorFor(model => model.Lozinka, new { htmlAttributes = new { @class = "form-control", @type = "password", placeholder = "Lozinka", style = "max-width:100%; margin:10px auto;" } })
                         @Html.ValidationMessageFor(model => model.Lozinka, "", new { @class = "text-danger" })
 
-                        @Html.EditorFor(model => model.Lozinka, new { htmlAttributes = new { @class = "form-control", @type = "password", placeholder = "Lozinka ponovno", style = "max-width:100%; margin:10px auto;" } })
+                        @Html.EditorFor(m=>lozinka, new { htmlAttributes = new { @class = "form-control", @type = "password", placeholder = "Lozinka ponovno", style = "max-width:100%; margin:10px auto;" } })
                         @Html.ValidationMessageFor(model => model.Lozinka, "", new { @class = "text-danger" })
                         <br>
+                        @{ ViewBag.lozinka = lozinka;}
                         <div class="col-md-12 text-center">
                             <input type="submit" value="Registriraj se" class="btn btn-danger" />
                         </div>
