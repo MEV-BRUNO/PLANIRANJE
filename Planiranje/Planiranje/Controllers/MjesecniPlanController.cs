@@ -55,8 +55,6 @@ namespace Planiranje.Controllers
 					return PartialView("_GradView", Popis2);
 				}
 				Page_No_Master = No_Of_Page;
-				//var Popis = mjesecni_planovi.ReadMjesecnePlanove().ToPagedList(No_Of_Page, Size_Of_Page);
-				string AkGodina = "";
 				int idPlan = 0;
 				mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 				{
@@ -67,17 +65,16 @@ namespace Planiranje.Controllers
 				if (Plan != null)
 				{
 					Godisnji_plan plan = godisnji_planovi.ReadGodisnjiPlan((Int32.Parse(Plan)));
-					AkGodina = plan.Ak_godina;
-					idPlan = mjesecniModel.GodisnjiPlanovi.FindIndex(i => i.Text == AkGodina);
+					idPlan = plan.Id_god;
 				}
 				else
 				{
-					AkGodina = mjesecniModel.GodisnjiPlanovi.ElementAt(0).Text;
+					idPlan = Convert.ToInt32(godisnji_planovi.ReadGodisnjiPlan(Convert.ToInt32(mjesecniModel.GodisnjiPlanovi.ElementAt(0).Value)).Id_god);
 				}
 
-				mjesecniModel.MjesecniPlanovi = mjesecni_planovi.ReadMjesecnePlanove(AkGodina).ToPagedList(No_Of_Page, Size_Of_Page).ToList();
+				mjesecniModel.MjesecniPlanovi = mjesecni_planovi.ReadMjesecnePlanove(idPlan).ToPagedList(No_Of_Page, Size_Of_Page).ToList();
 
-				mjesecniModel.GodisnjiPlanovi.ElementAt(idPlan).Selected = true;
+				mjesecniModel.GodisnjiPlanovi.ElementAt(idPlan - 1).Selected = true;
 				return View(mjesecniModel);
 			}
 			else
@@ -95,20 +92,24 @@ namespace Planiranje.Controllers
 
 		public ActionResult NoviPlan()
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			if (Request.IsAjaxRequest())
+			ViewBag.Title = "Novi mjesečni plan";
+			MjesecniModel mjesecniModel = new MjesecniModel();
+			mjesecniModel.MjesecniPlan = new Mjesecni_plan();
+			mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 			{
-				ViewBag.IsUpdate = false;
-				return View("NoviPlan");
-			}
-			return View("NoviPlan");
+				Text = i.Ak_godina,
+				Value = i.Id_god.ToString()
+			}));
+			
+			return PartialView("NoviPlan", mjesecniModel);
 		}
 
 		[HttpPost]
-		public ActionResult NoviPlan(Mjesecni_plan _mjesecni_plan)
+		public ActionResult NoviPlan(MjesecniModel _mjesecni_model)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
@@ -116,9 +117,10 @@ namespace Planiranje.Controllers
 			}
 			Mjesecni_plan mjesecni_plan = new Mjesecni_plan();
 			mjesecni_plan.ID_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-			mjesecni_plan.Ak_godina = _mjesecni_plan.Ak_godina;
-			mjesecni_plan.Naziv = _mjesecni_plan.Naziv;
-			mjesecni_plan.Opis = _mjesecni_plan.Opis;
+			mjesecni_plan.Id_godina = _mjesecni_model.MjesecniPlan.Id_godina;
+			mjesecni_plan.Naziv = _mjesecni_model.MjesecniPlan.Naziv;
+			mjesecni_plan.Opis = _mjesecni_model.MjesecniPlan.Opis;
+
 			if (mjesecni_planovi.CreateMjesecniPlan(mjesecni_plan))
 			{
 				TempData["alert"] = "<script>alert('Novi mjesecni plan je uspjesno spremljen!');</script>";

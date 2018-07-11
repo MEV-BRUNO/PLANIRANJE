@@ -10,5 +10,6 @@ namespace Planiranje.Models
 	{
 		public List<SelectListItem> GodisnjiPlanovi { get; set; }
 		public List<Mjesecni_plan> MjesecniPlanovi { get; set; }
+		public Mjesecni_plan MjesecniPlan { get; set; }
 	}
 }
