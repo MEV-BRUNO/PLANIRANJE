@@ -22,7 +22,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Podrucje.Opis_Podrucje, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.DropDownListFor(model => model.PodrucjeRada, Model.PodrucjeItems)
+                    @Html.DropDownListFor(model => model.PodrucjeRada, Model.PodrucjeItems,"Odaberi područje")
                 </div>
             </div>
             <div class="form-group">
@@ -35,7 +35,7 @@
             <div class="form-group">
                 @Html.Label("Cilj", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.DropDownListFor(model => model.Ciljevi, Model.CiljeviItems)
+                    @Html.DropDownListFor(model => model.Ciljevi, Model.CiljeviItems,"Odaberi cilj")
                 </div>
             </div>
 

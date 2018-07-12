@@ -221,10 +221,10 @@ namespace Planiranje.Controllers
             return View("NovoPodrucje",plan);
         }
 
-        [HttpPost]
-        public ActionResult NovoPodrucje()
-        {
+        //[HttpPost]
+        //public ActionResult NovoPodrucje()
+        //{
 
-        }
+        //}
     }
 }
