@@ -14,10 +14,11 @@ namespace Planiranje.Controllers
 {
     public class PlanOs1Controller : Controller
     {
+        private BazaPodataka baza = new BazaPodataka();
         private OS_Plan_1_DBHandle planovi_os1 = new OS_Plan_1_DBHandle();
         private Ciljevi_DBHandle ciljevi_db = new Ciljevi_DBHandle();
         private Podrucje_rada_DBHandle podrucje_rada_db = new Podrucje_rada_DBHandle();
-        private Aktivnost_DBHandle aktivnost_db = new Aktivnost_DBHandle();
+        private Aktivnost_DBHandle aktivnost_db = new Aktivnost_DBHandle();        
         int Page_No_Master = 1;
 
         public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
@@ -193,14 +194,20 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            
+            List<OS_Plan_1_podrucje> podrucja = new List<OS_Plan_1_podrucje>();
+            podrucja = baza.OsPlan1Podrucje.Where(izraz => izraz.Red_br_podrucje == id).ToList();
             PlanOs1View plan = new PlanOs1View();
             OS_Plan_1 p = new OS_Plan_1();
-            p = planovi_os1.ReadOS_Plan_1(id);            
+            p = planovi_os1.ReadOS_Plan_1(id);  
+            
             plan.OsPlan1 = p;
+            plan.OsPlan1Podrucje = podrucja;
+            
             return View("Details",plan);
         }
 
-        public ActionResult NovoPodrucje()
+        public ActionResult NovoPodrucje(int id)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -213,6 +220,9 @@ namespace Planiranje.Controllers
             ciljevi = ciljevi_db.ReadCiljevi();
             plan.Ciljevi = ciljevi;
             plan.PodrucjeRada = podrucje;
+            plan.Podrucje = new OS_Plan_1_podrucje();
+            plan.Podrucje.Red_br_podrucje = id;
+            
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
@@ -221,10 +231,22 @@ namespace Planiranje.Controllers
             return View("NovoPodrucje",plan);
         }
 
-        //[HttpPost]
-        //public ActionResult NovoPodrucje()
-        //{
-
-        //}
+        [HttpPost]
+        public ActionResult NovoPodrucje(PlanOs1View plan)
+        {
+            //test
+            plan.Podrucje.Mj_2 = 2;
+            plan.Podrucje.Mj_3 = 2;
+            plan.Podrucje.Mj_4 = 2;
+            plan.Podrucje.Mj_5 = 2;
+            plan.Podrucje.Mj_6 = 2;
+            plan.Podrucje.Mj_7 = 2;
+            plan.Podrucje.Mj_8 = 2;
+            //kraj testa
+            //int id = plan.Podrucje.Red_br_podrucje;            
+            baza.OsPlan1Podrucje.Add(plan.Podrucje);
+            baza.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
