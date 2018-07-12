@@ -206,7 +206,7 @@ namespace Planiranje.Controllers
             
             return View("Details",plan);
         }
-
+        
         public ActionResult NovoPodrucje(int id)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
@@ -220,8 +220,7 @@ namespace Planiranje.Controllers
             ciljevi = ciljevi_db.ReadCiljevi();
             plan.Ciljevi = ciljevi;
             plan.PodrucjeRada = podrucje;
-            plan.Podrucje = new OS_Plan_1_podrucje();
-            plan.Podrucje.Red_br_podrucje = id;
+            plan.Id = id;
             
             if (Request.IsAjaxRequest())
             {
@@ -243,7 +242,8 @@ namespace Planiranje.Controllers
             plan.Podrucje.Mj_7 = 2;
             plan.Podrucje.Mj_8 = 2;
             //kraj testa
-            //int id = plan.Podrucje.Red_br_podrucje;            
+            //int id = plan.Podrucje.Red_br_podrucje; 
+            plan.Podrucje.Red_br_podrucje = plan.Id;
             baza.OsPlan1Podrucje.Add(plan.Podrucje);
             baza.SaveChanges();
             return RedirectToAction("Index");

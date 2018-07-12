@@ -8,6 +8,7 @@ namespace Planiranje.Models
 {
     public class PlanOs1View
     {
+        public int Id { get; set; }
         public OS_Plan_1 OsPlan1 { get; set; }
         public OS_Plan_1_podrucje Podrucje { get; set; }
         public List<OS_Plan_1_podrucje> OsPlan1Podrucje { get; set; }
