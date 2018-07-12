@@ -194,9 +194,37 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             PlanOs1View plan = new PlanOs1View();
-            OS_Plan_1 p = planovi_os1.ReadOS_Plan_1(id);
+            OS_Plan_1 p = new OS_Plan_1();
+            p = planovi_os1.ReadOS_Plan_1(id);            
             plan.OsPlan1 = p;
             return View("Details",plan);
+        }
+
+        public ActionResult NovoPodrucje()
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            List<Podrucje_rada> podrucje = new List<Podrucje_rada>();
+            List<Ciljevi> ciljevi = new List<Ciljevi>();
+            PlanOs1View plan = new PlanOs1View();
+            podrucje = podrucje_rada_db.ReadPodrucjeRada();
+            ciljevi = ciljevi_db.ReadCiljevi();
+            plan.Ciljevi = ciljevi;
+            plan.PodrucjeRada = podrucje;
+            if (Request.IsAjaxRequest())
+            {
+                ViewBag.IsUpdate = false;
+                return View("NovoPodrucje",plan);
+            }
+            return View("NovoPodrucje",plan);
+        }
+
+        [HttpPost]
+        public ActionResult NovoPodrucje()
+        {
+
         }
     }
 }
