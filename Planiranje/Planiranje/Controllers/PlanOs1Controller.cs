@@ -197,10 +197,19 @@ namespace Planiranje.Controllers
             
             List<OS_Plan_1_podrucje> podrucja = new List<OS_Plan_1_podrucje>();
             podrucja = baza.OsPlan1Podrucje.Where(izraz => izraz.Red_br_podrucje == id).ToList();
+            
             PlanOs1View plan = new PlanOs1View();
             OS_Plan_1 p = new OS_Plan_1();
-            p = planovi_os1.ReadOS_Plan_1(id);  
-            
+            p = planovi_os1.ReadOS_Plan_1(id);
+
+            List<Podrucje_rada> pod_rada = new List<Podrucje_rada>();
+            pod_rada = podrucje_rada_db.ReadPodrucjeRada();
+            plan.PodrucjeRada = pod_rada;
+
+            List<Ciljevi> ciljevi = new List<Ciljevi>();
+            ciljevi = ciljevi_db.ReadCiljevi();
+            plan.Ciljevi = ciljevi;
+
             plan.OsPlan1 = p;
             plan.OsPlan1Podrucje = podrucja;
             
