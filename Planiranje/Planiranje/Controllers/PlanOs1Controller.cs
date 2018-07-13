@@ -244,9 +244,10 @@ namespace Planiranje.Controllers
             //kraj testa
             //int id = plan.Podrucje.Red_br_podrucje; 
             plan.Podrucje.Red_br_podrucje = plan.Id;
+            int _id = plan.Podrucje.Red_br_podrucje;
             baza.OsPlan1Podrucje.Add(plan.Podrucje);
             baza.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details",new { id=_id});
         }
     }
 }
