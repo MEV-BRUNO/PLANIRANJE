@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -196,7 +197,7 @@ namespace Planiranje.Controllers
             }
             
             List<OS_Plan_1_podrucje> podrucja = new List<OS_Plan_1_podrucje>();
-            podrucja = baza.OsPlan1Podrucje.Where(izraz => izraz.Red_br_podrucje == id).ToList();
+            podrucja = baza.OsPlan1Podrucje.Where(izraz => izraz.Id_glavni_plan == id).ToList();
             
             PlanOs1View plan = new PlanOs1View();
             OS_Plan_1 p = new OS_Plan_1();
@@ -210,6 +211,7 @@ namespace Planiranje.Controllers
             ciljevi = ciljevi_db.ReadCiljevi();
             plan.Ciljevi = ciljevi;
 
+            podrucja.OrderBy(o => o.Red_br_podrucje);
             plan.OsPlan1 = p;
             plan.OsPlan1Podrucje = podrucja;
             
@@ -242,20 +244,36 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult NovoPodrucje(PlanOs1View plan)
         {
-            //test
-            plan.Podrucje.Mj_2 = 2;
-            plan.Podrucje.Mj_3 = 2;
-            plan.Podrucje.Mj_4 = 2;
-            plan.Podrucje.Mj_5 = 2;
-            plan.Podrucje.Mj_6 = 2;
-            plan.Podrucje.Mj_7 = 2;
-            plan.Podrucje.Mj_8 = 2;
+            //test            
+            
             //kraj testa
             //int id = plan.Podrucje.Red_br_podrucje; 
-            plan.Podrucje.Red_br_podrucje = plan.Id;
-            int _id = plan.Podrucje.Red_br_podrucje;
-            baza.OsPlan1Podrucje.Add(plan.Podrucje);
-            baza.SaveChanges();
+            plan.Podrucje.Id_glavni_plan = plan.Id;
+            int _id = plan.Podrucje.Id_glavni_plan;
+
+            int maxValue;
+            List<OS_Plan_1_podrucje> trenutna_podrucja = new List<OS_Plan_1_podrucje>();
+            trenutna_podrucja = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == _id).ToList();
+            if (trenutna_podrucja.Count == 0)
+            {
+                maxValue = 1;
+            }
+            else
+            {
+                maxValue = trenutna_podrucja.Max(m => m.Red_br_podrucje);
+            }
+            maxValue++;
+
+            plan.Podrucje.Red_br_podrucje = maxValue;
+            try
+            {
+                baza.OsPlan1Podrucje.Add(plan.Podrucje);
+                baza.SaveChanges();
+            }
+            catch
+            {
+                return View();
+            }
             return RedirectToAction("Details",new { id=_id});
         }
     }
