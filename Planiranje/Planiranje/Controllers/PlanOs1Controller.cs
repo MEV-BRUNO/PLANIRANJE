@@ -272,7 +272,15 @@ namespace Planiranje.Controllers
             }
             catch
             {
-                return View();
+                List<Podrucje_rada> podrucje = new List<Podrucje_rada>();
+                List<Ciljevi> ciljevi = new List<Ciljevi>();
+                
+                podrucje = podrucje_rada_db.ReadPodrucjeRada();
+                ciljevi = ciljevi_db.ReadCiljevi();
+                plan.Ciljevi = ciljevi;
+                plan.PodrucjeRada = podrucje;
+                plan.Id = _id;
+                return View(plan);
             }
             return RedirectToAction("Details",new { id=_id});
         }
