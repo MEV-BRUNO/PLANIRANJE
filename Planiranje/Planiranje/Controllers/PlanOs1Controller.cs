@@ -211,7 +211,7 @@ namespace Planiranje.Controllers
             ciljevi = ciljevi_db.ReadCiljevi();
             plan.Ciljevi = ciljevi;
 
-            podrucja.OrderBy(o => o.Red_br_podrucje);
+            podrucja=podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
             plan.OsPlan1 = p;
             plan.OsPlan1Podrucje = podrucja;
             
@@ -261,8 +261,9 @@ namespace Planiranje.Controllers
             else
             {
                 maxValue = trenutna_podrucja.Max(m => m.Red_br_podrucje);
+                maxValue++;
             }
-            maxValue++;
+            
 
             plan.Podrucje.Red_br_podrucje = maxValue;
             try
@@ -283,6 +284,71 @@ namespace Planiranje.Controllers
                 return View(plan);
             }
             return RedirectToAction("Details",new { id=_id});
+        }
+
+        public ActionResult PodrucjePomakGore(int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            OS_Plan_1_podrucje plan = new OS_Plan_1_podrucje();
+            plan = baza.OsPlan1Podrucje.Single(s => s.Id_plan == id);
+            int id_glavni_plan = plan.Id_glavni_plan;
+            int pozicija = plan.Red_br_podrucje;
+
+            List<OS_Plan_1_podrucje> podrucja = new List<OS_Plan_1_podrucje>();
+            podrucja = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == id_glavni_plan && w.Red_br_podrucje <= pozicija).ToList();
+            podrucja=podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
+
+            if (podrucja.Count == 1)
+            {
+                return RedirectToAction("Details", new { id = id_glavni_plan });
+            }
+
+            int pozicija_prethodni, id_prethodni;
+            OS_Plan_1_podrucje p = podrucja.ElementAt(podrucja.Count - 2);
+            pozicija_prethodni = p.Red_br_podrucje;
+            id_prethodni = p.Id_plan;            
+
+            plan.Red_br_podrucje = pozicija_prethodni;
+            p.Red_br_podrucje = pozicija;
+            using(var db = new BazaPodataka())
+            {
+                var rezultat = db.OsPlan1Podrucje.SingleOrDefault(b => b.Id_plan == id_prethodni);
+                if (rezultat != null)
+                {
+                    try
+                    {
+                        db.OsPlan1Podrucje.Attach(plan);
+                        db.Entry(plan).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+
+                    }
+                }                
+            }
+            using (var db=new BazaPodataka())
+            {
+                var rezultat2 = db.OsPlan1Podrucje.SingleOrDefault(d => d.Id_plan == id);
+                if (rezultat2 != null)
+                {
+                    try
+                    {
+                        db.OsPlan1Podrucje.Attach(p);
+                        db.Entry(p).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }           
+
+            return RedirectToAction("Details", new { id = id_glavni_plan });
         }
     }
 }
