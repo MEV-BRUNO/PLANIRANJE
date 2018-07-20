@@ -365,7 +365,12 @@ namespace Planiranje.Controllers
 
             List<OS_Plan_1_podrucje> podrucja = new List<OS_Plan_1_podrucje>();
             podrucja = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == id_glavni_plan && w.Red_br_podrucje >= pozicija).ToList();
-                        
+
+            if (podrucja.Count == 1)
+            {
+                return RedirectToAction("Details", new { id = id_glavni_plan });
+            }
+
             podrucja = podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
             int pozicija_nakon = podrucja.ElementAt(1).Red_br_podrucje;
             int id_nakon = podrucja.ElementAt(1).Id_plan;
