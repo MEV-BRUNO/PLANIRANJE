@@ -77,7 +77,7 @@
                                                                 <td class="col-md-3">@cilj.Naziv</td>
                                                                 <td class="col-md-1">
                                                                     <a href="#" onclick="location.href='@Url.Action("PodrucjePomakGore","PlanOs1",new { id=item.Id_plan})'" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                    <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+                                                                    <a href="#" onclick="location.href='@Url.Action("PodrucjePomakDolje","PlanOs1", new { id=item.Id_plan})'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                 </td>
                                                                 <td class="col-md-1">
                                                                     <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>

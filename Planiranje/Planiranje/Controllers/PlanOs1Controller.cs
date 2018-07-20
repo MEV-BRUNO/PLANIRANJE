@@ -350,5 +350,39 @@ namespace Planiranje.Controllers
 
             return RedirectToAction("Details", new { id = id_glavni_plan });
         }
+
+        public ActionResult PodrucjePomakDolje (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+
+            OS_Plan_1_podrucje plan = new OS_Plan_1_podrucje();
+            plan = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id);
+            int id_glavni_plan = plan.Id_glavni_plan;
+            int pozicija = plan.Red_br_podrucje;
+
+            List<OS_Plan_1_podrucje> podrucja = new List<OS_Plan_1_podrucje>();
+            podrucja = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == id_glavni_plan && w.Red_br_podrucje >= pozicija).ToList();
+                        
+            podrucja = podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
+            int pozicija_nakon = podrucja.ElementAt(1).Red_br_podrucje;
+            int id_nakon = podrucja.ElementAt(1).Id_plan;
+
+            using(var db=new BazaPodataka())
+            {
+                var rezultat = db.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id);
+                var rezultat2 = db.OsPlan1Podrucje.SingleOrDefault(d => d.Id_plan == id_nakon);
+                if (rezultat != null && rezultat2!=null)
+                {
+                    rezultat.Red_br_podrucje = pozicija_nakon;
+                    rezultat2.Red_br_podrucje = pozicija;
+                    db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("Details", new { id = id_glavni_plan });
+        }
     }
 }
