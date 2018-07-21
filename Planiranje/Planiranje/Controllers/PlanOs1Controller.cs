@@ -273,16 +273,10 @@ namespace Planiranje.Controllers
             }
             catch
             {
-                List<Podrucje_rada> podrucje = new List<Podrucje_rada>();
-                List<Ciljevi> ciljevi = new List<Ciljevi>();
-                
-                podrucje = podrucje_rada_db.ReadPodrucjeRada();
-                ciljevi = ciljevi_db.ReadCiljevi();
-                plan.Ciljevi = ciljevi;
-                plan.PodrucjeRada = podrucje;
-                plan.Id = _id;
-                return View(plan);
+                TempData["novop"] = "Novo područje nije dodano. Pripazite da popunite sva polja.";
+                return RedirectToAction("Details", new { id = _id });
             }
+            TempData["novop"] = "Novo područje je dodano";
             return RedirectToAction("Details",new { id=_id});
         }
 
@@ -346,8 +340,8 @@ namespace Planiranje.Controllers
 
                     }
                 }
-            }           
-
+            }
+            TempData["pomak"] = "Područje je pomaknuto prema gore";
             return RedirectToAction("Details", new { id = id_glavni_plan });
         }
 
@@ -386,7 +380,7 @@ namespace Planiranje.Controllers
                     db.SaveChanges();
                 }
             }
-
+            TempData["pomak"] = "Područje je pomaknuto prema dolje";
             return RedirectToAction("Details", new { id = id_glavni_plan });
         }
     }
