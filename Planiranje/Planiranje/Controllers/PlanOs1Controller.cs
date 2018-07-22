@@ -383,5 +383,65 @@ namespace Planiranje.Controllers
             TempData["pomak"] = "Područje je pomaknuto prema dolje";
             return RedirectToAction("Details", new { id = id_glavni_plan });
         }
+
+        public ActionResult UrediPodrucje (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+
+            PlanOs1View plan = new PlanOs1View();
+            OS_Plan_1_podrucje podrucje = new OS_Plan_1_podrucje();
+            List<Ciljevi> ciljevi = new List<Ciljevi>();
+            List<Podrucje_rada> podrucja_rada = new List<Podrucje_rada>();
+
+            podrucje = baza.OsPlan1Podrucje.Single(s => s.Id_plan == id);
+            ciljevi = ciljevi_db.ReadCiljevi();
+            podrucja_rada = podrucje_rada_db.ReadPodrucjeRada();
+
+            
+            plan.Ciljevi = ciljevi;
+            plan.Podrucje = podrucje;
+            plan.PodrucjeRada = podrucja_rada;
+
+            
+
+            if (Request.IsAjaxRequest())
+            {
+                ViewBag.IsUpdate = false;
+                return View("UrediPodrucje", plan);
+            }
+            return View("UrediPodrucje", plan);
+        }
+
+        [HttpPost]
+        public ActionResult UrediPodrucje(PlanOs1View plan)
+        {
+            int _id=0;
+            TempData["note"] = "Glavni plan nije pronađen.";
+            using (var db = new BazaPodataka())
+            {
+                
+                var rezultat = db.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == plan.Podrucje.Id_plan);
+                if (rezultat != null)
+                {                    
+                    try
+                    {
+                        _id = rezultat.Id_glavni_plan;
+                        rezultat.Cilj = plan.Podrucje.Cilj;
+                        rezultat.Opis_Podrucje = plan.Podrucje.Opis_Podrucje;
+                        rezultat.Potrebno_sati = plan.Podrucje.Potrebno_sati;
+                        db.SaveChanges();
+                        TempData["note"] = "Promjena je spremljena";
+                    }
+                    catch
+                    {
+                        TempData["note"] = "Promjena nije spremljena";
+                    }
+                }
+            }
+            return RedirectToAction("Details", new { id = _id });
+        }
     }
 }

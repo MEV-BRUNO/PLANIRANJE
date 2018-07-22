@@ -127,7 +127,7 @@
                                                                             <a href="#" onclick="location.href='@Url.Action("PodrucjePomakDolje","PlanOs1", new { id=item.Id_plan})'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                         </td>
                                                                         <td class="col-md-1">
-                                                                            <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                                                            <a data-toggle="modal" data-url="@Url.Action("UrediPodrucje", "PlanOs1",new { id=item.Id_plan})" id="editAsset" class="btn btn-primary btn-xs btn-grad">Uredi</a>
                                                                             <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
                                                                         </td>
                                                                     </tr>
