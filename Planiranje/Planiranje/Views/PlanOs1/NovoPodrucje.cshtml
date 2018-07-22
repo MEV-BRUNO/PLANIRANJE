@@ -38,49 +38,9 @@
                 <div class="col-md-9">
                     @Html.DropDownListFor(model => model.Podrucje.Cilj, Model.CiljeviItems, "Odaberi cilj")
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Podrucje.Br_sati, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.Podrucje.Br_sati, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Podrucje.Br_sati, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Podrucje.Mj_9, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.Podrucje.Mj_9, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Podrucje.Mj_9, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Podrucje.Mj_10, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.Podrucje.Mj_10, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Podrucje.Mj_10, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Podrucje.Mj_11, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.Podrucje.Mj_11, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Podrucje.Mj_11, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Podrucje.Mj_12, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.Podrucje.Mj_12, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Podrucje.Mj_12, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Podrucje.Mj_1, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.Podrucje.Mj_1, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Podrucje.Mj_1, "", new { @class = "text-danger" })
-                </div>
-            </div>
+            </div>         
+            
+            
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
                 <input type="submit" class="btn btn-primary" value="Spremi" />

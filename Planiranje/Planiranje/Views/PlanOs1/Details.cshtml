@@ -43,6 +43,10 @@
     {
         <div id="snackbar">@TempData["novop"]</div>
     }
+    else if (TempData["note"] != null)
+    {
+        <div id="snackbar">@TempData["note"]</div>
+    }
     <div class="inner">
         <div class="row">
             <div class="col-lg-12">
