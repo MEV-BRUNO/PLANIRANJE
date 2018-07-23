@@ -443,5 +443,52 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Details", new { id = _id });
         }
+
+        public ActionResult ObrisiPodrucje (int id)
+        {
+            OS_Plan_1_podrucje podrucje = new OS_Plan_1_podrucje();
+            PlanOs1View plan = new PlanOs1View();
+            Ciljevi cilj = new Ciljevi();
+            Podrucje_rada podrucjeRada = new Podrucje_rada();
+
+            podrucje = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id);
+            cilj = ciljevi_db.ReadCiljevi(podrucje.Cilj);
+            podrucjeRada = podrucje_rada_db.ReadPodrucjeRada(podrucje.Opis_Podrucje);
+
+            plan.Podrucje = podrucje;
+            plan.PodrucjeRada = new List<Podrucje_rada>();
+            plan.PodrucjeRada.Add(podrucjeRada);
+            plan.Ciljevi = new List<Ciljevi>();
+            plan.Ciljevi.Add(cilj);
+
+            return View("ObrisiPodrucje", plan);
+        }
+
+        [HttpPost]
+        public ActionResult ObrisiPodrucje (PlanOs1View plan)
+        {
+            int _id = 0;
+            
+            using (var db = new BazaPodataka())
+            {
+                var rjesenje = db.OsPlan1Podrucje.SingleOrDefault(w => w.Id_plan == plan.Podrucje.Id_plan);
+                _id = rjesenje.Id_glavni_plan;
+                int id_ = rjesenje.Id_plan;
+                if (rjesenje != null)
+                {
+                    TempData["note"] = "Područje rada je obrisano";
+                    try
+                    {                        
+                        db.OsPlan1Podrucje.Remove(rjesenje);
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        TempData["note"] = "Područje rada nije obrisano. Pokušajte ponovno";
+                    }
+                }
+            }
+            return RedirectToAction("Details", new { id = _id });
+        }
     }
 }

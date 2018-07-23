@@ -376,6 +376,7 @@
     <Content Include="Views\PlanOs1\Details.cshtml" />
     <Content Include="Views\PlanOs1\NovoPodrucje.cshtml" />
     <Content Include="Views\PlanOs1\UrediPodrucje.cshtml" />
+    <Content Include="Views\PlanOs1\ObrisiPodrucje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
