@@ -147,13 +147,9 @@
                                                 </div>
                                                 <div class="col-lg-10">
                                                     <div class="form-group">
-                                                        <label class="control-label col-lg-2">Odabri područja rada:</label>
+                                                        <label class="control-label col-lg-2">Odaberi područja rada:</label>
                                                         <div class="col-lg-7">
-                                                            <select class="form-control">
-                                                                <option>1. Izvedbeno planiranje i programiranje</option>
-                                                                <option>2. Uvođenje novih programa i inovacija</option>
-                                                                <option>3. Savjetodavni rad</option>
-                                                            </select>
+                                                            @Html.DropDownListFor(m=>m.Os_Plan_1_Aktivnost.Id_podrucje,Model.PodrucjeRadaSelectedItems,new { @class="form-control"})
                                                         </div>
                                                     </div>
                                                 </div><!--END COL 10-->
@@ -175,10 +171,14 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                @{ int i = 0;}
+                                                                @foreach (var item in Model.OsPlan1Aktivnost)
+                                                                {
+                                                                    i++;                                                                    
                                                                 <tr>
-                                                                    <td class="col-md-1">1.1</td>
-                                                                    <td class="col-md-7">Neposredno izvođenje odgojno-obrazovnog rada</td>
-                                                                    <td class="col-md-2">4/god.</td>
+                                                                    <td class="col-md-1">@Model.Id .@i</td>
+                                                                    <td class="col-md-7">@Model.Aktivnosti.Single(s=>s.Id_aktivnost==item.Opis_aktivnost)</td>
+                                                                    <td class="col-md-2">@item.Potrebno_sati</td>
                                                                     <td class="col-md-1">
                                                                         <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
                                                                         <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
@@ -188,32 +188,8 @@
                                                                         <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td class="col-md-1">1.2</td>
-                                                                    <td class="col-md-7">Neposredno izvođenje odgojno-obrazovnog rada</td>
-                                                                    <td class="col-md-2">4/god.</td>
-                                                                    <td class="col-md-1">
-                                                                        <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                        <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
-                                                                    </td>
-                                                                    <td class="col-md-1">
-                                                                        <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                                        <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="col-md-1">1.3</td>
-                                                                    <td class="col-md-7">Neposredno izvođenje odgojno-obrazovnog rada</td>
-                                                                    <td class="col-md-2">4/god.</td>
-                                                                    <td class="col-md-1">
-                                                                        <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                        <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
-                                                                    </td>
-                                                                    <td class="col-md-1">
-                                                                        <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                                        <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
-                                                                    </td>
-                                                                </tr>
+                                                                }
+
                                                             </tbody>
                                                         </table>
                                                     </div>

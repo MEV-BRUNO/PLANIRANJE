@@ -55,5 +55,17 @@ namespace Planiranje.Models
         {
             get { return new SelectList(Ciljevi, "Id_cilj", "Naziv"); }
         }
+        /// <summary>
+        /// selektirana lista podrucja rada za programske aktivnosti (primjena:dropdown list)
+        /// </summary>
+        public List<Podrucje_rada> PodrucjeRadaSelected { get; set; }
+        /// <summary>
+        /// lista selektiranih područja rada za dropdown list
+        /// </summary>
+        public IEnumerable<SelectListItem> PodrucjeRadaSelectedItems { get { return new SelectList(PodrucjeRadaSelected, "Id_podrucje", "Naziv"); } }
+        /// <summary>
+        /// glavni model za os_plan_1_aktivnost
+        /// </summary>
+        public OS_Plan_1_aktivnost Os_Plan_1_Aktivnost { get; set; }
     }
 }

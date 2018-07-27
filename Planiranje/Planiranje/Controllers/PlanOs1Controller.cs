@@ -214,7 +214,31 @@ namespace Planiranje.Controllers
             podrucja=podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
             plan.OsPlan1 = p;
             plan.OsPlan1Podrucje = podrucja;
+
+            plan.PodrucjeRadaSelected = pod_rada;
+            /*dodatno*/
             
+                List<Aktivnost> aktivnosti = new List<Aktivnost>();
+                aktivnosti = aktivnost_db.ReadAktivnost();
+                plan.Aktivnosti = aktivnosti;
+
+                List<OS_Plan_1_aktivnost> osPlan1Aktivnosti = new List<OS_Plan_1_aktivnost>();
+            if (podrucja.Count != 0)
+            {
+                int id_pod = podrucja.ElementAt(0).Id_plan;
+
+                osPlan1Aktivnosti = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == id_pod).ToList();
+            }
+                plan.OsPlan1Aktivnost = osPlan1Aktivnosti;
+
+                OS_Plan_1_aktivnost ak = new OS_Plan_1_aktivnost();
+            if (podrucja.Count != 0)
+            {
+                ak.Id_podrucje = podrucja.ElementAt(0).Id_plan;
+            }
+                plan.Os_Plan_1_Aktivnost = ak;
+            
+            plan.Id = 1;
             return View("Details",plan);
         }
         

@@ -12,15 +12,13 @@ namespace Planiranje.Models
         [Required]
         public int Id_plan { get; set; }
         [Required]
-        public int Red_broj_podrucje { get; set; }
+        public int Id_podrucje { get; set; }        
+        [Required]
+        public int Opis_aktivnost { get; set; }
         [Required]
         public int Red_broj_aktivnost { get; set; }
         [Required]
-        public string Opis_aktivnost { get; set; }
-        [Required]
-        public int Red_br { get; set; }
-        [Required]
-        public int Potrebno_sati { get; set; }
+        public string Potrebno_sati { get; set; }
         [Required]
         public int Br_sati { get; set; }
 		[Required]
