@@ -21,14 +21,14 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Podrucje.Opis_Podrucje, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.DropDownListFor(model => model.Podrucje.Opis_Podrucje, Model.PodrucjeItems)
+                        @Html.DropDownListFor(model => model.Podrucje.Opis_Podrucje, Model.PodrucjeItems,new { @class="form-control"})
                         @Html.ValidationMessageFor(model => model.Podrucje.Opis_Podrucje, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Podrucje.Cilj, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.DropDownListFor(model => model.Podrucje.Cilj, Model.CiljeviItems)
+                        @Html.DropDownListFor(model => model.Podrucje.Cilj, Model.CiljeviItems, new { @class="form-control"})
                         @Html.ValidationMessageFor(model => model.Podrucje.Cilj, "", new { @class = "text-danger" })
                     </div>
                 </div>
