@@ -215,9 +215,17 @@ namespace Planiranje.Controllers
             plan.OsPlan1 = p;
             plan.OsPlan1Podrucje = podrucja;
 
-            plan.PodrucjeRadaSelected = pod_rada;
+
             /*dodatno*/
-            
+            List<Podrucje_rada> pr = new List<Podrucje_rada>();
+            foreach(var i in podrucja)
+            {
+                Podrucje_rada pod = new Podrucje_rada();
+                pod = podrucje_rada_db.ReadPodrucjeRada(i.Opis_Podrucje);
+                pr.Add(pod);
+            }
+
+            plan.PodrucjeRadaSelected = pr;
                 List<Aktivnost> aktivnosti = new List<Aktivnost>();
                 aktivnosti = aktivnost_db.ReadAktivnost();
                 plan.Aktivnosti = aktivnosti;
