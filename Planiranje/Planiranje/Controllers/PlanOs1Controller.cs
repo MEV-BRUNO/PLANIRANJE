@@ -540,5 +540,45 @@ namespace Planiranje.Controllers
             }
             return View("NovaAktivnost", plan);
         }
+        [HttpPost]
+        public ActionResult NovaAktivnost (PlanOs1View plan)
+        {            
+            int i = plan.Id;
+            OS_Plan_1_aktivnost ak = new OS_Plan_1_aktivnost();
+            ak = plan.Os_Plan_1_Aktivnost;
+            ak.Id_podrucje = i;
+
+            OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
+            p = baza.OsPlan1Podrucje.Single(s => s.Id_plan == i);
+            int _id = p.Id_glavni_plan;
+
+            int maxValue;
+            List<OS_Plan_1_aktivnost> trenutne = new List<OS_Plan_1_aktivnost>();
+            trenutne = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == i).ToList();
+            if (trenutne.Count == 0)
+            {
+                maxValue = 1;
+            }
+            else
+            {
+                maxValue = trenutne.Max(m => m.Red_broj_aktivnost);
+                maxValue++;
+            }
+            ak.Red_broj_aktivnost = maxValue;
+            TempData["note"] = "Nova aktivnost je dodana";
+                try
+                {
+                    baza.OsPlan1Aktivnost.Add(ak);
+                    baza.SaveChanges();
+                }
+                catch
+                {
+                    TempData["note"] = "Nova aktivnost nije dodana";
+                }
+            
+            
+            TempData["prikaz"] = "1";
+            return RedirectToAction("Details", new { id = _id });
+        }
     }
 }

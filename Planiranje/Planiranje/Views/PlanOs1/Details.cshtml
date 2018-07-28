@@ -33,6 +33,13 @@
             setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
         }
     </script>
+    <script>
+        $(document).ready(function () {
+            if ($("#testni").text() == "1") {
+                $("#akk").click();
+            }
+        })
+    </script>
 </head>
 <body onload="myFunction()">
     @if (TempData["pomak"] != null)
@@ -46,6 +53,10 @@
     else if (TempData["note"] != null)
     {
         <div id="snackbar">@TempData["note"]</div>
+    }
+    @if (TempData["prikaz"] != null)
+    {
+        <div id="testni" style="display:none">1</div>
     }
     <div class="inner">
         <div class="row">
@@ -80,7 +91,7 @@
                                             <a href="#podrucje" data-toggle="tab">Područja rada</a>
                                         </li>
                                         <li>
-                                            <a href="#aktivnosti" data-toggle="tab">Programske aktivnosti</a>
+                                            <a id="akk" href="#aktivnosti" data-toggle="tab">Programske aktivnosti</a>
                                         </li>
                                         <li>
                                             <a href="#vrijeme" data-toggle="tab">Vrijeme realizacije</a>
@@ -189,7 +200,7 @@
                                                                     i++;                                                                    
                                                                 <tr>
                                                                     <td class="col-md-1">@i</td>
-                                                                    <td class="col-md-7">@Model.Aktivnosti.Single(s=>s.Id_aktivnost==item.Opis_aktivnost)</td>
+                                                                    <td class="col-md-7">@Model.Aktivnosti.Single(s=>s.Id_aktivnost==item.Opis_aktivnost).Naziv</td>
                                                                     <td class="col-md-2">@item.Potrebno_sati</td>
                                                                     <td class="col-md-1">
                                                                         <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
