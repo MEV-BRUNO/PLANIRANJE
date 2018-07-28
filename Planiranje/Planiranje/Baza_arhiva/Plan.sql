@@ -181,19 +181,15 @@ CREATE TABLE dnevnik_detalji (
 );
 
 CREATE TABLE mjesecni_detalji (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  red_br int(11) NOT NULL,
-  podrucje int(11) NOT NULL,
-  aktivnost int(11) NOT NULL,
+  id int(11) NOT NULL AUTO_INCREMENT,
+  id_plan int(11) NOT NULL,
+  podrucje text,
+  aktivnost text,
   suradnici text,
   vrijeme datetime NOT NULL,
   br_sati int(11) NOT NULL,
   biljeska text,
-  PRIMARY KEY (id_plan),
-  KEY podrucje (podrucje),
-  KEY aktivnost (aktivnost),
-  CONSTRAINT mjesecni_detalji_ibfk_1 FOREIGN KEY (podrucje) REFERENCES podrucje_rada (id_podrucje),
-  CONSTRAINT mjesecni_detalji_ibfk_2 FOREIGN KEY (aktivnost) REFERENCES aktivnost (id_aktivnost)
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE os_plan_2_akcija (
