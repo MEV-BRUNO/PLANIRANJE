@@ -225,7 +225,7 @@ namespace Planiranje.Controllers
                 pr.Add(pod);
             }
 
-            plan.PodrucjeRadaSelected = pr;
+            
                 List<Aktivnost> aktivnosti = new List<Aktivnost>();
                 aktivnosti = aktivnost_db.ReadAktivnost();
                 plan.Aktivnosti = aktivnosti;
@@ -243,10 +243,11 @@ namespace Planiranje.Controllers
             if (podrucja.Count != 0)
             {
                 ak.Id_podrucje = podrucja.ElementAt(0).Id_plan;
+                plan.Id = podrucja.ElementAt(0).Id_plan;
             }
                 plan.Os_Plan_1_Aktivnost = ak;
             
-            plan.Id = 1;
+            
             return View("Details",plan);
         }
         
@@ -521,6 +522,23 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("Details", new { id = _id });
+        }
+
+        public ActionResult NovaAktivnost(int id)
+        {
+            PlanOs1View plan = new PlanOs1View();
+            plan.Id = id;
+
+            List<Aktivnost> aktivnosti = new List<Aktivnost>();
+            aktivnosti = aktivnost_db.ReadAktivnost();
+            plan.Aktivnosti = aktivnosti;
+
+            if (Request.IsAjaxRequest())
+            {
+                ViewBag.IsUpdate = false;
+                return View("NovaAktivnost", plan);
+            }
+            return View("NovaAktivnost", plan);
         }
     }
 }

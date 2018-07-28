@@ -62,7 +62,7 @@
                                 <h4> Kreiranje plana i programa</h4>
                                 <h5> Naziv plana i programa: @Model.OsPlan1.Naziv </h5>
                                 <p>
-                                    <a onclick="location.href='@Url.Action("Index","PlanOs1")'" class="btn btn-success btn-xs btn-grad"> Povratak na popis</a>
+                                    <a onclick="location.href='@Url.Action("Index", "PlanOs1")'" class="btn btn-success btn-xs btn-grad"> Povratak na popis</a>
                                 </p>
                             </div><!--END COL 10-->
                             <div class="col-lg-2">
@@ -92,7 +92,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <p>
-                                                        <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NovoPodrucje", "PlanOs1",new { id=Model.OsPlan1.Id_plan})" id="btnCreateAsset">
+                                                        <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NovoPodrucje", "PlanOs1", new { id = Model.OsPlan1.Id_plan })" id="btnCreateAsset">
                                                             Dodaj područje djelovanja
                                                         </button>
                                                     </p>
@@ -123,12 +123,12 @@
                                                                         <td class="col-md-2">@item.Potrebno_sati</td>
                                                                         <td class="col-md-3">@cilj.Naziv</td>
                                                                         <td class="col-md-1">
-                                                                            <a href="#" onclick="location.href='@Url.Action("PodrucjePomakGore","PlanOs1",new { id=item.Id_plan})'" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                            <a href="#" onclick="location.href='@Url.Action("PodrucjePomakDolje","PlanOs1", new { id=item.Id_plan})'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+                                                                            <a href="#" onclick="location.href='@Url.Action("PodrucjePomakGore", "PlanOs1", new { id = item.Id_plan })'" class="btn btn-warning btn-xs btn-grad">Gore</a>
+                                                                            <a href="#" onclick="location.href='@Url.Action("PodrucjePomakDolje", "PlanOs1", new { id = item.Id_plan })'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                         </td>
                                                                         <td class="col-md-1">
-                                                                            <a data-toggle="modal" data-url="@Url.Action("UrediPodrucje", "PlanOs1",new { id=item.Id_plan})" id="editAsset" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                                            <a data-toggle="modal" data-url="@Url.Action("ObrisiPodrucje","PlanOs1", new { id=item.Id_plan})" id="deleteAsset" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                                                            <a data-toggle="modal" data-url="@Url.Action("UrediPodrucje", "PlanOs1", new { id = item.Id_plan })" id="editAsset" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                                                            <a data-toggle="modal" data-url="@Url.Action("ObrisiPodrucje", "PlanOs1", new { id = item.Id_plan })" id="deleteAsset" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                                                         </td>
                                                                     </tr>
                                                                     brojac++;
@@ -143,13 +143,25 @@
                                         <div class="tab-pane fade" id="aktivnosti">
                                             <div class="row">
                                                 <div class="col-lg-2">
-                                                    <a href="#" class="btn btn-primary btn-xs btn-grad">Dodaj aktivnost</a>
+                                                    
+                                                    <button type="button" data-toggle="modal" data-url="@Url.Action("NovaAktivnost","PlanOs1",new { id=Model.Id})" id="btnCreateAktivnost" class="btn btn-primary btn-xs btn-grad">Dodaj aktivnost</button>
+                                                    
                                                 </div>
                                                 <div class="col-lg-10">
                                                     <div class="form-group">
                                                         <label class="control-label col-lg-2">Odaberi područja rada:</label>
                                                         <div class="col-lg-7">
-                                                            @Html.DropDownListFor(m=>m.Os_Plan_1_Aktivnost.Id_podrucje,Model.PodrucjeRadaSelectedItems,new { @class="form-control"})
+                                                            @*@Html.DropDownListFor(m=>m.Os_Plan_1_Aktivnost.Id_podrucje,Model.PodrucjeRadaSelectedItems,new { @class="form-control"})*@
+                                                            <select class="form-control">
+                                                                @{ int br = 1;}
+                                                                @foreach(var item in Model.OsPlan1Podrucje)
+                                                                {                                                                    
+                                                                    <option>
+                                                                        @br .@Model.PodrucjeRada.Single(s=>s.Id_podrucje==item.Opis_Podrucje).Naziv
+                                                                    </option>
+                                                                    br++;
+                                                                }
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div><!--END COL 10-->
@@ -176,7 +188,7 @@
                                                                 {
                                                                     i++;                                                                    
                                                                 <tr>
-                                                                    <td class="col-md-1">@Model.Id .@i</td>
+                                                                    <td class="col-md-1">@i</td>
                                                                     <td class="col-md-7">@Model.Aktivnosti.Single(s=>s.Id_aktivnost==item.Opis_aktivnost)</td>
                                                                     <td class="col-md-2">@item.Potrebno_sati</td>
                                                                     <td class="col-md-1">
@@ -362,6 +374,17 @@
         var rowDelete;
         $(document).ready(function () {
             $("#btnCreateAsset").click(function (e) {
+                var url = $(this).attr("data-url");
+                $.ajax({
+                    url: url,
+                    success: function (data) {
+                        $('#assetContainer').html(data);
+                        $('#assetModal').modal('show');
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+                });
+            });
+            $("#btnCreateAktivnost").click(function (e) {
                 var url = $(this).attr("data-url");
                 $.ajax({
                     url: url,
