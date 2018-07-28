@@ -1,0 +1,50 @@
+﻿@model Planiranje.Models.MjesecniModel
+
+<table class="table table-bordered table-hover" id="dataTables-example">
+	<thead>
+		<tr>
+			<td class="col-lg-1">
+				#
+			</td>
+			<td class="col-lg-3">
+				Naslov dokumenta
+			</td>
+			<td class="col-lg-1">
+				Šk. godina
+			</td>
+			<td class="col-lg-6">
+				Aktivnost
+			</td>
+			<td class="col-lg-2">
+				Akcija
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+
+		@foreach (var item in Model.MjesecniDetalji)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.ID_plan)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Aktivnost)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Biljeska)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Br_sati)
+				</td>
+				<td>
+					<div class="pull-right">
+						<input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick="location.href='@Url.Action("Detalji","MjesecniPlan",new { id = item.ID_plan })'" />
+						<a data-toggle="modal" data-url="@Url.Action("Delete","MjesecniPlan",new { id = item.ID_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+

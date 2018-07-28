@@ -1,0 +1,107 @@
+﻿@model Planiranje.Models.MjesecniModel
+@using PagedList.Mvc;
+
+@{
+	Page.Title = ViewBag.Title;
+}
+
+@Html.Raw(TempData["alert"])
+<div class="inner">
+	<div class="row">
+		<div class="col-lg-12">
+			<h3>@ViewBag.Title</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-lg-2">
+							<p>Školska godina:</p>
+
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-2">
+							<div class="pull-left">
+								<input type="button" class="btn btn-primary btn-md" value="Novi plan" onclick="location.href='@Url.Action("NoviDetalji", "MjesecniPlan")'" />
+							</div>
+						</div>
+					</div>
+					<br>
+					@if (Model.MjesecniDetalji.Count > 0/* || Model.MjesecniDetalji != null*/)
+					{
+						@Html.Partial("TableDetails", Model)
+					}
+					else
+					{
+						<p>Nema mjesečnih planova</p>
+					}
+					<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
+						<div id="assetContainer"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+		function ChangePlan(val) {
+			window.location.href = "/MjesecniPlan/Index?Plan=" + val;
+		}
+</script>
+<script>
+		var rowDelete;
+		$(document).ready(function () {
+			$("#btnCreateAsset").click(function (e) {
+				var url = $(this).attr("data-url");
+				$.ajax({
+					url: url,
+					success: function (data) {
+						$('#assetContainer').html(data);
+						$('#assetModal').modal('show');
+					},
+					error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+				});
+			});
+
+			$('#dataTables-example').on("click", "#editAsset", function (event) {
+				event.preventDefault();
+				var url = $(this).attr("data-url");
+				$.get(url, function (data) {
+					$('#assetContainer').html(data);
+					$('#assetModal').modal('show');
+				});
+			});
+
+			$('#dataTables-example').on("click", "#deleteAsset", function (event) {
+				event.preventDefault();
+				var url = $(this).attr("data-url");
+				$.get(url, function (data) {
+					$('#assetContainer').html(data);
+					$('#assetModal').modal('show');
+				});
+			});
+		});
+</script>
+
+<script type="text/javascript">
+		function CreateSuccess() {
+			$('#assetModal').modal('hide');
+			$('#assetContainer').html("");
+			location.reload(true);
+		}
+
+		function EditSuccess() {
+			$('#assetModal').modal('hide');
+			$('#assetContainer').html("");
+			location.reload(true);
+		}
+
+		function DeleteSuccess() {
+			location.reload(true);
+		}
+</script>
