@@ -137,12 +137,13 @@ namespace Planiranje.Models
 			using (MySqlCommand command = new MySqlCommand())
 			{
 				command.Connection = connection;
-				command.CommandText = "SELECT id_plan, ak_godina, naziv, opis " +
+				command.CommandText = "SELECT id_plan, id_godina, naziv, opis, godisnji_plan.ak_godina as ak_godina " +
 					"FROM mjesecni_plan " +
-					"WHERE id_plan = @id " +
-					"AND id_pedagog = @id_pedagog";
+					"JOIN godisnji_plan ON mjesecni_plan.id_plan = godisnji_plan.id_god " +
+					"WHERE id_plan = @id_plan " +
+					"AND mjesecni_plan.id_pedagog = @id_pedagog";
 				command.CommandType = CommandType.Text;
-				command.Parameters.AddWithValue("@id", _id);
+				command.Parameters.AddWithValue("@id_plan", _id);
 				command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
 				connection.Open();
 				using (MySqlDataReader sdr = command.ExecuteReader())
@@ -155,6 +156,7 @@ namespace Planiranje.Models
 							{
 								ID_plan = Convert.ToInt32(sdr["id_plan"]),
 								Ak_godina = sdr["ak_godina"].ToString(),
+								Id_godina = Convert.ToInt32(sdr["id_godina"]),
 								Naziv = sdr["naziv"].ToString(),
 								Opis = sdr["opis"].ToString()
 							};
@@ -250,6 +252,81 @@ namespace Planiranje.Models
 					command.CommandType = CommandType.Text;
 					command.Parameters.AddWithValue("@id_plan", id);
 					command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+					command.ExecuteNonQuery();
+				}
+			}
+			catch
+			{
+				connection.Close();
+				return false;
+			}
+			finally
+			{
+				connection.Close();
+			}
+			return true;
+		}
+
+
+		public List<Mjesecni_detalji> ReadMjesecneDetalje(int id)
+		{
+			int counter = 0;
+			List<Mjesecni_detalji> detalji = new List<Mjesecni_detalji>();
+			this.Connect();
+			using (MySqlCommand command = new MySqlCommand())
+			{
+				command.Connection = connection;
+				command.CommandText = "SELECT id_plan, podrucje, aktivnost, suradnici, vrijeme, br_sati, biljeska  " +
+					"FROM mjesecni_detalji " +
+					"WHERE id_plan = @id_plan " +
+					"ORDER BY id_plan ASC";
+				command.Parameters.AddWithValue("@id_plan", id);
+				connection.Open();
+				using (MySqlDataReader sdr = command.ExecuteReader())
+				{
+					if (sdr.HasRows)
+					{
+						while (sdr.Read())
+						{
+							Mjesecni_detalji detalj = new Mjesecni_detalji()
+							{
+								ID_plan = Convert.ToInt32(sdr["id_plan"]),
+								Red_br = ++counter,
+								Podrucje = sdr["podrucje"].ToString(),
+								Aktivnost = sdr["aktivnost"].ToString(),
+								Suradnici = sdr["suradnici"].ToString(),
+								Vrijeme = Convert.ToDateTime(sdr["vrijeme"]),
+								Br_sati = Convert.ToInt32(sdr["br_sati"]),
+								Biljeska = sdr["biljeska"].ToString(),
+							};
+							detalji.Add(detalj);
+						}
+					}
+				}
+				connection.Close();
+			}
+			return detalji;
+		}
+		public bool CreateMjesecniDetalj(Mjesecni_detalji mjesecni_detalj)
+		{
+			try
+			{
+				this.Connect();
+				using (MySqlCommand command = new MySqlCommand())
+				{
+					command.Connection = connection;
+					command.CommandText = "INSERT INTO mjesecni_detalji " +
+						"(id_plan, podrucje , aktivnost, suradnici, vrijeme, br_sati, biljeska) " +
+						" VALUES (@id_plan, @podrucje, @aktivnost, @suradnici, @vrijeme, @br_sati, @biljeska)";
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@id_plan", mjesecni_detalj.ID_plan);
+					command.Parameters.AddWithValue("@podrucje", mjesecni_detalj.Podrucje);
+					command.Parameters.AddWithValue("@aktivnost", mjesecni_detalj.Aktivnost);
+					command.Parameters.AddWithValue("@suradnici", mjesecni_detalj.Suradnici);
+					command.Parameters.AddWithValue("@vrijeme", mjesecni_detalj.Vrijeme);
+					command.Parameters.AddWithValue("@br_sati", mjesecni_detalj.Br_sati);
+					command.Parameters.AddWithValue("@biljeska", mjesecni_detalj.Biljeska);
+					connection.Open();
 					command.ExecuteNonQuery();
 				}
 			}
