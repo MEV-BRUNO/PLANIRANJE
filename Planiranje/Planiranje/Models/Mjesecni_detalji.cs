@@ -10,20 +10,20 @@ namespace Planiranje.Models
     {
         [Required]
         public int ID_plan { get; set; }
-        [Required]
-        public int Red_br { get; set; }
-        [Required]
-        public int Podrucje { get; set; }
-        [Required]
-        public int Aktivnost { get; set; }
-        [Required]
-        public string Suradnici { get; set; }
-        [Required]
-        [DataType(DataType.DateTime)]
+		[Required(ErrorMessage = "Obavezno polje.")]
+		public int Red_br { get; set; }
+		[Required(ErrorMessage = "Obavezno polje.")]
+		public string Podrucje { get; set; }
+		[Required(ErrorMessage = "Obavezno polje.")]
+		public string Aktivnost { get; set; }
+		[Required(ErrorMessage = "Obavezno polje.")]
+		public string Suradnici { get; set; }
+		[Required(ErrorMessage = "Obavezno polje.")]
+		[DataType(DataType.DateTime)]
         public DateTime Vrijeme { get; set; }
-        [Required]
-        public int Br_sati { get; set; }
-        [Required]
-        public string Biljeska { get; set; }
+		[Required(ErrorMessage = "Obavezno polje.")]
+		public int Br_sati { get; set; }
+		[Required(ErrorMessage = "Obavezno polje.")]
+		public string Biljeska { get; set; }
     }
 }
