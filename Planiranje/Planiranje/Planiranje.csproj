@@ -321,7 +321,7 @@
     <Content Include="Views\Shared\Navigation.cshtml" />
     <Content Include="Views\MjesecniPlan\Index.cshtml" />
     <Content Include="Views\MjesecniPlan\Table.cshtml" />
-    <Content Include="Views\MjesecniPlan\Uredi.cshtml" />
+    <Content Include="Views\MjesecniPlan\Detalji.cshtml" />
     <Content Include="Views\MjesecniPlan\NoviPlan.cshtml" />
     <Content Include="Views\MjesecniPlan\Obrisi.cshtml" />
     <Content Include="Views\PlanOs1\Index.cshtml" />
@@ -373,6 +373,8 @@
     <Content Include="Views\Ciljevi\Table.cshtml" />
     <Content Include="Views\Ciljevi\Uredi.cshtml" />
     <Content Include="Views\GodisnjiPlan\Detalji.cshtml" />
+    <Content Include="Views\MjesecniPlan\NoviDetalji.cshtml" />
+    <Content Include="Views\MjesecniPlan\TableDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
