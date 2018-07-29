@@ -66,7 +66,13 @@ namespace Planiranje.Models
         /// glavni model za os_plan_1_aktivnost
         /// </summary>
         public OS_Plan_1_aktivnost Os_Plan_1_Aktivnost { get; set; }
-
+        /// <summary>
+        /// pomoćni property
+        /// </summary>
         public int Broj { get; set; }
+        /// <summary>
+        /// označava poziciju područja u listi za izbor područja u select elementu aktivnosti
+        /// </summary>
+        public int Pozicija { get; set; }
     }
 }

@@ -166,10 +166,19 @@
                                                             <select class="form-control">
                                                                 @{ int br = 1;}
                                                                 @foreach(var item in Model.OsPlan1Podrucje)
-                                                                {                                                                    
-                                                                    <option>
-                                                                        @br .@Model.PodrucjeRada.Single(s=>s.Id_podrucje==item.Opis_Podrucje).Naziv
+                                                                {
+                                                                    if (br-1 == Model.Pozicija)
+                                                                    {
+                                                                       <option selected="selected">
+                                                                       @br .@Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv
+                                                                       </option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                    <option onclick="location.href='@Url.Action("Details2","PlanOs1", new { id=Model.OsPlan1.Id_plan,pozicija=br-1})'">
+                                                                        @br .@Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv
                                                                     </option>
+                                                                    }
                                                                     br++;
                                                                 }
                                                             </select>

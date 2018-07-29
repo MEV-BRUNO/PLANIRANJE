@@ -580,5 +580,78 @@ namespace Planiranje.Controllers
             TempData["prikaz"] = "1";
             return RedirectToAction("Details", new { id = _id });
         }
+        public ActionResult Details2 (int id, int pozicija)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+
+            List<OS_Plan_1_podrucje> podrucja = new List<OS_Plan_1_podrucje>();
+            podrucja = baza.OsPlan1Podrucje.Where(izraz => izraz.Id_glavni_plan == id).ToList();
+
+            PlanOs1View plan = new PlanOs1View();
+            OS_Plan_1 p = new OS_Plan_1();
+            p = planovi_os1.ReadOS_Plan_1(id);
+
+            List<Podrucje_rada> pod_rada = new List<Podrucje_rada>();
+            pod_rada = podrucje_rada_db.ReadPodrucjeRada();
+            plan.PodrucjeRada = pod_rada;
+
+            List<Ciljevi> ciljevi = new List<Ciljevi>();
+            ciljevi = ciljevi_db.ReadCiljevi();
+            plan.Ciljevi = ciljevi;
+
+            podrucja = podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
+            plan.OsPlan1 = p;
+            plan.OsPlan1Podrucje = podrucja;
+
+
+            /*dodatno*/
+            List<Podrucje_rada> pr = new List<Podrucje_rada>();
+            foreach (var i in podrucja)
+            {
+                Podrucje_rada pod = new Podrucje_rada();
+                pod = podrucje_rada_db.ReadPodrucjeRada(i.Opis_Podrucje);
+                pr.Add(pod);
+            }
+
+
+            List<Aktivnost> aktivnosti = new List<Aktivnost>();
+            aktivnosti = aktivnost_db.ReadAktivnost();
+            plan.Aktivnosti = aktivnosti;
+
+            List<OS_Plan_1_aktivnost> osPlan1Aktivnosti = new List<OS_Plan_1_aktivnost>();
+            if (podrucja.Count != 0)
+            {
+                int id_pod = podrucja.ElementAt(0).Id_plan;
+
+                osPlan1Aktivnosti = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == id_pod).ToList();
+            }
+            osPlan1Aktivnosti = osPlan1Aktivnosti.OrderBy(o => o.Red_broj_aktivnost).ToList();
+            plan.OsPlan1Aktivnost = osPlan1Aktivnosti;
+
+            OS_Plan_1_aktivnost ak = new OS_Plan_1_aktivnost();
+            if (podrucja.Count != 0)
+            {
+                ak.Id_podrucje = podrucja.ElementAt(0).Id_plan;
+                plan.Id = podrucja.ElementAt(0).Id_plan;
+            }
+            plan.Os_Plan_1_Aktivnost = ak;
+            
+            /*dodatno 2*/
+            plan.Pozicija = pozicija;
+            if (pozicija == -1)
+            {
+                return View("Details", plan);
+            }
+            OS_Plan_1_podrucje podr = new OS_Plan_1_podrucje();
+            podr = podrucja.ElementAt(pozicija);
+            osPlan1Aktivnosti = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == podr.Id_plan).ToList();
+            osPlan1Aktivnosti = osPlan1Aktivnosti.OrderBy(o => o.Red_broj_aktivnost).ToList();
+            plan.OsPlan1Aktivnost = osPlan1Aktivnosti;
+            TempData["prikaz"] = "1";
+            return View("Details", plan);
+        }
     }
 }
