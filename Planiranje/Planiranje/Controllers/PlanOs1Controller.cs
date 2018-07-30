@@ -651,6 +651,7 @@ namespace Planiranje.Controllers
             osPlan1Aktivnosti = osPlan1Aktivnosti.OrderBy(o => o.Red_broj_aktivnost).ToList();
             plan.OsPlan1Aktivnost = osPlan1Aktivnosti;
             TempData["prikaz"] = "1";
+            plan.Id = podr.Id_plan;
             return View("Details", plan);
         }
     }
