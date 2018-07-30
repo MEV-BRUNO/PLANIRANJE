@@ -1,0 +1,38 @@
+﻿@model Planiranje.Models.MjesecniModel
+
+@{
+	Layout = null;
+}
+
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="modal-title">Brisanje podatka</h4>
+		</div>
+		@using (Ajax.BeginForm("DeleteDetails", "MjesecniPlan", new { id = Model.mjesecniDetalj.ID_plan }, new AjaxOptions
+		{
+			HttpMethod = "Post",
+			OnSuccess = "DeleteSuccess"
+		}, new { @class = "form-horizontal", role = "form" }))
+		{
+		<div class="modal-body">
+			@Html.HiddenFor(model => model.mjesecniDetalj.ID)
+			@Html.HiddenFor(model => model.mjesecniDetalj.ID_plan)
+			<div class="form-group">
+				<div class="col-md-10">
+					<h5>
+						Jeste li sigurni da zelite obrisati "@Html.DisplayFor(model => Model.mjesecniDetalj.Biljeska, new { htmlAttributes = new { @class = "form-control" } })"?
+					</h5>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="form-group">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+					<input type="submit" class="btn btn-danger" value="Obrisi" />
+				</div>
+			</div>
+		</div>
+		}
+	</div>
+</div>

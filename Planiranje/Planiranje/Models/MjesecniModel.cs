@@ -16,5 +16,6 @@ namespace Planiranje.Models
 		public List<SelectListItem> PodrucjaRada { get; set; }
 		public List<SelectListItem> Subjekti { get; set; }
 		public Mjesecni_detalji mjesecniDetalj { get; set; }
-}
+		public int ID_PLAN { get; set; }
+	}
 }

@@ -135,6 +135,7 @@ namespace Planiranje.Controllers
 			MjesecniModel model = new MjesecniModel();
 			model.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(id);
 			model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(id);
+			model.ID_PLAN = id;
 			/*if (Request.IsAjaxRequest())
 			{
 				ViewBag.IsUpdate = false;
@@ -191,7 +192,7 @@ namespace Planiranje.Controllers
 			{
 				TempData["alert"] = "<script>alert('Mjesecni plan je uspjesno obrisan!');</script>";
 			}
-			return RedirectToAction("Index");
+			return RedirectToAction("Detalji");
 		}
 
         public FileStreamResult Ispis()
@@ -203,7 +204,7 @@ namespace Planiranje.Controllers
             return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
 		}
 
-		public ActionResult NoviDetalji()
+		public ActionResult NoviDetalji(int id)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
@@ -232,8 +233,9 @@ namespace Planiranje.Controllers
 				Text = i.Ak_godina,
 				Value = i.Id_god.ToString()
 			}));
-			mjesecniModel.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(1);
-			mjesecniModel.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(1);
+			mjesecniModel.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(id);
+			mjesecniModel.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(id);
+			mjesecniModel.ID_PLAN = id;
 
 			return View("NoviDetalji", mjesecniModel);
 		}
@@ -241,10 +243,10 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult NoviDetalji(MjesecniModel _mjesecni_model)
 		{
-			_mjesecni_model.mjesecniDetalj.ID_plan = _mjesecni_model.MjesecniPlan.ID_plan;
+			_mjesecni_model.mjesecniDetalj.ID_plan = _mjesecni_model.ID_PLAN;
 			if (mjesecni_planovi.CreateMjesecniDetalj(_mjesecni_model.mjesecniDetalj))
 			{
-				_mjesecni_model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(_mjesecni_model.mjesecniDetalj.ID_plan);
+				_mjesecni_model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(_mjesecni_model.ID_PLAN);
 				return View("Detalji", _mjesecni_model);
 			}
 			else
@@ -271,6 +273,44 @@ namespace Planiranje.Controllers
 				}));
 				return View("NoviDetalji", _mjesecni_model);
 			}
+		}
+
+		public ActionResult DeleteDetails(int id)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			MjesecniModel model = new MjesecniModel();
+			//model.ID_PLAN = 2;
+			model.mjesecniDetalj = mjesecni_planovi.ReadMjesecniDetalj(id);
+			if (Request.IsAjaxRequest())
+			{
+				ViewBag.IsUpdate = false;
+				return View("ObrisiDetalj", model);
+			}
+			return View("ObrisiDetalj");
+		}
+
+		[HttpPost]
+		public ActionResult DeleteDetails(MjesecniModel model)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			if (!mjesecni_planovi.DeleteMjesecniDetalj(model.mjesecniDetalj.ID))
+			{
+				TempData["alert"] = "<script>alert('Mjesecni plan nije obrisan, dogodila se greska!');</script>";
+			}
+			else
+			{
+				TempData["alert"] = "<script>alert('Mjesecni plan je uspjesno obrisan!');</script>";
+			}
+			//MjesecniModel model = new MjesecniModel();
+			model.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(model.mjesecniDetalj.ID_plan);
+			model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(model.mjesecniDetalj.ID_plan);
+			return View("Detalji", model);
 		}
 	}
 }

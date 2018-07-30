@@ -276,7 +276,7 @@ namespace Planiranje.Models
 			using (MySqlCommand command = new MySqlCommand())
 			{
 				command.Connection = connection;
-				command.CommandText = "SELECT id_plan, podrucje, aktivnost, suradnici, vrijeme, br_sati, biljeska  " +
+				command.CommandText = "SELECT id, id_plan, podrucje, aktivnost, suradnici, vrijeme, br_sati, biljeska  " +
 					"FROM mjesecni_detalji " +
 					"WHERE id_plan = @id_plan " +
 					"ORDER BY id_plan ASC";
@@ -290,6 +290,7 @@ namespace Planiranje.Models
 						{
 							Mjesecni_detalji detalj = new Mjesecni_detalji()
 							{
+								ID = Convert.ToInt32(sdr["id"]),
 								ID_plan = Convert.ToInt32(sdr["id_plan"]),
 								Red_br = ++counter,
 								Podrucje = sdr["podrucje"].ToString(),
@@ -306,6 +307,39 @@ namespace Planiranje.Models
 				connection.Close();
 			}
 			return detalji;
+		}
+		public Mjesecni_detalji ReadMjesecniDetalj(int id)
+		{
+			Mjesecni_detalji detalj = new Mjesecni_detalji();
+			this.Connect();
+			using (MySqlCommand command = new MySqlCommand())
+			{
+				command.Connection = connection;
+				command.CommandText = "SELECT id, id_plan, podrucje, aktivnost, suradnici, vrijeme, br_sati, biljeska  " +
+					"FROM mjesecni_detalji " +
+					"WHERE id = @id";
+				command.Parameters.AddWithValue("@id", id);
+				connection.Open();
+				using (MySqlDataReader sdr = command.ExecuteReader())
+				{
+					if (sdr.HasRows)
+					{
+						while (sdr.Read())
+						{
+							detalj.ID = Convert.ToInt32(sdr["id"]);
+							detalj.ID_plan = Convert.ToInt32(sdr["id_plan"]);
+							detalj.Podrucje = sdr["podrucje"].ToString();
+							detalj.Aktivnost = sdr["aktivnost"].ToString();
+							detalj.Suradnici = sdr["suradnici"].ToString();
+							detalj.Vrijeme = Convert.ToDateTime(sdr["vrijeme"]);
+							detalj.Br_sati = Convert.ToInt32(sdr["br_sati"]);
+							detalj.Biljeska = sdr["biljeska"].ToString();
+						}
+					}
+				}
+				connection.Close();
+			}
+			return detalj;
 		}
 		public bool CreateMjesecniDetalj(Mjesecni_detalji mjesecni_detalj)
 		{
@@ -327,6 +361,33 @@ namespace Planiranje.Models
 					command.Parameters.AddWithValue("@br_sati", mjesecni_detalj.Br_sati);
 					command.Parameters.AddWithValue("@biljeska", mjesecni_detalj.Biljeska);
 					connection.Open();
+					command.ExecuteNonQuery();
+				}
+			}
+			catch
+			{
+				connection.Close();
+				return false;
+			}
+			finally
+			{
+				connection.Close();
+			}
+			return true;
+		}
+		public bool DeleteMjesecniDetalj(int id)
+		{
+			try
+			{
+				this.Connect();
+				using (MySqlCommand command = new MySqlCommand())
+				{
+					command.Connection = connection;
+					connection.Open();
+					command.CommandText = "DELETE FROM mjesecni_detalji " +
+						"WHERE id = @id";
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@id", id);
 					command.ExecuteNonQuery();
 				}
 			}

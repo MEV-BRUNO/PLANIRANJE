@@ -375,6 +375,7 @@
     <Content Include="Views\GodisnjiPlan\Detalji.cshtml" />
     <Content Include="Views\MjesecniPlan\NoviDetalji.cshtml" />
     <Content Include="Views\MjesecniPlan\TableDetails.cshtml" />
+    <Content Include="Views\MjesecniPlan\ObrisiDetalj.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
