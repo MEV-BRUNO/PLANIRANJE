@@ -38,6 +38,9 @@
             if ($("#testni").text() == "1") {
                 $("#akk").click();
             }
+            if ($("#provjerapodrucja").text() == "1") {
+                $("#btnCreateAktivnost").prop("disabled", true);
+            }
         })
     </script>
 </head>
@@ -57,6 +60,10 @@
     @if (TempData["prikaz"] != null)
     {
         <div id="testni" style="display:none">1</div>
+    }
+    @if (Model.OsPlan1Podrucje.Count == 0)
+    {
+        <div id="provjerapodrucja" style="display:none">1</div>
     }
     <div class="inner">
         <div class="row">
