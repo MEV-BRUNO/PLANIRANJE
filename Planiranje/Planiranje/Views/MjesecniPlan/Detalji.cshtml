@@ -26,14 +26,14 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<div class="pull-left">
-								<input type="button" class="btn btn-primary btn-md" value="Novi plan" onclick="location.href='@Url.Action("NoviDetalji", "MjesecniPlan",new { id = Model.ID_PLAN })'" />
+								<input type="button" class="btn btn-primary btn-md" value="Novi detalji" onclick="location.href='@Html.Raw(@Url.Action("NoviDetalji", "MjesecniPlan" ,new { id=Model.ID_PLAN, id_god = Model.ID_GODINA }))'" />
 							</div>
 						</div>
 					</div>
 					<br>
-					@if (Model.MjesecniDetalji.Count > 0/* || Model.MjesecniDetalji != null*/)
+					@if (Model.MjesecniDetalji.Count > 0)
 					{
 						@Html.Partial("TableDetails", Model)
 					}
@@ -44,65 +44,76 @@
 					<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
 						<div id="assetContainer"></div>
 					</div>
+					<br>
+					<div class="pull-right">
+						<input type="button" class="btn btn-default btn-md" value="Odustani" onclick="location.href='@Url.Action("Index", "MjesecniPlan", new { Plan=Model.ID_GODINA.ToString() })'" />
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <script>
-		function ChangePlan(val) {
-			window.location.href = "/MjesecniPlan/Index?Plan=" + val;
-		}
+	function ChangePlan(val) {
+		window.location.href = "/MjesecniPlan/Index?Plan=" + val;
+	}
 </script>
 <script>
-		var rowDelete;
-		$(document).ready(function () {
-			$("#btnCreateAsset").click(function (e) {
-				var url = $(this).attr("data-url");
-				$.ajax({
-					url: url,
-					success: function (data) {
-						$('#assetContainer').html(data);
-						$('#assetModal').modal('show');
-					},
-					error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
-				});
-			});
-
-			$('#dataTables-example').on("click", "#editAsset", function (event) {
-				event.preventDefault();
-				var url = $(this).attr("data-url");
-				$.get(url, function (data) {
+	var rowDelete;
+	$(document).ready(function () {
+		$("#btnCreateAsset").click(function (e) {
+			var url = $(this).attr("data-url");
+			$.ajax({
+				url: url,
+				success: function (data) {
 					$('#assetContainer').html(data);
 					$('#assetModal').modal('show');
-				});
-			});
-
-			$('#dataTables-example').on("click", "#deleteAsset", function (event) {
-				event.preventDefault();
-				var url = $(this).attr("data-url");
-				$.get(url, function (data) {
-					$('#assetContainer').html(data);
-					$('#assetModal').modal('show');
-				});
+				},
+				error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
 			});
 		});
+
+		$('#dataTables-example').on("click", "#editAsset", function (event) {
+			event.preventDefault();
+			var url = $(this).attr("data-url");
+			$.get(url, function (data) {
+				$('#assetContainer').html(data);
+				$('#assetModal').modal('show');
+			});
+		});
+
+		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
+			event.preventDefault();
+			var url = $(this).attr("data-url");
+			$.get(url, function (data) {
+				$('#assetContainer').html(data);
+				$('#assetModal').modal('show');
+			});
+		});
+	});
 </script>
 
 <script type="text/javascript">
-		function CreateSuccess() {
-			$('#assetModal').modal('hide');
-			$('#assetContainer').html("");
-			location.reload(true);
-		}
+	function CreateSuccess() {
+		$('#assetModal').modal('hide');
+		$('#assetContainer').html("");
+		location.reload(true);
+	}
 
-		function EditSuccess() {
-			$('#assetModal').modal('hide');
-			$('#assetContainer').html("");
-			location.reload(true);
-		}
+	function EditSuccess() {
+		$('#assetModal').modal('hide');
+		$('#assetContainer').html("");
+		location.reload(true);
+	}
 
-		function DeleteSuccess() {
-			location.reload(true);
-		}
+	function DeleteSuccess() {
+		location.reload(true);
+	}
+</script>
+<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script>
+	$(document).ready(function () {
+		$('#dataTables-example').dataTable();
+	});
 </script>

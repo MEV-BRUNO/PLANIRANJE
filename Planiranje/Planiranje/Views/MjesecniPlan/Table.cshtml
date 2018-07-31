@@ -1,5 +1,7 @@
 ﻿@model Planiranje.Models.MjesecniModel
 
+@Html.HiddenFor(model => Model.ID_GODINA)
+
 <table class="table table-bordered table-hover" id="dataTables-example">
 	<thead>
 		<tr>
@@ -23,28 +25,28 @@
 	<tbody>
 
 		@foreach (var item in Model.MjesecniPlanovi)
-	{
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.ID_plan)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Naziv)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Ak_godina)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Opis)
-			</td>
-			<td>
-				<div class="pull-right">
-					<input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick="location.href='@Url.Action("Detalji","MjesecniPlan",new { id = item.ID_plan })'" />
-					<a data-toggle="modal" data-url="@Url.Action("Delete","MjesecniPlan",new { id = item.ID_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
-				</div>
-			</td>
-		</tr>
-}
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.ID_plan)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Naziv)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Ak_godina)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Opis)
+				</td>
+				<td>
+					<div class="pull-right">
+						<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick="location.href='@Html.Raw(@Url.Action("Detalji", "MjesecniPlan", new { id = item.ID_plan, id_god = Model.ID_GODINA }))'" />
+						<a data-toggle="modal" data-url="@Url.Action("Delete","MjesecniPlan",new { id = item.ID_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
+					</div>
+				</td>
+			</tr>
+		}
 	</tbody>
 </table>
 

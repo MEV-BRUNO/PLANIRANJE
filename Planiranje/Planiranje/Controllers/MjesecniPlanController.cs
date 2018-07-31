@@ -61,6 +61,10 @@ namespace Planiranje.Controllers
 
 				if (Plan != null)
 				{
+					if (Plan == "0")
+					{
+						idPlan = 1;
+					}
 					Godisnji_plan plan = godisnji_planovi.ReadGodisnjiPlan((Int32.Parse(Plan)));
 					int pln;
 					Int32.TryParse(Plan, out pln);
@@ -70,7 +74,9 @@ namespace Planiranje.Controllers
 				else
 				{
 					idPlan = Convert.ToInt32(godisnji_planovi.ReadGodisnjiPlan(Convert.ToInt32(mjesecniModel.GodisnjiPlanovi.ElementAt(0).Value)).Id_god);
+					mjesecniModel.ID_GODINA = idPlan;
 				}
+
 
 				mjesecniModel.MjesecniPlanovi = mjesecni_planovi.ReadMjesecnePlanove(idPlan).ToPagedList(No_Of_Page, Size_Of_Page).ToList();
 
@@ -129,7 +135,7 @@ namespace Planiranje.Controllers
 			return RedirectToAction("Index", new { Plan = _mjesecni_model.ID_GODINA });
 		}
 
-		public ActionResult Detalji (int id)
+		public ActionResult Detalji (int id, int id_god)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
@@ -140,11 +146,7 @@ namespace Planiranje.Controllers
 			model.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(id);
 			model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(id);
 			model.ID_PLAN = id;
-			/*if (Request.IsAjaxRequest())
-			{
-				ViewBag.IsUpdate = false;
-				return View("Uredi", mjesecni_plan);
-			}*/
+			model.ID_GODINA = id_god;
 			return View("Detalji", model);
 		}
 		[HttpPost]
@@ -208,7 +210,7 @@ namespace Planiranje.Controllers
             return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
 		}
 
-		public ActionResult NoviDetalji(int id)
+		public ActionResult NoviDetalji(int id, int id_god)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
@@ -240,6 +242,7 @@ namespace Planiranje.Controllers
 			mjesecniModel.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(id);
 			mjesecniModel.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(id);
 			mjesecniModel.ID_PLAN = id;
+			mjesecniModel.ID_GODINA = id_god;
 
 			return View("NoviDetalji", mjesecniModel);
 		}
@@ -248,12 +251,7 @@ namespace Planiranje.Controllers
 		public ActionResult NoviDetalji(MjesecniModel _mjesecni_model)
 		{
 			_mjesecni_model.mjesecniDetalj.ID_plan = _mjesecni_model.ID_PLAN;
-			if (/*_mjesecni_model.mjesecniDetalj.Aktivnost != null && 
-				_mjesecni_model.mjesecniDetalj.Suradnici != null &&
-				_mjesecni_model.mjesecniDetalj.Podrucje != null &&
-				_mjesecni_model.mjesecniDetalj.Br_sati < 0 &&
-				DateTime.Parse(_mjesecni_model.mjesecniDetalj.Vrijeme.ToString()) != null &&*/
-				mjesecni_planovi.CreateMjesecniDetalj(_mjesecni_model.mjesecniDetalj))
+			if (mjesecni_planovi.CreateMjesecniDetalj(_mjesecni_model.mjesecniDetalj))
 			{
 				TempData["alert"] = "<script>alert('Mjesecni detalj je dodan!');</script>";
 				_mjesecni_model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(_mjesecni_model.ID_PLAN);
@@ -286,7 +284,7 @@ namespace Planiranje.Controllers
 			}
 		}
 
-		public ActionResult DeleteDetails(int id)
+		public ActionResult DeleteDetails(int id, int id_god)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
@@ -295,6 +293,7 @@ namespace Planiranje.Controllers
 			MjesecniModel model = new MjesecniModel();
 			//model.ID_PLAN = 2;
 			model.mjesecniDetalj = mjesecni_planovi.ReadMjesecniDetalj(id);
+			model.ID_GODINA = id_god;
 			if (Request.IsAjaxRequest())
 			{
 				ViewBag.IsUpdate = false;

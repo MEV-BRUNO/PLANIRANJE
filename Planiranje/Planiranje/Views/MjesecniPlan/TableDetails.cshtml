@@ -1,5 +1,7 @@
 ﻿@model Planiranje.Models.MjesecniModel
 
+@Html.HiddenFor(model => Model.ID_GODINA)
+
 <table class="table table-bordered table-hover" id="dataTables-example">
 	<thead>
 		<tr>
@@ -40,7 +42,7 @@
 				<td>
 					<div class="pull-right">
 						<input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick="location.href='@Url.Action("Detalji","MjesecniPlan",new { id = item.ID })'" />
-						<a data-toggle="modal" data-url="@Url.Action("DeleteDetails","MjesecniPlan",new { id = item.ID })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
+						<a data-toggle="modal" data-url="@Html.Raw(@Url.Action("DeleteDetails","MjesecniPlan",new { id = item.ID, id_god = Model.ID_GODINA }))" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
 					</div>
 				</td>
 			</tr>
