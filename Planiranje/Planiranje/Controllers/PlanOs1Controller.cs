@@ -524,10 +524,11 @@ namespace Planiranje.Controllers
             return RedirectToAction("Details", new { id = _id });
         }
 
-        public ActionResult NovaAktivnost(int id)
+        public ActionResult NovaAktivnost(int id, int pozicija)
         {
             PlanOs1View plan = new PlanOs1View();
             plan.Id = id;
+            plan.Pozicija = pozicija;
 
             List<Aktivnost> aktivnosti = new List<Aktivnost>();
             aktivnosti = aktivnost_db.ReadAktivnost();
@@ -578,7 +579,7 @@ namespace Planiranje.Controllers
             
             
             TempData["prikaz"] = "1";
-            return RedirectToAction("Details", new { id = _id });
+            return RedirectToAction("Details2", new { id = _id, pozicija=plan.Pozicija });
         }
         public ActionResult Details2 (int id, int pozicija)
         {
