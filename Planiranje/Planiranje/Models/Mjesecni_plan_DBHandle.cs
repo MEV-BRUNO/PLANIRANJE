@@ -168,6 +168,39 @@ namespace Planiranje.Models
 			return mjesecni_plan;
 		}
 
+		public Mjesecni_plan ReadMjesecniPlanForDel(int _id)
+		{
+			Mjesecni_plan mjesecni_plan = new Mjesecni_plan();
+			this.Connect();
+			using (MySqlCommand command = new MySqlCommand())
+			{
+				command.Connection = connection;
+				command.CommandText = "SELECT * FROM mjesecni_plan " +
+					"WHERE id_plan = @id_plan";
+				command.CommandType = CommandType.Text;
+				command.Parameters.AddWithValue("@id_plan", _id);
+				connection.Open();
+				using (MySqlDataReader sdr = command.ExecuteReader())
+				{
+					if (sdr.HasRows)
+					{
+						while (sdr.Read())
+						{
+							mjesecni_plan = new Mjesecni_plan()
+							{
+								ID_plan = Convert.ToInt32(sdr["id_plan"]),
+								Id_godina = Convert.ToInt32(sdr["id_godina"]),
+								Naziv = sdr["naziv"].ToString(),
+								Opis = sdr["opis"].ToString()
+							};
+						}
+					}
+				}
+				connection.Close();
+			}
+			return mjesecni_plan;
+		}
+
 		public bool CreateMjesecniPlan(Mjesecni_plan mjesecni_plan)
 		{
 			try

@@ -167,30 +167,31 @@ namespace Planiranje.Controllers
 			return RedirectToAction("Detalji");
 		}
 		
-		public ActionResult Delete(int id)
+		public ActionResult Delete(int id, int id_god)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			Mjesecni_plan mjesecni_plan = new Mjesecni_plan();
-			mjesecni_plan = mjesecni_planovi.ReadMjesecniPlan(id);
+			MjesecniModel mjesecni_model = new MjesecniModel();
+			mjesecni_model.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlanForDel(id);
+			mjesecni_model.ID_GODINA = id_god;
 			if (Request.IsAjaxRequest())
 			{
 				ViewBag.IsUpdate = false;
-				return View("Obrisi", mjesecni_plan);
+				return View("Obrisi", mjesecni_model);
 			}
 			return View("Obrisi");
 		}
 
 		[HttpPost]
-		public ActionResult Delete(Mjesecni_plan mjesecni_plan)
+		public ActionResult Delete(MjesecniModel mjesecni_model)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			if (!mjesecni_planovi.DeleteMjesecniPlan(mjesecni_plan.ID_plan))
+			if (!mjesecni_planovi.DeleteMjesecniPlan(mjesecni_model.MjesecniPlan.ID_plan))
 			{
 				TempData["alert"] = "<script>alert('Mjesecni plan nije obrisan, dogodila se greska!');</script>";
 			}
@@ -198,7 +199,7 @@ namespace Planiranje.Controllers
 			{
 				TempData["alert"] = "<script>alert('Mjesecni plan je uspjesno obrisan!');</script>";
 			}
-			return RedirectToAction("Detalji");
+			return RedirectToAction("Index", new { Plan = mjesecni_model.ID_GODINA });
 		}
 
         public FileStreamResult Ispis()
