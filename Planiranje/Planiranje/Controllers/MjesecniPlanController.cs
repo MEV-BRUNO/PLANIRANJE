@@ -62,6 +62,9 @@ namespace Planiranje.Controllers
 				if (Plan != null)
 				{
 					Godisnji_plan plan = godisnji_planovi.ReadGodisnjiPlan((Int32.Parse(Plan)));
+					int pln;
+					Int32.TryParse(Plan, out pln);
+					mjesecniModel.ID_GODINA = pln;
 					idPlan = plan.Id_god;
 				}
 				else
@@ -83,7 +86,7 @@ namespace Planiranje.Controllers
 			}
 		}
 
-		public ActionResult NoviPlan()
+		public ActionResult NoviPlan(int id_godina)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
@@ -92,6 +95,7 @@ namespace Planiranje.Controllers
 			ViewBag.Title = "Novi mjesečni plan";
 			MjesecniModel mjesecniModel = new MjesecniModel();
 			mjesecniModel.MjesecniPlan = new Mjesecni_plan();
+			mjesecniModel.ID_GODINA = id_godina;
 			mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 			{
 				Text = i.Ak_godina,
@@ -110,7 +114,7 @@ namespace Planiranje.Controllers
 			}
 			Mjesecni_plan mjesecni_plan = new Mjesecni_plan();
 			mjesecni_plan.ID_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-			mjesecni_plan.Id_godina = _mjesecni_model.MjesecniPlan.Id_godina;
+			mjesecni_plan.Id_godina = _mjesecni_model.ID_GODINA;
 			mjesecni_plan.Naziv = _mjesecni_model.MjesecniPlan.Naziv;
 			mjesecni_plan.Opis = _mjesecni_model.MjesecniPlan.Opis;
 
@@ -122,7 +126,7 @@ namespace Planiranje.Controllers
 			{
 				TempData["alert"] = "<script>alert('Novi mjesecni plan nije spremljen');</script>";
 			}
-			return RedirectToAction("Index");
+			return RedirectToAction("Index", new { Plan = _mjesecni_model.ID_GODINA });
 		}
 
 		public ActionResult Detalji (int id)
@@ -244,13 +248,20 @@ namespace Planiranje.Controllers
 		public ActionResult NoviDetalji(MjesecniModel _mjesecni_model)
 		{
 			_mjesecni_model.mjesecniDetalj.ID_plan = _mjesecni_model.ID_PLAN;
-			if (mjesecni_planovi.CreateMjesecniDetalj(_mjesecni_model.mjesecniDetalj))
+			if (/*_mjesecni_model.mjesecniDetalj.Aktivnost != null && 
+				_mjesecni_model.mjesecniDetalj.Suradnici != null &&
+				_mjesecni_model.mjesecniDetalj.Podrucje != null &&
+				_mjesecni_model.mjesecniDetalj.Br_sati < 0 &&
+				DateTime.Parse(_mjesecni_model.mjesecniDetalj.Vrijeme.ToString()) != null &&*/
+				mjesecni_planovi.CreateMjesecniDetalj(_mjesecni_model.mjesecniDetalj))
 			{
+				TempData["alert"] = "<script>alert('Mjesecni detalj je dodan!');</script>";
 				_mjesecni_model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(_mjesecni_model.ID_PLAN);
 				return View("Detalji", _mjesecni_model);
 			}
 			else
 			{
+				//TempData["alert"] = "<script>alert('Mjesecni detalj nije dodan, dogodila se greska!');</script>";
 				_mjesecni_model.PodrucjaRada = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
 				{
 					Text = i.Naziv.ToString(),
@@ -310,6 +321,7 @@ namespace Planiranje.Controllers
 			//MjesecniModel model = new MjesecniModel();
 			model.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(model.mjesecniDetalj.ID_plan);
 			model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(model.mjesecniDetalj.ID_plan);
+			model.ID_PLAN = model.mjesecniDetalj.ID_plan;
 			return View("Detalji", model);
 		}
 	}
