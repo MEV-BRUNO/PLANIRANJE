@@ -16,30 +16,101 @@
             OnSuccess = "CreateSuccess"
         }, new { @class = "form-horizontal", role = "form" }))
         {
-            <div class="modal-body">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.Os_Plan_1_Aktivnost.Id_plan, new { Value = 0 })
-                @Html.HiddenFor(m=>m.Pozicija)
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Opis_aktivnost, htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.DropDownListFor(model => model.Os_Plan_1_Aktivnost.Opis_aktivnost, Model.AktivnostiItems, "Odaberi aktivnost", new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Potrebno_sati, htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Potrebno_sati, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Potrebno_sati, "", new { @class = "text-danger" })
-                    </div>
-                </div>              
-
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                    <input type="submit" class="btn btn-primary" value="Spremi" />
+        <div class="modal-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Os_Plan_1_Aktivnost.Id_plan, new { Value = 0 })
+            @Html.HiddenFor(m => m.Pozicija)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Opis_aktivnost, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.Os_Plan_1_Aktivnost.Opis_aktivnost, Model.AktivnostiItems, "Odaberi aktivnost", new { @class = "form-control" })
                 </div>
             </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Potrebno_sati, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Potrebno_sati, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Potrebno_sati, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_9, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_9, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_10, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_10, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_11, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_11, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_12, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_12, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_1, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_1, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_2, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_2, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_3, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_3, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_4, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_4, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_5, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_5, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_6, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_6, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_7, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_7, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_8, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_8, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                <input type="submit" class="btn btn-primary" value="Spremi" />
+            </div>
+        </div>
         }
     </div>
 </div>
