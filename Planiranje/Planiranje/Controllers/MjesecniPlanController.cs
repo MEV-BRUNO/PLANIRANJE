@@ -6,7 +6,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using PagedList;
 using Planiranje.Models;
 using Planiranje.Reports;
 
@@ -19,10 +18,9 @@ namespace Planiranje.Controllers
 		private Podrucje_rada_DBHandle podrucja_rada = new Podrucje_rada_DBHandle();
 		private Subjekt_DBHandle subjekti = new Subjekt_DBHandle();
 		private Aktivnost_DBHandle aktivnosti = new Aktivnost_DBHandle();
-		int Page_No_Master = 1;
 		private int tmpId;
 
-		public ActionResult Index(string Sort, string Search, string Plan, string Filter, int? Page_No)
+		public ActionResult Index(string Plan)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
@@ -30,66 +28,38 @@ namespace Planiranje.Controllers
 			}
 			MjesecniModel mjesecniModel = new MjesecniModel();
 			ViewBag.Title = "Pregled mjesečnih planova";
-			ViewBag.CurrentSortOrder = Sort;
-			ViewBag.SortingName = String.IsNullOrEmpty(Sort) ? "Naziv" : "";
-
-			ViewBag.FilterValue = Search;
-			if (Search != null)
+			
+			int idPlan = 0;
+			mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 			{
-				Page_No = 1;
+				Text = i.Ak_godina,
+				Value = i.Id_god.ToString()
+			}));
+
+			if (Plan != null)
+			{
+				idPlan = mjesecniModel.GodisnjiPlanovi.FindIndex(x => x.Value == Plan);
+				mjesecniModel.ID_GODINA = Convert.ToInt32(mjesecniModel.GodisnjiPlanovi.ElementAt(idPlan).Value.ToString());
+				ViewBag.HasGodPlan = true;
 			}
 			else
 			{
-				Search = Filter;
-			}
-			ViewBag.CurrentPage = 1;
-			if (Page_No != null)
-				ViewBag.CurrentPage = Page_No;
-
-			
-			int Size_Of_Page = 10;
-			int No_Of_Page = (Page_No ?? 1);
-			if (Search == null || Search.Length == 0)
-			{
-				Page_No_Master = No_Of_Page;
-				int idPlan = 0;
-				mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
+				if (mjesecniModel.GodisnjiPlanovi.Count < 1)
 				{
-					Text = i.Ak_godina,
-					Value = i.Id_god.ToString()
-				}));
-
-				if (Plan != null)
-				{
-					if (Plan == "0")
-					{
-						idPlan = 1;
-					}
-					Godisnji_plan plan = godisnji_planovi.ReadGodisnjiPlan((Int32.Parse(Plan)));
-					int pln;
-					Int32.TryParse(Plan, out pln);
-					mjesecniModel.ID_GODINA = pln;
-					idPlan = plan.Id_god;
+					ViewBag.HasGodPlan = false;
 				}
 				else
 				{
-					idPlan = Convert.ToInt32(godisnji_planovi.ReadGodisnjiPlan(Convert.ToInt32(mjesecniModel.GodisnjiPlanovi.ElementAt(0).Value)).Id_god);
-					mjesecniModel.ID_GODINA = idPlan;
+					mjesecniModel.ID_GODINA = Convert.ToInt32(mjesecniModel.GodisnjiPlanovi.ElementAt(0).Value.ToString());
+					idPlan = 0;
+					ViewBag.HasGodPlan = true;
 				}
-
-
-				mjesecniModel.MjesecniPlanovi = mjesecni_planovi.ReadMjesecnePlanove(idPlan).ToPagedList(No_Of_Page, Size_Of_Page).ToList();
-
-				mjesecniModel.GodisnjiPlanovi.ElementAt(idPlan - 1).Selected = true;
-				return View(mjesecniModel);
 			}
-			else
-			{
-				Page_No_Master = No_Of_Page;
-				var Popis = mjesecni_planovi.ReadMjesecnePlanove(Search).ToPagedList(No_Of_Page, Size_Of_Page);
 
-				return View(Popis);
-			}
+			//mjesecniModel.ID_GODINA = idPlan;
+			mjesecniModel.GodisnjiPlanovi.ElementAt(idPlan).Selected = true;
+			mjesecniModel.MjesecniPlanovi = mjesecni_planovi.ReadMjesecnePlanove(mjesecniModel.ID_GODINA);
+			return View(mjesecniModel);
 		}
 
 		public ActionResult NoviPlan(int id_godina)

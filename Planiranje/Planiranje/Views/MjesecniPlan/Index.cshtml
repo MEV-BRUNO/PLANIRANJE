@@ -17,13 +17,22 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-2">
-							<p>Školska godina:</p>
-							@Html.DropDownList("Model.GodisnjiPlanovi", Model.GodisnjiPlanovi, new { @class = "form-control", onchange = "ChangePlan(this.value);" })
+						<div class="col-lg-4">
+							@if (ViewBag.HasGodPlan == true)
+							{
+								<p>Školska godina:</p>
+								@Html.DropDownList("Model.GodisnjiPlanovi", Model.GodisnjiPlanovi, new { @class = "form-control", onchange = "ChangePlan(this.value);" })
+							}
+							else
+							{
+								<p>Za kreiranje mjesečnog plana morate dodati godišnji plan!</p>
+							}
 						</div>
 					</div>
 				</div>
 				<div class="panel-body">
+					@if (ViewBag.HasGodPlan == true)
+					{
 					<div class="row">
 						<div class="col-lg-2">
 							<div class="pull-left">
@@ -31,6 +40,7 @@
 							</div>
 						</div>
 					</div>
+					}	
 					<br>
 					@if (Model.MjesecniPlanovi.Count > 0)
 					{
@@ -38,7 +48,10 @@
 					}
 					else
 					{
-						<p>Nema mjesečnih planova</p>
+						if (ViewBag.HasGodPlan == true)
+						{
+							<p>Nema mjesečnih planova</p>
+						}
 					}
 					<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
 						<div id="assetContainer"></div>
