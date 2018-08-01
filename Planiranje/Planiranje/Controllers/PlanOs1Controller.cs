@@ -86,13 +86,13 @@ namespace Planiranje.Controllers
         }
 
         [HttpPost]
-        public ActionResult NoviPlan(OS_Plan_1 gr)
+        public ActionResult NoviPlan(OS_Plan_2 gr)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-			OS_Plan_1 os_plan = new OS_Plan_1();
+			OS_Plan_2 os_plan = new OS_Plan_2();
             os_plan.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
             os_plan.Ak_godina = gr.Ak_godina;
             os_plan.Naziv = gr.Naziv;
@@ -114,7 +114,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            OS_Plan_1 os_plan_1 = new OS_Plan_1();
+            OS_Plan_2 os_plan_1 = new OS_Plan_2();
             os_plan_1 = planovi_os1.ReadOS_Plan_1(id);
             if (Request.IsAjaxRequest())
             {
@@ -124,7 +124,7 @@ namespace Planiranje.Controllers
             return View("Uredi", os_plan_1);
         }
         [HttpPost]
-        public ActionResult Edit(OS_Plan_1 os_plan_1)
+        public ActionResult Edit(OS_Plan_2 os_plan_1)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -147,7 +147,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            OS_Plan_1 os_plan_1 = new OS_Plan_1();
+            OS_Plan_2 os_plan_1 = new OS_Plan_2();
 			os_plan_1 = planovi_os1.ReadOS_Plan_1(id);
             if (Request.IsAjaxRequest())
             {
@@ -158,7 +158,7 @@ namespace Planiranje.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(OS_Plan_1 os_plan_1)
+        public ActionResult Delete(OS_Plan_2 os_plan_1)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -177,7 +177,7 @@ namespace Planiranje.Controllers
 
 		public FileStreamResult Ispis()
 		{
-			List<OS_Plan_1> planovi = planovi_os1.ReadOS_Plan_1();
+			List<OS_Plan_2> planovi = planovi_os1.ReadOS_Plan_1();
 
 			PlanOs1Report report = new PlanOs1Report(planovi);
 

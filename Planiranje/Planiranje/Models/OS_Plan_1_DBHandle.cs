@@ -20,9 +20,9 @@ namespace Planiranje.Models
             connection = new MySqlConnection(connection_string);
         }
 
-        public List<OS_Plan_1> ReadOS_Plan_1()
+        public List<OS_Plan_2> ReadOS_Plan_1()
         {
-            List<OS_Plan_1> os_plan_1 = new List<OS_Plan_1>();
+            List<OS_Plan_2> os_plan_1 = new List<OS_Plan_2>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
@@ -39,7 +39,7 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            OS_Plan_1 plan = new OS_Plan_1()
+                            OS_Plan_2 plan = new OS_Plan_2()
                             {
                                 Id_plan = Convert.ToInt32(sdr["id_plan"]),
                                 Naziv = sdr["naziv"].ToString(),
@@ -55,9 +55,9 @@ namespace Planiranje.Models
             return os_plan_1;
         }
 
-        public List<OS_Plan_1> ReadOS_Plan_1(string search_string)
+        public List<OS_Plan_2> ReadOS_Plan_1(string search_string)
         {
-            List<OS_Plan_1> os_plan_1 = new List<OS_Plan_1>();
+            List<OS_Plan_2> os_plan_1 = new List<OS_Plan_2>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
@@ -77,7 +77,7 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            OS_Plan_1 plan = new OS_Plan_1()
+                            OS_Plan_2 plan = new OS_Plan_2()
                             {
                                 Id_plan = Convert.ToInt32(sdr["id_plan"]),
                                 Naziv = sdr["naziv"].ToString(),
@@ -93,9 +93,9 @@ namespace Planiranje.Models
             return os_plan_1;
         }
 
-        public OS_Plan_1 ReadOS_Plan_1(int _id)
+        public OS_Plan_2 ReadOS_Plan_1(int _id)
         {
-            OS_Plan_1 os_plan_1 = new OS_Plan_1();
+            OS_Plan_2 os_plan_1 = new OS_Plan_2();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
@@ -114,7 +114,7 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-							os_plan_1 = new OS_Plan_1()
+							os_plan_1 = new OS_Plan_2()
                             {
                                 Id_plan = Convert.ToInt32(sdr["id_plan"]),
                                 Ak_godina = sdr["ak_godina"].ToString(),
@@ -129,7 +129,7 @@ namespace Planiranje.Models
             return os_plan_1;
         }
 
-        public bool CreateOS_Plan_1(OS_Plan_1 os_plan_1)
+        public bool CreateOS_Plan_1(OS_Plan_2 os_plan_1)
         {
             try
             {
@@ -161,7 +161,7 @@ namespace Planiranje.Models
             return true;
         }
 
-        public bool UpdateOS_Plan_1(OS_Plan_1 os_plan_1)
+        public bool UpdateOS_Plan_1(OS_Plan_2 os_plan_1)
         {
             try
             {
