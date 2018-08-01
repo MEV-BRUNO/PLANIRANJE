@@ -177,13 +177,13 @@
                                                                     if (br-1 == Model.Pozicija)
                                                                     {
                                                                        <option selected="selected">
-                                                                       @br .@Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv
+                                                                       @br. @Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv
                                                                        </option>
                                                                     }
                                                                     else
                                                                     {
                                                                     <option onclick="location.href='@Url.Action("Details2","PlanOs1", new { id=Model.OsPlan1.Id_plan,pozicija=br-1})'">
-                                                                        @br .@Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv
+                                                                        @br. @Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv
                                                                     </option>
                                                                     }
                                                                     br++;
@@ -209,13 +209,13 @@
                                                                     <th>Aktivnost</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
-                                                                @{ int i = 0;}
+                                                            <tbody>                                                                
+                                                                @{ int i = 0; int a = Model.Pozicija+1;}
                                                                 @foreach (var item in Model.OsPlan1Aktivnost)
                                                                 {
                                                                     i++;                                                                    
                                                                 <tr>
-                                                                    <td class="col-md-1">@i</td>
+                                                                    <td class="col-md-1">@a.@i</td>
                                                                     <td class="col-md-7">@Model.Aktivnosti.Single(s=>s.Id_aktivnost==item.Opis_aktivnost).Naziv</td>
                                                                     <td class="col-md-2">@item.Potrebno_sati</td>
                                                                     <td class="col-md-1">
