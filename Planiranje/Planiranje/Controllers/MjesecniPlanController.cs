@@ -172,11 +172,15 @@ namespace Planiranje.Controllers
 			return RedirectToAction("Index", new { Plan = mjesecni_model.ID_GODINA });
 		}
 
-        public FileStreamResult Ispis()
+        public FileStreamResult Ispis(int id)
         {
-            List<Mjesecni_plan> planovi = mjesecni_planovi.ReadMjesecnePlanove();
+            Mjesecni_plan mjesecni_plan = mjesecni_planovi.ReadMjesecniPlan(id);
+			List<Mjesecni_detalji> mjesecni_detalji = mjesecni_planovi.ReadMjesecneDetalje(id);
+			MjesecniModel mjesecni_model = new MjesecniModel();
+			mjesecni_model.MjesecniPlan = mjesecni_plan;
+			mjesecni_model.MjesecniDetalji = mjesecni_detalji;
 
-            MjesecniPlanReport report = new MjesecniPlanReport(planovi);
+            MjesecniPlanReport report = new MjesecniPlanReport(mjesecni_model);
 
             return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
 		}
