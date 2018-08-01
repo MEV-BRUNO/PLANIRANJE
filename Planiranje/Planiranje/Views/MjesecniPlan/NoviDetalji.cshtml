@@ -5,6 +5,7 @@
 }
 
 @Html.Raw(TempData["alert"])
+@Html.HiddenFor(model => Model.ID_PLAN)
 <div class="inner">
 	<div class="row">
 		<div class="col-lg-12">
