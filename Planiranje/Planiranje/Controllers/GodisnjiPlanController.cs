@@ -6,7 +6,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using PagedList;
 using Planiranje.Models;
 using Planiranje.Reports;
 
@@ -31,8 +30,6 @@ namespace Planiranje.Controllers
 			new KeyValuePair<int, String>(8, "Kolovoz"),
 		};
 
-		int Page_No_Master = 1;
-
         public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
         {
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
@@ -40,50 +37,8 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             ViewBag.Title = "Pregled godišnjih planova";
-            ViewBag.CurrentSortOrder = Sort;
-            ViewBag.SortingName = String.IsNullOrEmpty(Sort) ? "Naziv" : "";
-
-            ViewBag.Message = "Grad";
-
-            ViewBag.FilterValue = Search;
-            if (Search != null)
-            {
-                Page_No = 1;
-            }
-            else
-            {
-                Search = Filter;
-            }
-            ViewBag.CurrentPage = 1;
-            if (Page_No != null)
-                ViewBag.CurrentPage = Page_No;
-
-
-            int Size_Of_Page = 10;
-            int No_Of_Page = (Page_No ?? 1);
-            if (Search == null || Search.Length == 0)
-            {
-
-                if (Request.IsAjaxRequest())
-                {
-                    int noP = (int)Page_No_Master;
-                    var Popis2 = godisnji_planovi.ReadGodisnjePlanove().ToPagedList(No_Of_Page, Size_Of_Page);
-                    return PartialView("_GradView", Popis2);
-                }
-                Page_No_Master = No_Of_Page;
-                var Popis = godisnji_planovi.ReadGodisnjePlanove().ToPagedList(No_Of_Page, Size_Of_Page);
-                return View(Popis);
-            }
-            else
-            {
-                Page_No_Master = No_Of_Page;
-                var Popis = godisnji_planovi.ReadGodisnjePlanove(Search).ToPagedList(No_Of_Page, Size_Of_Page);
-                if (Request.IsAjaxRequest())
-                {
-                    return PartialView("_GradView", Popis);
-                }
-                return View(Popis);
-            }
+			List<Godisnji_plan> god_planovi = godisnji_planovi.ReadGodisnjePlanove();
+			return View(god_planovi);
 
 		}
 

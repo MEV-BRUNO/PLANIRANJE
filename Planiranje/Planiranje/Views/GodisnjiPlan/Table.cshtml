@@ -1,25 +1,25 @@
-﻿@model PagedList.IPagedList<Planiranje.Models.Godisnji_plan>
+﻿@model List<Planiranje.Models.Godisnji_plan>
 
 <table class="table table-bordered" id="dataTables-example">
 	<thead>
 		<tr>
 			<td class="col-lg-1">
-				@Html.ActionLink("#", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				#
 			</td>
 			<td class="col-lg-1">
-				@Html.ActionLink("Ak. godina", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				Ak. godina
 			</td>
 			<td class="col-lg-2">
-				@Html.ActionLink("Br. dana god. odmora", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				Br. dana god. odmora
 			</td>
 			<td class="col-lg-2">
-				@Html.ActionLink("Br. radnih dana", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				Br. radnih dana
 			</td>
 			<td class="col-lg-2">
-				@Html.ActionLink("God. fond sati", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				God. fond sati
 			</td>
 			<td class="col-lg-2">
-				@Html.ActionLink("Ukupno radnih dana", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				Ukupno radnih dana
 			</td>
 			<td class="col-lg-2">
 				Akcija

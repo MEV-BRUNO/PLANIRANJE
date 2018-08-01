@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PagedList;
 using System.Configuration;
 using Planiranje.Controllers;
 using System.Data;
@@ -31,7 +30,7 @@ namespace Planiranje.Models
                 command.CommandText = "SELECT id_god, id_pedagog, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati" +
                     " FROM godisnji_plan " +
                     "WHERE id_pedagog = @id_pedagog " +
-                    "ORDER BY id_god ASC";
+                    "ORDER BY ak_godina ASC";
                 command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
@@ -58,45 +57,6 @@ namespace Planiranje.Models
             }
             return godisnji_planovi;
         }
-
-        public List<Godisnji_plan> ReadGodisnjePlanove(string search_string)
-        {
-            List<Godisnji_plan> godisnji_planovi = new List<Godisnji_plan>();
-            this.Connect();
-            using (MySqlCommand command = new MySqlCommand())
-            {
-                command.Connection = connection;
-                command.CommandText = "SELECT id_god, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati " +
-                    "FROM godisnji_plan " +
-                    "WHERE id_pedagog = @id_pedagog " +
-                    "AND (ak_godina like '%" + search_string + "%' " +
-                    "OR br_radnih_dana like '%" + search_string +"%')"+
-                    "ORDER BY id_god ASC";
-                command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
-                connection.Open();
-                using (MySqlDataReader sdr = command.ExecuteReader())
-                {
-                    if (sdr.HasRows)
-                    {
-                        while (sdr.Read())
-                        {
-                            Godisnji_plan plan = new Godisnji_plan()
-                            {
-                                Id_god = Convert.ToInt32(sdr["id_god"]),
-                                Ak_godina = sdr["ak_godina"].ToString(),
-                                Br_radnih_dana = Convert.ToInt32(sdr["br_radnih_dana"]),
-                                Br_dana_godina_odmor = Convert.ToInt32(sdr["br_dana_godina_odmor"]),
-                                Ukupni_rad_dana = Convert.ToInt32(sdr["ukupni_rad_dana"]),
-                                God_fond_sati = Convert.ToInt32(sdr["god_fond_sati"]),
-                            };
-                            godisnji_planovi.Add(plan);
-                        }
-                    }
-                }
-                connection.Close();
-            }
-            return godisnji_planovi;
-		}
 
 		public GodisnjiModel ReadGodisnjiDetalji(int _id)
 		{
