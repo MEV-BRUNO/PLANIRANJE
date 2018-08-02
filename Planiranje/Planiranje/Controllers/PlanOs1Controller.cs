@@ -655,5 +655,45 @@ namespace Planiranje.Controllers
             plan.Id = podr.Id_plan;
             return View("Details", plan);
         }
+
+        public ActionResult AktivnostPomakGore(int id, int pozicija_podrucja)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            OS_Plan_1_aktivnost aktivnost = new OS_Plan_1_aktivnost();
+            aktivnost = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+            OS_Plan_1_podrucje podrucje = new OS_Plan_1_podrucje();
+            podrucje = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == aktivnost.Id_podrucje);
+
+            int pozicija = aktivnost.Red_broj_aktivnost;
+
+            List<OS_Plan_1_aktivnost> aktivnosti = new List<OS_Plan_1_aktivnost>();
+            aktivnosti = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == aktivnost.Id_podrucje && w.Red_broj_aktivnost <= pozicija).ToList();
+            aktivnosti = aktivnosti.OrderBy(o => o.Red_broj_aktivnost).ToList();
+
+            if (aktivnosti.Count == 1)
+            {
+                return RedirectToAction("Details2", new { id = podrucje.Id_glavni_plan, pozicija = pozicija_podrucja });
+            }
+
+            int pozicija_prethodni = aktivnosti.ElementAt(aktivnosti.Count - 2).Red_broj_aktivnost;
+            int id_prethodni = aktivnosti.ElementAt(aktivnosti.Count - 2).Id_plan;
+
+            using (var db = new BazaPodataka())
+            {
+                var rezultat = db.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id);                
+                var rezultat1 = db.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id_prethodni);
+                if(rezultat!=null && rezultat1 != null)
+                {
+                    rezultat.Red_broj_aktivnost = pozicija_prethodni;
+                    rezultat1.Red_broj_aktivnost = pozicija;
+                    db.SaveChanges();
+                }
+            }
+            TempData["pomak"] = "Aktivnost je pomaknuta za jedno mjesto prema gore";
+            return RedirectToAction("Details2", new { id = podrucje.Id_glavni_plan, pozicija = pozicija_podrucja });
+        }
     }
 }

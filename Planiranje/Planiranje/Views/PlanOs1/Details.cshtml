@@ -219,7 +219,7 @@
                                                                     <td class="col-md-7">@Model.Aktivnosti.Single(s=>s.Id_aktivnost==item.Opis_aktivnost).Naziv</td>
                                                                     <td class="col-md-2">@item.Potrebno_sati</td>
                                                                     <td class="col-md-1">
-                                                                        <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
+                                                                        <a href="#" onclick="location.href='@Url.Action("AktivnostPomakGore","PlanOs1", new { id=item.Id_plan, pozicija_podrucja=Model.Pozicija})'" class="btn btn-warning btn-xs btn-grad">Gore</a>
                                                                         <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                     </td>
                                                                     <td class="col-md-1">
