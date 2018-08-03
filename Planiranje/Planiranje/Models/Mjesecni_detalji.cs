@@ -20,7 +20,7 @@ namespace Planiranje.Models
 		public string Aktivnost { get; set; }
 		[Required(ErrorMessage = "Obavezno polje.")]
 		public string Suradnici { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
+		[Required(ErrorMessage = "Datum mora biti veći od trenutnog.")]
 		[DataType(DataType.Date)]
         public DateTime Vrijeme { get; set; }
 		[Required(ErrorMessage = "Obavezno polje.")]

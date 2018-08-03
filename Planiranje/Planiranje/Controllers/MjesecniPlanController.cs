@@ -226,7 +226,13 @@ namespace Planiranje.Controllers
 		public ActionResult NoviDetalji(MjesecniModel _mjesecni_model)
 		{
 			_mjesecni_model.mjesecniDetalj.ID_plan = _mjesecni_model.ID_PLAN;
-			if (mjesecni_planovi.CreateMjesecniDetalj(_mjesecni_model.mjesecniDetalj))
+			if (_mjesecni_model.mjesecniDetalj.Suradnici != null &&
+				_mjesecni_model.mjesecniDetalj.Aktivnost != null &&
+				_mjesecni_model.mjesecniDetalj.Podrucje != null &&
+				_mjesecni_model.mjesecniDetalj.Biljeska != null &&
+				_mjesecni_model.mjesecniDetalj.Br_sati > 0 &&
+				DateTime.Compare(_mjesecni_model.mjesecniDetalj.Vrijeme, DateTime.Now.Date) > 0 && 
+				mjesecni_planovi.CreateMjesecniDetalj(_mjesecni_model.mjesecniDetalj))
 			{
 				TempData["alert"] = "<script>alert('Mjesecni detalj je dodan!');</script>";
 				_mjesecni_model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(_mjesecni_model.ID_PLAN);
