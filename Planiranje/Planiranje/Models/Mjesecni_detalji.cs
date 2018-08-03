@@ -21,7 +21,7 @@ namespace Planiranje.Models
 		[Required(ErrorMessage = "Obavezno polje.")]
 		public string Suradnici { get; set; }
 		[Required(ErrorMessage = "Obavezno polje.")]
-		[DataType(DataType.DateTime)]
+		[DataType(DataType.Date)]
         public DateTime Vrijeme { get; set; }
 		[Required(ErrorMessage = "Obavezno polje.")]
 		public int Br_sati { get; set; }
