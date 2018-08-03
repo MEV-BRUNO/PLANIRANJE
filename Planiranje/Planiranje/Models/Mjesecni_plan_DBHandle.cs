@@ -437,5 +437,45 @@ namespace Planiranje.Models
 			}
 			return true;
 		}
+		public bool UpdateMjesecniDetalj(Mjesecni_detalji mjesecni_detalj)
+		{
+			try
+			{
+				this.Connect();
+				using (MySqlCommand command = new MySqlCommand())
+				{
+					command.Connection = connection;
+					command.CommandText = "UPDATE mjesecni_detalji " +
+						"SET " +
+						"podrucje = @podrucje, " +
+						"aktivnost = @aktivnost, " +
+						"suradnici = @suradnici, " +
+						"vrijeme = @vrijeme, " +
+						"br_sati = @br_sati, " +
+						"biljeska = @biljeska " +
+						"WHERE id = @id ";
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@podrucje", mjesecni_detalj.Podrucje);
+					command.Parameters.AddWithValue("@aktivnost", mjesecni_detalj.Aktivnost);
+					command.Parameters.AddWithValue("@suradnici", mjesecni_detalj.Suradnici);
+					command.Parameters.AddWithValue("@vrijeme", mjesecni_detalj.Vrijeme);
+					command.Parameters.AddWithValue("@br_sati", mjesecni_detalj.Br_sati);
+					command.Parameters.AddWithValue("@biljeska", mjesecni_detalj.Biljeska);
+					command.Parameters.AddWithValue("@id", mjesecni_detalj.ID);
+					connection.Open();
+					command.ExecuteNonQuery();
+				}
+			}
+			catch (MySqlException e)
+			{
+				connection.Close();
+				return false;
+			}
+			finally
+			{
+				connection.Close();
+			}
+			return true;
+		}
 	}
 }

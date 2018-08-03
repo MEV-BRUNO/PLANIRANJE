@@ -350,5 +350,84 @@ namespace Planiranje.Controllers
 			}
 
 		}
+
+		public ActionResult UpdateNoviDetalji(int id, int id_plan, int id_god)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			ViewBag.Title = "Novi detalji mjesečnog plana";
+			MjesecniModel mjesecniModel = new MjesecniModel();
+			mjesecniModel.MjesecniPlan = new Mjesecni_plan();
+			mjesecniModel.PodrucjaRada = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv.ToString(),
+				Value = i.Id_podrucje.ToString()
+			}));
+			mjesecniModel.Aktivnosti = new List<SelectListItem>(aktivnosti.ReadAktivnost().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv.ToString(),
+				Value = i.Id_aktivnost.ToString()
+			}));
+			mjesecniModel.Subjekti = new List<SelectListItem>(subjekti.ReadSubjekti().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv.ToString(),
+				Value = i.ID_subjekt.ToString()
+			}));
+			mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
+			{
+				Text = i.Ak_godina,
+				Value = i.Id_god.ToString()
+			}));
+			mjesecniModel.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(id);
+			mjesecniModel.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(id);
+			mjesecniModel.ID_PLAN = id;
+			mjesecniModel.ID_GODINA = id_god;
+			mjesecniModel.mjesecniDetalj = mjesecni_planovi.ReadMjesecniDetalj(id);
+
+			return View("UrediDetalje", mjesecniModel);
+		}
+
+		[HttpPost]
+		public ActionResult UpdateNoviDetalji(MjesecniModel _mjesecni_model)
+		{
+			if (_mjesecni_model.mjesecniDetalj.Suradnici != null &&
+				_mjesecni_model.mjesecniDetalj.Aktivnost != null &&
+				_mjesecni_model.mjesecniDetalj.Podrucje != null &&
+				_mjesecni_model.mjesecniDetalj.Biljeska != null &&
+				_mjesecni_model.mjesecniDetalj.Br_sati > 0 &&
+				DateTime.Compare(_mjesecni_model.mjesecniDetalj.Vrijeme, DateTime.Now.Date) > 0 &&
+				mjesecni_planovi.UpdateMjesecniDetalj(_mjesecni_model.mjesecniDetalj))
+			{
+				TempData["alert"] = "<script>alert('Mjesecni detalj je uspješno promjenjen!');</script>";
+				_mjesecni_model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(_mjesecni_model.ID_PLAN);
+				return RedirectToAction("detalji", new { id = _mjesecni_model.ID_PLAN, id_god = _mjesecni_model.ID_GODINA });
+			}
+			else
+			{
+				_mjesecni_model.PodrucjaRada = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
+				{
+					Text = i.Naziv.ToString(),
+					Value = i.Id_podrucje.ToString()
+				}));
+				_mjesecni_model.Aktivnosti = new List<SelectListItem>(aktivnosti.ReadAktivnost().Select(i => new SelectListItem()
+				{
+					Text = i.Naziv.ToString(),
+					Value = i.Id_aktivnost.ToString()
+				}));
+				_mjesecni_model.Subjekti = new List<SelectListItem>(subjekti.ReadSubjekti().Select(i => new SelectListItem()
+				{
+					Text = i.Naziv.ToString(),
+					Value = i.ID_subjekt.ToString()
+				}));
+				_mjesecni_model.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
+				{
+					Text = i.Ak_godina,
+					Value = i.Id_god.ToString()
+				}));
+				return View("UrediDetalje", _mjesecni_model);
+			}
+		}
 	}
 }

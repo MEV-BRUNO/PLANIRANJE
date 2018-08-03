@@ -59,7 +59,7 @@
 				</td>
 				<td>
 					<div class="pull-right">
-						<input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick="location.href='@Url.Action("Detalji","MjesecniPlan",new { id = item.ID })'" />
+						<input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick="location.href='@Html.Raw(@Url.Action("UpdateNoviDetalji","MjesecniPlan",new { id = item.ID, id_plan = item.ID_plan, id_god = Model.ID_GODINA }))'" />
 						<a data-toggle="modal" data-url="@Html.Raw(@Url.Action("DeleteDetails","MjesecniPlan",new { id = item.ID, id_god = Model.ID_GODINA }))" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
 					</div>
 				</td>
