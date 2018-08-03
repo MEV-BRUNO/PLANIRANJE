@@ -128,9 +128,8 @@
 
 
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-							<input type="submit" class="btn btn-primary" value="Spremi" />
-
+							<input type="button" class="btn btn-default" value="Odustani" onclick="location.href='@Url.Action("Detalji", "MjesecniPlan", new { id = Model.mjesecniDetalj.ID_plan, id_god = Model.ID_GODINA })'" />
+							<input type="submit" class="btn btn-primary" value="Spremi"/>
 						</div>
 					}
 				</div>

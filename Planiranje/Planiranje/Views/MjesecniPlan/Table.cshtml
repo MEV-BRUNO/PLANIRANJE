@@ -11,11 +11,11 @@
 			<td class="col-lg-3">
 				Naslov dokumenta
 			</td>
+			<td class="col-lg-5">
+				Opis
+			</td>
 			<td class="col-lg-1">
 				Šk. godina
-			</td>
-			<td class="col-lg-5">
-				Aktivnost
 			</td>
 			<td class="col-lg-3">
 				Akcija
@@ -34,10 +34,10 @@
 					@Html.DisplayFor(modelItem => item.Naziv)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Ak_godina)
+					@Html.DisplayFor(modelItem => item.Opis)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Opis)
+					@Html.DisplayFor(modelItem => item.Ak_godina)
 				</td>
 				<td>
 					<div class="pull-right">
