@@ -59,7 +59,7 @@ namespace Planiranje.Controllers
 			//mjesecniModel.ID_GODINA = idPlan;
 			mjesecniModel.GodisnjiPlanovi.ElementAt(idPlan).Selected = true;
 			mjesecniModel.MjesecniPlanovi = mjesecni_planovi.ReadMjesecnePlanove(mjesecniModel.ID_GODINA);
-			return View(mjesecniModel);
+			return View("Index", mjesecniModel);
 		}
 
 		public ActionResult NoviPlan(int id_godina)

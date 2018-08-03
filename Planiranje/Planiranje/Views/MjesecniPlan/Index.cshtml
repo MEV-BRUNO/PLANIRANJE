@@ -1,8 +1,10 @@
 ﻿@model Planiranje.Models.MjesecniModel
-@using PagedList.Mvc;
 
 @{
 	Page.Title = ViewBag.Title;
+}
+@{
+	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 @Html.Raw(TempData["alert"])
@@ -21,7 +23,7 @@
 							@if (ViewBag.HasGodPlan == true)
 							{
 								<p>Školska godina:</p>
-								@Html.DropDownList("Model.GodisnjiPlanovi", Model.GodisnjiPlanovi, new { @class = "form-control", onchange = "ChangePlan(this.value);" })
+								@Html.DropDownList("Model.GodisnjiPlanovi", Model.GodisnjiPlanovi, new { @class = "form-control", @id = "godPlanoviChange" })
 							}
 							else
 							{
@@ -36,7 +38,7 @@
 					<div class="row">
 						<div class="col-lg-2">
 							<div class="pull-left">
-								<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "MjesecniPlan", new { id_godina = Model.ID_GODINA })" id="btnCreateAsset">Nova plan</button>
+								<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "MjesecniPlan", new { id_godina = Model.ID_GODINA })" id="btnCreateAsset">Novi plan</button>
 							</div>
 						</div>
 					</div>
@@ -66,11 +68,6 @@
 <script src="~/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 <script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-<script>
-	function ChangePlan(val) {
-		window.location.href = "/MjesecniPlan/Index?Plan=" + val;
-	}
-</script>
 <script>
 	var rowDelete;
 	$(document).ready(function () {
