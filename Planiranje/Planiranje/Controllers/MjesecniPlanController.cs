@@ -104,8 +104,7 @@ namespace Planiranje.Controllers
 			}
 			return RedirectToAction("Index", new { Plan = _mjesecni_model.ID_GODINA });
 		}
-
-		public ActionResult Detalji (int id, int id_god)
+		public ActionResult PrikaziDetalje (int id, int id_god)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{

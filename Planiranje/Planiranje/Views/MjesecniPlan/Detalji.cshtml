@@ -4,6 +4,9 @@
 @{
 	Page.Title = ViewBag.Title;
 }
+@{
+	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
 
 @Html.Raw(TempData["alert"])
 @Html.HiddenFor(model => Model.ID_PLAN)
@@ -54,7 +57,7 @@
 					</div>
 					<br>
 					<div class="pull-right">
-						<input type="button" class="btn btn-default btn-md" value="Zatvori" onclick="location.href='@Url.Action("Index", "MjesecniPlan", new { Plan=Model.ID_GODINA.ToString() })'" />
+						<input type="button" class="btn btn-default btn-md" value="Zatvori" onclick='closeDetails("@Url.Action("Index", "MjesecniPlan", new { Plan=Model.ID_GODINA.ToString() })")' />
 					</div>
 				</div>
 			</div>
@@ -64,6 +67,18 @@
 <script>
 	function ChangePlan(val) {
 		window.location.href = "/MjesecniPlan/Index?Plan=" + val;
+	}
+	function closeDetails(location)
+	{
+		$.ajax({
+			url: location,
+			success: function (data, text) {
+				$("#content").html(data);
+			},
+			error: function (request, status, error) {
+				alert(request.responseText);
+			}
+		});
 	}
 </script>
 <script>

@@ -42,7 +42,7 @@
 				<td>
 					<div class="pull-right">
 						<a data-toggle="modal" data-url="@Html.Raw(@Url.Action("UrediNoviPlan", "MjesecniPlan", new { id_godina = Model.ID_GODINA, id_plan = item.ID_plan }))" id="deleteAsset" class="btn btn-primary btn-xs ">Uredi</a>
-						<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick="location.href='@Html.Raw(@Url.Action("Detalji", "MjesecniPlan", new { id = item.ID_plan, id_god = Model.ID_GODINA }))'" />
+						<input type="button" class="btn btn-primary btn-xs mjPlanDetalji" value="Detalji" onclick='showDetails("@Html.Raw(@Url.Action("PrikaziDetalje","MjesecniPlan",new { id = item.ID_plan, id_god = Model.ID_GODINA }))")' />
 						<a data-toggle="modal" data-url="@Html.Raw(@Url.Action("Delete","MjesecniPlan",new { id = item.ID_plan, id_god = Model.ID_GODINA }))" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
 					</div>
 				</td>
@@ -50,4 +50,19 @@
 		}
 	</tbody>
 </table>
+<script>
+	function showDetails(value)
+	{
+		$.ajax({
+			url: value,
+			success: function (data, text) {
+				$("#content").html(data);
+			},
+			error: function (request, status, error) {
+				alert(request.responseText);
+			}
+		});
+	}
+</script>
+
 
