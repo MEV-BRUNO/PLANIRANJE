@@ -94,6 +94,7 @@ namespace Planiranje.Models
 
 		public List<Mjesecni_plan> ReadMjesecnePlanove(int id)
 		{
+			int counter = 0;
 			List<Mjesecni_plan> mjesecni_planovi = new List<Mjesecni_plan>();
 			this.Connect();
 			using (MySqlCommand command = new MySqlCommand())
@@ -115,6 +116,7 @@ namespace Planiranje.Models
 						{
 							Mjesecni_plan plan = new Mjesecni_plan()
 							{
+								Red_br = ++counter,
 								ID_plan = Convert.ToInt32(sdr["id_plan"]),
 								Naziv = sdr["naziv"].ToString(),
 								Ak_godina = sdr["ak_godina"].ToString(),
@@ -139,7 +141,7 @@ namespace Planiranje.Models
 				command.Connection = connection;
 				command.CommandText = "SELECT id_plan, id_godina, naziv, opis, godisnji_plan.ak_godina as ak_godina " +
 					"FROM mjesecni_plan " +
-					"JOIN godisnji_plan ON mjesecni_plan.id_plan = godisnji_plan.id_god " +
+					"JOIN godisnji_plan ON mjesecni_plan.id_godina = godisnji_plan.id_god " +
 					"WHERE id_plan = @id_plan " +
 					"AND mjesecni_plan.id_pedagog = @id_pedagog";
 				command.CommandType = CommandType.Text;
@@ -243,7 +245,7 @@ namespace Planiranje.Models
 					command.Connection = connection;
 					command.CommandText = "UPDATE mjesecni_plan " +
 						"SET " +
-						"ak_godina = @ak_godina, " +
+						"id_godina = @id_godina, " +
 						"naziv = @naziv, " +
 						"opis = @opis " +
 						"WHERE id_plan = @id_plan " +
@@ -251,7 +253,7 @@ namespace Planiranje.Models
 					command.CommandType = CommandType.Text;
 					command.Parameters.AddWithValue("@id_plan", mjesecni_plan.ID_plan);
 					command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
-					command.Parameters.AddWithValue("@ak_godina", mjesecni_plan.Ak_godina);
+					command.Parameters.AddWithValue("@id_godina", mjesecni_plan.Id_godina);
 					command.Parameters.AddWithValue("@naziv", mjesecni_plan.Naziv);
 					command.Parameters.AddWithValue("@opis", mjesecni_plan.Opis);
 					connection.Open();

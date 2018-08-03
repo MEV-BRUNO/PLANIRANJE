@@ -298,5 +298,51 @@ namespace Planiranje.Controllers
 			model.ID_PLAN = model.mjesecniDetalj.ID_plan;
 			return View("Detalji", model);
 		}
+		public ActionResult UrediNoviPlan(int id_godina, int id_plan)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			ViewBag.Title = "Novi mjesečni plan";
+			MjesecniModel mjesecniModel = new MjesecniModel();
+			mjesecniModel.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(id_plan);
+			mjesecniModel.ID_GODINA = id_godina;
+			mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
+			{
+				Text = i.Ak_godina,
+				Value = i.Id_god.ToString()
+			}));
+
+			return PartialView("UrediNoviPlan", mjesecniModel);
+		}
+
+		[HttpPost]
+		public ActionResult UrediNoviPlan(MjesecniModel _mjesecni_model)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			Mjesecni_plan mjesecni_plan = new Mjesecni_plan();
+			mjesecni_plan.ID_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+			mjesecni_plan.Id_godina = _mjesecni_model.ID_GODINA;
+			mjesecni_plan.Naziv = _mjesecni_model.MjesecniPlan.Naziv;
+			mjesecni_plan.Opis = _mjesecni_model.MjesecniPlan.Opis;
+			mjesecni_plan.ID_plan = _mjesecni_model.ID_PLAN;
+			mjesecni_plan.Ak_godina = godisnji_planovi.ReadGodisnjiPlan(_mjesecni_model.ID_GODINA).Ak_godina;
+
+			if (mjesecni_planovi.UpdateMjesecniPlan(mjesecni_plan))
+			{
+				TempData["alert"] = "<script>alert('Novi mjesecni plan je uspjesno promjenjen!');</script>";
+				return RedirectToAction("Index", new { Plan = _mjesecni_model.ID_GODINA });
+			}
+			else
+			{
+				TempData["alert"] = "<script>alert('Novi mjesecni plan nije promjenjen');</script>";
+				return null;
+			}
+
+		}
 	}
 }

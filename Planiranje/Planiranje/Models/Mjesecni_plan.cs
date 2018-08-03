@@ -9,7 +9,8 @@ namespace Planiranje.Models
 {
     public class Mjesecni_plan
     {
-        [Required]
+		public int Red_br { get; set; }
+		[Required]
         public int ID_plan { get; set; }
         [Required]
         public int ID_pedagog { get; set; }
