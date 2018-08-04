@@ -186,7 +186,7 @@ namespace Planiranje.Controllers
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			ViewBag.Title = "Novi detalji mjesečnog plana";
+			ViewBag.Title = "Novi detalj mjesečnog plana";
 			MjesecniModel mjesecniModel = new MjesecniModel();
 			mjesecniModel.MjesecniPlan = new Mjesecni_plan();
 			mjesecniModel.PodrucjaRada = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
@@ -214,7 +214,7 @@ namespace Planiranje.Controllers
 			mjesecniModel.ID_PLAN = id;
 			mjesecniModel.ID_GODINA = id_god;
 
-			return View("NoviDetalji", mjesecniModel);
+			return PartialView("NoviDetalji", mjesecniModel);
 		}
 
 		[HttpPost]
@@ -229,9 +229,9 @@ namespace Planiranje.Controllers
 				DateTime.Compare(_mjesecni_model.mjesecniDetalj.Vrijeme, DateTime.Now.Date) > 0 && 
 				mjesecni_planovi.CreateMjesecniDetalj(_mjesecni_model.mjesecniDetalj))
 			{
-				TempData["alert"] = "<script>alert('Mjesecni detalj je dodan!');</script>";
+				//TempData["alert"] = "<script>alert('Mjesecni detalj je dodan!');</script>";
 				_mjesecni_model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(_mjesecni_model.ID_PLAN);
-				return View("Detalji", _mjesecni_model);
+				return RedirectToAction("PrikaziDetalje", new { id = _mjesecni_model.ID_PLAN, id_god = _mjesecni_model.ID_GODINA });
 			}
 			else
 			{
@@ -256,7 +256,7 @@ namespace Planiranje.Controllers
 					Text = i.Ak_godina,
 					Value = i.Id_god.ToString()
 				}));
-				return View("NoviDetalji", _mjesecni_model);
+				return PartialView("NoviDetalji", _mjesecni_model);
 			}
 		}
 

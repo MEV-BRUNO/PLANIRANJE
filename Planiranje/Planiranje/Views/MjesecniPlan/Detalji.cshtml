@@ -8,10 +8,10 @@
 	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Raw(TempData["alert"])
-@Html.HiddenFor(model => Model.ID_PLAN)
-@Html.HiddenFor(model => Model.ID_GODINA)
 <div class="inner">
+	@Html.Raw(TempData["alert"])
+	@Html.HiddenFor(model => Model.ID_PLAN)
+	@Html.HiddenFor(model => Model.ID_GODINA)
 	<div class="row">
 		<div class="col-lg-12">
 			<h3>@ViewBag.Title</h3>
@@ -31,14 +31,14 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="pull-left">
-								<input type="button" class="btn btn-primary btn-md" value="Novi detalji" onclick="location.href='@Html.Raw(@Url.Action("NoviDetalji", "MjesecniPlan" ,new { id=Model.ID_PLAN, id_god = Model.ID_GODINA }))'" />
+								<button type="button" class="btn btn-primary btn-md" data-url="@Html.Raw(@Url.Action("NoviDetalji", "MjesecniPlan" ,new { id=Model.ID_PLAN, id_god = Model.ID_GODINA }))" id="btnCreateAsset">Novi detalj</button>
 							</div>
 							@if (Model.MjesecniDetalji.Count > 0)
 							{
-							<div class="pull-right">
-								<input type="button" class="btn btn-danger btn-md" value="Ispiši" style="margin-top:15px"
-									   onclick="location.href='@Url.Action("Ispis", "MjesecniPlan", new { id = Model.ID_PLAN })'" />
-							</div>
+								<div class="pull-right">
+									<input type="button" class="btn btn-danger btn-md" value="Ispiši" style="margin-top:15px"
+										   onclick="location.href='@Url.Action("Ispis", "MjesecniPlan", new { id = Model.ID_PLAN })'" />
+								</div>
 							}
 							<br>
 						</div>
