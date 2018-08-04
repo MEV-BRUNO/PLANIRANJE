@@ -244,12 +244,11 @@ CREATE TABLE os_plan_1_akcija (
 
 CREATE TABLE os_plan_1_aktivnost (
   id_plan int(11) NOT NULL AUTO_INCREMENT,
-  red_broj_podrucje int(11) NOT NULL,
+  id_podrucje int(11) NOT NULL,
   red_broj_aktivnost int(11) NOT NULL,
-  opis_aktivnost text,
-  red_br int(11) NOT NULL,
-  potrebno_sati int(11) NOT NULL,
-  br_sati int(11) NOT NULL,
+  opis_aktivnost int(11) NOT NULL,  
+  potrebno_sati text,
+  br_sati int(11) DEFAULT NULL,
   mj_1 int(11) DEFAULT NULL,
   mj_2 int(11) DEFAULT NULL,
   mj_3 int(11) DEFAULT NULL,
@@ -263,19 +262,19 @@ CREATE TABLE os_plan_1_aktivnost (
   mj_11 int(11) DEFAULT NULL,
   mj_12 int(11) DEFAULT NULL,
   PRIMARY KEY (id_plan),
-  KEY red_broj_podrucje (red_broj_podrucje),
+  KEY opis_aktivnost (opis_aktivnost),
   KEY red_broj_aktivnost (red_broj_aktivnost),
-  CONSTRAINT os_plan_1_aktivnost_ibfk_1 FOREIGN KEY (red_broj_podrucje) REFERENCES podrucje_rada (id_podrucje),
-  CONSTRAINT os_plan_1_aktivnost_ibfk_2 FOREIGN KEY (red_broj_aktivnost) REFERENCES aktivnost (id_aktivnost)
+  CONSTRAINT os_plan_1_aktivnost_ibfk_1 FOREIGN KEY (opis_aktivnost) REFERENCES aktivnost (id_aktivnost)  
 );
 
 CREATE TABLE os_plan_1_podrucje (
   id_plan int(11) NOT NULL AUTO_INCREMENT,
+  id_glavni_plan int(11) NOT NULL,
   red_br_podrucje int(11) NOT NULL,
-  opis_podrucje text,
-  potrebno_sati int(11) NOT NULL,
+  opis_podrucje int(11) NOT NULL,
+  potrebno_sati text,
   cilj int(11) NOT NULL,
-  br_sati int(11) NOT NULL,
+  br_sati int(11) DEFAULT NULL,
   mj_1 int(11) DEFAULT NULL,
   mj_2 int(11) DEFAULT NULL,
   mj_3 int(11) DEFAULT NULL,
@@ -289,9 +288,9 @@ CREATE TABLE os_plan_1_podrucje (
   mj_11 int(11) DEFAULT NULL,
   mj_12 int(11) DEFAULT NULL,
   PRIMARY KEY (id_plan),
-  KEY red_br_podrucje (red_br_podrucje),
+  KEY opis_podrucje (opis_podrucje),
   KEY cilj (cilj),
-  CONSTRAINT os_plan_1_podrucje_ibfk_1 FOREIGN KEY (red_br_podrucje) REFERENCES podrucje_rada (id_podrucje),
+  CONSTRAINT os_plan_1_podrucje_ibfk_1 FOREIGN KEY (opis_podrucje) REFERENCES podrucje_rada (id_podrucje),
   CONSTRAINT os_plan_1_podrucje_ibfk_2 FOREIGN KEY (cilj) REFERENCES ciljevi (id_cilj)
 );
 
