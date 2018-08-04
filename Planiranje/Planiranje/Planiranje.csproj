@@ -233,6 +233,7 @@
     <Compile Include="Models\Godisnji_plan.cs" />
     <Compile Include="Models\OS_Plan_1.cs" />
     <Compile Include="Models\Pedagog.cs" />
+    <Compile Include="Models\PlanOs1View.cs" />
     <Compile Include="Models\Podrucje_rada.cs" />
     <Compile Include="Models\Podrucje_rada_DBHandle.cs" />
     <Compile Include="Models\Skola.cs" />
@@ -378,6 +379,11 @@
     <Content Include="Views\MjesecniPlan\ObrisiDetalj.cshtml" />
     <Content Include="Views\MjesecniPlan\UrediNoviPlan.cshtml" />
     <Content Include="Views\MjesecniPlan\UrediDetalje.cshtml" />
+    <Content Include="Views\PlanOs1\Details.cshtml" />
+    <Content Include="Views\PlanOs1\NovoPodrucje.cshtml" />
+    <Content Include="Views\PlanOs1\UrediPodrucje.cshtml" />
+    <Content Include="Views\PlanOs1\ObrisiPodrucje.cshtml" />
+    <Content Include="Views\PlanOs1\NovaAktivnost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
