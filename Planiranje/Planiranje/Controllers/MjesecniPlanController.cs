@@ -55,9 +55,10 @@ namespace Planiranje.Controllers
 					ViewBag.HasGodPlan = true;
 				}
 			}
-
-			//mjesecniModel.ID_GODINA = idPlan;
-			mjesecniModel.GodisnjiPlanovi.ElementAt(idPlan).Selected = true;
+			if (mjesecniModel.GodisnjiPlanovi.Count > 0)
+			{
+				mjesecniModel.GodisnjiPlanovi.ElementAt(idPlan).Selected = true;
+			}
 			mjesecniModel.MjesecniPlanovi = mjesecni_planovi.ReadMjesecnePlanove(mjesecniModel.ID_GODINA);
 			return View("Index", mjesecniModel);
 		}
