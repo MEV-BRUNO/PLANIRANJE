@@ -18,10 +18,10 @@ namespace Planiranje.Models
 		[Required]
 		[DisplayName("Ak. godina")]
 		public string Ak_godina { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Obavezno polje")]
 		[DisplayName("Naziv plana")]
 		public string Naziv { get; set; }
-        [Required]
+		[Required(ErrorMessage = "Obavezno polje")]
 		[DisplayName("Opis plana")]
 		public string Opis { get; set; }
     }

@@ -94,15 +94,12 @@ namespace Planiranje.Controllers
 			mjesecni_plan.Naziv = _mjesecni_model.MjesecniPlan.Naziv;
 			mjesecni_plan.Opis = _mjesecni_model.MjesecniPlan.Opis;
 
-			if (mjesecni_planovi.CreateMjesecniPlan(mjesecni_plan))
+			if (mjesecni_plan.Naziv != null && mjesecni_plan.Opis != null && mjesecni_planovi.CreateMjesecniPlan(mjesecni_plan))
 			{
-				TempData["alert"] = "<script>alert('Novi mjesecni plan je uspjesno spremljen!');</script>";
+				return RedirectToAction("Index", new { Plan = _mjesecni_model.ID_GODINA });
 			}
-			else
-			{
-				TempData["alert"] = "<script>alert('Novi mjesecni plan nije spremljen');</script>";
-			}
-			return RedirectToAction("Index", new { Plan = _mjesecni_model.ID_GODINA });
+			_mjesecni_model.MjesecniPlan = mjesecni_plan;
+			return View("NoviPlan", _mjesecni_model);
 		}
 		public ActionResult PrikaziDetalje (int id, int id_god)
 		{
