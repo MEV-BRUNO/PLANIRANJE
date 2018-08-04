@@ -380,7 +380,7 @@ namespace Planiranje.Controllers
 			mjesecniModel.ID_GODINA = id_god;
 			mjesecniModel.mjesecniDetalj = mjesecni_planovi.ReadMjesecniDetalj(id);
 
-			return View("UrediDetalje", mjesecniModel);
+			return PartialView("UrediDetalje", mjesecniModel);
 		}
 
 		[HttpPost]
@@ -396,7 +396,7 @@ namespace Planiranje.Controllers
 			{
 				TempData["alert"] = "<script>alert('Mjesecni detalj je uspješno promjenjen!');</script>";
 				_mjesecni_model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(_mjesecni_model.ID_PLAN);
-				return RedirectToAction("detalji", new { id = _mjesecni_model.ID_PLAN, id_god = _mjesecni_model.ID_GODINA });
+				return RedirectToAction("PrikaziDetalje", new { id = _mjesecni_model.ID_PLAN, id_god = _mjesecni_model.ID_GODINA });
 			}
 			else
 			{
@@ -420,7 +420,7 @@ namespace Planiranje.Controllers
 					Text = i.Ak_godina,
 					Value = i.Id_god.ToString()
 				}));
-				return View("UrediDetalje", _mjesecni_model);
+				return PartialView("UrediDetalje", _mjesecni_model);
 			}
 		}
 	}

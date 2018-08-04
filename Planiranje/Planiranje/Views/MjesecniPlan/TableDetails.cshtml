@@ -59,7 +59,7 @@
 				</td>
 				<td>
 					<div class="pull-right">
-						<input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick="location.href='@Html.Raw(@Url.Action("UpdateNoviDetalji","MjesecniPlan",new { id = item.ID, id_plan = item.ID_plan, id_god = Model.ID_GODINA }))'" />
+						<button type="button" class="btn btn-primary btn-xs" data-url="@Html.Raw(@Url.Action("UpdateNoviDetalji","MjesecniPlan",new { id = item.ID, id_plan = item.ID_plan, id_god = Model.ID_GODINA }))" id="btnCreateAsset2">Uredi</button>
 						<a data-toggle="modal" data-url="@Html.Raw(@Url.Action("DeleteDetails","MjesecniPlan",new { id = item.ID, id_god = Model.ID_GODINA }))" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
 					</div>
 				</td>
@@ -67,4 +67,24 @@
 		}
 	</tbody>
 </table>
+
+<div class="modal fade" id="assetModal2" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
+	<div id="assetContainer2"></div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		$("#btnCreateAsset2").click(function (e) {
+			var url = $(this).attr("data-url");
+			$.ajax({
+				url: url,
+				success: function (data) {
+					$('#assetContainer2').html(data);
+					$('#assetModal2').modal('show');
+				},
+				error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+			});
+		});
+	});
+</script>
 
