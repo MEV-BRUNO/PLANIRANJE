@@ -60,7 +60,7 @@
 				<td>
 					<div class="pull-right">
 						<button type="button" class="btn btn-primary btn-xs" data-url="@Html.Raw(@Url.Action("UpdateNoviDetalji","MjesecniPlan",new { id = item.ID, id_plan = item.ID_plan, id_god = Model.ID_GODINA }))" id="btnCreateAsset2">Uredi</button>
-						<a data-toggle="modal" data-url="@Html.Raw(@Url.Action("DeleteDetails","MjesecniPlan",new { id = item.ID, id_god = Model.ID_GODINA }))" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
+						<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='deleteDetail("@Html.Raw(@Url.Action("DeleteDetails","MjesecniPlan",new { id = item.ID, id_god = Model.ID_GODINA }))")' />
 					</div>
 				</td>
 			</tr>
@@ -87,4 +87,17 @@
 		});
 	});
 </script>
-
+<script>
+	function deleteDetail(value) {
+		$.ajax({
+			url: value,
+			success: function (data, text) {
+				$("#assetContainer").html(data);
+				$('#assetModal').modal('show');
+			},
+			error: function (request, status, error) {
+				alert(request.responseText);
+			}
+		});
+	}
+</script>
