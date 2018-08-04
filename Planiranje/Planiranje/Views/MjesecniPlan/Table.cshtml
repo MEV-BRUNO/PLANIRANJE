@@ -42,21 +42,36 @@
 				<td>
 					<div class="pull-right">
 						<a data-toggle="modal" data-url="@Html.Raw(@Url.Action("UrediNoviPlan", "MjesecniPlan", new { id_godina = Model.ID_GODINA, id_plan = item.ID_plan }))" id="deleteAsset" class="btn btn-primary btn-xs ">Uredi</a>
-						<input type="button" class="btn btn-primary btn-xs mjPlanDetalji" value="Detalji" onclick='showDetails("@Html.Raw(@Url.Action("PrikaziDetalje","MjesecniPlan",new { id = item.ID_plan, id_god = Model.ID_GODINA }))")' />
-						<a data-toggle="modal" data-url="@Html.Raw(@Url.Action("Delete","MjesecniPlan",new { id = item.ID_plan, id_god = Model.ID_GODINA }))" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
+						<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='showDetails("@Html.Raw(@Url.Action("PrikaziDetalje","MjesecniPlan",new { id = item.ID_plan, id_god = Model.ID_GODINA }))")' />
+						<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='deleteDetails("@Html.Raw(@Url.Action("Delete","MjesecniPlan", new { id = item.ID_plan, id_god = Model.ID_GODINA }))")' />
 					</div>
 				</td>
 			</tr>
 		}
 	</tbody>
 </table>
+
+<div class="modal fade" id="assetModal2" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
+	<div id="assetContainer2"></div>
+</div>
 <script>
-	function showDetails(value)
-	{
+	function showDetails(value) {
 		$.ajax({
 			url: value,
 			success: function (data, text) {
 				$("#content").html(data);
+			},
+			error: function (request, status, error) {
+				alert(request.responseText);
+			}
+		});
+	}
+	function deleteDetails(value) {
+		$.ajax({
+			url: value,
+			success: function (data, text) {
+				$("#assetContainer2").html(data);
+				$('#assetModal2').modal('show');
 			},
 			error: function (request, status, error) {
 				alert(request.responseText);

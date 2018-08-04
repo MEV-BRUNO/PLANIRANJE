@@ -8,31 +8,50 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h4 class="modal-title">Brisanje podatka</h4>
+			<h4 class="modal-title">@ViewBag.Title</h4>
 		</div>
-		@using (Ajax.BeginForm("Delete", "MjesecniPlan", new { id = Model.MjesecniPlan.ID_plan }, new AjaxOptions
+		@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiPlanModalView", @class = "form-horizontal", role = "form" }))
 		{
-			HttpMethod = "Post",
-			OnSuccess = "DeleteSuccess"
-		}, new { @class = "form-horizontal", role = "form" }))
-		{
-		<div class="modal-body">
-			@Html.HiddenFor(model => model.MjesecniPlan.ID_plan)
-			@Html.HiddenFor(model => model.ID_GODINA)
-			<div class="form-group">
-				<div class="col-md-10">
-					<h5>
-						Jeste li sigurni da zelite obrisati "@Html.DisplayFor(model => model.MjesecniPlan.Naziv, new { htmlAttributes = new { @class = "form-control" } })"?
-					</h5>
-				</div>
-			</div>
-			<div class="modal-footer">
+			<div class="modal-body">
+				@Html.HiddenFor(model => model.MjesecniPlan.ID_plan)
+				@Html.HiddenFor(model => model.ID_GODINA)
 				<div class="form-group">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-					<input type="submit" class="btn btn-danger" value="Obriši" />
+					<div class="col-md-10">
+						<h5>
+							Jeste li sigurni da zelite obrisati "@Html.DisplayFor(model => model.MjesecniPlan.Naziv, new { htmlAttributes = new { @class = "form-control" } })"?
+						</h5>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="form-group">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+						<input id="obrisiNoviPlan" type="button" class="btn btn-danger" value="Obriši" />
+					</div>
 				</div>
 			</div>
-		</div>
 		}
 	</div>
 </div>
+
+<script>
+	$(document).ready(function () {
+		$('#obrisiNoviPlan').click(function ()
+		{
+			var data = $('#obrisiPlanModalView').serialize();
+			$.ajax({
+				url: "/MjesecniPlan/Delete",
+				type: "POST",
+				data: data,
+				success: function (data) {
+					$('#assetModal2').modal('hide');
+					$('.modal-backdrop').remove();
+					$("#content").html(data);
+					console.log(data);
+				},
+				error: function (request, status, error) {
+					console.log(request.responseText);
+				}
+			});
+		});
+	});
+</script>

@@ -144,10 +144,9 @@ namespace Planiranje.Controllers
 			mjesecni_model.ID_GODINA = id_god;
 			if (Request.IsAjaxRequest())
 			{
-				ViewBag.IsUpdate = false;
-				return View("Obrisi", mjesecni_model);
+				return PartialView("Obrisi", mjesecni_model);
 			}
-			return View("Obrisi");
+			return new EmptyResult();
 		}
 
 		[HttpPost]
