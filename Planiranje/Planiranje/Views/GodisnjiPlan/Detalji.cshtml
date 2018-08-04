@@ -1,6 +1,7 @@
 ﻿@model Planiranje.Models.GodisnjiModel
 @{
 	Page.Title = ViewBag.Title;
+	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 @Html.Raw(TempData["alert"])
@@ -77,10 +78,22 @@
 
 					</table>
 					<div class="modal-footer">
-						<input type="button" class="btn btn-default" value="Odustani" onclick="location.href='@Url.Action("Index", "GodisnjiPlan")'" />
+						<input type="button" class="btn btn-default" value="Zatvori" onclick='cancelNewPlan("@Url.Action("Index", "GodisnjiPlan")")' />
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+	function cancelNewPlan(url) {
+		$.ajax({
+			url: url,
+			success: function (data) {
+				$('#content').html(data);
+			},
+			error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+		});
+	}
+</script>

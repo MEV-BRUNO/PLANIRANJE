@@ -2,6 +2,7 @@
 
 @{
 	Page.Title = ViewBag.Title;
+	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 	int i = 0;
 }
 
@@ -17,12 +18,8 @@
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					@using (Ajax.BeginForm("Edit", "GodisnjiPlan", new AjaxOptions
-	{
-		HttpMethod = "Post",
-		OnSuccess = "CreateSuccess"
-	}, new { @class = "form-horizontal", role = "form" }))
-	{
+					@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "urediGodPlanView", @class = "form-horizontal", role = "form" }))
+					{
 
 
 
@@ -129,10 +126,10 @@
 					</div>
 
 					
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" value="Odustani" onclick="location.href='@Url.Action("Index", "GodisnjiPlan")'" />
-						<input type="submit" class="btn btn-primary" value="Spremi" />
-					</div>
+						<div class="modal-footer">
+							<input type="button" class="btn btn-default" value="Zatvori" onclick='cancelNewPlan("@Url.Action("Index", "GodisnjiPlan")")' />
+							<input type="button" class="btn btn-primary" value="Spremi" id="updateNoviGodPlan" />
+						</div>
 
 					}
 				</div>
@@ -141,7 +138,35 @@
 		</div>
 	</div>
 </div>
-
+<script>
+	$(document).ready(function () {
+		$('#updateNoviGodPlan').click(function () {
+			var data = $('#urediGodPlanView').serialize();
+			$.ajax({
+				url: "/GodisnjiPlan/Edit",
+				type: "POST",
+				data: data,
+				success: function (data) {
+					$("#content").html(data);
+				},
+				error: function (request, status, error) {
+					console.log(request.responseText);
+				}
+			});
+		});
+	});
+</script>
+<script>
+	function cancelNewPlan(url) {
+		$.ajax({
+			url: url,
+			success: function (data) {
+				$('#content').html(data);
+			},
+			error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+		});
+	}
+</script>
 <script>
 	var rowDelete;
 	$(document).ready(function () {

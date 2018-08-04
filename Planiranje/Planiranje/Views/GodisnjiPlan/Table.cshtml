@@ -51,12 +51,52 @@
 				</td>
 				<td>
 					<div class="pull-right">
-						<input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick="location.href='@Url.Action("Edit","GodisnjiPlan",new { id = item.Id_god })'" />
-						<a data-toggle="modal" data-url="@Url.Action("Delete","GodisnjiPlan",new { id = item.Id_god })" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
-						<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick="location.href='@Url.Action("Details","GodisnjiPlan",new { id = item.Id_god })'" />
+						<input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick='updatePlan("@Url.Action("Edit","GodisnjiPlan",new { id = item.Id_god })")' />
+						<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='showGodDetails("@Url.Action("Details","GodisnjiPlan",new { id = item.Id_god })")' />
+						<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='deleteGodDetails("@Url.Action("Delete","GodisnjiPlan",new { id = item.Id_god })")' />
 					</div>
 				</td>
 			</tr>
 		}
 	</tbody>
 </table>
+
+<div class="modal fade" id="assetModal2" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
+	<div id="assetContainer2"></div>
+</div>
+<script>
+	function showGodDetails(value) {
+		$.ajax({
+			url: value,
+			success: function (data, text) {
+				$("#content").html(data);
+			},
+			error: function (request, status, error) {
+				alert(request.responseText);
+			}
+		});
+	}
+	function deleteGodDetails(value) {
+		$.ajax({
+			url: value,
+			success: function (data, text) {
+				$("#assetContainer2").html(data);
+				$('#assetModal2').modal('show');
+			},
+			error: function (request, status, error) {
+				alert(request.responseText);
+			}
+		});
+	}
+	function updatePlan(url) {
+		$.ajax({
+			url: url,
+			success: function (data, text) {
+				$("#content").html(data);
+			},
+			error: function (request, status, error) {
+				alert(request.responseText);
+			}
+		});
+	}
+</script>

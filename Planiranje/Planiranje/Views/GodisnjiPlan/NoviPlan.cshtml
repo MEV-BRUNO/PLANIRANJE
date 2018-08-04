@@ -2,6 +2,7 @@
 
 @{
 	Page.Title = ViewBag.Title;
+	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 	int i = 0;
 }
 
@@ -17,11 +18,7 @@
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					@using (Ajax.BeginForm("NoviPlan", "GodisnjiPlan", new AjaxOptions
-					{
-						HttpMethod = "Post",
-						OnSuccess = "CreateSuccess"
-					}, new { @class = "form-horizontal", role = "form" }))
+					@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviGodPlanView", @class = "form-horizontal", role = "form" }))
 					{
 						<div class="modal-body">
 							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -114,8 +111,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<input type="button" class="btn btn-default" value="Odustani" onclick="location.href='@Url.Action("Index", "GodisnjiPlan")'" />
-						<input type="submit" class="btn btn-primary" value="Spremi" />
+						<input type="button" class="btn btn-default" value="Odustani" onclick='cancelNewPlan("@Url.Action("Index", "GodisnjiPlan")")' />
+						<input type="button" class="btn btn-primary" value="Spremi" id="spremiNoviGodPlan" />
 					</div>
 					}
 					</div><!--exTab2-->
@@ -124,7 +121,36 @@
 		</div>
 	</div>
 </div>
+<script>
+	$(document).ready(function () {
+		$('#spremiNoviGodPlan').click(function () {
+			var data = $('#noviGodPlanView').serialize();
+			$.ajax({
+				url: "/GodisnjiPlan/NoviPlan",
+				type: "POST",
+				data: data,
+				success: function (data) {
+					$("#content").html(data);
+				},
+				error: function (request, status, error) {
+					console.log(request.responseText);
+				}
+			});
+		});
+	});
+</script>
 
+<script>
+	function cancelNewPlan(url) {
+		$.ajax({
+			url: url,
+			success: function (data) {
+				$('#content').html(data);
+			},
+			error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+		});
+	}
+</script>
 <script>
 	var rowDelete;
 	$(document).ready(function () {
