@@ -341,9 +341,8 @@ namespace Planiranje.Controllers
 			else
 			{
 				TempData["alert"] = "<script>alert('Novi mjesecni plan nije promjenjen');</script>";
-				return null;
+				return PartialView("UrediNoviPlan", _mjesecni_model);
 			}
-
 		}
 
 		public ActionResult UpdateNoviDetalji(int id, int id_plan, int id_god)
