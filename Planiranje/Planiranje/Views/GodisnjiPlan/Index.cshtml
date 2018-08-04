@@ -2,6 +2,7 @@
 
 @{
 	Page.Title = ViewBag.Title;
+	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 @Html.Raw(TempData["alert"])

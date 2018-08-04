@@ -83,6 +83,16 @@
 						$("#content").html(data);
 					});
 			});
+			$("#godPlan").on("click", function () {
+				$.ajax({
+					url: "/GodisnjiPlan/Index",
+					type: "GET",
+					data: { id: 1 }
+				})
+					.done(function (data) {
+						$("#content").html(data);
+					});
+			});
 			$(document).on("change", "#godPlanoviChange", (function () {
 				$.ajax({
 					url: "/MjesecniPlan/Index?Plan=" + $(this).val(),
