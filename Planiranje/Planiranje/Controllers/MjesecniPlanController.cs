@@ -79,7 +79,7 @@ namespace Planiranje.Controllers
 				Value = i.Id_god.ToString()
 			}));
 			
-			return PartialView("NoviPlan", mjesecniModel);
+			return View("NoviPlan", mjesecniModel);
 		}
 
 		[HttpPost]

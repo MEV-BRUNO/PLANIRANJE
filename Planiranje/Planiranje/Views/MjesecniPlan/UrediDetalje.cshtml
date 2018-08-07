@@ -109,37 +109,13 @@
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-				<input id="urediNoviDetalj" type="button" class="btn btn-primary" value="Spremi" />
+				<input type="button" class="btn btn-primary" value="Spremi" onclick='hideModal("/MjesecniPlan/UpdateNoviDetalji", "UrediNoviDetaljModalView", "Detalji uspješno promjenjeni")' />
 			</div>
 		}
 	</div>
 </div>
 
-<script>
-	$(document).ready(function () {
-		$('#urediNoviDetalj').click(function () {
-			var data = $('#UrediNoviDetaljModalView').serialize();
-			$.ajax({
-				url: "/MjesecniPlan/UpdateNoviDetalji",
-				type: "POST",
-				data: data,
-				success: function (data) {
-					if ($(data)[0].className == "modal-dialog") {
-						$("#assetModal2").html(data);
-					}
-					else if ($(data)[0].className == "inner") {
-						$('#assetModal2').modal('hide');
-						$('.modal-backdrop').remove();
-						$("#content").html(data);
-					}
-				},
-				error: function (request, status, error) {
-					console.log(request.responseText);
-				}
-			});
-		});
-	});
-</script>
+
 
 <script type="text/javascript">
 	function PridruziPodrucjeRada() {

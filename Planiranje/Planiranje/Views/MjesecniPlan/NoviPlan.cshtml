@@ -10,12 +10,18 @@
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h4 class="modal-title">@ViewBag.Title</h4>
 		</div>
+		@using (Ajax.BeginForm("NoviPlan", "MjesecniPlan", new AjaxOptions {
+			HttpMethod = "POST",
+			OnSuccess = "CreateSuccess"
+		}, new { @class = "form-horizontal", role = "form" } ))
+		{
+		}
 		@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviPlanModalView", @class = "form-horizontal", role = "form" }))
 		{
+		@Html.HiddenFor(model => model.MjesecniPlan.ID_plan, new { Value = 0 })
+		@Html.HiddenFor(model => model.ID_GODINA)
 		<div class="modal-body">
 			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-			@Html.HiddenFor(model => model.MjesecniPlan.ID_plan, new { Value = 0 })
-			@Html.HiddenFor(model => model.ID_GODINA)
 			<div class="form-group">
 				@Html.LabelFor(model => model.MjesecniPlan.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
 				<div class="col-md-9">
@@ -32,35 +38,16 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-				<input id="spremiNoviPlan" type="button" class="btn btn-primary" value="Spremi" />
+				<input type="button" class="btn btn-primary" value="Spremi" onclick='hideModal("/MjesecniPlan/NoviPlan", "noviPlanModalView", "Plan uspješno spremljen")' />
 			</div>
 		</div>
-		}
+}
 	</div>
 </div>
+
 <script>
-	$(document).ready(function () {
-		$('#spremiNoviPlan').click(function ()
-		{
-			var data = $('#noviPlanModalView').serialize();
-			$.ajax({
-				url: "/MjesecniPlan/NoviPlan",
-				type: "POST",
-				data: data,
-				success: function (data) {
-					if ($(data)[0].className == "modal-dialog") {
-						$("#assetModal").html(data);
-					}
-					else if ($(data)[0].className == "inner") {
-						$('#assetModal').modal('hide');
-						$('.modal-backdrop').remove();
-						$("#content").html(data);
-					}
-				},
-				error: function (request, status, error) {
-					console.log(request.responseText);
-				}
-			});
-		});
-	});
+	function CreateSuccess() {
+		$('#assetModal').modal('hide');
+		$('#assetContainer').html("");
+	}
 </script>

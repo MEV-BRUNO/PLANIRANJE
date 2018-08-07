@@ -50,10 +50,10 @@
 				type: "POST",
 				data: data,
 				success: function (data) {
-					$('#assetModal2').modal('hide');
+					$('#modal').modal('hide');
 					$('.modal-backdrop').remove();
 					$("#content").html(data);
-					console.log(data);
+					showSnackBar("Uspješno promjenjeno!");
 				},
 				error: function (request, status, error) {
 					console.log(request.responseText);
