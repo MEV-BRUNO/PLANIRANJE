@@ -37,9 +37,9 @@ function hideModal(path, id, message) {
 		type: "POST",
 		data: dt,
 		success: function (data) {
-			if ($(data)[0].className == "modal-dialog") {
-				$("#modal").html(data);
-			} else if ($(data)[0].className == "inner") {
+			if ($(data)[0].className === "modal-dialog") {
+				$("#modalContainer").html(data);
+			} else if ($(data)[0].className === "inner") {
 				$('#modal').modal('hide');
 				$('#modalContainer').removeData();
 				$('.modal-backdrop').remove();

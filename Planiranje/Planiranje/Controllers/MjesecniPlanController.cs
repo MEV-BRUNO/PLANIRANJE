@@ -18,7 +18,6 @@ namespace Planiranje.Controllers
 		private Podrucje_rada_DBHandle podrucja_rada = new Podrucje_rada_DBHandle();
 		private Subjekt_DBHandle subjekti = new Subjekt_DBHandle();
 		private Aktivnost_DBHandle aktivnosti = new Aktivnost_DBHandle();
-		private int tmpId;
 
 		public ActionResult Index(string Plan)
 		{
@@ -108,7 +107,6 @@ namespace Planiranje.Controllers
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			tmpId = id;
 			MjesecniModel model = new MjesecniModel();
 			model.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(id);
 			model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(id);
