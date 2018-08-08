@@ -25,32 +25,10 @@
 				<div class="modal-footer">
 					<div class="form-group">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-						<input id="obrisiNoviPlan" type="button" class="btn btn-danger" value="Obriši" />
+						<input type="button" class="btn btn-danger" value="Obriši" onclick='hideModal("/MjesecniPlan/Delete", "#obrisiPlanModalView", "Plan uspješno obrisan")' />
 					</div>
 				</div>
 			</div>
 		}
 	</div>
 </div>
-
-<script>
-	$(document).ready(function () {
-		$('#obrisiNoviPlan').click(function ()
-		{
-			var data = $('#obrisiPlanModalView').serialize();
-			$.ajax({
-				url: "/MjesecniPlan/Delete",
-				type: "POST",
-				data: data,
-				success: function (data) {
-					$('#assetModal2').modal('hide');
-					$('.modal-backdrop').remove();
-					$("#content").html(data);
-				},
-				error: function (request, status, error) {
-					console.log(request.responseText);
-				}
-			});
-		});
-	});
-</script>

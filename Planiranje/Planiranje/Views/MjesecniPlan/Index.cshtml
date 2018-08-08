@@ -5,7 +5,6 @@
 	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Raw(TempData["alert"])
 <div class="inner">
 	<div class="row">
 		<div class="col-lg-12">
@@ -17,30 +16,32 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-4">
-							@if (ViewBag.HasGodPlan == true)
-							{
-								<p>Školska godina:</p>
+						@if (ViewBag.HasGodPlan == true)
+						{
+							<div class="col-lg-1">
+								<p style="padding: 8px 0px">Školska godina:</p>
+							</div>
+							<div class="col-lg-3">
 								@Html.DropDownList("Model.GodisnjiPlanovi", Model.GodisnjiPlanovi, new { @class = "form-control", @id = "godPlanoviChange" })
-							}
-							else
-							{
-								<p>Za kreiranje mjesečnog plana morate dodati godišnji plan!</p>
-							}
-						</div>
+							</div>
+						}
+						else
+						{
+							<div class="col-lg-3">
+								<h5>Za kreiranje mjesečnog plana morate dodati godišnji plan!</h5>
+							</div>
+						}
+						@if (ViewBag.HasGodPlan == true)
+						{
+							<div class="col-lg-8">
+								<div class="pull-right">
+									<input type="button" class="btn btn-primary btn-md" value="Novi plan" onclick='showModal("@Url.Action("NoviPlan", "MjesecniPlan", new { id_godina = Model.ID_GODINA })")' />
+								</div>
+							</div>
+						}
 					</div>
 				</div>
 				<div class="panel-body">
-					@if (ViewBag.HasGodPlan == true)
-					{
-					<div class="row">
-						<div class="col-lg-2">
-							<div class="pull-left">
-								<button type="button" class="btn btn-primary btn-md" data-url="@Url.Action("NoviPlan", "MjesecniPlan", new { id_godina = Model.ID_GODINA })" id="btnCreateAsset">Novi plan</button>
-							</div>
-						</div>
-					</div>
-					}	
 					<br>
 					@if (Model.MjesecniPlanovi.Count > 0)
 					{
@@ -53,75 +54,17 @@
 							<p>Nema mjesečnih planova</p>
 						}
 					}
-					<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
-						<div id="assetContainer"></div>
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<script src="~/assets/plugins/jquery-2.0.3.min.js"></script>
-<script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script src="~/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
-<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-<script>
-	var rowDelete;
-	$(document).ready(function () {
-		$("#btnCreateAsset").click(function (e) {
-			var url = $(this).attr("data-url");
-			$.ajax({
-				url: url,
-				success: function (data) {
-					$('#assetContainer').html(data);
-					$('#assetModal').modal('show');
-				},
-				error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
-			});
-		});
 
-		$('#dataTables-example').on("click", "#editAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
+	
 
-		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-	});
-</script>
 
-<script type="text/javascript">
-	function CreateSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function EditSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function DeleteSuccess() {
-		location.reload(true);
-	}
-</script>
-<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
-<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script>
 	$(document).ready(function () {
-		$('#dataTables-example').dataTable();
+		$("#dataTable").dataTable();
 	});
 </script>

@@ -12,47 +12,22 @@
 		</div>
 		@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiDetaljModalView", @class = "form-horizontal", role = "form" }))
 		{
-
 			<div class="modal-body">
 				@Html.HiddenFor(model => model.mjesecniDetalj.ID)
 				@Html.HiddenFor(model => model.mjesecniDetalj.ID_plan)
 				@Html.HiddenFor(model => model.ID_GODINA)
 				<div class="form-group">
 					<div class="col-md-10">
-						<h5>
-							Jeste li sigurni da želite obrisati "@Html.DisplayFor(model => Model.mjesecniDetalj.Biljeska, new { htmlAttributes = new { @class = "form-control" } })"?
-						</h5>
+						<h5>Jeste li sigurni da želite obrisati detalje"?</h5>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<div class="form-group">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-						<input id="obrisiDetalj" type="button" class="btn btn-danger" value="Obriši" />
+						<input type="button" class="btn btn-danger" value="Obriši" onclick='hideModal("/MjesecniPlan/DeleteDetails", "#obrisiDetaljModalView", "Detalji uspješno obrisani")'/>
 					</div>
 				</div>
 			</div>
 		}
 	</div>
 </div>
-
-<script>
-	$(document).ready(function () {
-		$('#obrisiDetalj').click(function ()
-		{
-			var data = $('#obrisiDetaljModalView').serialize();
-			$.ajax({
-				url: "/MjesecniPlan/DeleteDetails",
-				type: "POST",
-				data: data,
-				success: function (data) {
-					$('#assetModal2').modal('hide');
-					$('.modal-backdrop').remove();
-					$("#content").html(data);
-				},
-				error: function (request, status, error) {
-					console.log(request.responseText);
-				}
-			});
-		});
-	});
-</script>
