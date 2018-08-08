@@ -4,7 +4,6 @@
 	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Raw(TempData["alert"])
 <div class="inner">
 	<div class="panel-body">
 		<div class="pull-left">
@@ -78,22 +77,10 @@
 
 					</table>
 					<div class="modal-footer">
-						<input type="button" class="btn btn-default" value="Zatvori" onclick='cancelNewPlan("@Url.Action("Index", "GodisnjiPlan")")' />
+						<input type="button" class="btn btn-default" value="Zatvori" onclick='reloadPage("@Url.Action("Index", "GodisnjiPlan")")' />
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-<script>
-	function cancelNewPlan(url) {
-		$.ajax({
-			url: url,
-			success: function (data) {
-				$('#content').html(data);
-			},
-			error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
-		});
-	}
-</script>

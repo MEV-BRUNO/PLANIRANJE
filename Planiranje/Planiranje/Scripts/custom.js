@@ -30,8 +30,26 @@ function showModal(path) {
 	});
 }
 
+function reloadWithData(path, id, message) {
+	var dt = $(id).serialize();
+	$.ajax({
+		url: path,
+		type: "POST",
+		data: dt,
+		success: function (data) {
+			$("#content").html(data);
+			if ($(data)[0].id !== "newPlan") {
+				showSnackBar(message);
+			}
+		},
+		error: function (request, status, error) {
+			console.log(request.responseText);
+		}
+	});
+}
+
 function hideModal(path, id, message) {
-	var dt = $ (id).serialize();
+	var dt = $(id).serialize();
 	$.ajax({
 		url: path,
 		type: "POST",

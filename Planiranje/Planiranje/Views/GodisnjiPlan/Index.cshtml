@@ -5,7 +5,6 @@
 	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Raw(TempData["alert"])
 <div class="inner">
 	<div class="row">
 		<div class="col-lg-12">
@@ -19,8 +18,8 @@
 					<div class="row">
 						<div class="col-lg-2">
 							<div class="pull-left">
-								<input type="button" class="btn btn-primary btn-md" onclick='reloadPage("@Url.Action("NoviPlan", "GodisnjiPlan")")' value="Novi plan"/>
-								</div>
+								<input type="button" class="btn btn-primary btn-md" value="Novi plan" onclick='reloadPage("@Url.Action("NoviPlan", "GodisnjiPlan")")' />
+							</div>
 						</div>
 					</div>
 					<br>
@@ -32,34 +31,11 @@
 					{
 						<p>Nema mjesečnih planova</p>
 					}
-						<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
-						<div id="assetContainer"></div>
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-<script>
-	var rowDelete;
-	$(document).ready(function () {
-		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-	});
-</script>
-
-<script type="text/javascript">
-	function DeleteSuccess() {
-		location.reload(true);
-	}
-</script>
 
 <script>
 	$(document).ready(function () {
