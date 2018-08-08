@@ -10,12 +10,6 @@
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h4 class="modal-title">@ViewBag.Title</h4>
 		</div>
-		@using (Ajax.BeginForm("NoviPlan", "MjesecniPlan", new AjaxOptions {
-			HttpMethod = "POST",
-			OnSuccess = "CreateSuccess"
-		}, new { @class = "form-horizontal", role = "form" } ))
-		{
-		}
 		@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviPlanModalView", @class = "form-horizontal", role = "form" }))
 		{
 		@Html.HiddenFor(model => model.MjesecniPlan.ID_plan, new { Value = 0 })
@@ -38,16 +32,9 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-				<input type="button" class="btn btn-primary" value="Spremi" onclick='hideModal("/MjesecniPlan/NoviPlan", "noviPlanModalView", "Plan uspješno spremljen")' />
+				<input type="button" class="btn btn-primary" value="Spremi" onclick='hideModal("/MjesecniPlan/NoviPlan", "#noviPlanModalView", "Plan uspješno spremljen")' />
 			</div>
 		</div>
 }
 	</div>
 </div>
-
-<script>
-	function CreateSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-	}
-</script>

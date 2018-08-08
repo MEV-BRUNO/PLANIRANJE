@@ -31,7 +31,7 @@ function showModal(path) {
 }
 
 function hideModal(path, id, message) {
-	var dt = $("#" + id).serialize();
+	var dt = $ (id).serialize();
 	$.ajax({
 		url: path,
 		type: "POST",
@@ -41,7 +41,7 @@ function hideModal(path, id, message) {
 				$("#modal").html(data);
 			} else if ($(data)[0].className == "inner") {
 				$('#modal').modal('hide');
-				$('#modalContainer').html("");
+				$('#modalContainer').removeData();
 				$('.modal-backdrop').remove();
 				$("#content").html(data);
 				showSnackBar(message);
