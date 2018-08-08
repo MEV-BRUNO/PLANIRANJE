@@ -4,13 +4,13 @@ USE PLANIRANJE;
 
 CREATE TABLE aktivnost (
   id_aktivnost int(11) NOT NULL AUTO_INCREMENT,
-  naziv varchar(50) NOT NULL,
+  naziv text,
   PRIMARY KEY (id_aktivnost)
 );
 
 CREATE TABLE ciljevi (
   id_cilj int(11) NOT NULL AUTO_INCREMENT,
-  naziv varchar(50),
+  naziv text,
   PRIMARY KEY (id_cilj)
 );
 
@@ -22,7 +22,7 @@ CREATE TABLE oblici (
 
 CREATE TABLE podrucje_rada (
   id_podrucje int(11) NOT NULL AUTO_INCREMENT,
-  naziv varchar(50) NOT NULL,
+  naziv text,
   PRIMARY KEY (id_podrucje)
 );
 

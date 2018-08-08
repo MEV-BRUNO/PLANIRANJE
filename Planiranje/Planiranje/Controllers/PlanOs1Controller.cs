@@ -477,7 +477,7 @@ namespace Planiranje.Controllers
             return RedirectToAction("Details", new { id = _id });
         }
 
-        public ActionResult ObrisiPodrucje (int id)
+        public ActionResult ObrisiPodrucje (int id, int pozicija)
         {
             OS_Plan_1_podrucje podrucje = new OS_Plan_1_podrucje();
             PlanOs1View plan = new PlanOs1View();
@@ -488,6 +488,7 @@ namespace Planiranje.Controllers
             cilj = ciljevi_db.ReadCiljevi(podrucje.Cilj);
             podrucjeRada = podrucje_rada_db.ReadPodrucjeRada(podrucje.Opis_Podrucje);
 
+            plan.Pozicija = pozicija;
             plan.Podrucje = podrucje;
             plan.PodrucjeRada = new List<Podrucje_rada>();
             plan.PodrucjeRada.Add(podrucjeRada);

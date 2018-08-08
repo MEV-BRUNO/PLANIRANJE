@@ -146,7 +146,7 @@
                                                                         </td>
                                                                         <td class="col-md-1">
                                                                             <a data-toggle="modal" data-url="@Url.Action("UrediPodrucje", "PlanOs1", new { id = item.Id_plan })" id="editAsset" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                                            <a data-toggle="modal" data-url="@Url.Action("ObrisiPodrucje", "PlanOs1", new { id = item.Id_plan })" id="deleteAsset" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                                                            <a data-toggle="modal" data-url="@Url.Action("ObrisiPodrucje", "PlanOs1", new { id = item.Id_plan, pozicija=brojac })" id="deleteAsset" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                                                         </td>
                                                                     </tr>
                                                                     brojac++;

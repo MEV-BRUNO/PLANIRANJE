@@ -25,21 +25,27 @@
                 </div>
             </div>
             <div class="form-group">
+                @Html.Label("Redni broj", new { @class = "control-label col-md-3" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Pozicija,new { @class="form-control", @disabled="true"})
+                </div>
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(model => model.Podrucje.Opis_Podrucje, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.DisplayTextFor(model => model.PodrucjeRada.First().Naziv)
+                    @Html.TextAreaFor(model => model.PodrucjeRada.First().Naziv, new { @class = "form-control", @disabled = "true" })
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Podrucje.Cilj, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.DisplayTextFor(model => model.Ciljevi.First().Naziv)
+                    @Html.TextAreaFor(model => model.Ciljevi.First().Naziv, new { @class = "form-control", @disabled = "true" })
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Podrucje.Potrebno_sati, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.DisplayTextFor(model => model.Podrucje.Potrebno_sati)
+                    @Html.TextBoxFor(model => model.Podrucje.Potrebno_sati, new { @class = "form-control", @disabled = "true" })
                 </div>
             </div>
             <div class="modal-footer">
