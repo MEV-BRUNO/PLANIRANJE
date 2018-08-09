@@ -752,6 +752,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult UrediAktivnost (int id, string pozicija, int pozicija_podrucja)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PlanOs1View plan = new PlanOs1View();            
             OS_Plan_1_aktivnost aktivnost = new OS_Plan_1_aktivnost();
             aktivnost = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id);
@@ -776,15 +780,19 @@ namespace Planiranje.Controllers
 
             using (var db = new BazaPodataka())
             {
-                db.OsPlan1Aktivnost.Add(aktivnost);
-                db.Entry(aktivnost).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                TempData["note"] = "Aktivnost je promijenjena";
-            }
-
-                
-            return RedirectToAction("Details2", new { id = _id, pozicija = plan.Pozicija });
-            
+                try
+                {
+                    db.OsPlan1Aktivnost.Add(aktivnost);
+                    db.Entry(aktivnost).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["note"] = "Aktivnost je promijenjena";
+                }
+                catch
+                {
+                    TempData["note"] = "Aktivnost nije promijenjena.Pokušajte ponovno.";
+                }
+            }                
+            return RedirectToAction("Details2", new { id = _id, pozicija = plan.Pozicija });            
         }
     }
 }
