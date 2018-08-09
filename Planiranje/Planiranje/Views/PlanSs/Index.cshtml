@@ -17,16 +17,29 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-6">
-							<div class="pull-left">
-								<input type="button" class="btn btn-primary btn-md" value="Novi plan" onclick='showModal("@Url.Action("NoviPlan", "PlanSs")")' />
+						@if (ViewBag.HasGodPlan == true)
+						{
+							<div class="col-lg-1">
+								<p style="padding: 8px 0px">Školska godina:</p>
 							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="pull-right">
-								<input type="button" class="btn btn-danger btn-md" value="Ispiši" onclick="location.href='@Url.Action("Ispis", "PlanSs", new { id = 1 })'" />
+							<div class="col-lg-3">
+								@Html.DropDownList("Model.GodisnjiPlanovi", Model.GodisnjiPlanovi, new { @class = "form-control", @id = "godPlanoviChangeSS" })
 							</div>
-						</div>
+						}
+						else
+						{
+							<div class="col-lg-3">
+								<h5>Za kreiranje mjesečnog plana morate dodati godišnji plan!</h5>
+							</div>
+						}
+						@if (ViewBag.HasGodPlan == true)
+						{
+							<div class="col-lg-8">
+								<div class="pull-right">
+									<input type="button" class="btn btn-primary btn-md" value="Novi plan" onclick='showModal("@Url.Action("NoviPlan", "PlanSs", new { id_god = Model.ID_GODINA })")' />
+								</div>
+							</div>
+						}
 					</div>
 				</div>
 				<div class="panel-body">

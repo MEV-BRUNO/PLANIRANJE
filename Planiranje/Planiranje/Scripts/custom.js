@@ -90,5 +90,15 @@ $(document).ready(function () {
 			}
 		});
 	}));
-	
+});
+
+$(document).ready(function () {
+	$(document).on("change", "#godPlanoviChangeSS", (function () {
+		$.ajax({
+			url: "/PlanSs/Index?Plan=" + $(this).val(),
+			success: function (data) {
+				$("#content").html(data);
+			}
+		});
+	}));
 });

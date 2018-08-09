@@ -13,11 +13,16 @@ using Planiranje.Reports;
 namespace Planiranje.Controllers
 {
     public class PlanSsController : Controller
-
     {
-       private SS_Plan_DBHandle planovi_ss = new SS_Plan_DBHandle();
 
-        public ActionResult Index()
+		private Mjesecni_plan_DBHandle mjesecni_planovi = new Mjesecni_plan_DBHandle();
+		private Godisnji_plan_DBHandle godisnji_planovi = new Godisnji_plan_DBHandle();
+		private Podrucje_rada_DBHandle podrucja_rada = new Podrucje_rada_DBHandle();
+		private Subjekt_DBHandle subjekti = new Subjekt_DBHandle();
+		private Aktivnost_DBHandle aktivnosti = new Aktivnost_DBHandle();
+		private SS_Plan_DBHandle planovi_ss = new SS_Plan_DBHandle();
+
+        public ActionResult Index(string Plan)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -26,27 +31,58 @@ namespace Planiranje.Controllers
             ViewBag.Title = "Pregled srednjih skola";
 
 			SSModel model = new SSModel();
-			model.SS_Planovi = planovi_ss.ReadSSPlanove();
-			
-			return View(model);
+			model.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
+			{
+				Text = i.Ak_godina,
+				Value = i.Id_god.ToString()
+			}));
+
+			int idPlan = 0;
+			if (Plan != null)
+			{
+				idPlan = model.GodisnjiPlanovi.FindIndex(x => x.Value == Plan);
+				model.ID_GODINA = Convert.ToInt32(model.GodisnjiPlanovi.ElementAt(idPlan).Value.ToString());
+				ViewBag.HasGodPlan = true;
+			}
+			else
+			{
+				if (model.GodisnjiPlanovi.Count < 1)
+				{
+					ViewBag.HasGodPlan = false;
+				}
+				else
+				{
+					model.ID_GODINA = Convert.ToInt32(model.GodisnjiPlanovi.ElementAt(0).Value.ToString());
+					idPlan = 0;
+					ViewBag.HasGodPlan = true;
+				}
+			}
+			if (model.GodisnjiPlanovi.Count > 0)
+			{
+				model.GodisnjiPlanovi.ElementAt(idPlan).Selected = true;
+			}
+			model.SS_Planovi = planovi_ss.ReadSSPlanove(model.ID_GODINA);
+			return View("Index", model);
 		}
 
-        public ActionResult NoviPlan()
+        public ActionResult NoviPlan(int id_god)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+			SSModel model = new SSModel();
+			model.ID_GODINA = id_god;
+			model.SS_Plan = new SS_Plan();
             if (Request.IsAjaxRequest())
             {
-                ViewBag.IsUpdate = false;
-                return View("NoviPlan");
+                return View("NoviPlan", model);
             }
             return View("NoviPlan");
         }
 
         [HttpPost]
-        public ActionResult NoviPlan(SS_Plan gr)
+        public ActionResult NoviPlan(SSModel model)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -54,18 +90,16 @@ namespace Planiranje.Controllers
             }
             SS_Plan ss_plan = new SS_Plan();
             ss_plan.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-            ss_plan.Ak_godina = gr.Ak_godina;
-            ss_plan.Naziv = gr.Naziv;
-            ss_plan.Opis = gr.Opis;
-            if (planovi_ss.CreateSSPlan(ss_plan))
+            ss_plan.Id_godina = model.ID_GODINA;
+            ss_plan.Naziv = model.SS_Plan.Naziv;
+            ss_plan.Opis = model.SS_Plan.Opis;
+
+			if (ss_plan.Naziv != null && ss_plan.Opis != null && planovi_ss.CreateSSPlan(ss_plan))
 			{
-				TempData["alert"] = "<script>alert('Novi plan za srednju skolu je uspjesno spremljen!');</script>";
+				return RedirectToAction("Index", new { Plan = model.ID_GODINA });
 			}
-			else
-			{
-				TempData["alert"] = "<script>alert('Novi plan nije spremljen');</script>";
-			}
-			return RedirectToAction("Index");
+			model.SS_Plan = ss_plan;
+			return View("NoviPlan", model);
         }
 
         public ActionResult Edit(int id)
@@ -135,13 +169,13 @@ namespace Planiranje.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public FileStreamResult Ispis()
+		/*public FileStreamResult Ispis()
 		{
 			List<SS_Plan> planovi = planovi_ss.ReadSSPlanove();
 
 			PlanSsReport report = new PlanSsReport(planovi);
 
 			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
-		}
+		}*/
 	}
 }

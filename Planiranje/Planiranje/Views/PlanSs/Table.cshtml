@@ -6,34 +6,26 @@
             <td class="col-lg-1">#</td>
             <td class="col-lg-3">Naziv</td>
             <td class="col-lg-1">Ak. godina</td>
-            <td class="col-lg-6">Opis</td>
-            <td class="col-lg-2"> Akcija</td>
+            <td class="col-lg-5">Opis</td>
+            <td class="col-lg-3"> Akcija</td>
         </tr>
     </thead>
     <tbody>
-
         @foreach (var item in Model.SS_Planovi)
-	{
+		{
         <tr>
+            <td>@Html.DisplayFor(modelItem => item.Id_plan)</td>
+            <td>@Html.DisplayFor(modelItem => item.Naziv)</td>
+            <td>@Html.DisplayFor(modelItem => item.Ak_godina)</td>
+            <td>@Html.DisplayFor(modelItem => item.Opis)</td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_plan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Naziv)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ak_godina)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Opis)
-            </td>
-            <td>
-                <div class="pull-right">
-                    <a data-toggle="modal" data-url="@Url.Action("Edit","PlanSs",new { id = item.Id_plan })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
-                    <a data-toggle="modal" data-url="@Url.Action("Delete","PlanSs",new { id = item.Id_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
-                </div>
+				<div class="pull-right">
+					<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='reloadPage("@Url.Action("Edit","PlanSs",new { id = item.Id_plan })")' />
+					<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='reloadPage("@Url.Action("Details","PlanSs",new { id = item.Id_plan })")' />
+					<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete","PlanSs",new { id = item.Id_plan })")' />
+				</div>
             </td>
         </tr>
-}
+		}
     </tbody>
 </table>

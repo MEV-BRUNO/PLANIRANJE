@@ -16,7 +16,8 @@ namespace Planiranje.Models
         [Required]
 		[DisplayName("Ak. godina")]
 		public string Ak_godina { get; set; }
-        [Required]
+		public int Id_godina { get; set; }
+		[Required]
 		[DisplayName("Naziv plana")]
 		public string Naziv { get; set; }
         [Required]

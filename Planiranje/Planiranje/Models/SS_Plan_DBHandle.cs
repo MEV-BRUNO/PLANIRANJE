@@ -20,19 +20,22 @@ namespace Planiranje.Models
             connection = new MySqlConnection(connection_string);
         }
 
-        public List<SS_Plan> ReadSSPlanove()
+        public List<SS_Plan> ReadSSPlanove(int id_god)
         {
             List<SS_Plan> Ss_planovi = new List<SS_Plan>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_plan, ak_godina, naziv, opis " +
+                command.CommandText = "SELECT id_plan, id_godina, naziv, opis, godisnji_plan.ak_godina as ak_godina " +
                     "FROM Ss_plan " +
-                    "WHERE id_pedagog = @id_pedagog " +
-                    "ORDER BY id_plan ASC";
-                command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
-                connection.Open();
+					"JOIN godisnji_plan ON Ss_plan.id_godina = godisnji_plan.id_god " +
+					"WHERE ss_plan.id_pedagog = @id_pedagog " +
+					"AND id_godina = @id_godina " +
+					"ORDER BY id_plan ASC";
+				command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+				command.Parameters.AddWithValue("@id_godina", id_god);
+				connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {
                     if (sdr.HasRows)
@@ -43,7 +46,8 @@ namespace Planiranje.Models
                             {
                                 Id_plan = Convert.ToInt32(sdr["id_plan"]),
                                 Naziv = sdr["naziv"].ToString(),
-                                Ak_godina = sdr["ak_godina"].ToString(),
+								Ak_godina = sdr["ak_godina"].ToString(),
+								Id_godina = Convert.ToInt32(sdr["Id_godina"]),
                                 Opis = sdr["opis"].ToString(),
                             };
                             Ss_planovi.Add(plan);
@@ -81,7 +85,7 @@ namespace Planiranje.Models
                             {
                                 Id_plan = Convert.ToInt32(sdr["id_plan"]),
                                 Naziv = sdr["naziv"].ToString(),
-                                Ak_godina = sdr["ak_godina"].ToString(),
+                                Id_godina = Convert.ToInt32(sdr["ak_godina"]),
                                 Opis = sdr["opis"].ToString(),
                             };
                             Ss_planovi.Add(plan);
@@ -100,7 +104,7 @@ namespace Planiranje.Models
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_plan, ak_godina, naziv, opis " +
+                command.CommandText = "SELECT id_plan, id_godina, naziv, opis " +
                     "FROM Ss_plan " +
                     "WHERE id_plan = @id " +
                     "AND id_pedagog = @id_pedagog";
@@ -117,7 +121,7 @@ namespace Planiranje.Models
                            Ss_plan = new SS_Plan()
                             {
                                 Id_plan = Convert.ToInt32(sdr["id_plan"]),
-                                Ak_godina = sdr["ak_godina"].ToString(),
+                                Id_godina = Convert.ToInt32(sdr["id_godina"]),
                                 Naziv = sdr["naziv"].ToString(),
                                 Opis = sdr["opis"].ToString()
                             };
@@ -138,11 +142,11 @@ namespace Planiranje.Models
                 {
                     command.Connection = connection;
                     command.CommandText = "INSERT INTO Ss_plan " +
-                        "(id_pedagog, ak_godina, naziv, opis) " +
-                        " VALUES (@id_pedagog, @ak_godina, @naziv, @opis)";
+                        "(id_pedagog, id_godina, naziv, opis) " +
+                        " VALUES (@id_pedagog, @id_godina, @naziv, @opis)";
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
-                    command.Parameters.AddWithValue("@ak_godina", Ss_plan.Ak_godina);
+                    command.Parameters.AddWithValue("@id_godina", Ss_plan.Id_godina);
                     command.Parameters.AddWithValue("@naziv", Ss_plan.Naziv);
                     command.Parameters.AddWithValue("@opis",Ss_plan.Opis);
                     connection.Open();
@@ -179,7 +183,7 @@ namespace Planiranje.Models
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@id_plan", Ss_plan.Id_plan);
                     command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
-                    command.Parameters.AddWithValue("@ak_godina", Ss_plan.Ak_godina);
+                    command.Parameters.AddWithValue("@ak_godina", Ss_plan.Id_godina.ToString());
                     command.Parameters.AddWithValue("@naziv", Ss_plan.Naziv);
                     command.Parameters.AddWithValue("@opis", Ss_plan.Opis);
                     connection.Open();
