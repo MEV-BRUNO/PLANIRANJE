@@ -1,6 +1,6 @@
-﻿@model PagedList.IPagedList<Planiranje.Models.SS_Plan>
+﻿@model  Planiranje.Models.SSModel
 
-<table class="table table-bordered table-hover" id="dataTables-example">
+<table class="table table-bordered table-hover" id="dataTable">
     <thead>
         <tr>
             <td class="col-lg-1">
@@ -22,7 +22,7 @@
     </thead>
     <tbody>
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.SS_Planovi)
 	{
         <tr>
             <td>

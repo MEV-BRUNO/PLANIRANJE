@@ -16,61 +16,20 @@ namespace Planiranje.Controllers
 
     {
        private SS_Plan_DBHandle planovi_ss = new SS_Plan_DBHandle();
-        int Page_No_Master = 1;
 
-        public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
+        public ActionResult Index()
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
             ViewBag.Title = "Pregled srednjih skola";
-            ViewBag.CurrentSortOrder = Sort;
-            ViewBag.SortingName = String.IsNullOrEmpty(Sort) ? "Naziv" : "";
 
-            ViewBag.Message = "Grad";
-
-            ViewBag.FilterValue = Search;
-            if (Search != null)
-            {
-                Page_No = 1;
-            }
-            else
-            {
-                Search = Filter;
-            }
-            ViewBag.CurrentPage = 1;
-            if (Page_No != null)
-                ViewBag.CurrentPage = Page_No;
-
-
-            int Size_Of_Page = 10;
-            int No_Of_Page = (Page_No ?? 1);
-            if (Search == null || Search.Length == 0)
-            {
-
-                if (Request.IsAjaxRequest())
-                {
-                    int noP = (int)Page_No_Master;
-                    var Popis2 = planovi_ss.ReadSSPlanove().ToPagedList(No_Of_Page, Size_Of_Page);
-                    return PartialView("_GradView", Popis2);
-                }
-                Page_No_Master = No_Of_Page;
-                var Popis = planovi_ss.ReadSSPlanove().ToPagedList(No_Of_Page, Size_Of_Page);
-                return View(Popis);
-            }
-            else
-            {
-                Page_No_Master = No_Of_Page;
-                var Popis = planovi_ss.ReadSSPlanove(Search).ToPagedList(No_Of_Page, Size_Of_Page);
-                if (Request.IsAjaxRequest())
-                {
-                    return PartialView("_GradView", Popis);
-                }
-
-                return View(Popis);
-            }
-        }
+			SSModel model = new SSModel();
+			model.SS_Planovi = planovi_ss.ReadSSPlanove();
+			
+			return View(model);
+		}
 
         public ActionResult NoviPlan()
         {

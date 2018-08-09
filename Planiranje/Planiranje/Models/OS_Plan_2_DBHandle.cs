@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web;
 using MySql.Data.MySqlClient;
 using Planiranje.Controllers;
-using PagedList;
 
 namespace Planiranje.Models
 {
