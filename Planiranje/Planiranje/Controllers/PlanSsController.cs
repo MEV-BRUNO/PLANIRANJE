@@ -108,31 +108,32 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            SS_Plan ss_plan = new SS_Plan();
-            ss_plan = planovi_ss.ReadSSPlan(id);
+			SSModel model = new SSModel();
+			model.SS_Plan = planovi_ss.ReadSSPlan(id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
-                return View("Uredi", ss_plan);
+                return View("Uredi", model);
             }
-            return View("Uredi", ss_plan);
+            return View("Uredi");
         }
         [HttpPost]
-        public ActionResult Edit(SS_Plan ss_plan)
+        public ActionResult Edit(SSModel model)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!planovi_ss.UpdateSSPlan(ss_plan))
+
+			if (model.SS_Plan.Naziv != null && model.SS_Plan.Opis != null && planovi_ss.CreateSSPlan(model.SS_Plan))
 			{
-				TempData["alert"] = "<script>alert('Plan nije promjenjen!');</script>";
+				return RedirectToAction("Index", new { Plan = model.SS_Plan.Id_godina });
 			}
-			else
-			{
-				TempData["alert"] = "<script>alert('Plan je uspjesno promjenjen!');</script>";
-			}
-			return RedirectToAction("Index");
+			return PartialView("Uredi", model);
+			
+
+
+			
         }
 
         public ActionResult Delete(int id)
