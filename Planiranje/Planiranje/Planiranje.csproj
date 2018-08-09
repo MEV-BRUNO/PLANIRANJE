@@ -385,6 +385,7 @@
     <Content Include="Views\PlanOs1\ObrisiPodrucje.cshtml" />
     <Content Include="Views\PlanOs1\NovaAktivnost.cshtml" />
     <Content Include="Views\PlanOs1\UrediAktivnost.cshtml" />
+    <Content Include="Views\PlanOs1\ObrisiAktivnost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

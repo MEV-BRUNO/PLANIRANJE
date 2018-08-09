@@ -224,7 +224,7 @@
                                                                     </td>
                                                                     <td class="col-md-1">
                                                                         <a id="editAktivnost" data-toggle="modal" data-url="@Url.Action("UrediAktivnost","PlanOs1",new { id=item.Id_plan, pozicija=a.ToString()+"."+i.ToString(), pozicija_podrucja=Model.Pozicija})" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                                        <a href="#" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                                                        <a id="deleteAktivnost" data-toggle="modal" data-url="@Url.Action("ObrisiAktivnost","PlanOs1", new { id=item.Id_plan, pozicija=Model.Pozicija, broj=a.ToString()+"."+i.ToString()})" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                                                     </td>
                                                                 </tr>
                                                                 }
@@ -433,6 +433,15 @@
             });
 
             $('#dataTables').on("click", "#editAktivnost", function (event) {
+                event.preventDefault();
+                var url = $(this).attr("data-url");
+                $.get(url, function (data) {
+                    $('#assetContainer').html(data);
+                    $('#assetModal').modal('show');
+                });
+            });
+
+            $('#dataTables').on("click", "#deleteAktivnost", function (event) {
                 event.preventDefault();
                 var url = $(this).attr("data-url");
                 $.get(url, function (data) {
