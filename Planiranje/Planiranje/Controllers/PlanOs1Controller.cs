@@ -750,5 +750,41 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Details2", new { id = podrucje.Id_glavni_plan, pozicija = pozicija_podrucja });
         }
+        public ActionResult UrediAktivnost (int id, string pozicija, int pozicija_podrucja)
+        {
+            PlanOs1View plan = new PlanOs1View();            
+            OS_Plan_1_aktivnost aktivnost = new OS_Plan_1_aktivnost();
+            aktivnost = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+
+            plan.Pozicija = pozicija_podrucja;
+            plan.Aktivnosti = new List<Aktivnost>();
+            plan.Aktivnosti = aktivnost_db.ReadAktivnost();
+            plan.Os_Plan_1_Aktivnost = aktivnost;
+            ViewBag.pozicija = pozicija;
+            return View("UrediAktivnost", plan);
+        }
+        [HttpPost]
+        public ActionResult UrediAktivnost (PlanOs1View plan)
+        {
+            int _id;
+            OS_Plan_1_aktivnost aktivnost = plan.Os_Plan_1_Aktivnost;
+            int id_ak = aktivnost.Id_plan;
+            int id_pod = aktivnost.Id_podrucje;
+            OS_Plan_1_podrucje podrucje = new OS_Plan_1_podrucje();
+            podrucje = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id_pod);
+            _id = podrucje.Id_glavni_plan;
+
+            using (var db = new BazaPodataka())
+            {
+                db.OsPlan1Aktivnost.Add(aktivnost);
+                db.Entry(aktivnost).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                TempData["note"] = "Aktivnost je promijenjena";
+            }
+
+                
+            return RedirectToAction("Details2", new { id = _id, pozicija = plan.Pozicija });
+            
+        }
     }
 }
