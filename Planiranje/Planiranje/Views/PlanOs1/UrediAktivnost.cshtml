@@ -21,8 +21,9 @@
                 @Html.HiddenFor(model => model.Os_Plan_1_Aktivnost.Id_plan)
                 @Html.HiddenFor(m=>m.Os_Plan_1_Aktivnost.Id_podrucje)
                 @Html.HiddenFor(m=>m.Os_Plan_1_Aktivnost.Red_broj_aktivnost)
-                @Html.HiddenFor(m=>m.Pozicija)
-                @Html.HiddenFor(m=>m.Id)
+                @Html.HiddenFor(m=>m.Os_Plan_1_Aktivnost.Br_sati)
+                @Html.HiddenFor(m=>m.Pozicija,new { @Value=Model.Broj})
+                
                 <div class="form-group">
                     @Html.Label("Redni broj", new { @class="control-label col-md-3"})
                     <div class="col-md-4">

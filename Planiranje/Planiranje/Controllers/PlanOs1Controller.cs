@@ -784,6 +784,7 @@ namespace Planiranje.Controllers
             plan.Aktivnosti = new List<Aktivnost>();
             plan.Aktivnosti = aktivnost_db.ReadAktivnost();
             plan.Os_Plan_1_Aktivnost = aktivnost;
+            plan.Broj = pozicija_podrucja;
             ViewBag.pozicija = pozicija;
             return View("UrediAktivnost", plan);
         }
