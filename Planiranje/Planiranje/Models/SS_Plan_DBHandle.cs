@@ -22,6 +22,7 @@ namespace Planiranje.Models
 
         public List<SS_Plan> ReadSSPlanove(int id_god)
         {
+			int counter = 0;
             List<SS_Plan> Ss_planovi = new List<SS_Plan>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
@@ -42,8 +43,9 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            SS_Plan plan = new SS_Plan()
-                            {
+							SS_Plan plan = new SS_Plan()
+							{
+								Red_br = ++counter,
                                 Id_plan = Convert.ToInt32(sdr["id_plan"]),
                                 Naziv = sdr["naziv"].ToString(),
 								Ak_godina = sdr["ak_godina"].ToString(),

@@ -130,10 +130,6 @@ namespace Planiranje.Controllers
 				return RedirectToAction("Index", new { Plan = model.SS_Plan.Id_godina });
 			}
 			return PartialView("Uredi", model);
-			
-
-
-			
         }
 
         public ActionResult Delete(int id)

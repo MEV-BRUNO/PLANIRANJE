@@ -9,6 +9,7 @@ namespace Planiranje.Models
 {
     public class SS_Plan
     {
+		public int Red_br { get; set; }
         [Required]
         public int Id_plan { get; set; }
         [Required]
