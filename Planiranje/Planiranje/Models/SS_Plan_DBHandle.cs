@@ -33,7 +33,7 @@ namespace Planiranje.Models
 					"JOIN godisnji_plan ON Ss_plan.id_godina = godisnji_plan.id_god " +
 					"WHERE ss_plan.id_pedagog = @id_pedagog " +
 					"AND id_godina = @id_godina " +
-					"ORDER BY id_plan ASC";
+					"ORDER BY naziv ASC";
 				command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
 				command.Parameters.AddWithValue("@id_godina", id_god);
 				connection.Open();
@@ -177,7 +177,7 @@ namespace Planiranje.Models
                     command.Connection = connection;
                     command.CommandText = "UPDATE Ss_plan " +
                         "SET " +
-                        "ak_godina = @ak_godina, " +
+                        "id_godina = @id_godina, " +
                         "naziv = @naziv, " +
                         "opis = @opis " +
                         "WHERE id_plan = @id_plan " +
@@ -185,7 +185,7 @@ namespace Planiranje.Models
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@id_plan", Ss_plan.Id_plan);
                     command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
-                    command.Parameters.AddWithValue("@ak_godina", Ss_plan.Id_godina.ToString());
+                    command.Parameters.AddWithValue("@id_godina", Ss_plan.Id_godina);
                     command.Parameters.AddWithValue("@naziv", Ss_plan.Naziv);
                     command.Parameters.AddWithValue("@opis", Ss_plan.Opis);
                     connection.Open();
@@ -233,6 +233,51 @@ namespace Planiranje.Models
             }
             return true;
         }
+
+		public List<SS_Plan_podrucje> ReadSsPodrucja(int id_plan)
+		{
+			int counter = 0;
+			List<SS_Plan_podrucje> ss_podrucja = new List<SS_Plan_podrucje>();
+			this.Connect();
+			using (MySqlCommand command = new MySqlCommand())
+			{
+				command.Connection = connection;
+				command.CommandText = "SELECT * " +
+					"FROM ss_plan_podrucje " +
+					"WHERE id_plan = @id_plan " +
+					"ORDER BY id_plan ASC";
+				command.Parameters.AddWithValue("@id_plan", id_plan);
+				connection.Open();
+				using (MySqlDataReader sdr = command.ExecuteReader())
+				{
+					if (sdr.HasRows)
+					{
+						while (sdr.Read())
+						{
+							SS_Plan_podrucje plan = new SS_Plan_podrucje()
+							{
+								Red_br = ++counter,
+								Id = Convert.ToInt32(sdr["id"]),
+								ID_plan = Convert.ToInt32(sdr["id_plan"]),
+								Opis_podrucje = sdr["opis_podrucje"].ToString(),
+								Svrha = sdr["svrha"].ToString(),
+								Zadaca = sdr["zadaca"].ToString(),
+								Sadrzaj = sdr["sadrzaj"].ToString(),
+								Oblici = sdr["oblici"].ToString(),
+								Suradnici = sdr["suradnici"].ToString(),
+								Mjesto = sdr["mjesto"].ToString(),
+								Vrijeme  = Convert.ToDateTime(sdr["vrijeme"]),
+								Ishodi = sdr["ishodi"].ToString(),
+								Sati = Convert.ToInt32(sdr["sati"])
+							};
+							ss_podrucja.Add(plan);
+						}
+					}
+				}
+				connection.Close();
+			}
+			return ss_podrucja;
+		}
     }
 }
 

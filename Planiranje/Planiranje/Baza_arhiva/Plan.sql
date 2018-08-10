@@ -90,7 +90,7 @@ CREATE TABLE os_plan_2 (
 CREATE TABLE ss_plan (
   id_plan int(11) NOT NULL AUTO_INCREMENT,
   id_pedagog int(11) NOT NULL,
-  ak_godina varchar(25) NOT NULL,
+  id_godina int(11) NOT NULL,
   naziv varchar(50) NOT NULL,
   opis text,
   PRIMARY KEY (id_plan),
@@ -338,21 +338,17 @@ CREATE TABLE os_plan_2_podrucje (
 );
 
 CREATE TABLE ss_plan_podrucje (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  red_br_podrucje int(11) NOT NULL,
+  id int(11) NOT NULL AUTO_INCREMENT,
+  id_plan int(11) NOT NULL,
   opis_podrucje text,
   svrha text,
   zadaca text,
   sadrzaj text,
-  oblici int(11) NOT NULL,
+  oblici text,
   suradnici text,
-  mjesto varchar(30),
+  mjesto text,
   vrijeme datetime NOT NULL,
   ishodi text,
   sati int(11) NOT NULL,
-  PRIMARY KEY (id_plan),
-  KEY red_br_podrucje (red_br_podrucje),
-  KEY oblici (oblici),
-  CONSTRAINT ss_plan_podrucje_ibfk_1 FOREIGN KEY (red_br_podrucje) REFERENCES podrucje_rada (id_podrucje),
-  CONSTRAINT ss_plan_podrucje_ibfk_2 FOREIGN KEY (oblici) REFERENCES oblici (id_oblici)
+  PRIMARY KEY (id)
 );

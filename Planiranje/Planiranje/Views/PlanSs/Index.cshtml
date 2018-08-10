@@ -43,9 +43,16 @@
 					</div>
 				</div>
 				<div class="panel-body">
-					@if (Model.SS_Planovi.Count >= 0)
+					@if (Model.SS_Planovi.Count > 0)
 					{
 						@Html.Partial("Table", Model)
+					}
+					else
+					{
+						if (ViewBag.HasGodPlan == true)
+						{
+							<p>Nema mjesečnih planova</p>
+						}
 					}
 				</div>
 			</div>

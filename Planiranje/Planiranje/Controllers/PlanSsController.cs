@@ -125,7 +125,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
 
-			if (model.SS_Plan.Naziv != null && model.SS_Plan.Opis != null && planovi_ss.CreateSSPlan(model.SS_Plan))
+			if (model.SS_Plan.Naziv != null && model.SS_Plan.Opis != null && planovi_ss.UpdateSSPlan(model.SS_Plan))
 			{
 				return RedirectToAction("Index", new { Plan = model.SS_Plan.Id_godina });
 			}
@@ -174,5 +174,36 @@ namespace Planiranje.Controllers
 
 			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
 		}*/
+		public ActionResult Detalji(int id, int id_god)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			SSModel model = new SSModel();
+			model.SS_Podrucja = planovi_ss.ReadSsPodrucja(id);
+			model.Ak_godina = godisnji_planovi.ReadGodisnjiPlan(id_god).Ak_godina;
+			//model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(id);
+			model.ID_PLAN = id;
+			model.ID_GODINA = id_god;
+			return View("Detalji", model);
+		}
+		[HttpPost]
+		public ActionResult Detalji(Mjesecni_plan mjesecni_plan)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			if (!mjesecni_planovi.UpdateMjesecniPlan(mjesecni_plan))
+			{
+				TempData["alert"] = "<script>alert('Mjesecni plan nije promjenjen!');</script>";
+			}
+			else
+			{
+				TempData["alert"] = "<script>alert('Mjesecni plan je uspjesno promjenjen!');</script>";
+			}
+			return RedirectToAction("Detalji");
+		}
 	}
 }

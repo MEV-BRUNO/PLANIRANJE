@@ -1,0 +1,66 @@
+﻿@model Planiranje.Models.SSModel
+@using PagedList.Mvc;
+
+@{
+	Page.Title = ViewBag.Title;
+	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="inner">
+	@Html.HiddenFor(model => Model.ID_PLAN)
+	@Html.HiddenFor(model => Model.ID_GODINA)
+	<div class="row">
+		<div class="col-lg-12">
+			<h3>@ViewBag.Title</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-lg-2">
+							<p>Školska godina: @Model.Ak_godina</p>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="pull-left">
+								<input type="button" class="btn btn-primary btn-md" value="Novi detalji" onclick='showModal("@Html.Raw(@Url.Action("NoviDetalji", "PlanSs" ,new { id=Model.ID_PLAN, id_god = Model.ID_GODINA }))")' />
+							</div>
+							@if (Model.SS_Podrucja.Count > 0)
+							{
+								<div class="pull-right">
+									<input type="button" class="btn btn-danger btn-md" value="Ispiši" style="margin-top:15px"
+										   onclick="location.href='@Url.Action("Ispis", "PlanSs", new { id = Model.ID_PLAN })'" />
+								</div>
+							}
+							<br>
+						</div>
+					</div>
+					<br>
+					@if (Model.SS_Podrucja.Count > 0)
+					{
+						@Html.Partial("TableDetails", Model)
+					}
+					else
+					{
+						<p>Nema mjesečnih planova</p>
+					}
+					<br>
+					<div class="pull-right">
+						<input type="button" class="btn btn-default btn-md" value="Zatvori" onclick='reloadPage("@Url.Action("Index", "PlanSs", new { Plan=Model.ID_GODINA.ToString() })")' />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		$('#dataTables-example').dataTable();
+	});
+</script>

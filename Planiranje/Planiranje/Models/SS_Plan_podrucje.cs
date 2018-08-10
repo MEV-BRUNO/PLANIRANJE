@@ -8,10 +8,11 @@ namespace Planiranje.Models
 {
     public class SS_Plan_podrucje
     {
-        [Required]
+		public int Red_br { get; set; }
+		[Required]
+		public int Id { get; set; }
+		[Required]
         public int ID_plan { get; set; }
-        [Required]
-        public int Red_br_podrucje { get; set; }
         [Required]
         public string Opis_podrucje { get; set; }
         [Required]
@@ -21,7 +22,7 @@ namespace Planiranje.Models
         [Required]
         public string Sadrzaj { get; set; }
         [Required]
-        public int Oblici { get; set; }
+        public string Oblici { get; set; }
         [Required]
         public string Suradnici { get; set; }
         [Required]

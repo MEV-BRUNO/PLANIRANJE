@@ -12,6 +12,8 @@ namespace Planiranje.Models
 		public int ID_PLAN { get; set; }
 		public List<SS_Plan> SS_Planovi { get; set; }
 		public List<SelectListItem> GodisnjiPlanovi { get; set; }
+		public List<SS_Plan_podrucje> SS_Podrucja { get; set;  }
 		public SS_Plan SS_Plan { get; set; }
+		public string Ak_godina { get; set; }
 	}
 }
