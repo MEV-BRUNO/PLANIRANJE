@@ -278,7 +278,48 @@ namespace Planiranje.Models
 			}
 			return ss_podrucja;
 		}
-    }
+
+		public bool CreateSSPlanPodrucje(SSModel model)
+		{
+			try
+			{
+				this.Connect();
+				using (MySqlCommand command = new MySqlCommand())
+				{
+					command.Connection = connection;
+					command.CommandText = "INSERT INTO ss_plan_podrucje " +
+						"(id_plan, opis_podrucje, svrha, zadaca, sadrzaj, oblici, suradnici, mjesto, vrijeme, ishodi, sati) " +
+						" VALUES (@id_plan, @opis_podrucje, @svrha, @zadaca, @sadrzaj, @oblici, @suradnici, @mjesto, @vrijeme, @ishodi, @sati)";
+					command.CommandType = CommandType.Text;
+
+					command.Parameters.AddWithValue("@id_plan", model.ID_PLAN);
+					command.Parameters.AddWithValue("@opis_podrucje", model.SS_Plan_Podrucje.Opis_podrucje);
+					command.Parameters.AddWithValue("@svrha", model.SS_Plan_Podrucje.Svrha);
+					command.Parameters.AddWithValue("@zadaca", model.SS_Plan_Podrucje.Zadaca);
+					command.Parameters.AddWithValue("@sadrzaj", model.SS_Plan_Podrucje.Sadrzaj);
+					command.Parameters.AddWithValue("@oblici", model.SS_Plan_Podrucje.Oblici);
+					command.Parameters.AddWithValue("@suradnici", model.SS_Plan_Podrucje.Suradnici);
+					command.Parameters.AddWithValue("@mjesto", model.SS_Plan_Podrucje.Mjesto);
+					command.Parameters.AddWithValue("@vrijeme", model.SS_Plan_Podrucje.Vrijeme);
+					command.Parameters.AddWithValue("@ishodi", model.SS_Plan_Podrucje.Ishodi);
+					command.Parameters.AddWithValue("@sati", model.SS_Plan_Podrucje.Sati);
+
+					connection.Open();
+					command.ExecuteNonQuery();
+				}
+			}
+			catch
+			{
+				connection.Close();
+				return false;
+			}
+			finally
+			{
+				connection.Close();
+			}
+			return true;
+		}
+	}
 }
 
 

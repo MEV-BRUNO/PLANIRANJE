@@ -1,0 +1,204 @@
+﻿@model Planiranje.Models.SSModel
+
+@{
+	Page.Title = ViewBag.Title;
+}
+
+<div class="inner">
+	@Html.HiddenFor(model => Model.ID_PLAN)
+	@Html.HiddenFor(model => Model.ID_GODINA)
+	<div class="row">
+		<div class="col-lg-12">
+			<h3>@ViewBag.Title</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-lg-2">
+							<p>Školska godina: @Model.Ak_godina</p>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-12">
+							@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "NoviDetaljSSView", @class = "form-horizontal", role = "form" }))
+							{
+								@Html.HiddenFor(model => model.ID_GODINA)
+								@Html.HiddenFor(model => model.ID_PLAN)
+							<div class="modal-body">
+
+								<div class="form-group">
+									<div class="col-md-12">
+										@Html.LabelFor(model => model.SS_Plan_Podrucje.Opis_podrucje)
+									</div>
+									<div class="col-md-7">
+										@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Opis_podrucje, new { @class = "edit-opis-detalji", id = "podRada" })
+										@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Opis_podrucje, "", new { @class = "text-danger" })
+									</div>
+									<div class="col-md-1">
+										<input type="button" class="btn btn-primary" onclick="PridruziPodrucjeRada()" value="<" />
+									</div>
+									<div class="col-md-4">
+										@Html.DropDownListFor(model => Model.PodrucjaDjelovanja, Model.PodrucjaDjelovanja, new { @class = "form-control", id = "podrucjeDD" })
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										@Html.LabelFor(model => model.SS_Plan_Podrucje.Svrha)
+									</div>
+									<div class="col-md-7">
+										@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Svrha, new { @class = "edit-opis-detalji", id = "podRada" })
+										@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Svrha, "", new { @class = "text-danger" })
+									</div>
+									<div class="col-md-1">
+										<input type="button" class="btn btn-primary" onclick="PridruziPodrucjeRada()" value="<" />
+									</div>
+									<div class="col-md-4">
+										@Html.DropDownListFor(model => Model.Ciljevi, Model.Ciljevi, new { @class = "form-control", id = "podrucjeDD" })
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										@Html.LabelFor(model => model.SS_Plan_Podrucje.Zadaca)
+									</div>
+									<div class="col-md-7">
+										@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Zadaca, new { @class = "edit-opis-detalji", id = "podRada" })
+										@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Zadaca, "", new { @class = "text-danger" })
+									</div>
+									<div class="col-md-1">
+										<input type="button" class="btn btn-primary" onclick="PridruziPodrucjeRada()" value="<" />
+									</div>
+									<div class="col-md-4">
+										@Html.DropDownListFor(model => Model.Zadace, Model.Zadace, new { @class = "form-control", id = "podrucjeDD" })
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										@Html.LabelFor(model => model.SS_Plan_Podrucje.Sadrzaj)
+									</div>
+									<div class="col-md-7">
+										@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Sadrzaj, new { @class = "edit-opis-detalji", id = "podRada" })
+										@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Sadrzaj, "", new { @class = "text-danger" })
+									</div>
+									<div class="col-md-1">
+										<input type="button" class="btn btn-primary" onclick="PridruziPodrucjeRada()" value="<" />
+									</div>
+									<div class="col-md-4">
+										@Html.DropDownListFor(model => Model.PodrucjaDjelovanja, Model.PodrucjaDjelovanja, new { @class = "form-control", id = "podrucjeDD" })
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										@Html.LabelFor(model => model.SS_Plan_Podrucje.Oblici)
+									</div>
+									<div class="col-md-7">
+										@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Oblici, new { @class = "edit-opis-detalji", id = "podRada" })
+										@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Oblici, "", new { @class = "text-danger" })
+									</div>
+									<div class="col-md-1">
+										<input type="button" class="btn btn-primary" onclick="PridruziPodrucjeRada()" value="<" />
+									</div>
+									<div class="col-md-4">
+										@Html.DropDownListFor(model => Model.Oblici, Model.Oblici, new { @class = "form-control", id = "podrucjeDD" })
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										@Html.LabelFor(model => model.SS_Plan_Podrucje.Suradnici)
+									</div>
+									<div class="col-md-7">
+										@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Suradnici, new { @class = "edit-opis-detalji", id = "podRada" })
+										@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Suradnici, "", new { @class = "text-danger" })
+									</div>
+									<div class="col-md-1">
+										<input type="button" class="btn btn-primary" onclick="PridruziPodrucjeRada()" value="<" />
+									</div>
+									<div class="col-md-4">
+										@Html.DropDownListFor(model => Model.Suradnici, Model.Suradnici, new { @class = "form-control", id = "podrucjeDD" })
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										@Html.LabelFor(model => model.SS_Plan_Podrucje.Mjesto)
+									</div>
+									<div class="col-md-12">
+										@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Mjesto, new { @class = "edit-opis-detalji", id = "podRada" })
+										@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Mjesto, "", new { @class = "text-danger" })
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										@Html.LabelFor(model => model.SS_Plan_Podrucje.Vrijeme)
+									</div>
+									<div class="col-md-12">
+										@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Vrijeme, new { @class = "edit-opis-detalji", id = "podRada" })
+										@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Vrijeme, "", new { @class = "text-danger" })
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										@Html.LabelFor(model => model.SS_Plan_Podrucje.Ishodi)
+									</div>
+									<div class="col-md-12">
+										@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Ishodi, new { @class = "edit-opis-detalji", id = "podRada" })
+										@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Ishodi, "", new { @class = "text-danger" })
+									</div>
+								</div>
+
+							</div>
+							<div class="modal-footer">
+								<input type="button" class="btn btn-default" value="Odustani" onclick='showModal("@Html.Raw(@Url.Action("CancelNewDetails", "PlanSs", new { id_godina = Model.ID_GODINA, id_plan = Model.ID_PLAN }))")' />
+								<input type="button" class="btn btn-primary" value="Spremi" onclick='reloadWithData("/PlanSs/NoviDetalji", "#NoviDetaljSSView", "Detalji uspješno spremljeni")' />
+							</div>
+								}
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function PridruziPodrucjeRada() {
+		var podrucje = document.getElementById("podrucjeDD");
+		var Text = podrucje.options[podrucje.selectedIndex].text;
+		var podRadaTxt = document.getElementById('podRada');
+		if (podRadaTxt.value.length == 0) {
+			podRadaTxt.value = Text;
+		}
+		else {
+			podRadaTxt.value = podRadaTxt.value + ", " + Text;
+		}
+	};
+</script>
+<script type="text/javascript">
+	function PridruziAktivnost() {
+		var podrucje = document.getElementById("aktivnostDD");
+		var Text = podrucje.options[podrucje.selectedIndex].text;
+		var podRadaTxt = document.getElementById('akt');
+		if (podRadaTxt.value.length == 0) {
+			podRadaTxt.value = Text;
+		}
+		else {
+			podRadaTxt.value = podRadaTxt.value + ", " + Text;
+		}
+	};
+</script>
+<script type="text/javascript">
+	function PridruziSubjekt() {
+		var podrucje = document.getElementById("subjektDD");
+		var Text = podrucje.options[podrucje.selectedIndex].text;
+		var podRadaTxt = document.getElementById('subj');
+		if (podRadaTxt.value.length == 0) {
+			podRadaTxt.value = Text;
+		}
+		else {
+			podRadaTxt.value = podRadaTxt.value + ", " + Text;
+		}
+	};
+</script>

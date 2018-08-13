@@ -28,14 +28,14 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="pull-left">
-								<input type="button" class="btn btn-primary btn-md" value="Novi detalji" onclick='showModal("@Html.Raw(@Url.Action("NoviDetalji", "PlanSs" ,new { id=Model.ID_PLAN, id_god = Model.ID_GODINA }))")' />
+								<input type="button" class="btn btn-primary btn-md" value="Novi detalji" onclick='reloadPage("@Html.Raw(@Url.Action("NoviDetalji", "PlanSs" ,new { id=Model.ID_PLAN, id_god = Model.ID_GODINA }))")' />
 							</div>
 							@if (Model.SS_Podrucja.Count > 0)
 							{
-								<div class="pull-right">
-									<input type="button" class="btn btn-danger btn-md" value="Ispiši" style="margin-top:15px"
-										   onclick="location.href='@Url.Action("Ispis", "PlanSs", new { id = Model.ID_PLAN })'" />
-								</div>
+							<div class="pull-right">
+								<input type="button" value="Ispiši" 
+									   onclick="location.href='@Url.Action("Ispis", "PlanSs", new { target="_blank", id = Model.ID_PLAN })'" />
+							</div>
 							}
 							<br>
 						</div>

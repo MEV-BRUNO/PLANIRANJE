@@ -62,7 +62,9 @@ function hideModal(path, id, message) {
 				$('#modalContainer').removeData();
 				$('.modal-backdrop').remove();
 				$("#content").html(data);
-				showSnackBar(message);
+				if (message !== null) {
+					showSnackBar(message);
+				}
 			}
 		},
 		error: function (request, status, error) {

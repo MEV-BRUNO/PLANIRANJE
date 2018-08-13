@@ -256,6 +256,7 @@
     <Compile Include="Reports\MjesecniPlanReport.cs" />
     <Compile Include="Reports\PlanOs1Report.cs" />
     <Compile Include="Reports\PlanOs2Report.cs" />
+    <Compile Include="Reports\PlanSsPodrucjaReport.cs" />
     <Compile Include="Reports\PlanSsReport.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -387,6 +388,9 @@
     <Content Include="Views\PlanOs1\ObrisiPodrucje.cshtml" />
     <Content Include="Views\PlanOs1\NovaAktivnost.cshtml" />
     <Content Include="Views\PlanSs\Detalji.cshtml" />
+    <Content Include="Views\PlanSs\NoviDetalji.cshtml" />
+    <Content Include="Views\PlanSs\ObrisiNoviDetalj.cshtml" />
+    <Content Include="Views\PlanSs\TableDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

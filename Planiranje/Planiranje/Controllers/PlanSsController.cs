@@ -20,9 +20,12 @@ namespace Planiranje.Controllers
 		private Podrucje_rada_DBHandle podrucja_rada = new Podrucje_rada_DBHandle();
 		private Subjekt_DBHandle subjekti = new Subjekt_DBHandle();
 		private Aktivnost_DBHandle aktivnosti = new Aktivnost_DBHandle();
+		private Zadaci_DBHandle zadaci = new Zadaci_DBHandle();
 		private SS_Plan_DBHandle planovi_ss = new SS_Plan_DBHandle();
+		private Oblici_DBHandle oblici = new Oblici_DBHandle();
+		private Ciljevi_DBHandle ciljevi = new Ciljevi_DBHandle();
 
-        public ActionResult Index(string Plan)
+		public ActionResult Index(string Plan)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -166,14 +169,15 @@ namespace Planiranje.Controllers
 			return RedirectToAction("Index");
 		}
 
-		/*public FileStreamResult Ispis()
+		public FileStreamResult Ispis(int id)
 		{
-			List<SS_Plan> planovi = planovi_ss.ReadSSPlanove();
+			List<SS_Plan_podrucje> podrucja = planovi_ss.ReadSsPodrucja(id);
 
-			PlanSsReport report = new PlanSsReport(planovi);
+			PlanSsPodrucjaReport report = new PlanSsPodrucjaReport(podrucja);
 
 			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
-		}*/
+		}
+
 		public ActionResult Detalji(int id, int id_god)
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
@@ -183,7 +187,6 @@ namespace Planiranje.Controllers
 			SSModel model = new SSModel();
 			model.SS_Podrucja = planovi_ss.ReadSsPodrucja(id);
 			model.Ak_godina = godisnji_planovi.ReadGodisnjiPlan(id_god).Ak_godina;
-			//model.MjesecniDetalji = mjesecni_planovi.ReadMjesecneDetalje(id);
 			model.ID_PLAN = id;
 			model.ID_GODINA = id_god;
 			return View("Detalji", model);
@@ -204,6 +207,85 @@ namespace Planiranje.Controllers
 				TempData["alert"] = "<script>alert('Mjesecni plan je uspjesno promjenjen!');</script>";
 			}
 			return RedirectToAction("Detalji");
+		}
+
+		public ActionResult NoviDetalji(int id, int id_god)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			SSModel model = new SSModel();
+			model.PodrucjaDjelovanja = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv,
+				Value = i.Id_podrucje.ToString()
+			}));
+			model.Zadace = new List<SelectListItem>(zadaci.ReadZadaci().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv,
+				Value = i.ID_zadatak.ToString()
+			}));
+			model.Oblici = new List<SelectListItem>(oblici.ReadOblici().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv,
+				Value = i.Id_oblici.ToString()
+			}));
+
+			model.Suradnici = new List<SelectListItem>(subjekti.ReadSubjekti().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv,
+				Value = i.ID_subjekt.ToString()
+			}));
+
+			model.Ciljevi = new List<SelectListItem>(ciljevi.ReadCiljevi().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv,
+				Value = i.ID_cilj.ToString()
+			}));
+
+			model.ID_GODINA = id_god;
+			model.ID_PLAN = id;
+
+			return PartialView("NoviDetalji", model);
+		}
+		[HttpPost]
+		public ActionResult NoviDetalji(SSModel model)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+
+			if (!planovi_ss.CreateSSPlanPodrucje(model))
+			{
+				return PartialView("NoviDetalji", model);
+			}
+			else
+			{
+				return RedirectToAction("Detalji", new { id = model.ID_PLAN, id_god = model.ID_GODINA });
+			}
+		}
+		
+		public ActionResult CancelNewDetails(int id_godina, int id_plan)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			SSModel model = new SSModel();
+			model.ID_GODINA = id_godina;
+			model.ID_PLAN = id_plan;
+			return View("ObrisiNoviDetalj", model);
+		}
+		[HttpPost]
+		public ActionResult CancelNewDetails(SSModel model)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			return RedirectToAction("Detalji", new { id = model.ID_PLAN,  id_god = model.ID_GODINA });
 		}
 	}
 }
