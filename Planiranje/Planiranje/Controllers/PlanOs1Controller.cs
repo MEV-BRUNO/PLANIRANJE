@@ -569,11 +569,16 @@ namespace Planiranje.Controllers
             OS_Plan_1_aktivnost ak = new OS_Plan_1_aktivnost();
             ak = plan.Os_Plan_1_Aktivnost;
             ak.Id_podrucje = i;
-
+            //zbrajanje
+            ak.Br_sati = ak.Mj_1 + ak.Mj_10 + ak.Mj_11 + ak.Mj_12 + ak.Mj_2 + ak.Mj_3 + ak.Mj_4 + ak.Mj_5 + ak.Mj_6 + ak.Mj_7 + ak.Mj_8 + ak.Mj_9;
+            //zbrajanje-kraj
             OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
             p = baza.OsPlan1Podrucje.Single(s => s.Id_plan == i);
             int _id = p.Id_glavni_plan;
-
+            //zbrajanje podrucja
+            p.Br_sati += ak.Br_sati; p.Mj_1 += ak.Mj_1;p.Mj_2 += ak.Mj_2;p.Mj_3 += ak.Mj_3;p.Mj_4 += ak.Mj_4;p.Mj_5 += ak.Mj_5;p.Mj_6 += ak.Mj_6;
+            p.Mj_7 += ak.Mj_7;p.Mj_8 += ak.Mj_8;p.Mj_9 += ak.Mj_9;p.Mj_10 += ak.Mj_10;p.Mj_11 += ak.Mj_11;p.Mj_12 += ak.Mj_12;
+            //zbrajanje podrucja-kraj
             int maxValue;
             List<OS_Plan_1_aktivnost> trenutne = new List<OS_Plan_1_aktivnost>();
             trenutne = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == i).ToList();
@@ -588,17 +593,21 @@ namespace Planiranje.Controllers
             }
             ak.Red_broj_aktivnost = maxValue;
             TempData["note"] = "Nova aktivnost je dodana";
+            using (var db = new BazaPodataka())
+            {
                 try
                 {
-                    baza.OsPlan1Aktivnost.Add(ak);
-                    baza.SaveChanges();
+                    db.OsPlan1Aktivnost.Add(ak);
+                    db.OsPlan1Podrucje.Add(p);
+                    db.Entry(p).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
                 }
                 catch
                 {
                     TempData["note"] = "Nova aktivnost nije dodana";
                 }
-            
-            
+
+            }
             TempData["prikaz"] = "1";
             return RedirectToAction("Details2", new { id = _id, pozicija=plan.Pozicija });
         }
@@ -800,16 +809,28 @@ namespace Planiranje.Controllers
             aktivnost = plan.Os_Plan_1_Aktivnost;
             int id_ak = aktivnost.Id_plan;
             int id_pod = aktivnost.Id_podrucje;
-            OS_Plan_1_podrucje podrucje = new OS_Plan_1_podrucje();
-            podrucje = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id_pod);
-            _id = podrucje.Id_glavni_plan;
+            OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
+            p = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id_pod);
+            _id = p.Id_glavni_plan;
+            //
+            OS_Plan_1_aktivnost akPrije = new OS_Plan_1_aktivnost();
+            akPrije = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id_ak);
+            p.Br_sati -= akPrije.Br_sati;p.Mj_1 -= akPrije.Mj_1;p.Mj_2 -= akPrije.Mj_2;p.Mj_3 -= akPrije.Mj_3;p.Mj_4 -= akPrije.Mj_4;p.Mj_5 -= akPrije.Mj_5;
+            p.Mj_6 -= akPrije.Mj_6;p.Mj_7 -= akPrije.Mj_7;p.Mj_8 -= akPrije.Mj_8;p.Mj_9 -= akPrije.Mj_9;p.Mj_10 -= akPrije.Mj_10;p.Mj_11 -= akPrije.Mj_11;p.Mj_12 -= akPrije.Mj_12;
+            var ak = aktivnost;
+            ak.Br_sati = ak.Mj_1 + ak.Mj_10 + ak.Mj_11 + ak.Mj_12 + ak.Mj_2 + ak.Mj_3 + ak.Mj_4 + ak.Mj_5 + ak.Mj_6 + ak.Mj_7 + ak.Mj_8 + ak.Mj_9;
 
+            p.Br_sati += ak.Br_sati; p.Mj_1 += ak.Mj_1; p.Mj_2 += ak.Mj_2; p.Mj_3 += ak.Mj_3; p.Mj_4 += ak.Mj_4; p.Mj_5 += ak.Mj_5;
+            p.Mj_6 += ak.Mj_6; p.Mj_7 += ak.Mj_7; p.Mj_8 += ak.Mj_8; p.Mj_9 += ak.Mj_9; p.Mj_10 += ak.Mj_10; p.Mj_11 += ak.Mj_11; p.Mj_12 += ak.Mj_12;
+            //
             using (var db = new BazaPodataka())
             {
                 try
                 {
                     db.OsPlan1Aktivnost.Add(aktivnost);
                     db.Entry(aktivnost).State = System.Data.Entity.EntityState.Modified;
+                    db.OsPlan1Podrucje.Add(p);
+                    db.Entry(p).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     TempData["note"] = "Aktivnost je promijenjena";
                 }
@@ -854,15 +875,24 @@ namespace Planiranje.Controllers
             OS_Plan_1_aktivnost a = new OS_Plan_1_aktivnost();
             a = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id_akt);
             id_pod = a.Id_podrucje;
-            
-            using(var db = new BazaPodataka())
+
+            OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
+            p = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id_pod);
+            id_glavni = p.Id_glavni_plan;
+            //
+            p.Br_sati -= a.Br_sati; p.Mj_1 -= a.Mj_1; p.Mj_2 -= a.Mj_2; p.Mj_3 -= a.Mj_3; p.Mj_4 -= a.Mj_4; p.Mj_5 -= a.Mj_5;
+            p.Mj_6 -= a.Mj_6; p.Mj_7 -= a.Mj_7; p.Mj_8 -= a.Mj_8; p.Mj_9 -= a.Mj_9; p.Mj_10 -= a.Mj_10; p.Mj_11 -= a.Mj_11; p.Mj_12 -=a.Mj_12;
+            //
+            using (var db = new BazaPodataka())
             {
                 var aktivnost = db.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id_akt);
-                if (aktivnost != null)
+                if (aktivnost!=null)
                 {                    
                     try
                     {
                         db.OsPlan1Aktivnost.Remove(aktivnost);
+                        db.OsPlan1Podrucje.Add(p);
+                        db.Entry(p).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
                         TempData["note"] = "Aktivnost je obrisana";
                     }
@@ -872,9 +902,7 @@ namespace Planiranje.Controllers
                     }
                 }
             }
-            OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
-            p = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id_pod);
-            id_glavni = p.Id_glavni_plan;
+            
             return RedirectToAction("Details2", "PlanOs1", new { id = id_glavni, pozicija = plan.Pozicija });
         }
     }
