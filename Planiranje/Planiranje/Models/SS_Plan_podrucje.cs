@@ -35,15 +35,15 @@ namespace Planiranje.Models
 		[Required(ErrorMessage = "Obavezno polje.")]
 		[DisplayName("Mjesto")]
 		public string Mjesto { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
-		[DisplayName("Vrijeme")]
-		[DataType(DataType.DateTime)]
-        public DateTime Vrijeme { get; set; }
+		[Required(ErrorMessage = "Datum mora biti veći od trenutnog.")]
+		[DataType(DataType.Date)]
+		public DateTime Vrijeme { get; set; }
 		[Required(ErrorMessage = "Obavezno polje.")]
 		[DisplayName("Ishodi")]
 		public string Ishodi { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
 		[DisplayName("Sati")]
+		[Required(ErrorMessage = "Obavezno polje.")]
+		[Range(1, int.MaxValue, ErrorMessage = "Broj mora biti pozitivan!")]
 		public int Sati { get; set; }
     }
 }
