@@ -29,7 +29,7 @@
 				<td>@Html.DisplayFor(modelItem => item.Suradnici)</td>
 				<td>
 					<div class="pull-right">
-						<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Html.Raw(@Url.Action("UpdateNoviDetalji","MjesecniPlan", new { id = item.ID_plan, id_plan = item.ID_plan, id_god = Model.ID_GODINA }))")' />
+						<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Html.Raw(@Url.Action("UpdateNoviDetalji","PlanSs", new { id = item.ID_plan, id_plan = item.ID_plan, id_god = Model.ID_GODINA }))")' />
 						<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Html.Raw(@Url.Action("DeleteDetails","PlanSs", new { id = item.Id, id_plan = item.ID_plan, id_god = Model.ID_GODINA }))")' />
 					</div>
 				</td>

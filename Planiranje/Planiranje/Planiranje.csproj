@@ -391,6 +391,7 @@
     <Content Include="Views\PlanSs\NoviDetalji.cshtml" />
     <Content Include="Views\PlanSs\ObrisiNoviDetalj.cshtml" />
     <Content Include="Views\PlanSs\TableDetails.cshtml" />
+    <Content Include="Views\PlanSs\ObrisiDetalje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
