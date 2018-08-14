@@ -319,6 +319,76 @@ namespace Planiranje.Models
 			}
 			return true;
 		}
+
+
+		public SS_Plan_podrucje ReadSsPodrucje(int id)
+		{
+			SS_Plan_podrucje ss_podrucje = new SS_Plan_podrucje();
+			this.Connect();
+			using (MySqlCommand command = new MySqlCommand())
+			{
+				command.Connection = connection;
+				command.CommandText = "SELECT * " +
+					"FROM ss_plan_podrucje " +
+					"WHERE id = @id";
+				command.Parameters.AddWithValue("@id", id);
+				connection.Open();
+				using (MySqlDataReader sdr = command.ExecuteReader())
+				{
+					if (sdr.HasRows)
+					{
+						while (sdr.Read())
+						{
+							SS_Plan_podrucje plan = new SS_Plan_podrucje()
+							{
+								Id = Convert.ToInt32(sdr["id"]),
+								ID_plan = Convert.ToInt32(sdr["id_plan"]),
+								Opis_podrucje = sdr["opis_podrucje"].ToString(),
+								Svrha = sdr["svrha"].ToString(),
+								Zadaca = sdr["zadaca"].ToString(),
+								Sadrzaj = sdr["sadrzaj"].ToString(),
+								Oblici = sdr["oblici"].ToString(),
+								Suradnici = sdr["suradnici"].ToString(),
+								Mjesto = sdr["mjesto"].ToString(),
+								Vrijeme = Convert.ToDateTime(sdr["vrijeme"]),
+								Ishodi = sdr["ishodi"].ToString(),
+								Sati = Convert.ToInt32(sdr["sati"])
+							};
+							ss_podrucje = plan;
+						}
+					}
+				}
+				connection.Close();
+			}
+			return ss_podrucje;
+		}
+		public bool DeleteSSPlanPodrucje(int id)
+		{
+			try
+			{
+				this.Connect();
+				using (MySqlCommand command = new MySqlCommand())
+				{
+					command.Connection = connection;
+					connection.Open();
+					command.CommandText = "DELETE FROM Ss_plan_podrucje " +
+						"WHERE id = @id";
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@id", id);
+					command.ExecuteNonQuery();
+				}
+			}
+			catch
+			{
+				connection.Close();
+				return false;
+			}
+			finally
+			{
+				connection.Close();
+			}
+			return true;
+		}
 	}
 }
 

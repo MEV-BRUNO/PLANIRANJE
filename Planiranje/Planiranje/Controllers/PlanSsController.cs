@@ -324,5 +324,39 @@ namespace Planiranje.Controllers
 			}
 			return RedirectToAction("Detalji", new { id = model.ID_PLAN,  id_god = model.ID_GODINA });
 		}
+		public ActionResult DeleteDetails(int id, int id_plan, int id_god)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			SSModel model = new SSModel();
+			model.ID_GODINA = id_god;
+			model.ID_PLAN = id_plan;
+			model.SS_Plan_Podrucje = planovi_ss.ReadSsPodrucje(id);
+			if (Request.IsAjaxRequest())
+			{
+				return View("ObrisiDetalje", model);
+			}
+			return View("Obrisi");
+		}
+
+		[HttpPost]
+		public ActionResult DeleteDetails(SSModel model)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			if (!planovi_ss.DeleteSSPlanPodrucje(model.SS_Plan_Podrucje.Id))
+			{
+				TempData["alert"] = "<script>alert('Plan nije obrisan, dogodila se greska!');</script>";
+			}
+			else
+			{
+				TempData["alert"] = "<script>alert('Plan je uspjesno obrisan!');</script>";
+			}
+			return RedirectToAction("Detalji", new { id = model.ID_PLAN, id_god = model.ID_GODINA });
+		}
 	}
 }
