@@ -30,6 +30,7 @@ namespace Planiranje.Models
 		public DateTime Vrijeme { get; set; }
 		[Required(ErrorMessage = "Obavezno polje.")]
 		[DisplayName("Vrijeme rada")]
+		[Range(1, 999, ErrorMessage = "Vrijeme rada može biti iymeđu 1 i 999 sati")]
 		public int Br_sati { get; set; }
 		[Required(ErrorMessage = "Obavezno polje.")]
 		[DisplayName("Bilješke")]
