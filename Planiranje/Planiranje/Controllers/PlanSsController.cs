@@ -135,30 +135,31 @@ namespace Planiranje.Controllers
 			return PartialView("Uredi", model);
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, int id_god)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            SS_Plan ss_plan = new SS_Plan();
-            ss_plan = planovi_ss.ReadSSPlan(id);
+            SSModel model = new SSModel();
+			model.ID_GODINA = id_god;
+			model.ID_PLAN = id;
+			model.SS_Plan = planovi_ss.ReadSSPlan(id);
             if (Request.IsAjaxRequest())
             {
-                ViewBag.IsUpdate = false;
-                return View("Obrisi", ss_plan);
+                return View("Obrisi", model);
             }
             return View("Obrisi");
         }
 
         [HttpPost]
-        public ActionResult Delete(SS_Plan ss_plan)
+        public ActionResult Delete(SSModel model)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!planovi_ss.DeleteSSPlan(ss_plan.Id_plan))
+            if (!planovi_ss.DeleteSSPlan(model.ID_PLAN))
 			{
 				TempData["alert"] = "<script>alert('Plan nije obrisan, dogodila se greska!');</script>";
 			}
@@ -166,7 +167,7 @@ namespace Planiranje.Controllers
 			{
 				TempData["alert"] = "<script>alert('Plan je uspjesno obrisan!');</script>";
 			}
-			return RedirectToAction("Index");
+			return RedirectToAction("Index", new { Plan = model.ID_GODINA });
 		}
 
 		public FileStreamResult Ispis(int id)
