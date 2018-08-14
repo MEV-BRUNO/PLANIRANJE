@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.ModelBinding;
 
 namespace Planiranje.Models
 {
@@ -43,7 +44,7 @@ namespace Planiranje.Models
 		public string Ishodi { get; set; }
 		[DisplayName("Sati")]
 		[Required(ErrorMessage = "Obavezno polje.")]
-		[Range(1, int.MaxValue, ErrorMessage = "Broj mora biti pozitivan!")]
+		[Range(1, 999, ErrorMessage = "Broj mora biti između 1 i 999!")]
 		public int Sati { get; set; }
     }
 }
