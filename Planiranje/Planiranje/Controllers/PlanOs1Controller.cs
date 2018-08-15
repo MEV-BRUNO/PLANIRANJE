@@ -905,5 +905,35 @@ namespace Planiranje.Controllers
             
             return RedirectToAction("Details2", "PlanOs1", new { id = id_glavni, pozicija = plan.Pozicija });
         }
+        public FileStreamResult IspisDetalji(int id)
+        {
+            PlanOs1View plan = new PlanOs1View();
+            plan.Aktivnosti = new List<Aktivnost>();
+            plan.Aktivnosti = aktivnost_db.ReadAktivnost();
+            plan.Ciljevi = new List<Ciljevi>();
+            plan.Ciljevi = ciljevi_db.ReadCiljevi();
+            plan.PodrucjeRada = new List<Podrucje_rada>();
+            plan.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();
+            plan.OsPlan1 = new OS_Plan_1();
+            plan.OsPlan1 = baza.OsPlan1.SingleOrDefault(s => s.Id_plan == id);
+
+            plan.OsPlan1Podrucje = new List<OS_Plan_1_podrucje>();
+            plan.OsPlan1Podrucje = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == id).ToList();
+
+            plan.OsPlan1Aktivnost = new List<OS_Plan_1_aktivnost>();
+            foreach(var item in plan.OsPlan1Podrucje)
+            {
+                List<OS_Plan_1_aktivnost> a = new List<OS_Plan_1_aktivnost>();
+                a = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == item.Id_plan).ToList();
+                foreach(var i in a)
+                {
+                    plan.OsPlan1Aktivnost.Add(i);
+                }
+            }
+
+            PlanOs1DetailsReport report = new PlanOs1DetailsReport(plan);
+
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+        }
     }
 }
