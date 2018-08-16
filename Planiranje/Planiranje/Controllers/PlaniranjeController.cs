@@ -6,6 +6,7 @@ using Planiranje.Models;
 using System.Web.Security;
 using System.Runtime.Remoting.Messaging;
 using System.Net.Mail;
+using System.Data.SqlClient;
 
 
 namespace Planiranje.Controllers

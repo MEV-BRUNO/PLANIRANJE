@@ -252,6 +252,7 @@
     <Compile Include="Reports\GodisnjiPlanReport.cs" />
     <Compile Include="Reports\MjesecniPlanReport.cs" />
     <Compile Include="Reports\PlanOs1Report.cs" />
+    <Compile Include="Reports\PlanOs2DetailsReport.cs" />
     <Compile Include="Reports\PlanOs2Report.cs" />
     <Compile Include="Reports\PlanSsReport.cs" />
   </ItemGroup>
@@ -372,12 +373,15 @@
     <Content Include="Views\Ciljevi\Table.cshtml" />
     <Content Include="Views\Ciljevi\Uredi.cshtml" />
     <Content Include="Views\PlanOs2\Details.cshtml" />
-    <Content Include="Views\PlanOs2\NovoPodrucje.cshtml" />
+    <Content Include="Views\PlanOs2\NoviPosao.cshtml" />
+    <Content Include="Views\PlanOs2\NoviZadatak.cshtml" />
     <Content Include="Views\PlanOs2\NovaAktivnost.cshtml" />
-    <Content Include="Views\PlanOs2\ObrisiAktivnost.cshtml" />
-    <Content Include="Views\PlanOs2\ObrisiPodrucje.cshtml" />
+    <Content Include="Views\PlanOs2\UrediPosao.cshtml" />
+    <Content Include="Views\PlanOs2\UrediZadatak.cshtml" />
     <Content Include="Views\PlanOs2\UrediAktivnost.cshtml" />
-    <Content Include="Views\PlanOs2\UrediPodrucje.cshtml" />
+    <Content Include="Views\PlanOs2\ObrisiPosao.cshtml" />
+    <Content Include="Views\PlanOs2\ObrisiZadatak.cshtml" />
+    <Content Include="Views\PlanOs2\ObrisiAktivnost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
