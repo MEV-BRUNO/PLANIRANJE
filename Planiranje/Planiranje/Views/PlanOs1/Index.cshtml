@@ -1,8 +1,8 @@
-﻿@model PagedList.IPagedList<Planiranje.Models.OS_Plan_1>
-@using PagedList.Mvc;
+﻿@model List<Planiranje.Models.OS_Plan_1>
 
 @{
 	Page.Title = ViewBag.Title;
+    Layout = null;
 }
 
 @Html.Raw(TempData["alert"])
@@ -24,23 +24,10 @@
 							<span class="glyphicon glyphicon-print"></span>
 							@Html.ActionLink("Ispiši listu", "Ispis", new { target = "blank" })
 						</div>
-						<div class="pull-right">
-							@using (Html.BeginForm("Index", "PlanOs1", FormMethod.Get))
-							{
-								<p>
-									@Html.TextBox("Search", ViewBag.FilterValue as string, new { @class = "search-bar" })
-									<input class="btn btn-primary btn-md" type="submit" value="Trazi" />
-								</p>
-							}
-						</div>
-						<br>
+						<br />
 					</div>
 					@Html.Partial("Table", Model)
-					<div id="Paginator">
-						Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
-						@Html.PagedListPager(Model, Page_No => Url.Action("Index",
-							 new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
-					</div>
+					
 					<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
 						<div id="assetContainer"></div>
 					</div>
@@ -101,4 +88,9 @@
 	function DeleteSuccess() {
 		location.reload(true);
 	}
+</script>
+<script>
+    $(document).ready(function () {
+        $('#dataTables-example').dataTable();
+    });
 </script>

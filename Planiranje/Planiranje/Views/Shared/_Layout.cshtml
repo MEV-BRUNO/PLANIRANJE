@@ -71,8 +71,19 @@
 		</div>
 	</div>
 	@Html.Partial("../Shared/Footer")
+    
 	<script>
-		$(document).ready(function () {
+        $(document).ready(function () {
+            $("#osPlan").on("click", function () {
+                $.ajax({
+                    url: "@Url.Action("Index","PlanOs1")"
+
+                })
+                    .done(function (data) {
+                        $("#content").html(data);
+                    });
+            });
+
 			$("#mjPlan").on("click", function () {
 				$.ajax({
 					url: "/MjesecniPlan/Index",
