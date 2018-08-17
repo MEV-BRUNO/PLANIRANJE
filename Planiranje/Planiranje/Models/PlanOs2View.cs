@@ -41,6 +41,13 @@ namespace Planiranje.Models
         /// lista svih aktivnosti
         /// </summary>
         public List<Aktivnost> Aktivnosti { get; set; }
+
+        public List<Oblici> Oblici { get; set; }
+
+        public List<Subjekti> Subjekti { get; set; }
+
+        public List<Zadaci> Zadaci { get; set; }
+
         /// <summary>
         /// lista svih područja za dropdown list
         /// </summary>
@@ -58,10 +65,28 @@ namespace Planiranje.Models
         /// <summary>
         /// lista svih aktivnosti za dropdown list
         /// </summary>
+        public IEnumerable<SelectListItem> ObliciItems
+        {
+            get { return new SelectList(Oblici, "Id_oblici", "Naziv"); }
+        }
+
+        public IEnumerable<SelectListItem> SubjektiItems
+        {
+            get { return new SelectList(Subjekti, "ID_subjekt", "Naziv"); }
+        }
+
+
+        public IEnumerable<SelectListItem> ZadaciItems
+        {
+            get { return new SelectList(Zadaci, "ID_zadatak", "Naziv"); }
+        }
+
         public IEnumerable<SelectListItem> AktivnostiItems
         {
             get { return new SelectList(Aktivnosti, "Id_aktivnost", "Naziv"); }
         }
+
+
         /// <summary>
         /// glavni model za os_plan_2_aktivnost
         /// </summary>

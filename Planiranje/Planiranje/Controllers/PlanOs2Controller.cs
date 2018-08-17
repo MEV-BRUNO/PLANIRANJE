@@ -27,7 +27,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            ViewBag.Title = "Pregled - osnovna skola 1";
+            ViewBag.Title = "Pregled - osnovna skola 2";
 
             List<OS_Plan_2> planovi = new List<OS_Plan_2>();
             planovi = planovi_os2.ReadOS_Plan_2();
@@ -121,7 +121,7 @@ namespace Planiranje.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(OS_Plan_2 os_plan_1)
+        public ActionResult Delete(OS_Plan_2 os_plan_2)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -211,6 +211,7 @@ namespace Planiranje.Controllers
 
 
 
+        
 
 
 
