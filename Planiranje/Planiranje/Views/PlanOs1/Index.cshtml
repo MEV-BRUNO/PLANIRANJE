@@ -1,8 +1,8 @@
 ﻿@model List<Planiranje.Models.OS_Plan_1>
 
 @{
-	Page.Title = ViewBag.Title;
-    Layout = null;
+    Page.Title = ViewBag.Title;
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 @Html.Raw(TempData["alert"])
