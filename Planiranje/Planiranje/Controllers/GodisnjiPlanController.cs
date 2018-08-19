@@ -82,16 +82,11 @@ namespace Planiranje.Controllers
 				ViewBag.Title = "Novi godišnji plan";
 				return View("NoviPlan", model);
 			}
-            
-            if (godisnji_planovi.CreateGodisnjiPlan(model))
-			{
-				TempData["alert"] = "<script>alert('Novi godišnji plan je spremljen!');</script>";
-			}
 			else
 			{
-				TempData["alert"] = "<script>alert('Novi godišnji plan nije spremljen');</script>";
+				godisnji_planovi.CreateGodisnjiPlan(model);
+				return RedirectToAction("Index");
 			}
-			return RedirectToAction("Index");
         }
 
 		// UREĐIVANJE
@@ -164,7 +159,7 @@ namespace Planiranje.Controllers
 			}
 			else
 			{
-                TempData["alert"] = "<script>alert('Godišnji plan je obrisan!');</script>";
+                //TempData["alert"] = "<script>alert('Godišnji plan je obrisan!');</script>";
 			}
 			return RedirectToAction("Index");
 		}

@@ -1,9 +1,9 @@
 ﻿@model Planiranje.Models.GodisnjiModel
 @{
 	Page.Title = ViewBag.Title;
+	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Raw(TempData["alert"])
 <div class="inner">
 	<div class="panel-body">
 		<div class="pull-left">
@@ -77,7 +77,7 @@
 
 					</table>
 					<div class="modal-footer">
-						<input type="button" class="btn btn-default" value="Odustani" onclick="location.href='@Url.Action("Index", "GodisnjiPlan")'" />
+						<input type="button" class="btn btn-default" value="Zatvori" onclick='reloadPage("@Url.Action("Index", "GodisnjiPlan")")' />
 					</div>
 				</div>
 			</div>

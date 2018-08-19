@@ -105,8 +105,8 @@
 				</span>
 			</a>
 			<ul class="collapse" id="DDLP-nav">
-				<li><a id="godPlan" class="pointer"><i class="icon-angle-right"></i> Godišnji plan </a></li>
-				<li><a id="mjPlan" class="pointer"><i class="icon-angle-right"></i> Mjesečni plan </a></li>
+				<li><a onclick='reloadPage("@Url.Action("Index", "GodisnjiPlan")")' class="pointer"><i class="icon-angle-right"></i> Godišnji plan </a></li>
+				<li><a onclick='reloadPage("@Url.Action("Index", "MjesecniPlan")")' class="pointer"><i class="icon-angle-right"></i> Mjesečni plan </a></li>
 				<li>
 					<a href="#" data-parent="#DDLP-nav" data-toggle="collapse" class="accordion-toggle" data-target="#DDL3-nav">
 						<i class="icon-sitemap"></i>&nbsp; Planovi i program
@@ -122,7 +122,7 @@
 							<a onclick="location.href='@Url.Action("Index", "PlanOs2")'" class="pointer"><i class="icon-angle-right"></i> Plan osnovna škola - 2 </a>
 						</li>
 						<li>
-							<a onclick="location.href='@Url.Action("Index", "PlanSs")'" class="pointer"><i class="icon-angle-right"></i> Srednja škola </a>
+							<a onclick='reloadPage("@Url.Action("Index", "PlanSs")")' class="pointer"><i class="icon-angle-right"></i> Srednja škola </a>
 						</li>
 					</ul>
 				</li>

@@ -2,12 +2,11 @@
 
 @{
 	Page.Title = ViewBag.Title;
+	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 	int i = 0;
 }
 
-
-@Html.Raw(TempData["alert"])
-<div class="inner">
+<div class="inner" id="newPlan">
 	<div class="row">
 		<div class="col-lg-12">
 			<h3> @ViewBag.Title </h3>
@@ -17,12 +16,8 @@
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					@using (Ajax.BeginForm("Edit", "GodisnjiPlan", new AjaxOptions
-	{
-		HttpMethod = "Post",
-		OnSuccess = "CreateSuccess"
-	}, new { @class = "form-horizontal", role = "form" }))
-	{
+					@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "urediGodPlanView", @class = "form-horizontal", role = "form" }))
+					{
 
 
 
@@ -129,10 +124,10 @@
 					</div>
 
 					
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" value="Odustani" onclick="location.href='@Url.Action("Index", "GodisnjiPlan")'" />
-						<input type="submit" class="btn btn-primary" value="Spremi" />
-					</div>
+						<div class="modal-footer">
+							<input type="button" class="btn btn-default" value="Zatvori" onclick='reloadPage("@Url.Action("Index", "GodisnjiPlan")")' />
+							<input type="button" class="btn btn-primary" value="Spremi" onclick='reloadWithData("/GodisnjiPlan/Edit", "#urediGodPlanView", "Plan uspješno promjenjen")' />
+						</div>
 
 					}
 				</div>
@@ -141,71 +136,3 @@
 		</div>
 	</div>
 </div>
-
-<script>
-	var rowDelete;
-	$(document).ready(function () {
-		$("#btnCreateAsset").click(function (e) {
-			var url = $(this).attr("data-url");
-			$.ajax({
-				url: url,
-				success: function (data) {
-					$('#assetContainer').html(data);
-					$('#assetModal').modal('show');
-				},
-				error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
-			});
-		});
-
-		$('#dataTables-example').on("click", "#editAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-
-		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-
-		$('#dataTables-example').on("click", "#detailsAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-	});
-</script>
-
-<script type="text/javascript">
-	function CreateSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function EditSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function DeleteSuccess() {
-		location.reload(true);
-	}
-
-	function DetailsSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-</script>
