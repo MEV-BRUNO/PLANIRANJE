@@ -74,23 +74,21 @@ function hideModal(path, id, message) {
 }
 
 $(document).ready(function () {
-	$(document).on("change", "#godPlanoviChange", (function () {
+	$(document).on("change", "#godPlanoviChange", function () {
 		$.ajax({
 			url: "/MjesecniPlan/Index?Plan=" + $(this).val(),
 			success: function (data) {
 				$("#content").html(data);
 			}
 		});
-	}));
-});
+	});
 
-$(document).ready(function () {
-	$(document).on("change", "#godPlanoviChangeSS", (function () {
+	$(document).on("change", "#godPlanoviChangeSS", function () {
 		$.ajax({
 			url: "/PlanSs/Index?Plan=" + $(this).val(),
 			success: function (data) {
 				$("#content").html(data);
 			}
 		});
-	}));
+	});
 });
