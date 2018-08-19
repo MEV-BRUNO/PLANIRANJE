@@ -242,6 +242,7 @@
     <Compile Include="Models\Dnevnik_rada.cs" />
     <Compile Include="Models\Mjesecni_detalji.cs" />
     <Compile Include="Models\Mjesecni_plan.cs" />
+    <Compile Include="Models\SSModel.cs" />
     <Compile Include="Models\SS_Plan.cs" />
     <Compile Include="Models\SS_Plan_DBHandle.cs" />
     <Compile Include="Models\SS_Plan_podrucje.cs" />
@@ -255,6 +256,7 @@
     <Compile Include="Reports\MjesecniPlanReport.cs" />
     <Compile Include="Reports\PlanOs1Report.cs" />
     <Compile Include="Reports\PlanOs2Report.cs" />
+    <Compile Include="Reports\PlanSsPodrucjaReport.cs" />
     <Compile Include="Reports\PlanSsReport.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +387,11 @@
     <Content Include="Views\PlanOs1\UrediPodrucje.cshtml" />
     <Content Include="Views\PlanOs1\ObrisiPodrucje.cshtml" />
     <Content Include="Views\PlanOs1\NovaAktivnost.cshtml" />
+    <Content Include="Views\PlanSs\Detalji.cshtml" />
+    <Content Include="Views\PlanSs\NoviDetalji.cshtml" />
+    <Content Include="Views\PlanSs\ObrisiNoviDetalj.cshtml" />
+    <Content Include="Views\PlanSs\TableDetails.cshtml" />
+    <Content Include="Views\PlanSs\ObrisiDetalje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

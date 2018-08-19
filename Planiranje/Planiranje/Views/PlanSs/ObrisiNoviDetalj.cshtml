@@ -17,13 +17,13 @@
 			@Html.HiddenFor(model => model.ID_GODINA)
 			<div class="form-group">
 				<div class="col-md-10">
-					<h5>Jeste li sigurni da želite obrisati "@Html.DisplayFor(model => model.SS_Plan.Naziv, new { htmlAttributes = new { @class = "form-control" } })"?</h5>
+					<h5>Jeste li sigurni da želite odustati? Svi podaci će se izgubiti!</h5>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<div class="form-group">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-					<input type="button" class="btn btn-danger" value="Obriši" onclick='hideModal("/PlanSs/Delete", "#obrisiSSPlanModalView", "Plan uspješno obrisan")' />
+					<button type="button" class="btn btn-default" data-dismiss="modal">Prekini</button>
+					<input type="button" class="btn btn-danger" value="U redu" onclick='hideModal("/PlanSs/CancelNewDetails", "#obrisiSSPlanModalView", null)' />
 				</div>
 			</div>
 		</div>

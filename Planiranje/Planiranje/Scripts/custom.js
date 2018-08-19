@@ -62,7 +62,9 @@ function hideModal(path, id, message) {
 				$('#modalContainer').removeData();
 				$('.modal-backdrop').remove();
 				$("#content").html(data);
-				showSnackBar(message);
+				if (message !== null) {
+					showSnackBar(message);
+				}
 			}
 		},
 		error: function (request, status, error) {
@@ -71,24 +73,22 @@ function hideModal(path, id, message) {
 	});
 }
 
-
-function ValidateNumber(e) {
-	var evt = (e) ? e : window.event;
-	var charCode = (evt.keyCode) ? evt.keyCode : evt.which;
-	if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-		return false;
-	}
-	return true;
-};
-
 $(document).ready(function () {
-	$(document).on("change", "#godPlanoviChange", (function () {
+	$(document).on("change", "#godPlanoviChange", function () {
 		$.ajax({
 			url: "/MjesecniPlan/Index?Plan=" + $(this).val(),
 			success: function (data) {
 				$("#content").html(data);
 			}
 		});
-	}));
-	
+	});
+
+	$(document).on("change", "#godPlanoviChangeSS", function () {
+		$.ajax({
+			url: "/PlanSs/Index?Plan=" + $(this).val(),
+			success: function (data) {
+				$("#content").html(data);
+			}
+		});
+	});
 });
