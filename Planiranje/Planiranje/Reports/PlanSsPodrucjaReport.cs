@@ -17,7 +17,7 @@ namespace Planiranje.Reports
 		public PlanSsPodrucjaReport(List<SS_Plan_podrucje> ss_plan_podrucja)
 		{
 			Document pdfDokument = new Document(
-				PageSize.A4, 50, 50, 20, 50);
+				PageSize.A4.Rotate(), 20, 20, 20, 20);
 
 			MemoryStream memStream = new MemoryStream();
 			PdfWriter.GetInstance(pdfDokument, memStream).
@@ -25,36 +25,48 @@ namespace Planiranje.Reports
 			pdfDokument.Open();
 			BaseFont font = BaseFont.CreateFont(BaseFont.HELVETICA,
 				BaseFont.CP1250, false);
-			Font header = new Font(font, 12, Font.NORMAL, BaseColor.DARK_GRAY);
-			Font naslov = new Font(font, 14, Font.BOLDITALIC, BaseColor.BLACK);
-			Font tekst = new Font(font, 10, Font.NORMAL, BaseColor.BLACK);
+			Font header = new Font(font, 11, Font.NORMAL, BaseColor.DARK_GRAY);
+			Font naslov = new Font(font, 13, Font.BOLDITALIC, BaseColor.BLACK);
+			Font tekst = new Font(font, 9, Font.NORMAL, BaseColor.BLACK);
 
 			Paragraph p = new Paragraph("IZVJEŠTAJ", header);
 			pdfDokument.Add(p);
 
-			p = new Paragraph("Plan srednja skola", naslov);
+			p = new Paragraph("Plan srednja škola", naslov);
 			p.Alignment = Element.ALIGN_CENTER;
 			p.SpacingBefore = 30;
 			p.SpacingAfter = 30;
 			pdfDokument.Add(p);
 
-			PdfPTable t = new PdfPTable(4);
+			PdfPTable t = new PdfPTable(10);
 			t.WidthPercentage = 100;
-			t.SetWidths(new float[] { 1, 3, 4, 5 });
+			t.SetWidths(new float[] { 1, 1, 1, 2, 1, 1, 1, 1, 1, 2 });
 
-			t.AddCell(VratiCeliju("R.br.", tekst, true, BaseColor.LIGHT_GRAY));
-			t.AddCell(VratiCeliju("Ak. godina", tekst, false, BaseColor.LIGHT_GRAY));
-			t.AddCell(VratiCeliju("Naziv", tekst, true, BaseColor.LIGHT_GRAY));
-			t.AddCell(VratiCeliju("Opis", tekst, true, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("R.br.", tekst, false, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("Područja rada", tekst, false, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("Svrha/cilj", tekst, false, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("Zadaće", tekst, false, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("Sadržaj", tekst, false, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("Oblici i metode rada", tekst, false, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("Suradnici/subjekti", tekst, false, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("Mjesto ostvarenja", tekst, false, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("Vrijeme/broj sati", tekst, false, BaseColor.LIGHT_GRAY));
+			t.AddCell(VratiCeliju("Ishodi", tekst, false, BaseColor.LIGHT_GRAY));
 
 			int i = 1;
-			/*foreach (SS_Plan plan in ss_plan)
+			foreach (SS_Plan_podrucje plan in ss_plan_podrucja)
 			{
-				t.AddCell(VratiCeliju((i++).ToString(), tekst, true, BaseColor.WHITE));
-				t.AddCell(VratiCeliju(plan.Id_godina.ToString(), tekst, false, BaseColor.WHITE));
-				t.AddCell(VratiCeliju(plan.Naziv, tekst, true, BaseColor.WHITE));
-				t.AddCell(VratiCeliju(plan.Opis, tekst, true, BaseColor.WHITE));
-			}*/
+				t.AddCell(VratiCeliju((i++).ToString(), tekst, false, BaseColor.WHITE));
+				t.AddCell(VratiCeliju(plan.Opis_podrucje.ToString(), tekst, false, BaseColor.WHITE));
+				t.AddCell(VratiCeliju(plan.Svrha, tekst, false, BaseColor.WHITE));
+				t.AddCell(VratiCeliju(plan.Zadaca, tekst, false, BaseColor.WHITE));
+				t.AddCell(VratiCeliju(plan.Sadrzaj, tekst, false, BaseColor.WHITE));
+				t.AddCell(VratiCeliju(plan.Oblici, tekst, false, BaseColor.WHITE));
+				t.AddCell(VratiCeliju(plan.Suradnici, tekst, false, BaseColor.WHITE));
+				t.AddCell(VratiCeliju(plan.Mjesto, tekst, false, BaseColor.WHITE));
+				t.AddCell(VratiCeliju(plan.Sati.ToString(), tekst, false, BaseColor.WHITE));
+				t.AddCell(VratiCeliju(plan.Ishodi, tekst, false, BaseColor.WHITE));
+			}
 
 			pdfDokument.Add(t);
 
