@@ -73,6 +73,42 @@ function hideModal(path, id, message) {
 	});
 }
 
+function appendText(source, destination) {
+	var dropDown = document.getElementById(source);
+	var sourceText = " - " + dropDown.options[dropDown.selectedIndex].text;
+	if (dropDown.options[dropDown.selectedIndex].value != "") {
+		var destinationText = document.getElementById(destination).value;
+		var lines = destinationText.split('\n');
+
+		var LineIndex = lines.indexOf(sourceText);
+		if (LineIndex === -1) {
+			lines.push(sourceText);
+		}
+		if (lines[0] == "") {
+			lines.shift();
+		}
+		var output = lines.join("\n");
+		document.getElementById(destination).value = output;
+	}
+}
+
+function removeText(source, destination) {
+	var dropDown = document.getElementById(source);
+	var sourceText = " - " + dropDown.options[dropDown.selectedIndex].text;
+	var destinationText = document.getElementById(destination).value;
+	var lines = destinationText.split('\n');
+
+	var LineIndex = lines.indexOf(sourceText);
+	if (LineIndex !== -1) {
+		lines.splice(LineIndex, 1);
+	}
+	var output = lines.join("\n");
+	
+	if (dropDown.options[dropDown.selectedIndex].value != "") {
+		document.getElementById(destination).value = output;
+	}
+}
+
 $(document).ready(function () {
 	$(document).on("change", "#godPlanoviChange", function () {
 		$.ajax({
@@ -91,4 +127,5 @@ $(document).ready(function () {
 			}
 		});
 	});
+
 });
