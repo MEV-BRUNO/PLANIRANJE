@@ -112,7 +112,7 @@ CREATE TABLE mjesecni_plan (
 CREATE TABLE godisnji_plan (
   id_god int(11) NOT NULL AUTO_INCREMENT,
   id_pedagog int(11) NOT NULL,
-  ak_godina varchar(25) NOT NULL,
+  ak_godina varchar(25) NOT NULL UNIQUE,
   br_radnih_dana int(11) DEFAULT NULL,
   br_dana_godina_odmor int(11) DEFAULT NULL,
   ukupni_rad_dana int(11) DEFAULT NULL,
@@ -351,4 +351,12 @@ CREATE TABLE ss_plan_podrucje (
   ishodi text,
   sati int(11) NOT NULL,
   PRIMARY KEY (id)
+);
+
+INSERT INTO skola VALUES (
+  1, "Međimursko veleučiliste", "Bana Josipa Jelačića", "Čakovec", "", "", ""
+);
+
+INSERT INTO skola VALUES (
+  2, "Sveučiliste Sjever", "", "Varaždin", "", "", ""
 );
