@@ -4,7 +4,7 @@
 	Page.Title = ViewBag.Title;
 }
 
-<div class="modal-dialog">
+<div class="modal-dialog" style="width:50%; min-width:800px;">
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -17,75 +17,101 @@
 				@Html.HiddenFor(model => model.MjesecniPlan.ID_plan)
 				@Html.HiddenFor(model => model.ID_PLAN)
 				@Html.HiddenFor(model => model.ID_GODINA)
-				@for (int i = 0; i < Model.GodisnjiPlanovi.Count(); i++)
-				{
-					@Html.HiddenFor(model => model.GodisnjiPlanovi[i].Text)
-					@Html.HiddenFor(model => model.GodisnjiPlanovi[i].Value)
-				}
-				@for (int i = 0; i < Model.PodrucjaRada.Count(); i++)
-				{
-					@Html.HiddenFor(model => model.PodrucjaRada[i].Text)
-					@Html.HiddenFor(model => model.PodrucjaRada[i].Value)
-				}
-				@for (int i = 0; i < Model.Subjekti.Count(); i++)
-				{
-					@Html.HiddenFor(model => model.Subjekti[i].Text)
-					@Html.HiddenFor(model => model.Subjekti[i].Value)
-				}
-				@for (int i = 0; i < Model.Aktivnosti.Count(); i++)
-				{
-					@Html.HiddenFor(model => model.Aktivnosti[i].Text)
-					@Html.HiddenFor(model => model.Aktivnosti[i].Value)
-				}
+				<!--PODRUCJA RADA-->
 				<div class="form-group">
-					<div class="col-md-12">
+					<div class="col-lg-12">
 						@Html.LabelFor(model => model.PodrucjaRada)
 					</div>
-					<div class="col-md-7">
-						@Html.TextAreaFor(model => model.mjesecniDetalj.Podrucje, new { @class = "edit-opis-detalji", id = "podRada" })
-						@Html.ValidationMessageFor(model => model.mjesecniDetalj.Podrucje, "", new { @class = "text-danger" })
+					<div class="col-lg-7">
+						<div class="form-group">
+							<div class="col-lg-12">
+								@Html.TextAreaFor(model => model.mjesecniDetalj.Podrucje, new { @class = "edit-text-area", id = "podrucjeRadaText" })
+								@Html.ValidationMessageFor(model => model.mjesecniDetalj.Podrucje, "", new { @class = "text-danger" })
+							</div>
+						</div>
 					</div>
-					<div class="col-md-1">
-						<input type="button" class="btn btn-primary" onclick="PridruziPodrucjeRada()" value="<" />
-					</div>
-					<div class="col-md-4">
-						@Html.DropDownList("PodrucjaRada", Model.PodrucjaRada, new { @class = "form-control", id = "podrucjeDD" })
+					<div class="col-lg-5">
+						<div class="form-group">
+							<div class="col-lg-12">
+								@Html.DropDownList("PodrucjaRada", Model.PodrucjaRada, "---Odaberi---", new { @class = "form-control", id = "podrucjeRadaList" })
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-6">
+								<input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("podrucjeRadaList", "podrucjeRadaText")' value="Dodaj" />
+							</div>
+							<div class="col-lg-6">
+								<input type="button" class="btn btn-danger" style="width:100%;" onclick='removeText("podrucjeRadaList", "podrucjeRadaText")' value="Ukloni" />
+							</div>
+						</div>
 					</div>
 				</div>
+				<!--//PODRUCJA RADA-->
+				<!--AKTIVNOSTI-->
 				<div class="form-group">
-					<div class="col-md-12">
+					<div class="col-lg-12">
 						@Html.LabelFor(model => model.Aktivnosti)
 					</div>
-					<div class="col-md-7">
-						@Html.TextAreaFor(model => model.mjesecniDetalj.Aktivnost, new { @class = "edit-opis-detalji", id = "akt" })
-						@Html.ValidationMessageFor(model => model.mjesecniDetalj.Aktivnost, "", new { @class = "text-danger" })
+					<div class="col-lg-7">
+						<div class="form-group">
+							<div class="col-lg-12">
+								@Html.TextAreaFor(model => model.mjesecniDetalj.Aktivnost, new { @class = "edit-text-area", id = "aktivnostText" })
+								@Html.ValidationMessageFor(model => model.mjesecniDetalj.Aktivnost, "", new { @class = "text-danger" })
+							</div>
+						</div>
 					</div>
-					<div class="col-md-1">
-						<input type="button" class="btn btn-primary" onclick="PridruziAktivnost()" value="<" />
-					</div>
-					<div class="col-md-4">
-						@Html.DropDownListFor(model => model.Aktivnosti, Model.Aktivnosti, new { @class = "form-control", id = "aktivnostDD" })
+					<div class="col-lg-5">
+						<div class="form-group">
+							<div class="col-lg-12">
+								@Html.DropDownList("PodrucjaRada", Model.Aktivnosti, "---Odaberi---", new { @class = "form-control", id = "aktivnostList" })
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-6">
+								<input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("aktivnostList", "aktivnostText")' value="Dodaj" />
+							</div>
+							<div class="col-lg-6">
+								<input type="button" class="btn btn-danger" style="width:100%;" onclick='removeText("aktivnostList", "aktivnostText")' value="Ukloni" />
+							</div>
+						</div>
 					</div>
 				</div>
+				<!--//AKTIVNOSTI-->
+				<!--SUBJEKTI-->
 				<div class="form-group">
-					<div class="col-md-12">
+					<div class="col-lg-12">
 						@Html.LabelFor(model => model.Subjekti)
 					</div>
-					<div class="col-md-7">
-						@Html.TextAreaFor(model => model.mjesecniDetalj.Suradnici, new { @class = "edit-opis-detalji", id = "subj" })
-						@Html.ValidationMessageFor(model => model.mjesecniDetalj.Suradnici, "", new { @class = "text-danger" })
+					<div class="col-lg-7">
+						<div class="form-group">
+							<div class="col-lg-12">
+								@Html.TextAreaFor(model => model.mjesecniDetalj.Suradnici, new { @class = "edit-text-area", id = "suradniciText" })
+								@Html.ValidationMessageFor(model => model.mjesecniDetalj.Suradnici, "", new { @class = "text-danger" })
+							</div>
+						</div>
 					</div>
-					<div class="col-md-1">
-						<input type="button" class="btn btn-primary" onclick="PridruziSubjekt()" value="<" />
-					</div>
-					<div class="col-md-4">
-						@Html.DropDownListFor(model => model.Subjekti, Model.Subjekti, new { @class = "form-control", id = "subjektDD" })
+					<div class="col-lg-5">
+						<div class="form-group">
+							<div class="col-lg-12">
+								@Html.DropDownList("PodrucjaRada", Model.Subjekti, "---Odaberi---", new { @class = "form-control", id = "suradniciList" })
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-6">
+								<input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("suradniciList", "suradniciText")' value="Dodaj" />
+							</div>
+							<div class="col-lg-6">
+								<input type="button" class="btn btn-danger" style="width:100%;" onclick='removeText("suradniciList", "suradniciText")' value="Ukloni" />
+							</div>
+						</div>
 					</div>
 				</div>
+				<!--//SUBJEKTI-->
+				<!--VRIJEME-->
 				<div class="form-group">
 					<div class="col-md-7">
 						@Html.LabelFor(model => model.mjesecniDetalj.Vrijeme)
-						@Html.EditorFor(model => model.mjesecniDetalj.Vrijeme, new { htmlAttributes = new { @class = "form-control ", PlaceHolder = "" } })
+						@Html.EditorFor(model => model.mjesecniDetalj.Vrijeme, "{0:dd-MM-yyyy}", new { htmlAttributes = new { @class = "form-control" } })
 						@Html.ValidationMessageFor(model => model.mjesecniDetalj.Vrijeme, "", new { @class = "text-danger" })
 					</div>
 					<div class="col-md-5">
@@ -94,6 +120,8 @@
 						@Html.ValidationMessageFor(model => model.mjesecniDetalj.Br_sati, "", new { @class = "text-danger" })
 					</div>
 				</div>
+				<!--//VRIJEME-->
+				<!--//BILJESKA-->
 				<div class="form-group">
 					<div class="col-md-12">
 						@Html.LabelFor(model => model.mjesecniDetalj.Biljeska)
@@ -102,7 +130,8 @@
 						@Html.TextAreaFor(model => model.mjesecniDetalj.Biljeska, new { @class = "edit-opis", id = "podRada" })
 						@Html.ValidationMessageFor(model => model.mjesecniDetalj.Biljeska, "", new { @class = "text-danger" })
 					</div>
-				</div>
+				</div>	
+				<!--//BILJESKA-->
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
@@ -111,43 +140,3 @@
 		}
 	</div>
 </div>
-
-<script type="text/javascript">
-	function PridruziPodrucjeRada() {
-		var podrucje = document.getElementById("podrucjeDD");
-		var Text = podrucje.options[podrucje.selectedIndex].text;
-		var podRadaTxt = document.getElementById('podRada');
-		if (podRadaTxt.value.length == 0) {
-			podRadaTxt.value = Text;
-		}
-		else {
-			podRadaTxt.value = podRadaTxt.value + ", " + Text;
-		}
-	};
-</script>
-<script type="text/javascript">
-	function PridruziAktivnost() {
-		var podrucje = document.getElementById("aktivnostDD");
-		var Text = podrucje.options[podrucje.selectedIndex].text;
-		var podRadaTxt = document.getElementById('akt');
-		if (podRadaTxt.value.length == 0) {
-			podRadaTxt.value = Text;
-		}
-		else {
-			podRadaTxt.value = podRadaTxt.value + ", " + Text;
-		}
-	};
-</script>
-<script type="text/javascript">
-	function PridruziSubjekt() {
-		var podrucje = document.getElementById("subjektDD");
-		var Text = podrucje.options[podrucje.selectedIndex].text;
-		var podRadaTxt = document.getElementById('subj');
-		if (podRadaTxt.value.length == 0) {
-			podRadaTxt.value = Text;
-		}
-		else {
-			podRadaTxt.value = podRadaTxt.value + ", " + Text;
-		}
-	};
-</script>
