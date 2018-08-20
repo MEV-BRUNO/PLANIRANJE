@@ -13,60 +13,18 @@ namespace Planiranje.Controllers
     public class PodrucjaDjelovanjaController : Controller
     {
         private Podrucje_rada_DBHandle podrucja_djelovanja = new Podrucje_rada_DBHandle();
-        int Page_No_Master = 1;
-        // GET: PodrucjaDjelovanja
-        public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
+        
+        public ActionResult Index()
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            ViewBag.Title = "Pregled podrucja djelovanja";
-            ViewBag.CurrentSortOrder = Sort;
-            ViewBag.SortingName = String.IsNullOrEmpty(Sort) ? "Naziv" : "";
+            ViewBag.Title = "Pregled područja djelovanja";
 
-            ViewBag.Message = "Grad";
-
-            ViewBag.FilterValue = Search;
-            if (Search != null)
-            {
-                Page_No = 1;
-            }
-            else
-            {
-                Search = Filter;
-            }
-            ViewBag.CurrentPage = 1;
-            if (Page_No != null)
-                ViewBag.CurrentPage = Page_No;
-
-
-            int Size_Of_Page = 10;
-            int No_Of_Page = (Page_No ?? 1);
-            if (Search == null || Search.Length == 0)
-            {
-
-                if (Request.IsAjaxRequest())
-                {
-                    int noP = (int)Page_No_Master;
-                    var Popis2 = podrucja_djelovanja.ReadPodrucjeRada().ToPagedList(No_Of_Page, Size_Of_Page);
-                    return PartialView("_GradView", Popis2);
-                }
-                Page_No_Master = No_Of_Page;
-                var Popis = podrucja_djelovanja.ReadPodrucjeRada().ToPagedList(No_Of_Page, Size_Of_Page);
-                return View(Popis);
-            }
-            else
-            {
-                Page_No_Master = No_Of_Page;
-                var Popis = podrucja_djelovanja.ReadPodrucjeRada(Search).ToPagedList(No_Of_Page, Size_Of_Page);
-                if (Request.IsAjaxRequest())
-                {
-                    return PartialView("_GradView", Popis);
-                }
-
-                return View(Popis);
-            }
+			PodrucjaRadaModel model = new PodrucjaRadaModel();
+			model.podrucjaRada = podrucja_djelovanja.ReadPodrucjeRada();
+			return View("Index", model);
         }
 
         public ActionResult NoviPlan()
@@ -77,10 +35,10 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
-                ViewBag.IsUpdate = false;
-                return View("NoviPlan");
+				Podrucje_rada podrucje = new Podrucje_rada();
+                return PartialView("NoviPlan", podrucje);
             }
-            return View("NoviPlan");
+			return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -90,20 +48,14 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            //Podrucje_rada rad = new Podrucje_rada();
-            //mjesecni_plan.ID_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-            //mjesecni_plan.Ak_godina = _mjesecni_plan.Ak_godina;
-            //mjesecni_plan.Naziv = _mjesecni_plan.Naziv;
-            //mjesecni_plan.Opis = _mjesecni_plan.Opis;
-            if (podrucja_djelovanja.CreatePodrucjeRada(podrucje))
+            if (podrucje.Naziv != null && podrucja_djelovanja.CreatePodrucjeRada(podrucje))
             {
-                TempData["alert"] = "<script>alert('Novo podrucje djelovanja je uspjesno spremljeno!');</script>";
-            }
+				return RedirectToAction("Index");
+			}
             else
             {
-                TempData["alert"] = "<script>alert('Novi podrucje djelovanja nije spremljeno');</script>";
-            }
-            return RedirectToAction("Index");
+				return PartialView("NoviPlan", podrucje);
+			}
         }
 
         public ActionResult Edit(int id)
@@ -129,15 +81,14 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!podrucja_djelovanja.UpdatePodrucjeRada(podrucje))
+            if (podrucje.Naziv != null && podrucja_djelovanja.UpdatePodrucjeRada(podrucje))
             {
-                TempData["alert"] = "<script>alert('Podrucje djelovanja nije promjenjeno!');</script>";
-            }
+				return RedirectToAction("Index");
+			}
             else
             {
-                TempData["alert"] = "<script>alert('Podrucje djelovanja je uspjesno promjenjeno!');</script>";
-            }
-            return RedirectToAction("Index");
+				return PartialView("NoviPlan", podrucje);
+			}
         }
 
         public ActionResult Delete(int id)

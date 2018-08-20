@@ -236,6 +236,7 @@
     <Compile Include="Models\PlaniranjeModel.cs" />
     <Compile Include="Models\Planiranje_DBHandle.cs" />
     <Compile Include="Models\PlanOs1View.cs" />
+    <Compile Include="Models\PodrucjaRadaModel.cs" />
     <Compile Include="Models\Podrucje_rada.cs" />
     <Compile Include="Models\Podrucje_rada_DBHandle.cs" />
     <Compile Include="Models\Skola.cs" />
