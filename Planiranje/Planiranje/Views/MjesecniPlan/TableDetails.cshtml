@@ -18,13 +18,13 @@
 	@foreach (var item in Model.MjesecniDetalji)
 	{
 		<tr>
-			<td>@Html.DisplayFor(modelItem => item.Red_br)</td>
-			<td>@Html.DisplayFor(modelItem => item.Aktivnost)</td>
-			<td>@Html.DisplayFor(modelItem => item.Suradnici)</td>
-			<td>@Html.DisplayFor(modelItem => item.Podrucje)</td>
-			<td>@Html.DisplayFor(modelItem => item.Vrijeme)</td>
-			<td>@Html.DisplayFor(modelItem => item.Br_sati)</td>
-			<td>@Html.DisplayFor(modelItem => item.Biljeska)</td>
+			<td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Red_br)</td>
+			<td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Aktivnost)</td>
+			<td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Suradnici)</td>
+			<td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Podrucje)</td>
+			<td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Vrijeme)</td>
+			<td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Br_sati)</td>
+			<td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Biljeska)</td>
 			<td>
 				<div class="pull-right">
 					<input type="button" class="btn btn-default btn-xs" value="Uredi"	onclick='showModal("@Html.Raw(@Url.Action("UpdateNoviDetalji","MjesecniPlan", new { id = item.ID, id_plan = item.ID_plan, id_god = Model.ID_GODINA }))")' />
