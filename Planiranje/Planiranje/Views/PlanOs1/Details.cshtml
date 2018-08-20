@@ -84,7 +84,7 @@
                                 </p>
                             </div><!--END COL 10-->
                             <div class="col-lg-2">
-                                <button class="btn btn-success btn-sm">ISPIS / PDF DOKUMENT</button>
+                                <button onclick="location.href='@Url.Action("IspisDetalji","PlanOs1",new { id=Model.OsPlan1.Id_plan})'" class="btn btn-success btn-sm">ISPIS / PDF DOKUMENT</button>
                             </div>
                         </div><!--END ROW -->
                     </div>
@@ -146,7 +146,7 @@
                                                                         </td>
                                                                         <td class="col-md-1">
                                                                             <a data-toggle="modal" data-url="@Url.Action("UrediPodrucje", "PlanOs1", new { id = item.Id_plan })" id="editAsset" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                                            <a data-toggle="modal" data-url="@Url.Action("ObrisiPodrucje", "PlanOs1", new { id = item.Id_plan })" id="deleteAsset" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                                                            <a data-toggle="modal" data-url="@Url.Action("ObrisiPodrucje", "PlanOs1", new { id = item.Id_plan, pozicija=brojac })" id="deleteAsset" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                                                         </td>
                                                                     </tr>
                                                                     brojac++;
@@ -199,7 +199,7 @@
 
                                                     </p>
                                                     <div class="table-responsive">
-                                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                        <table class="table table-striped table-bordered table-hover" id="dataTables">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Rb.</th>
@@ -223,8 +223,8 @@
                                                                         <a href="#" onclick="location.href='@Url.Action("AktivnostPomakDolje","PlanOs1", new { id=item.Id_plan, pozicija_podrucja = Model.Pozicija})'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                     </td>
                                                                     <td class="col-md-1">
-                                                                        <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                                        <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+                                                                        <a id="editAktivnost" data-toggle="modal" data-url="@Url.Action("UrediAktivnost","PlanOs1",new { id=item.Id_plan, pozicija=a.ToString()+"."+i.ToString(), pozicija_podrucja=Model.Pozicija})" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                                                        <a id="deleteAktivnost" data-toggle="modal" data-url="@Url.Action("ObrisiAktivnost","PlanOs1", new { id=item.Id_plan, pozicija=Model.Pozicija, broj=a.ToString()+"."+i.ToString()})" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                                                     </td>
                                                                 </tr>
                                                                 }
@@ -243,7 +243,7 @@
                                                     <thead class="thead-light">
                                                         <tr>
                                                             <th class="col-md-1">Rb.</th>
-                                                            <th class="col-md-3">Područje rada/Aktivnosti</th>
+                                                            <th class="col-md-3"><strong>Područje rada</strong>/Aktivnosti</th>
                                                             <th class="col-md-1">Br. sati</th>
                                                             <th class="col-md-7">
                                                                 Vrijeme realizacije<br>
@@ -289,94 +289,109 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        @{ int b = 0;}
+                                                        @foreach (var item in Model.OsPlan1Podrucje)
+                                                        {                                                            
+                                                            b++;
                                                         <tr>
-                                                            <td class="col-md-1">1.</td>
-                                                            <td class="col-md-3"><b>Izvedbeno planiranje i programiranje</b></td>
-                                                            <td class="col-md-1">150</td>
+                                                            <td class="col-md-1">@b</td>
+                                                            <td class="col-md-3"><b>@Model.PodrucjeRada.Single(s=>s.Id_podrucje==item.Opis_Podrucje).Naziv</b></td>
+                                                            <td class="col-md-1">@item.Br_sati</td>
                                                             <td class="col-md-7">
                                                                 <div class="row">
                                                                     <div class="col-md-1">
-                                                                        12
+                                                                        @item.Mj_9
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        34
+                                                                        @item.Mj_10
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        2
+                                                                        @item.Mj_11
                                                                     </div>
                                                                     <div class="col-md-1">
+                                                                        @item.Mj_12
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        3
+                                                                        @item.Mj_1
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        22
+                                                                        @item.Mj_2
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        11
+                                                                        @item.Mj_3
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        9
+                                                                        @item.Mj_4
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        8
+                                                                        @item.Mj_5
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        12
+                                                                        @item.Mj_6
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        10
+                                                                        @item.Mj_7
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        3
+                                                                        @item.Mj_8
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
+                                                                        List<OS_Plan_1_aktivnost> ak = new List<OS_Plan_1_aktivnost>();
+                                                                        ak = Model.OsPlan1Aktivnost.Where(w => w.Id_podrucje == item.Id_plan).ToList();
+                                                                        int c = 0;
+                                                                        foreach (var it in ak)
+                                                                        {
+                                                                            c++;
+
                                                         <tr>
-                                                            <td class="col-md-1">1.1</td>
-                                                            <td class="col-md-3">Aktivnost - Izvedbeno planiranje i programiranje</td>
-                                                            <td class="col-md-1">150</td>
+                                                            <td class="col-md-1">@b.@c</td>
+                                                            <td class="col-md-3">@Model.Aktivnosti.Single(s=>s.Id_aktivnost==it.Opis_aktivnost).Naziv</td>
+                                                            <td class="col-md-1">@it.Br_sati</td>
                                                             <td class="col-md-7">
                                                                 <div class="row">
                                                                     <div class="col-md-1">
-                                                                        12
+                                                                        @it.Mj_9
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        34
+                                                                        @it.Mj_10
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        2
+                                                                        @it.Mj_11
                                                                     </div>
                                                                     <div class="col-md-1">
+                                                                        @it.Mj_12
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        3
+                                                                        @it.Mj_1
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        22
+                                                                        @it.Mj_2
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        11
+                                                                        @it.Mj_3
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        9
+                                                                        @it.Mj_4
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        8
+                                                                        @it.Mj_5
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        12
+                                                                        @it.Mj_6
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        10
+                                                                        @it.Mj_7
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        3
+                                                                        @it.Mj_8
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
+                                                            }
+                                                        }
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -424,6 +439,24 @@
             });
 
             $('#dataTables-example').on("click", "#editAsset", function (event) {
+                event.preventDefault();
+                var url = $(this).attr("data-url");
+                $.get(url, function (data) {
+                    $('#assetContainer').html(data);
+                    $('#assetModal').modal('show');
+                });
+            });
+
+            $('#dataTables').on("click", "#editAktivnost", function (event) {
+                event.preventDefault();
+                var url = $(this).attr("data-url");
+                $.get(url, function (data) {
+                    $('#assetContainer').html(data);
+                    $('#assetModal').modal('show');
+                });
+            });
+
+            $('#dataTables').on("click", "#deleteAktivnost", function (event) {
                 event.preventDefault();
                 var url = $(this).attr("data-url");
                 $.get(url, function (data) {

@@ -19,61 +19,19 @@ namespace Planiranje.Controllers
         private OS_Plan_1_DBHandle planovi_os1 = new OS_Plan_1_DBHandle();
         private Ciljevi_DBHandle ciljevi_db = new Ciljevi_DBHandle();
         private Podrucje_rada_DBHandle podrucje_rada_db = new Podrucje_rada_DBHandle();
-        private Aktivnost_DBHandle aktivnost_db = new Aktivnost_DBHandle();        
-        int Page_No_Master = 1;
-
-        public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
+        private Aktivnost_DBHandle aktivnost_db = new Aktivnost_DBHandle();     
+               
+        public ActionResult Index()
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
             ViewBag.Title = "Pregled - osnovna skola 1";
-            ViewBag.CurrentSortOrder = Sort;
-            ViewBag.SortingName = String.IsNullOrEmpty(Sort) ? "Naziv" : "";
 
-            ViewBag.Message = "Grad";
-
-            ViewBag.FilterValue = Search;
-            if (Search != null)
-            {
-                Page_No = 1;
-            }
-            else
-            {
-                Search = Filter;
-            }
-            ViewBag.CurrentPage = 1;
-            if (Page_No != null)
-                ViewBag.CurrentPage = Page_No;
-
-
-            int Size_Of_Page = 10;
-            int No_Of_Page = (Page_No ?? 1);
-            if (Search == null || Search.Length == 0)
-            {
-
-                if (Request.IsAjaxRequest())
-                {
-                    int noP = (int)Page_No_Master;
-                    var Popis2 = planovi_os1.ReadOS_Plan_1().ToPagedList(No_Of_Page, Size_Of_Page);
-                    return PartialView("_GradView", Popis2);
-                }
-                Page_No_Master = No_Of_Page;
-                var Popis = planovi_os1.ReadOS_Plan_1().ToPagedList(No_Of_Page, Size_Of_Page);
-                return View(Popis);
-            }
-            else
-            {
-                Page_No_Master = No_Of_Page;
-                var Popis = planovi_os1.ReadOS_Plan_1(Search).ToPagedList(No_Of_Page, Size_Of_Page);
-                if (Request.IsAjaxRequest())
-                {
-                    return PartialView("_GradView", Popis);
-                }
-
-                return View(Popis);
-            }
+            List<OS_Plan_1> planovi = new List<OS_Plan_1>();
+            planovi = planovi_os1.ReadOS_Plan_1();
+            return View("Index",planovi);            
         }
 
         public ActionResult NoviPlan()
@@ -451,6 +409,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult UrediPodrucje(PlanOs1View plan)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int _id=0;
             TempData["note"] = "Glavni plan nije pronađen.";
             using (var db = new BazaPodataka())
@@ -477,8 +439,12 @@ namespace Planiranje.Controllers
             return RedirectToAction("Details", new { id = _id });
         }
 
-        public ActionResult ObrisiPodrucje (int id)
+        public ActionResult ObrisiPodrucje (int id, int pozicija)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             OS_Plan_1_podrucje podrucje = new OS_Plan_1_podrucje();
             PlanOs1View plan = new PlanOs1View();
             Ciljevi cilj = new Ciljevi();
@@ -488,6 +454,7 @@ namespace Planiranje.Controllers
             cilj = ciljevi_db.ReadCiljevi(podrucje.Cilj);
             podrucjeRada = podrucje_rada_db.ReadPodrucjeRada(podrucje.Opis_Podrucje);
 
+            plan.Pozicija = pozicija;
             plan.Podrucje = podrucje;
             plan.PodrucjeRada = new List<Podrucje_rada>();
             plan.PodrucjeRada.Add(podrucjeRada);
@@ -500,6 +467,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult ObrisiPodrucje (PlanOs1View plan)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int _id = 0;
             
             using (var db = new BazaPodataka())
@@ -526,6 +497,10 @@ namespace Planiranje.Controllers
 
         public ActionResult NovaAktivnost(int id, int pozicija)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PlanOs1View plan = new PlanOs1View();
             plan.Id = id;
             plan.Pozicija = pozicija;
@@ -543,16 +518,25 @@ namespace Planiranje.Controllers
         }
         [HttpPost]
         public ActionResult NovaAktivnost (PlanOs1View plan)
-        {            
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int i = plan.Id;
             OS_Plan_1_aktivnost ak = new OS_Plan_1_aktivnost();
             ak = plan.Os_Plan_1_Aktivnost;
             ak.Id_podrucje = i;
-
+            //zbrajanje
+            ak.Br_sati = ak.Mj_1 + ak.Mj_10 + ak.Mj_11 + ak.Mj_12 + ak.Mj_2 + ak.Mj_3 + ak.Mj_4 + ak.Mj_5 + ak.Mj_6 + ak.Mj_7 + ak.Mj_8 + ak.Mj_9;
+            //zbrajanje-kraj
             OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
             p = baza.OsPlan1Podrucje.Single(s => s.Id_plan == i);
             int _id = p.Id_glavni_plan;
-
+            //zbrajanje podrucja
+            p.Br_sati += ak.Br_sati; p.Mj_1 += ak.Mj_1;p.Mj_2 += ak.Mj_2;p.Mj_3 += ak.Mj_3;p.Mj_4 += ak.Mj_4;p.Mj_5 += ak.Mj_5;p.Mj_6 += ak.Mj_6;
+            p.Mj_7 += ak.Mj_7;p.Mj_8 += ak.Mj_8;p.Mj_9 += ak.Mj_9;p.Mj_10 += ak.Mj_10;p.Mj_11 += ak.Mj_11;p.Mj_12 += ak.Mj_12;
+            //zbrajanje podrucja-kraj
             int maxValue;
             List<OS_Plan_1_aktivnost> trenutne = new List<OS_Plan_1_aktivnost>();
             trenutne = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == i).ToList();
@@ -567,17 +551,21 @@ namespace Planiranje.Controllers
             }
             ak.Red_broj_aktivnost = maxValue;
             TempData["note"] = "Nova aktivnost je dodana";
+            using (var db = new BazaPodataka())
+            {
                 try
                 {
-                    baza.OsPlan1Aktivnost.Add(ak);
-                    baza.SaveChanges();
+                    db.OsPlan1Aktivnost.Add(ak);
+                    db.OsPlan1Podrucje.Add(p);
+                    db.Entry(p).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
                 }
                 catch
                 {
                     TempData["note"] = "Nova aktivnost nije dodana";
                 }
-            
-            
+
+            }
             TempData["prikaz"] = "1";
             return RedirectToAction("Details2", new { id = _id, pozicija=plan.Pozicija });
         }
@@ -748,6 +736,162 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("Details2", new { id = podrucje.Id_glavni_plan, pozicija = pozicija_podrucja });
+        }
+        public ActionResult UrediAktivnost (int id, string pozicija, int pozicija_podrucja)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            PlanOs1View plan = new PlanOs1View();            
+            OS_Plan_1_aktivnost aktivnost = new OS_Plan_1_aktivnost();
+            aktivnost = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+
+            plan.Pozicija = pozicija_podrucja;
+            plan.Aktivnosti = new List<Aktivnost>();
+            plan.Aktivnosti = aktivnost_db.ReadAktivnost();
+            plan.Os_Plan_1_Aktivnost = aktivnost;
+            plan.Broj = pozicija_podrucja;
+            ViewBag.pozicija = pozicija;
+            return View("UrediAktivnost", plan);
+        }
+        [HttpPost]
+        public ActionResult UrediAktivnost (PlanOs1View plan)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int _id, poz = plan.Pozicija;
+            OS_Plan_1_aktivnost aktivnost = new OS_Plan_1_aktivnost();
+            aktivnost = plan.Os_Plan_1_Aktivnost;
+            int id_ak = aktivnost.Id_plan;
+            int id_pod = aktivnost.Id_podrucje;
+            OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
+            p = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id_pod);
+            _id = p.Id_glavni_plan;
+            //
+            OS_Plan_1_aktivnost akPrije = new OS_Plan_1_aktivnost();
+            akPrije = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id_ak);
+            p.Br_sati -= akPrije.Br_sati;p.Mj_1 -= akPrije.Mj_1;p.Mj_2 -= akPrije.Mj_2;p.Mj_3 -= akPrije.Mj_3;p.Mj_4 -= akPrije.Mj_4;p.Mj_5 -= akPrije.Mj_5;
+            p.Mj_6 -= akPrije.Mj_6;p.Mj_7 -= akPrije.Mj_7;p.Mj_8 -= akPrije.Mj_8;p.Mj_9 -= akPrije.Mj_9;p.Mj_10 -= akPrije.Mj_10;p.Mj_11 -= akPrije.Mj_11;p.Mj_12 -= akPrije.Mj_12;
+            var ak = aktivnost;
+            ak.Br_sati = ak.Mj_1 + ak.Mj_10 + ak.Mj_11 + ak.Mj_12 + ak.Mj_2 + ak.Mj_3 + ak.Mj_4 + ak.Mj_5 + ak.Mj_6 + ak.Mj_7 + ak.Mj_8 + ak.Mj_9;
+
+            p.Br_sati += ak.Br_sati; p.Mj_1 += ak.Mj_1; p.Mj_2 += ak.Mj_2; p.Mj_3 += ak.Mj_3; p.Mj_4 += ak.Mj_4; p.Mj_5 += ak.Mj_5;
+            p.Mj_6 += ak.Mj_6; p.Mj_7 += ak.Mj_7; p.Mj_8 += ak.Mj_8; p.Mj_9 += ak.Mj_9; p.Mj_10 += ak.Mj_10; p.Mj_11 += ak.Mj_11; p.Mj_12 += ak.Mj_12;
+            //
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.OsPlan1Aktivnost.Add(aktivnost);
+                    db.Entry(aktivnost).State = System.Data.Entity.EntityState.Modified;
+                    db.OsPlan1Podrucje.Add(p);
+                    db.Entry(p).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["note"] = "Aktivnost je promijenjena";
+                }
+                catch
+                {
+                    TempData["note"] = "Aktivnost nije promijenjena.Pokušajte ponovno.";
+                }
+            }                
+            return RedirectToAction("Details2", new { id = _id, pozicija = plan.Pozicija });            
+        }
+        public ActionResult ObrisiAktivnost(int id, int pozicija, string broj)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            PlanOs1View plan = new PlanOs1View();
+            plan.Os_Plan_1_Aktivnost = new OS_Plan_1_aktivnost();
+            plan.Os_Plan_1_Aktivnost = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+            int pod = plan.Os_Plan_1_Aktivnost.Id_podrucje;
+            int ak = plan.Os_Plan_1_Aktivnost.Opis_aktivnost;
+            plan.Aktivnosti = new List<Aktivnost>();
+            Aktivnost a = new Aktivnost();
+            a = aktivnost_db.ReadAktivnost(ak);
+            plan.Aktivnosti.Add(a);
+            OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
+            p = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == pod);
+            plan.Id = p.Id_glavni_plan;
+            plan.Pozicija = pozicija;
+            ViewBag.broj = broj;
+            return View("ObrisiAktivnost", plan);
+        }
+        [HttpPost]
+        public ActionResult ObrisiAktivnost (PlanOs1View plan)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int id_akt = plan.Os_Plan_1_Aktivnost.Id_plan;
+            int id_glavni, id_pod;
+            OS_Plan_1_aktivnost a = new OS_Plan_1_aktivnost();
+            a = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id_akt);
+            id_pod = a.Id_podrucje;
+
+            OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
+            p = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id_pod);
+            id_glavni = p.Id_glavni_plan;
+            //
+            p.Br_sati -= a.Br_sati; p.Mj_1 -= a.Mj_1; p.Mj_2 -= a.Mj_2; p.Mj_3 -= a.Mj_3; p.Mj_4 -= a.Mj_4; p.Mj_5 -= a.Mj_5;
+            p.Mj_6 -= a.Mj_6; p.Mj_7 -= a.Mj_7; p.Mj_8 -= a.Mj_8; p.Mj_9 -= a.Mj_9; p.Mj_10 -= a.Mj_10; p.Mj_11 -= a.Mj_11; p.Mj_12 -=a.Mj_12;
+            //
+            using (var db = new BazaPodataka())
+            {
+                var aktivnost = db.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id_akt);
+                if (aktivnost!=null)
+                {                    
+                    try
+                    {
+                        db.OsPlan1Aktivnost.Remove(aktivnost);
+                        db.OsPlan1Podrucje.Add(p);
+                        db.Entry(p).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                        TempData["note"] = "Aktivnost je obrisana";
+                    }
+                    catch
+                    {
+                        TempData["note"] = "Aktivnost nije obrisana";
+                    }
+                }
+            }
+            
+            return RedirectToAction("Details2", "PlanOs1", new { id = id_glavni, pozicija = plan.Pozicija });
+        }
+        public FileStreamResult IspisDetalji(int id)
+        {
+            PlanOs1View plan = new PlanOs1View();
+            plan.Aktivnosti = new List<Aktivnost>();
+            plan.Aktivnosti = aktivnost_db.ReadAktivnost();
+            plan.Ciljevi = new List<Ciljevi>();
+            plan.Ciljevi = ciljevi_db.ReadCiljevi();
+            plan.PodrucjeRada = new List<Podrucje_rada>();
+            plan.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();
+            plan.OsPlan1 = new OS_Plan_1();
+            plan.OsPlan1 = baza.OsPlan1.SingleOrDefault(s => s.Id_plan == id);
+
+            plan.OsPlan1Podrucje = new List<OS_Plan_1_podrucje>();
+            plan.OsPlan1Podrucje = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == id).ToList();
+
+            plan.OsPlan1Aktivnost = new List<OS_Plan_1_aktivnost>();
+            foreach(var item in plan.OsPlan1Podrucje)
+            {
+                List<OS_Plan_1_aktivnost> a = new List<OS_Plan_1_aktivnost>();
+                a = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == item.Id_plan).ToList();
+                foreach(var i in a)
+                {
+                    plan.OsPlan1Aktivnost.Add(i);
+                }
+            }
+
+            PlanOs1DetailsReport report = new PlanOs1DetailsReport(plan);
+
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
         }
     }
 }
