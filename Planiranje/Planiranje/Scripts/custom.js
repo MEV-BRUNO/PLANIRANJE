@@ -76,7 +76,7 @@ function hideModal(path, id, message) {
 function appendText(source, destination) {
 	var dropDown = document.getElementById(source);
 	var sourceText = " - " + dropDown.options[dropDown.selectedIndex].text;
-	if (dropDown.options[dropDown.selectedIndex].value != "") {
+	if (dropDown.options[dropDown.selectedIndex].value !== "") {
 		var destinationText = document.getElementById(destination).value;
 		var lines = destinationText.split('\n');
 
@@ -84,7 +84,7 @@ function appendText(source, destination) {
 		if (LineIndex === -1) {
 			lines.push(sourceText);
 		}
-		if (lines[0] == "") {
+		if (lines[0] === "") {
 			lines.shift();
 		}
 		var output = lines.join("\n");
@@ -104,7 +104,7 @@ function removeText(source, destination) {
 	}
 	var output = lines.join("\n");
 	
-	if (dropDown.options[dropDown.selectedIndex].value != "") {
+	if (dropDown.options[dropDown.selectedIndex].value !== "") {
 		document.getElementById(destination).value = output;
 	}
 }

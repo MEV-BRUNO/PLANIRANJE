@@ -33,8 +33,11 @@
 							@if (Model.SS_Podrucja.Count > 0)
 							{
 							<div class="pull-right">
-								<input type="button" value="Ispiši" 
-									   onclick="location.href='@Url.Action("Ispis", "PlanSs", new { target="_blank", id = Model.ID_PLAN })'" />
+								<a href="@Url.Action("Ispis", "PlanSs", new { target="_blank", id = Model.ID_PLAN })"
+								   target="_blank"
+								   class="btn btn-primary btn-md">
+									Ispiši
+								</a>
 							</div>
 							}
 							<br>
