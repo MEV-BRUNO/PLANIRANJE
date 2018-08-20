@@ -30,6 +30,7 @@ namespace Planiranje.Controllers
 			new KeyValuePair<int, String>(8, "Kolovoz"),
 		};
 
+		// INDEX
         public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
         {
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
@@ -39,7 +40,6 @@ namespace Planiranje.Controllers
             ViewBag.Title = "Pregled godišnjih planova";
 			List<Godisnji_plan> god_planovi = godisnji_planovi.ReadGodisnjePlanove();
 			return View(god_planovi);
-
 		}
 
 		// NOVI PLAN
@@ -76,7 +76,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
 
-			if (model.GodisnjiPlan.Ak_godina == null)
+			if (!godisnji_planovi.CreateGodisnjiPlan(model) || model.GodisnjiPlan.Ak_godina == null)
 			{
 				ViewBag.Mjeseci = mjeseci;
 				ViewBag.Title = "Novi godišnji plan";
@@ -84,7 +84,6 @@ namespace Planiranje.Controllers
 			}
 			else
 			{
-				godisnji_planovi.CreateGodisnjiPlan(model);
 				return RedirectToAction("Index");
 			}
         }
@@ -109,23 +108,16 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-			
-			if (model.GodisnjiPlan.Ak_godina == null)
+			if (model.GodisnjiPlan.Ak_godina == null || !godisnji_planovi.UpdateGodisnjiPlan(model))
 			{
 				ViewBag.Mjeseci = mjeseci;
 				ViewBag.Title = "Uredi godišnji plan " + model.GodisnjiPlan.Ak_godina;
 				return View("Uredi", model);
 			}
-
-			if (!godisnji_planovi.UpdateGodisnjiPlan(model))
-			{
-				TempData["alert"] = "<script>alert('Godišnji plan nije promjenjen!');</script>";
-			}
 			else
 			{
-				TempData["alert"] = "<script>alert('Godišnji plan je uspješno promjenjen!');</script>";
+				return RedirectToAction("Index");
 			}
-			return RedirectToAction("Index");
         }
 
 		// BRISANJE
@@ -142,8 +134,8 @@ namespace Planiranje.Controllers
                 ViewBag.IsUpdate = false;
                 return PartialView("Obrisi", godisnji_plan);
             }
-            return View("Obrisi");
-        }
+			return RedirectToAction("Index");
+		}
 
         [HttpPost]
         public ActionResult Delete(Godisnji_plan godisnji_plan)
@@ -155,13 +147,12 @@ namespace Planiranje.Controllers
             
             if (!godisnji_planovi.DeleteGodisnjiPlan(godisnji_plan.Id_god))
 			{
-				TempData["alert"] = "<script>alert('Godišnji plan nije obrisan!');</script>";
+				return PartialView("Obrisi", godisnji_plan);
 			}
 			else
 			{
-                //TempData["alert"] = "<script>alert('Godišnji plan je obrisan!');</script>";
+				return RedirectToAction("Index");
 			}
-			return RedirectToAction("Index");
 		}
 
 		// DETALJI
