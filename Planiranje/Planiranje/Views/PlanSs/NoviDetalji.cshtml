@@ -36,18 +36,18 @@
 									</div>
 									<div class="form-group">
 										<div class="col-lg-8">
-											@Html.DropDownList("Podrucje", Model.PodrucjaDjelovanja, "---Odaberite---", new { @class = "form-control" })
+											@Html.DropDownList("Podrucje", Model.PodrucjaDjelovanja, "---Odaberite---", new { @class = "form-control", @id = "podrucjaDjelovanjaList" })
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" />
+											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" onclick='appendText("podrucjaDjelovanjaList", "podrucjaDjelovanjaText")' />
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" />
+											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" onclick='removeText("podrucjaDjelovanjaList", "podrucjaDjelovanjaText")' />
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-md-12">
-											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Opis_podrucje, new { @class = "edit-opis", @readonly = true })
+											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Opis_podrucje, new { @class = "edit-opis", @readonly = true, @id = "podrucjaDjelovanjaText" })
 											@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Opis_podrucje, "", new { @class = "text-danger" })
 										</div>
 									</div>
@@ -60,18 +60,18 @@
 									</div>
 									<div class="form-group">
 										<div class="col-md-8">
-											@Html.DropDownList("Ciljevi", Model.Ciljevi, "---Odaberite---", new { @class = "form-control" })
+											@Html.DropDownList("Ciljevi", Model.Ciljevi, "---Odaberite---", new { @class = "form-control", @id = "ciljeviList" })
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" />
+											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" onclick='appendText("ciljeviList", "ciljeviText")' />
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" />
+											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" onclick='removeText("ciljeviList", "ciljeviText")' />
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-md-12">
-											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Svrha, new { @class = "edit-opis", @readonly = true })
+											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Svrha, new { @class = "edit-opis", @readonly = true, @id = "ciljeviText" })
 											@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Svrha, "", new { @class = "text-danger" })
 										</div>
 									</div>
@@ -84,18 +84,18 @@
 									</div>
 									<div class="form-group">
 										<div class="col-md-8">
-											@Html.DropDownList("Zadace", Model.Zadace, "---Odaberite---", new { @class = "form-control" })
+											@Html.DropDownList("Zadace", Model.Zadace, "---Odaberite---", new { @class = "form-control", @id = "zadaceList" })
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" />
+											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" onclick='appendText("zadaceList", "zadaceText")' />
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" />
+											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" onclick='removeText("zadaceList", "zadaceText")' />
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-md-12">
-											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Zadaca, new { @class = "edit-opis", @readonly = true })
+											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Zadaca, new { @class = "edit-opis", @readonly = true, @id = "zadaceText" })
 											@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Zadaca, "", new { @class = "text-danger" })
 										</div>
 									</div>
@@ -108,18 +108,18 @@
 									</div>
 									<div class="form-group">
 										<div class="col-md-8">
-											@Html.DropDownList("Podrucje", Model.PodrucjaDjelovanja, "---Odaberite---", new { @class = "form-control" })
+											@Html.DropDownList("Podrucje", Model.PodrucjaDjelovanja, "---Odaberite---", new { @class = "form-control", @id = "sadrzajList" })
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" />
+											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" onclick='appendText("sadrzajList", "sadrzajText")' />
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" />
+											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" onclick='removeText("sadrzajList", "sadrzajText")' />
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-md-12">
-											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Sadrzaj, new { @class = "edit-opis", @readonly = true })
+											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Sadrzaj, new { @class = "edit-opis", @readonly = true, @id = "sadrzajText" })
 											@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Sadrzaj, "", new { @class = "text-danger" })
 										</div>
 									</div>
@@ -132,18 +132,18 @@
 									</div>
 									<div class="form-group">
 										<div class="col-md-8">
-											@Html.DropDownList("Oblici", Model.Oblici, "---Odaberite---", new { @class = "form-control" })
+											@Html.DropDownList("Oblici", Model.Oblici, "---Odaberite---", new { @class = "form-control", @id = "obliciList" })
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" />
+											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" onclick='appendText("obliciList", "obliciText")' />
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" />
+											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" onclick='removeText("obliciList", "obliciText")' />
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-md-12">
-											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Oblici, new { @class = "edit-opis", @readonly = true })
+											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Oblici, new { @class = "edit-opis", @readonly = true, @id = "obliciText" })
 											@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Oblici, "", new { @class = "text-danger" })
 										</div>
 									</div>
@@ -156,18 +156,18 @@
 									</div>
 									<div class="form-group">
 										<div class="col-md-8">
-											@Html.DropDownList("Suradnici", Model.Suradnici, "---Odaberite---", new { @class = "form-control" })
+											@Html.DropDownList("Suradnici", Model.Suradnici, "---Odaberite---", new { @class = "form-control", @id = "suradniciList" })
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" />
+											<input type="button" class="btn btn-primary" style="width: 100%" value="Dodaj" onclick='appendText("suradniciList", "suradniciText")' />
 										</div>
 										<div class="col-md-2">
-											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" />
+											<input type="button" class="btn btn-danger" style="width: 100%" value="Ukloni" onclick='removeText("suradniciList", "suradniciText")' />
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-md-12">
-											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Suradnici, new { @class = "edit-opis", @readonly = true })
+											@Html.TextAreaFor(model => model.SS_Plan_Podrucje.Suradnici, new { @class = "edit-opis", @readonly = true, @id = "suradniciText" })
 											@Html.ValidationMessageFor(model => model.SS_Plan_Podrucje.Suradnici, "", new { @class = "text-danger" })
 										</div>
 									</div>
