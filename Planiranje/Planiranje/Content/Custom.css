@@ -55,6 +55,21 @@
 	margin: 0;
 }
 
+.edit-text-area {
+	min-width: 100%;
+	max-width: 100%;
+	width: 100%;
+	min-height: 84px;
+	height: 84px;
+	max-height: 84px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: lightgray;
+	border-radius: 5px;
+	padding: 5px;
+	margin: 0;
+}
+
 /*SNACK-BAR*/
 #snackbar {
 	visibility: hidden;
