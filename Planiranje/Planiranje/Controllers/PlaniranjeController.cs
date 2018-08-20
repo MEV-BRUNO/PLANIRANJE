@@ -43,7 +43,7 @@ namespace Planiranje.Controllers
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId > 0)
 			{
-				ViewBag.Title = "Pocetna";
+				ViewBag.Title = "Početna";
 				return View();
 			}
 			return RedirectToAction("Prijava", "Planiranje");
