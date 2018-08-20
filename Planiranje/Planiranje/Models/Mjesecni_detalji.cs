@@ -27,6 +27,7 @@ namespace Planiranje.Models
 		[Required(ErrorMessage = "Datum mora biti veći od trenutnog.")]
 		[DataType(DataType.Date)]
 		[DisplayName("Vrijeme izvršenja")]
+		[DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
 		public DateTime Vrijeme { get; set; }
 		[Required(ErrorMessage = "Obavezno polje.")]
 		[DisplayName("Vrijeme rada")]
