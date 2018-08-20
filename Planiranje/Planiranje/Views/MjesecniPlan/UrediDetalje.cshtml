@@ -26,7 +26,7 @@
 					<div class="col-lg-7">
 						<div class="form-group">
 							<div class="col-lg-12">
-								@Html.TextAreaFor(model => model.mjesecniDetalj.Podrucje, new { @class = "edit-text-area", id = "podrucjeRadaText" })
+								@Html.TextAreaFor(model => model.mjesecniDetalj.Podrucje, new { @class = "edit-text-area", id = "podrucjeRadaText", @readOnly = "false" })
 								@Html.ValidationMessageFor(model => model.mjesecniDetalj.Podrucje, "", new { @class = "text-danger" })
 							</div>
 						</div>
@@ -56,7 +56,7 @@
 					<div class="col-lg-7">
 						<div class="form-group">
 							<div class="col-lg-12">
-								@Html.TextAreaFor(model => model.mjesecniDetalj.Aktivnost, new { @class = "edit-text-area", id = "aktivnostText" })
+								@Html.TextAreaFor(model => model.mjesecniDetalj.Aktivnost, new { @class = "edit-text-area", id = "aktivnostText", @readOnly = "false" })
 								@Html.ValidationMessageFor(model => model.mjesecniDetalj.Aktivnost, "", new { @class = "text-danger" })
 							</div>
 						</div>
@@ -86,7 +86,7 @@
 					<div class="col-lg-7">
 						<div class="form-group">
 							<div class="col-lg-12">
-								@Html.TextAreaFor(model => model.mjesecniDetalj.Suradnici, new { @class = "edit-text-area", id = "suradniciText" })
+								@Html.TextAreaFor(model => model.mjesecniDetalj.Suradnici, new { @class = "edit-text-area", id = "suradniciText", @readOnly = "false" })
 								@Html.ValidationMessageFor(model => model.mjesecniDetalj.Suradnici, "", new { @class = "text-danger" })
 							</div>
 						</div>
