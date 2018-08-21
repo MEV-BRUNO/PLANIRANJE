@@ -3,13 +3,14 @@
 @{
     Layout = null;
 }
+
 <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Brisanje podatka</h4>
-        </div>
-        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiZadatakView", @class = "form-horizontal", role = "form" }))
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="modal-title">Brisanje podatka</h4>
+		</div>
+		@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiZadatakView", @class = "form-horizontal", role = "form" }))
         {
             <div class="modal-body">
             @Html.HiddenFor(model => model.zadatak.ID_zadatak)

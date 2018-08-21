@@ -8,13 +8,13 @@
 <div class="inner">
 	<div class="row">
 		<div class="col-lg-12">
-			<h3> @ViewBag.Title </h3>
+			<h3>@ViewBag.Title</h3>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-body">
+				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-2">
 							<div class="pull-left">
@@ -22,7 +22,8 @@
 							</div>
 						</div>
 					</div>
-					<br>
+				</div>
+				<div class="panel-body">
 					@if (Model.Count > 0)
 					{
 						@Html.Partial("Table", Model)
@@ -39,6 +40,6 @@
 
 <script>
 	$(document).ready(function () {
-		$('#dataTables-example').dataTable();
+		$('#dataTable').dataTable();
 	});
 </script>

@@ -1,42 +1,28 @@
 ﻿@model Planiranje.Models.AkcijeModel
-
+		
 <table class="table table-bordered table-hover" id="dataTable">
-    <thead>
+	<thead>
 		<tr>
-			<td class="col-lg-1">
-				#
-			</td>
-			<td class="col-lg-5">
-				Naziv
-			</td>
-			<td class="col-lg-5">
-				Akcija
-			</td>
-			<td class="col-lg-1">
-				Akcija
-			</td>
+			<td class="col-lg-1">#</td>
+			<td class="col-lg-5">Naziv</td>
+			<td class="col-lg-5">Aktivnost</td>
+			<td class="col-lg-1">Akcija</td>
 		</tr>
 	</thead>
 	<tbody>
 		@foreach (var item in Model.akcije)
 		{
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.Id_akcija)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Naziv_Akcija)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Naziv_Aktivnost)
-			</td>
-			<td>
-				<div class="pull-right">
-					<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("Edit","Akcije",new { id = item.Id_akcija})")' />
-					<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete","Akcije",new { id = item.Id_akcija})")' />
-				</div>
-			</td>
-		</tr>
-        }
-    </tbody>
-</table> 
+			<tr>
+				<td>@Html.DisplayFor(modelItem => item.Id_akcija)</td>
+				<td>@Html.DisplayFor(modelItem => item.Naziv_Akcija)</td>
+				<td>@Html.DisplayFor(modelItem => item.Naziv_Aktivnost)</td>
+				<td>
+					<div class="pull-right">
+						<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("Edit","Akcije",new { id = item.Id_akcija})")' />
+						<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete","Akcije",new { id = item.Id_akcija})")' />
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
