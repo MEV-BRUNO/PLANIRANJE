@@ -1,13 +1,13 @@
-﻿@model PagedList.IPagedList<Planiranje.Models.Oblici>
+﻿@model Planiranje.Models.ObliciMetodeModel
 
-<table class="table table-bordered table-hover" id="dataTables-example">
+<table class="table table-bordered table-hover" id="dataTable">
     <thead>
         <tr>
             <td class="col-lg-1">
-                @Html.ActionLink("Id", "Index", "ObliciMetode", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                #
             </td>
             <td class="col-lg-9">
-                @Html.ActionLink("Naziv", "Index", "ObliciMetode", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                Naziv
             </td>            
             <td class="col-lg-2">
                 Akcija
@@ -16,7 +16,7 @@
     </thead>
     <tbody>
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.oblici)
         {
             <tr>
                 <td>
@@ -27,10 +27,10 @@
                 </td>
                 
                 <td>
-                    <div class="pull-right">
-                        <a data-toggle="modal" data-url="@Url.Action("Edit","ObliciMetode",new { id = item.Id_oblici })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
-                        <a data-toggle="modal" data-url="@Url.Action("Delete","ObliciMetode",new { id = item.Id_oblici })" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
-                    </div>
+					<div class="pull-right">
+						<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("Edit","ObliciMetode",new { id = item.Id_oblici })")' />
+						<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete","ObliciMetode",new { id = item.Id_oblici })")' />
+					</div>
                 </td>
             </tr>
         }

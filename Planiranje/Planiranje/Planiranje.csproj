@@ -219,6 +219,7 @@
     <Compile Include="Models\MjesecniModel.cs" />
     <Compile Include="Models\Mjesecni_plan_DBHandle.cs" />
     <Compile Include="Models\Oblici.cs" />
+    <Compile Include="Models\ObliciMetodeModel.cs" />
     <Compile Include="Models\Oblici_DBHandle.cs" />
     <Compile Include="Models\OS_Plan_1_akcija.cs" />
     <Compile Include="Models\OS_Plan_1_aktivnost.cs" />
