@@ -73,20 +73,6 @@
 		<div id="snackbar"></div>
 	</div>
 	@Html.Partial("../Shared/Footer")
-
-	<script>
-        $(document).ready(function () {
-            $("#osPlan").on("click", function () {
-                $.ajax({
-                    url: "@Url.Action("Index","PlanOs1")"
-
-                })
-                    .done(function (data) {
-                        $("#content").html(data);
-                    });
-            });
-		});
-	</script>
 	<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
 	<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
 	<script src="~/Scripts/custom.js"></script>
