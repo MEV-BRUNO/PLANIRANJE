@@ -359,5 +359,103 @@ namespace Planiranje.Controllers
 			}
 			return RedirectToAction("Detalji", new { id = model.ID_PLAN, id_god = model.ID_GODINA });
 		}
+
+
+		public ActionResult EditDetails(int id, int id_plan, int id_god)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+			SSModel model = new SSModel();
+			model.PodrucjaDjelovanja = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv,
+				Value = i.Id_podrucje.ToString()
+			}));
+			model.Zadace = new List<SelectListItem>(zadaci.ReadZadaci().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv,
+				Value = i.ID_zadatak.ToString()
+			}));
+			model.Oblici = new List<SelectListItem>(oblici.ReadOblici().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv,
+				Value = i.Id_oblici.ToString()
+			}));
+
+			model.Suradnici = new List<SelectListItem>(subjekti.ReadSubjekti().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv,
+				Value = i.ID_subjekt.ToString()
+			}));
+
+			model.Ciljevi = new List<SelectListItem>(ciljevi.ReadCiljevi().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv,
+				Value = i.ID_cilj.ToString()
+			}));
+
+			model.ID_GODINA = id_god;
+			model.ID_PLAN = id;
+
+			model.SS_Plan_Podrucje = planovi_ss.ReadSsPodrucje(id);
+
+			return PartialView("UrediDetalje", model);
+		}
+		[HttpPost]
+		public ActionResult EditDetails(SSModel model)
+		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
+
+			if (model.SS_Plan_Podrucje.Ishodi == null ||
+				model.SS_Plan_Podrucje.Mjesto == null ||
+				model.SS_Plan_Podrucje.Oblici == null ||
+				model.SS_Plan_Podrucje.Opis_podrucje == null ||
+				model.SS_Plan_Podrucje.Sadrzaj == null ||
+				model.SS_Plan_Podrucje.Sati < 1 ||
+				model.SS_Plan_Podrucje.Suradnici == null ||
+				model.SS_Plan_Podrucje.Svrha == null ||
+				model.SS_Plan_Podrucje.Vrijeme <= DateTime.Now ||
+				model.SS_Plan_Podrucje.Zadaca == null ||
+				!planovi_ss.UpdateSSPlanPodrucje(model.SS_Plan_Podrucje))
+			{
+				model.PodrucjaDjelovanja = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
+				{
+					Text = i.Naziv,
+					Value = i.Id_podrucje.ToString()
+				}));
+				model.Zadace = new List<SelectListItem>(zadaci.ReadZadaci().Select(i => new SelectListItem()
+				{
+					Text = i.Naziv,
+					Value = i.ID_zadatak.ToString()
+				}));
+				model.Oblici = new List<SelectListItem>(oblici.ReadOblici().Select(i => new SelectListItem()
+				{
+					Text = i.Naziv,
+					Value = i.Id_oblici.ToString()
+				}));
+
+				model.Suradnici = new List<SelectListItem>(subjekti.ReadSubjekti().Select(i => new SelectListItem()
+				{
+					Text = i.Naziv,
+					Value = i.ID_subjekt.ToString()
+				}));
+
+				model.Ciljevi = new List<SelectListItem>(ciljevi.ReadCiljevi().Select(i => new SelectListItem()
+				{
+					Text = i.Naziv,
+					Value = i.ID_cilj.ToString()
+				}));
+				return PartialView("UrediDetalje", model);
+			}
+			else
+			{
+				return RedirectToAction("Detalji", new { id = model.ID_PLAN, id_god = model.ID_GODINA });
+			}
+		}
 	}
 }

@@ -389,6 +389,60 @@ namespace Planiranje.Models
 			}
 			return true;
 		}
+
+		public bool UpdateSSPlanPodrucje(SS_Plan_podrucje SS_Plan_Podrucje)
+		{
+			try
+			{
+				this.Connect();
+				using (MySqlCommand command = new MySqlCommand())
+				{
+					command.Connection = connection;
+					command.CommandText = "UPDATE ss_plan_podrucje " +
+						"SET " +
+						"id = @id, " +
+						"id_plan = @id_plan, " +
+						"opis_podrucje = @opis_podrucje, " +
+						"svrha = @svrha, " +
+						"zadaca = @zadaca, " +
+						"sadrzaj = @sadrzaj, " +
+						"oblici = @oblici, " +
+						"suradnici = @suradnici, " +
+						"mjesto = @mjesto, " +
+						"vrijeme = @vrijeme, " +
+						"ishodi = @ishodi, " +
+						"sati = @sati " +
+						"WHERE id = @id AND id_plan = @id_plan";
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@id", SS_Plan_Podrucje.Id);
+					command.Parameters.AddWithValue("@id_plan", SS_Plan_Podrucje.ID_plan);
+					command.Parameters.AddWithValue("@opis_podrucje", SS_Plan_Podrucje.Opis_podrucje);
+					command.Parameters.AddWithValue("@svrha", SS_Plan_Podrucje.Svrha);
+					command.Parameters.AddWithValue("@zadaca", SS_Plan_Podrucje.Zadaca);
+					command.Parameters.AddWithValue("@sadrzaj", SS_Plan_Podrucje.Sadrzaj);
+					command.Parameters.AddWithValue("@oblici", SS_Plan_Podrucje.Oblici);
+					command.Parameters.AddWithValue("@suradnici", SS_Plan_Podrucje.Suradnici);
+					command.Parameters.AddWithValue("@mjesto", SS_Plan_Podrucje.Mjesto);
+					command.Parameters.AddWithValue("@vrijeme", SS_Plan_Podrucje.Vrijeme);
+					command.Parameters.AddWithValue("@ishodi", SS_Plan_Podrucje.Ishodi);
+					command.Parameters.AddWithValue("@sati", SS_Plan_Podrucje.Sati);
+
+
+					connection.Open();
+					command.ExecuteNonQuery();
+				}
+			}
+			catch
+			{
+				connection.Close();
+				return false;
+			}
+			finally
+			{
+				connection.Close();
+			}
+			return true;
+		}
 	}
 }
 
