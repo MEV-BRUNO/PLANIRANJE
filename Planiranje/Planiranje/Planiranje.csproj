@@ -209,14 +209,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AkcijeModel.cs" />
+    <Compile Include="Models\AktivnostiModel.cs" />
     <Compile Include="Models\Aktivnost_akcija_DBHandle.cs" />
     <Compile Include="Models\Aktivnost_DBHandle.cs" />
     <Compile Include="Models\Akt_Akc.cs" />
+    <Compile Include="Models\CIljeviModel.cs" />
     <Compile Include="Models\Ciljevi_DBHandle.cs" />
     <Compile Include="Models\Godisnji_plan_DBHandle.cs" />
     <Compile Include="Models\MjesecniModel.cs" />
     <Compile Include="Models\Mjesecni_plan_DBHandle.cs" />
     <Compile Include="Models\Oblici.cs" />
+    <Compile Include="Models\ObliciMetodeModel.cs" />
     <Compile Include="Models\Oblici_DBHandle.cs" />
     <Compile Include="Models\OS_Plan_1_akcija.cs" />
     <Compile Include="Models\OS_Plan_1_aktivnost.cs" />
@@ -236,6 +240,7 @@
     <Compile Include="Models\PlaniranjeModel.cs" />
     <Compile Include="Models\Planiranje_DBHandle.cs" />
     <Compile Include="Models\PlanOs1View.cs" />
+    <Compile Include="Models\PodrucjaRadaModel.cs" />
     <Compile Include="Models\Podrucje_rada.cs" />
     <Compile Include="Models\Podrucje_rada_DBHandle.cs" />
     <Compile Include="Models\Skola.cs" />
@@ -249,9 +254,11 @@
     <Compile Include="Models\SS_Plan_DBHandle.cs" />
     <Compile Include="Models\SS_Plan_podrucje.cs" />
     <Compile Include="Models\Subjekti.cs" />
+    <Compile Include="Models\SubjektiModel.cs" />
     <Compile Include="Models\Subjekt_DBHandle.cs" />
     <Compile Include="Models\GodisnjiModel.cs" />
     <Compile Include="Models\Zadaci.cs" />
+    <Compile Include="Models\ZadaciModel.cs" />
     <Compile Include="Models\Zadaci_DBHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\GodisnjiReport.cs" />

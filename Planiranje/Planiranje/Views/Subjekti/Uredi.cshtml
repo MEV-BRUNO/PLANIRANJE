@@ -1,4 +1,4 @@
-﻿@model Planiranje.Models.Subjekti
+﻿@model Planiranje.Models.SubjektiModel
 
 @{
     Layout = null;
@@ -9,27 +9,23 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Uređivanje podataka</h4>
         </div>
-        @using (Ajax.BeginForm("Edit", "Subjekti", new AjaxOptions
-        {
-            HttpMethod = "Post",
-            OnSuccess = "EditSuccess"
-        }, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "urediSubjektView", @class = "form-horizontal", role = "form" }))
         {
             <div class="modal-body">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.ID_subjekt)
+                @Html.HiddenFor(model => model.subjekt.ID_subjekt)
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.subjekt.Naziv, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.subjekt.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.subjekt.Naziv, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="form-group">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                        <input type="submit" class="btn btn-primary" value="Promijeni" />
-                    </div>
+					<div class="form-group">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+						<input type="button" class="btn btn-primary" value="Promijeni" onclick='hideModal("/Subjekti/Edit", "#urediSubjektView", "Subjekt je uspješno promjenjen!")' />
+					</div>
                 </div>
             </div>
         }
