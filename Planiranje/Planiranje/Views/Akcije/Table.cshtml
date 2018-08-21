@@ -1,16 +1,16 @@
-﻿@model PagedList.IPagedList<Planiranje.Models.Akt_Akc>
+﻿@model Planiranje.Models.AkcijeModel
 
-<table class="table table-bordered table-hover" id="dataTables-example">
+<table class="table table-bordered table-hover" id="dataTable">
     <thead>
 		<tr>
 			<td class="col-lg-1">
-				@Html.ActionLink("Id", "Index", "Akcije", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				#
 			</td>
 			<td class="col-lg-5">
-				@Html.ActionLink("Naziv", "Index", "Akcija", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				Naziv
 			</td>
 			<td class="col-lg-5">
-				@Html.ActionLink("Akcija", "Index", "Akcija", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+				Akcija
 			</td>
 			<td class="col-lg-1">
 				Akcija
@@ -18,7 +18,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var item in Model)
+		@foreach (var item in Model.akcije)
 		{
 		<tr>
 			<td>
@@ -32,8 +32,8 @@
 			</td>
 			<td>
 				<div class="pull-right">
-					<a data-toggle="modal" data-url="@Url.Action("Edit","Akcije",new { id = item.Id_akcija})" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
-					<a data-toggle="modal" data-url="@Url.Action("Delete","Akcije",new { id = item.Id_akcija})" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
+					<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("Edit","Akcije",new { id = item.Id_akcija})")' />
+					<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete","Akcije",new { id = item.Id_akcija})")' />
 				</div>
 			</td>
 		</tr>
