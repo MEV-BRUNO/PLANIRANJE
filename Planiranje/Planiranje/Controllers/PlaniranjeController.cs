@@ -23,7 +23,7 @@ namespace Planiranje.Controllers
 		{
 			PlaniranjeSession.Trenutni.PedagogId = 0;
 			ViewBag.Title = "Prijava";
-			return View();
+			return View("Prijava");
 		}
 
 		[HttpPost]
@@ -47,7 +47,7 @@ namespace Planiranje.Controllers
 			if (PlaniranjeSession.Trenutni.PedagogId > 0)
 			{
 				ViewBag.Title = "Početna";
-				return View();
+				return View("Index");
 			}
 			return RedirectToAction("Prijava", "Planiranje");
 		}
