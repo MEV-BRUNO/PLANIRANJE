@@ -73,7 +73,7 @@
 		<div id="snackbar"></div>
 	</div>
 	@Html.Partial("../Shared/Footer")
-    
+
 	<script>
         $(document).ready(function () {
             $("#osPlan").on("click", function () {
@@ -85,27 +85,6 @@
                         $("#content").html(data);
                     });
             });
-
-			$("#mjPlan").on("click", function () {
-				$.ajax({
-					url: "/MjesecniPlan/Index",
-					type: "GET",
-					data: { id: 1 }
-				})
-					.done(function (data) {
-						$("#content").html(data);
-					});
-			});
-			$("#godPlan").on("click", function () {
-				$.ajax({
-					url: "/GodisnjiPlan/Index",
-					type: "GET",
-					data: { id: 1 }
-				})
-					.done(function (data) {
-						$("#content").html(data);
-					});
-			});
 			$(document).on("change", "#godPlanoviChange", (function () {
 				$.ajax({
 					url: "/MjesecniPlan/Index?Plan=" + $(this).val(),
