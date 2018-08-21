@@ -23,6 +23,7 @@ namespace Planiranje.Models
 
         public List<Zadaci> ReadZadaci()
         {
+			int counter = 0;
             List<Zadaci> zadaci = new List<Zadaci>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
@@ -39,8 +40,9 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                           Zadaci zad = new Zadaci()
-                            {
+							Zadaci zad = new Zadaci()
+							{
+								Red_br = ++counter,
                                 ID_zadatak = Convert.ToInt32(sdr["id_zadatak"]),
                                 Naziv = sdr["naziv"].ToString()
                             };

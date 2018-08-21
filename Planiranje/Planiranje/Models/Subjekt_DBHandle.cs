@@ -22,6 +22,7 @@ namespace Planiranje.Models
 
         public List<Subjekti> ReadSubjekti()
         {
+			int counter = 0;
             List<Subjekti> subjekti = new List<Subjekti>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
@@ -40,6 +41,7 @@ namespace Planiranje.Models
                         {
                             Subjekti subj = new Subjekti()
                             {
+								Red_br = ++counter,
                                 ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
                                 Naziv = sdr["naziv"].ToString()
                             };

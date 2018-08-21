@@ -1,4 +1,4 @@
-﻿@model Planiranje.Models.Aktivnost
+﻿@model Planiranje.Models.AktivnostiModel
 
 @{
     Layout = null;
@@ -10,26 +10,22 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Nova aktivnost</h4>
         </div>
-        @using (Ajax.BeginForm("NovaAktivnost", "Aktivnosti", new AjaxOptions
-        {
-            HttpMethod = "Post",
-            OnSuccess = "CreateSuccess"
-        }, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "novaAktivnostView", @class = "form-horizontal", role = "form" }))
         {
             <div class="modal-body">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.Id_aktivnost, new { Value = 0 })
+                @Html.HiddenFor(model => model.aktivnost.Id_aktivnost, new { Value = 0 })
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.aktivnost.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.aktivnost.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.aktivnost.Naziv, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                    <input type="submit" class="btn btn-primary" value="Spremi" />
-                </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+					<input type="button" class="btn btn-primary" value="Spremi" onclick='hideModal("/Aktivnosti/NovaAktivnost", "#novaAktivnostView", "Nova aktivnost je uspješno spremljena")' />
+				</div>
             </div>
         }
     </div>

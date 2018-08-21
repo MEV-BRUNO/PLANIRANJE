@@ -7,11 +7,14 @@ using System.Web.Security;
 using System.Runtime.Remoting.Messaging;
 using System.Net.Mail;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace Planiranje.Controllers
 {
+
 	public class PlaniranjeController : Controller
-    {
+	{
+		private Planiranje_DBHandle planovi = new Planiranje_DBHandle();
 		private BazaPodataka baza = new BazaPodataka();
         
 
@@ -43,7 +46,7 @@ namespace Planiranje.Controllers
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId > 0)
 			{
-				ViewBag.Title = "Pocetna";
+				ViewBag.Title = "Početna";
 				return View();
 			}
 			return RedirectToAction("Prijava", "Planiranje");
@@ -104,29 +107,62 @@ namespace Planiranje.Controllers
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId == 0)
 			{
+                ViewBag.poruka = null;
 				ViewBag.Title = "Registracija";
-				return View();
+                ViewBag.lozinka = "";
+				PlaniranjeModel model = new PlaniranjeModel();
+				model.Pedagog = new Pedagog();
+				model.PopisSkola = new List<SelectListItem>(planovi.ReadSkole().Select(i => new SelectListItem()
+				{
+					Text = i.Naziv,
+					Value = i.Id_skola.ToString()
+				}));
+				return View("Registracija", model);
 			}
 			return RedirectToAction("Prijava", "Planiranje");
 		}
 
         [HttpPost]
-        public ActionResult Registracija(Pedagog p)
+        public ActionResult Registracija(PlaniranjeModel model)
         {
-            Pedagog ped = baza.Pedagog.SingleOrDefault(pedagog => pedagog.Email == p.Email);
+			Pedagog ped = baza.Pedagog.SingleOrDefault(pedagog => pedagog.Email == model.Pedagog.Email);
             if (ped != null)
             {
-                return RedirectToAction("Registracija");
+                ViewBag.Message = "Korisnik s tom e-mail adresom postoji. Ako ste već registrirani, možete ponovno postaviti lozinku!";
+				model.PopisSkola = new List<SelectListItem>(planovi.ReadSkole().Select(i => new SelectListItem()
+				{
+					Text = i.Naziv,
+					Value = i.Id_skola.ToString()
+				}));
+				return View("Registracija", model);
             }
-            p.Titula = "student";
-            p.Id_skola = 1;
-            p.Licenca = new DateTime(2020, 6, 14, 14, 55, 10);
-            p.Aktivan = '1';
+			
+            model.Pedagog.Id_skola = model.SelectedSchool;
+			model.Pedagog.Licenca = DateTime.Now.AddYears(2);
+			model.Pedagog.Aktivan = '1';
 
-            baza.Pedagog.Add(p);
-            baza.SaveChanges();
-            
-            return RedirectToAction("Prijava");
+            try
+            {
+                baza.Pedagog.Add(model.Pedagog);
+                baza.SaveChanges();
+            }
+            catch
+            {
+				ViewBag.Message = "Registracija nije uspjela. Pokušajte ponovno";
+				model.PopisSkola = new List<SelectListItem>(planovi.ReadSkole().Select(i => new SelectListItem()
+				{
+					Text = i.Naziv,
+					Value = i.Id_skola.ToString()
+				}));
+				return View("Registracija", model);
+            }
+            ViewBag.Message = "Registracija je uspješna. Možete se prijaviti";
+			model.PopisSkola = new List<SelectListItem>(planovi.ReadSkole().Select(i => new SelectListItem()
+			{
+				Text = i.Naziv,
+				Value = i.Id_skola.ToString()
+			}));
+			return View("Registracija", model);
         }
     }
 }

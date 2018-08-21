@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -8,14 +9,17 @@ namespace Planiranje.Models
 {
     public class OS_Plan_1_podrucje
     {
+        [Key]
         [Required]
         public int Id_plan { get; set; }
         [Required]
+        public int Id_glavni_plan { get; set; }
+        [Required]
         public int Red_br_podrucje { get; set; }
         [Required]
-        public string Opis_Podrucje { get; set; }
+        public int Opis_Podrucje { get; set; }
         [Required]
-        public int Potrebno_sati { get; set; }
+        public string Potrebno_sati { get; set; }
         [Required]
         public int Cilj { get; set; }
         [Required]

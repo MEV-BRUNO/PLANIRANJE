@@ -16,8 +16,6 @@
 	<script src="~/assets/plugins/jquery-2.0.3.min.js"></script>
 	<script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 	<script src="~/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-	<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
-	<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
 </head>
 <body class="padTop53 ">
 	<div id="wrap">
@@ -69,7 +67,58 @@
 		<div id="content">
 			@RenderBody()
 		</div>
+		<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" data-backdrop="static">
+			<div id="modalContainer"></div>
+		</div>
+		<div id="snackbar"></div>
 	</div>
 	@Html.Partial("../Shared/Footer")
+    
+	<script>
+        $(document).ready(function () {
+            $("#osPlan").on("click", function () {
+                $.ajax({
+                    url: "@Url.Action("Index","PlanOs1")"
+
+                })
+                    .done(function (data) {
+                        $("#content").html(data);
+                    });
+            });
+
+			$("#mjPlan").on("click", function () {
+				$.ajax({
+					url: "/MjesecniPlan/Index",
+					type: "GET",
+					data: { id: 1 }
+				})
+					.done(function (data) {
+						$("#content").html(data);
+					});
+			});
+			$("#godPlan").on("click", function () {
+				$.ajax({
+					url: "/GodisnjiPlan/Index",
+					type: "GET",
+					data: { id: 1 }
+				})
+					.done(function (data) {
+						$("#content").html(data);
+					});
+			});
+			$(document).on("change", "#godPlanoviChange", (function () {
+				$.ajax({
+					url: "/MjesecniPlan/Index?Plan=" + $(this).val(),
+					success: function (data) {
+						$("#content").html(data);
+					}
+				});
+			}));
+		});
+	</script>
+	<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
+	<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+	<script src="~/Scripts/custom.js"></script>
 </body>
 </html>
+

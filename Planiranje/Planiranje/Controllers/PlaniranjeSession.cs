@@ -13,7 +13,7 @@ namespace Planiranje.Controllers
 			get
 			{
 				PlaniranjeSession session = (PlaniranjeSession)HttpContext.Current.Session["id_pedagog"];
-				HttpContext.Current.Session.Timeout = 60;
+				HttpContext.Current.Session.Timeout = 1440;
 				if (session == null)
 				{
 					session = new PlaniranjeSession();
