@@ -9,6 +9,7 @@ namespace Planiranje.Models
 {
     public class Oblici
 	{
+		public int Red_br { get; set; }
 		[Required(ErrorMessage = "Obavezno polje")]
 		[DisplayName("Id")]
 		public int Id_oblici { get; set; }

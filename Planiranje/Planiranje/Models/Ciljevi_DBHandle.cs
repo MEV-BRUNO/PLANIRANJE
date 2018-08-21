@@ -22,6 +22,7 @@ namespace Planiranje.Models
 
         public List<Ciljevi> ReadCiljevi()
         {
+			int counter = 0;
             List<Ciljevi> ciljevi = new List<Ciljevi>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
@@ -30,7 +31,6 @@ namespace Planiranje.Models
                 command.CommandText = "SELECT id_cilj, naziv " +
                     "FROM ciljevi " +
                     "ORDER BY id_cilj ASC";
-                //command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {
@@ -40,6 +40,7 @@ namespace Planiranje.Models
                         {
                             Ciljevi cilj = new Ciljevi()
                             {
+								Red_br = ++counter,
                                 ID_cilj = Convert.ToInt32(sdr["id_cilj"]),
                                 Naziv = sdr["naziv"].ToString()
                             };

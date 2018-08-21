@@ -8,7 +8,7 @@ using System.Web;
 namespace Planiranje.Models
 {
     public class Aktivnost_akcija
-    {
+	{
 		[Required(ErrorMessage = "Obavezno polje")]
 		[DisplayName("Id")]
 		public int Id_akcija { get; set; }

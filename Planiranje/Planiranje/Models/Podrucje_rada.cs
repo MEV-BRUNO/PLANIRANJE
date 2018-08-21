@@ -8,6 +8,7 @@ namespace Planiranje.Models
 {
     public class Podrucje_rada
     {
+		public int Red_br { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
         public int Id_podrucje { get; set; }
 		[Required(ErrorMessage = "Obavezno polje")]

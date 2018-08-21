@@ -1,5 +1,5 @@
 ﻿@model Planiranje.Models.AkcijeModel
-		
+
 <table class="table table-bordered table-hover" id="dataTable">
 	<thead>
 		<tr>
@@ -13,7 +13,7 @@
 		@foreach (var item in Model.akcije)
 		{
 			<tr>
-				<td>@Html.DisplayFor(modelItem => item.Id_akcija)</td>
+				<td>@Html.DisplayFor(modelItem => item.Red_br)</td>
 				<td>@Html.DisplayFor(modelItem => item.Naziv_Akcija)</td>
 				<td>@Html.DisplayFor(modelItem => item.Naziv_Aktivnost)</td>
 				<td>

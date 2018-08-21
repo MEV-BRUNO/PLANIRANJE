@@ -9,6 +9,7 @@ namespace Planiranje.Models
 {
 	public class Akt_Akc
 	{
+		public int Red_br { get; set; }
 		public int Id_akcija { get; set; }
 		[Required(ErrorMessage = "Obavezno polje")]
 		[DisplayName("Akcija")]

@@ -8,8 +8,9 @@ using System.Web;
 namespace Planiranje.Models
 {
     public class Subjekti
-    {
-        [Required(ErrorMessage = "Obavezno polje.")]
+	{
+		public int Red_br { get; set; }
+		[Required(ErrorMessage = "Obavezno polje.")]
 		[DisplayName("Id")]
 		public int ID_subjekt { get; set; }
 		[Required(ErrorMessage = "Obavezno polje.")]
