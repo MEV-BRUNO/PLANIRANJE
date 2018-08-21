@@ -85,14 +85,6 @@
                         $("#content").html(data);
                     });
             });
-			$(document).on("change", "#godPlanoviChange", (function () {
-				$.ajax({
-					url: "/MjesecniPlan/Index?Plan=" + $(this).val(),
-					success: function (data) {
-						$("#content").html(data);
-					}
-				});
-			}));
 		});
 	</script>
 	<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
