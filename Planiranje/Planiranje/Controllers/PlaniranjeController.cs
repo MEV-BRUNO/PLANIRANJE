@@ -17,8 +17,6 @@ namespace Planiranje.Controllers
 		private Planiranje_DBHandle planovi = new Planiranje_DBHandle();
 		private BazaPodataka baza = new BazaPodataka();
         
-
-		[HttpGet]
 		public ActionResult Prijava()
 		{
 			PlaniranjeSession.Trenutni.PedagogId = 0;
@@ -39,7 +37,7 @@ namespace Planiranje.Controllers
 			else
 			{
 				ViewBag.Message = "Korisnik nije pronadjen!";
-				return View("Prijava");
+				return RedirectToAction("Prijava");
 			}
 		}
 		public ActionResult Index()

@@ -109,6 +109,12 @@ function removeText(source, destination) {
 	}
 }
 
+$(document).on('keydown', 'input[type=text]', function (e) {
+	if (e.which == 13) {
+		e.preventDefault();
+	}
+});
+
 $(document).ready(function () {
 	$(document).on("change", "#godPlanoviChange", function () {
 		$.ajax({
