@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -15,60 +16,16 @@ namespace Planiranje.Controllers
     public class PlanOs2Controller : Controller
     {
         private OS_Plan_2_DBHandle planovi_os2 = new OS_Plan_2_DBHandle();
-        int Page_No_Master = 1;
-
-        public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
+        
+        public ActionResult Index()
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            ViewBag.Title = "Pregled - osnovna skola 2";
-            ViewBag.CurrentSortOrder = Sort;
-            ViewBag.SortingName = String.IsNullOrEmpty(Sort) ? "Naziv" : "";
-
-            ViewBag.Message = "Grad";
-
-            ViewBag.FilterValue = Search;
-            if (Search != null)
-            {
-                Page_No = 1;
-            }
-            else
-            {
-                Search = Filter;
-            }
-            ViewBag.CurrentPage = 1;
-            if (Page_No != null)
-                ViewBag.CurrentPage = Page_No;
-
-
-            int Size_Of_Page = 10;
-            int No_Of_Page = (Page_No ?? 1);
-            if (Search == null || Search.Length == 0)
-            {
-
-                if (Request.IsAjaxRequest())
-                {
-                    int noP = (int)Page_No_Master;
-                    var Popis2 = planovi_os2.ReadOS_Plan_2().ToPagedList(No_Of_Page, Size_Of_Page);
-                    return PartialView("_GradView", Popis2);
-                }
-                Page_No_Master = No_Of_Page;
-                var Popis = planovi_os2.ReadOS_Plan_2().ToPagedList(No_Of_Page, Size_Of_Page);
-                return View(Popis);
-            }
-            else
-            {
-                Page_No_Master = No_Of_Page;
-                var Popis = planovi_os2.ReadOS_Plan_2(Search).ToPagedList(No_Of_Page, Size_Of_Page);
-                if (Request.IsAjaxRequest())
-                {
-                    return PartialView("_GradView", Popis);
-                }
-
-                return View(Popis);
-            }
+            List<OS_Plan_2> planovi = new List<OS_Plan_2>();
+            planovi = planovi_os2.ReadOS_Plan_2();
+            return View(planovi);
         }
 
         public ActionResult NoviPlan()
