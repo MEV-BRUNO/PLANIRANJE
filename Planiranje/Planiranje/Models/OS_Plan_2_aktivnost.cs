@@ -11,24 +11,10 @@ namespace Planiranje.Models
         [Required]
         public int Id_plan { get; set; }
         [Required]
-        public int Red_br_podrucje { get; set; }
+        public int Id_podrucje { get; set; }
         [Required]
         public int Red_br_aktivnost { get; set; }
         [Required]
-        public string Opis_aktivnost { get; set; }
-        [Required]
-        public int Cilj { get; set; }
-        [Required]
-        public int Zadaci { get; set; }
-        [Required]
-        public int Subjekti { get; set; }
-        [Required]
-        public int Oblici { get; set; }
-        [Required]
-        [DataType(DataType.DateTime)]
-        public DateTime Vrijeme { get; set; }
-        [Required]
-        public int Sati { get; set; }
-    
-}
+        public string Opis_aktivnost { get; set; }           
+    }
 }

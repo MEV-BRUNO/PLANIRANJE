@@ -22,10 +22,9 @@ namespace Planiranje.Models
         public int Subjekti { get; set; }
         [Required]
         public int Oblici { get; set; }
-        [Required]
-        [DataType(DataType.DateTime)]
-        public DateTime Vrijeme { get; set; }
         [Required]        
-        public int Sati { get; set; }
+        public string Vrijeme { get; set; }
+        [Required]        
+        public int Id_glavni_plan { get; set; }
     }
 }
