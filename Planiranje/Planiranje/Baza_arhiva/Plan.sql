@@ -148,7 +148,7 @@ CREATE TABLE aktivnost_akcija (
   id_aktivnost int(11) DEFAULT NULL,
   PRIMARY KEY (id_akcija),
   KEY id_aktivnost (id_aktivnost),
-  CONSTRAINT aktivnost_akcija_ibfk_1 FOREIGN KEY (id_aktivnost) REFERENCES aktivnost (id_aktivnost)
+  CONSTRAINT aktivnost_akcija_ibfk_1 FOREIGN KEY (id_aktivnost) REFERENCES aktivnost (id_aktivnost) ON DELETE CASCADE
 );
 
 CREATE TABLE dnevnik_rada (
