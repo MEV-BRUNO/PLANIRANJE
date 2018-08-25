@@ -17,7 +17,7 @@ namespace Planiranje.Controllers
 		
         public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -45,7 +45,7 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult NovaAktivnost(AktivnostiModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -61,7 +61,7 @@ namespace Planiranje.Controllers
 
         public ActionResult Edit(int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -77,7 +77,7 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Edit(AktivnostiModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -93,7 +93,7 @@ namespace Planiranje.Controllers
 
         public ActionResult Delete(int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -110,7 +110,7 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Delete(Aktivnost aktivnost)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
