@@ -288,7 +288,8 @@ CREATE TABLE os_plan_2_aktivnost (
   id_plan int(11) NOT NULL AUTO_INCREMENT,
   id_podrucje int(11) NOT NULL,
   red_br_aktivnost int(11) NOT NULL,
-  opis_aktivnost text,  
+  opis_aktivnost text, 
+  sati int(11) NOT NULL 
   PRIMARY KEY (id_plan)  
 );
 
@@ -302,7 +303,8 @@ CREATE TABLE os_plan_2_podrucje (
   subjekti int(11) NOT NULL,
   oblici int(11) NOT NULL,
   vrijeme text,  
-  PRIMARY KEY (id_plan),  
+  PRIMARY KEY (id_plan), 
+  sati int(11) NOT NULL, 
   CONSTRAINT os_plan_2_podrucje_ibfk_2 FOREIGN KEY (cilj) REFERENCES ciljevi (id_cilj),
   CONSTRAINT os_plan_2_podrucje_ibfk_3 FOREIGN KEY (subjekti) REFERENCES subjekti (id_subjekt),
   CONSTRAINT os_plan_2_podrucje_ibfk_4 FOREIGN KEY (oblici) REFERENCES oblici (id_oblici),

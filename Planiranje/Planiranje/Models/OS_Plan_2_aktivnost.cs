@@ -15,6 +15,8 @@ namespace Planiranje.Models
         [Required]
         public int Red_br_aktivnost { get; set; }
         [Required]
-        public string Opis_aktivnost { get; set; }           
+        public string Opis_aktivnost { get; set; }
+        [Required]
+        public int Sati { get; set; }
     }
 }
