@@ -16,6 +16,10 @@ namespace Planiranje.Controllers
         public DbSet<OS_Plan_1_podrucje> OsPlan1Podrucje { get; set; }
         public DbSet<OS_Plan_1> OsPlan1 { get; set; }
         public DbSet<OS_Plan_1_aktivnost> OsPlan1Aktivnost { get; set; }
+        public DbSet<OS_Plan_2> OsPlan2 { get; set; }
+        public DbSet<OS_Plan_2_podrucje> OsPlan2Podrucje { get; set; }
+        public DbSet<OS_Plan_2_aktivnost> OsPlan2Aktivnost { get; set; }
+        public DbSet<OS_Plan_2_akcija> OsPlan2Akcija { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

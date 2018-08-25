@@ -8,11 +8,13 @@ namespace Planiranje.Models
 {
     public class PlanOs2View
     {
-        public OS_Plan_2 Os_plan_2 { get; set; }
-        public OS_Plan_2_podrucje Os_plan_2_podrucje { get; set; }
-        public OS_Plan_2_aktivnost Os_plan_2_aktivnost { get; set; }
-        public OS_Plan_2_akcija Os_plan_2_akcija { get; set; }
+        public OS_Plan_2 OsPlan2 { get; set; }
+        public OS_Plan_2_podrucje OsPlan2Podrucje { get; set; }
+        public OS_Plan_2_aktivnost OsPlan2Aktivnost { get; set; }
+        public OS_Plan_2_akcija OsPlan2Akcija { get; set; }
         public List<OS_Plan_2_podrucje> OsPlan2Podrucja { get; set; }
+        public List<OS_Plan_2_aktivnost> OsPlan2Aktivnosti { get; set; }
+        public List<OS_Plan_2_akcija> OsPlan2Akcije { get; set; }
         public List<Ciljevi> Ciljevi { get; set; }
         public List<Zadaci> Zadaci { get; set; }
         public List<Subjekti> Subjekti { get; set; }

@@ -16,6 +16,12 @@ namespace Planiranje.Controllers
     public class PlanOs2Controller : Controller
     {
         private OS_Plan_2_DBHandle planovi_os2 = new OS_Plan_2_DBHandle();
+        private BazaPodataka baza = new BazaPodataka();
+        private Ciljevi_DBHandle ciljevi_db = new Ciljevi_DBHandle();
+        private Zadaci_DBHandle zadaci_db = new Zadaci_DBHandle();
+        private Subjekt_DBHandle subjekti_db = new Subjekt_DBHandle();
+        private Oblici_DBHandle oblici_db = new Oblici_DBHandle();
+
         
         public ActionResult Index()
         {
