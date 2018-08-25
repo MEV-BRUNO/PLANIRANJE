@@ -285,5 +285,44 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Details", new { id = id_ });
         }
+        public ActionResult PosaoPomakGore(int id)
+        {
+            OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
+            podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
+            int id_ = podrucje.Id_glavni_plan;
+
+            int pozicija = podrucje.Red_br_podrucje;
+            List<OS_Plan_2_podrucje> pod = new List<OS_Plan_2_podrucje>();
+            pod = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == id_ && w.Red_br_podrucje <= pozicija).ToList();            
+
+            if (pod.Count == 1)
+            {
+                return RedirectToAction("Details", new { id = id_ });
+            }
+            pod = pod.OrderBy(o => o.Red_br_podrucje).ToList();
+            int idPrethodni = pod.ElementAt(pod.Count - 2).Id_plan;
+            int pozicijaPrethodni = pod.ElementAt(pod.Count - 2).Red_br_podrucje;
+            using(var db = new BazaPodataka())
+            {
+                var result = db.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
+                var result2 = db.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPrethodni);
+                if(result!=null && result2 != null)
+                {
+                    try
+                    {
+                        result.Red_br_podrucje = pozicijaPrethodni;
+                        result2.Red_br_podrucje = pozicija;
+                        db.SaveChanges();
+                        TempData["note"] = "Posao je pomaknut za jedno mjesto gore";
+                    }
+                    catch
+                    {
+                        TempData["note"] = "Dogodila se greška. Posao nije pomaknut";
+                    }
+                }
+            }
+
+            return RedirectToAction("Details", new { id = id_ });
+        }
 	}
 }

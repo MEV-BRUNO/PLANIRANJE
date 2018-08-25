@@ -113,7 +113,7 @@
                                             <td class="col-md-1">@Model.Oblici.Single(s => s.Id_oblici == item.Oblici).Naziv</td>
                                             <td class="col-md-1">@item.Vrijeme</td>
                                             <td class="col-md-1">
-                                                <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
+                                                <a onclick="location.href='@Url.Action("PosaoPomakGore","PlanOs2", new { id=item.Id_plan})'" class="btn btn-warning btn-xs btn-grad">Gore</a>
                                                 <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                             </td>
                                             <td class="col-md-1">
