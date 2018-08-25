@@ -146,5 +146,23 @@ namespace Planiranje.Controllers
 
 			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
 		}
+        public ActionResult Details(int id)
+        {
+            PlanOs2View plan = new PlanOs2View();
+            plan.OsPlan2 = new OS_Plan_2();
+            plan.OsPlan2 = planovi_os2.ReadOS_Plan_2(id);
+            plan.OsPlan2Podrucja = new List<OS_Plan_2_podrucje>();
+            plan.OsPlan2Podrucja = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == id).ToList();
+            plan.OsPlan2Podrucja = plan.OsPlan2Podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
+            plan.Ciljevi = new List<Ciljevi>();
+            plan.Ciljevi = ciljevi_db.ReadCiljevi();
+            plan.Subjekti = new List<Subjekti>();
+            plan.Subjekti = subjekti_db.ReadSubjekti();
+            plan.Zadaci = new List<Zadaci>();
+            plan.Zadaci = zadaci_db.ReadZadaci();
+            plan.Oblici = new List<Oblici>();
+            plan.Oblici = oblici_db.ReadOblici();
+            return View(plan);
+        }
 	}
 }
