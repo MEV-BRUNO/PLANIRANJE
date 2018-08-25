@@ -184,6 +184,19 @@ namespace Planiranje.Controllers
         {
             plan.OsPlan2Podrucje.Id_glavni_plan = plan.OsPlan2.Id_plan;
             int _id = plan.OsPlan2.Id_plan;
+            int br;
+            List<OS_Plan_2_podrucje> trenutni = new List<OS_Plan_2_podrucje>();
+            trenutni = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == _id).ToList();
+            if (trenutni.Count == 0)
+            {
+                br = 1;
+            }
+            else
+            {
+                br = trenutni.Max(m => m.Red_br_podrucje);
+                br++;
+            }
+            plan.OsPlan2Podrucje.Red_br_podrucje = br;
             using(var db = new BazaPodataka())
             {
                 try
@@ -199,7 +212,7 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Details", new { id = _id });
         }
-        public ActionResult UrediPosao(int id)
+        public ActionResult UrediPosao(int id, int broj)
         {
             PlanOs2View plan = new PlanOs2View();
             plan.OsPlan2Podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
@@ -211,7 +224,66 @@ namespace Planiranje.Controllers
             plan.Zadaci = zadaci_db.ReadZadaci();
             plan.Oblici = new List<Oblici>();
             plan.Oblici = oblici_db.ReadOblici();
+            plan.Broj = broj;
             return View(plan);
+        }
+        [HttpPost]
+        public ActionResult UrediPosao (PlanOs2View plan)
+        {
+            int id_ = plan.OsPlan2Podrucje.Id_glavni_plan;
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.OsPlan2Podrucje.Add(plan.OsPlan2Podrucje);
+                    db.Entry(plan.OsPlan2Podrucje).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["note"] = "Posao je promijenjen";
+                }
+                catch
+                {
+                    TempData["note"] = "Posao nije promijenjen";
+                }
+            }
+            return RedirectToAction("Details", new { id = id_ });
+        }
+        public ActionResult ObrisiPosao(int id, int broj)
+        {
+            PlanOs2View plan = new PlanOs2View();
+            plan.Broj = broj;
+            plan.OsPlan2Podrucje = new OS_Plan_2_podrucje();
+            plan.OsPlan2Podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
+            plan.Ciljevi = new List<Ciljevi>();
+            plan.Ciljevi.Add(ciljevi_db.ReadCiljevi(plan.OsPlan2Podrucje.Cilj));
+            return View(plan);
+        }
+        [HttpPost]
+        public ActionResult ObrisiPosao(PlanOs2View plan)
+        {
+            int id = plan.OsPlan2Podrucje.Id_plan;
+            int id_ = plan.OsPlan2Podrucje.Id_glavni_plan;
+            using (var db = new BazaPodataka())
+            {
+                var result = db.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
+                if (result != null)
+                {
+                    try
+                    {
+                        db.OsPlan2Podrucje.Remove(result);
+                        db.SaveChanges();
+                        TempData["note"] = "Posao je obrisan";
+                    }
+                    catch
+                    {
+                        TempData["note"] = "Posao nije obrisan";
+                    }
+                }
+                else
+                {
+                    TempData["note"] = "Posao nije obrisan. Dogodila se greška";
+                }
+            }
+            return RedirectToAction("Details", new { id = id_ });
         }
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -35,5 +36,7 @@ namespace Planiranje.Models
         {
             get { return new SelectList(Oblici, "Id_oblici", "Naziv"); }
         }
+        [DisplayName("Redni broj")]
+        public int Broj { get; set; }
     }
 }
