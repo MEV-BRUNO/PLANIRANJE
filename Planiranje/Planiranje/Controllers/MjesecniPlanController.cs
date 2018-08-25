@@ -408,6 +408,14 @@ namespace Planiranje.Controllers
 			}
 			else
 			{
+				if (DateTime.Compare(_mjesecni_model.mjesecniDetalj.Vrijeme, DateTime.Now.Date) <= 0 || (_mjesecni_model.mjesecniDetalj.Vrijeme.Year < 2))
+				{
+					ModelState.AddModelError("error_msg", "Datum mora biti noviji od trenutnog.");
+				}
+				else
+				{
+					ModelState.AddModelError("error_msg", " ");
+				}
 				_mjesecni_model.PodrucjaRada = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
 				{
 					Text = i.Naziv.ToString(),
