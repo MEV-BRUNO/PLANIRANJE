@@ -26,5 +26,7 @@ namespace Planiranje.Models
         public string Vrijeme { get; set; }
         [Required]        
         public int Id_glavni_plan { get; set; }
+        [Required]
+        public int Sati { get; set; }
     }
 }
