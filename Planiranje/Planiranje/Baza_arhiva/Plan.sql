@@ -289,7 +289,7 @@ CREATE TABLE os_plan_2_aktivnost (
   id_podrucje int(11) NOT NULL,
   red_br_aktivnost int(11) NOT NULL,
   opis_aktivnost text, 
-  sati int(11) NOT NULL 
+  sati int(11) NOT NULL, 
   PRIMARY KEY (id_plan)  
 );
 

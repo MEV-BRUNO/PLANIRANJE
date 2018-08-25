@@ -164,5 +164,10 @@ namespace Planiranje.Controllers
             plan.Oblici = oblici_db.ReadOblici();
             return View(plan);
         }
+        public ActionResult NoviPosao(int id)
+        {
+
+            return View();
+        }
 	}
 }
