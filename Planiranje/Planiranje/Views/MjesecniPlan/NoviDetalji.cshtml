@@ -113,6 +113,7 @@
 						@Html.LabelFor(model => model.mjesecniDetalj.Vrijeme)
 						@Html.EditorFor(model => model.mjesecniDetalj.Vrijeme, "{0:dd-MM-yyyy}", new { htmlAttributes = new { @class = "form-control" } })
 						@Html.ValidationMessageFor(model => model.mjesecniDetalj.Vrijeme, "", new { @class = "text-danger" })
+						@Html.ValidationMessage("error_msg", new { @class = "text-danger" })
 					</div>
 					<div class="col-md-5">
 						@Html.LabelFor(model => model.mjesecniDetalj.Br_sati)
