@@ -166,8 +166,52 @@ namespace Planiranje.Controllers
         }
         public ActionResult NoviPosao(int id)
         {
-
-            return View();
+            PlanOs2View plan = new PlanOs2View();
+            plan.OsPlan2 = new OS_Plan_2();
+            plan.OsPlan2 = planovi_os2.ReadOS_Plan_2(id);
+            plan.Ciljevi = new List<Ciljevi>();
+            plan.Ciljevi = ciljevi_db.ReadCiljevi();
+            plan.Subjekti = new List<Subjekti>();
+            plan.Subjekti = subjekti_db.ReadSubjekti();
+            plan.Zadaci = new List<Zadaci>();
+            plan.Zadaci = zadaci_db.ReadZadaci();
+            plan.Oblici = new List<Oblici>();
+            plan.Oblici = oblici_db.ReadOblici();
+            return View(plan);
+        }
+        [HttpPost]
+        public ActionResult NoviPosao (PlanOs2View plan)
+        {
+            plan.OsPlan2Podrucje.Id_glavni_plan = plan.OsPlan2.Id_plan;
+            int _id = plan.OsPlan2.Id_plan;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.OsPlan2Podrucje.Add(plan.OsPlan2Podrucje);
+                    db.SaveChanges();
+                    TempData["note"] = "Novi posao je dodan";
+                }
+                catch
+                {
+                    TempData["note"] = "Novi posao nije dodan.\nPobrinite se da sva polja pravilno ispunite";
+                }
+            }
+            return RedirectToAction("Details", new { id = _id });
+        }
+        public ActionResult UrediPosao(int id)
+        {
+            PlanOs2View plan = new PlanOs2View();
+            plan.OsPlan2Podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
+            plan.Ciljevi = new List<Ciljevi>();
+            plan.Ciljevi = ciljevi_db.ReadCiljevi();
+            plan.Subjekti = new List<Subjekti>();
+            plan.Subjekti = subjekti_db.ReadSubjekti();
+            plan.Zadaci = new List<Zadaci>();
+            plan.Zadaci = zadaci_db.ReadZadaci();
+            plan.Oblici = new List<Oblici>();
+            plan.Oblici = oblici_db.ReadOblici();
+            return View(plan);
         }
 	}
 }
