@@ -114,7 +114,7 @@
                                             <td class="col-md-1">@item.Vrijeme</td>
                                             <td class="col-md-1">
                                                 <a onclick="location.href='@Url.Action("PosaoPomakGore","PlanOs2", new { id=item.Id_plan})'" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+                                                <a onclick="location.href='@Url.Action("PosaoPomakDolje","PlanOs2", new { id=item.Id_plan})'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                             </td>
                                             <td class="col-md-1">
                                                 <a id="editAsset" data-toggle="modal" data-url="@Url.Action("UrediPosao","PlanOs2", new { id=item.Id_plan, broj=br})" class="btn btn-primary btn-xs btn-grad">Uredi</a>
