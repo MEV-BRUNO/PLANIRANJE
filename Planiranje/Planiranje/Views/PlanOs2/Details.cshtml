@@ -184,7 +184,7 @@
                                                                     <td class="col-md-1">@ab.@b</td>
                                                                     <td class="col-md-9">@zadatak.Opis_aktivnost</td>
                                                                     <td class="col-md-1">
-                                                                        <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
+                                                                        <a onclick="location.href='@Url.Action("ZadatakPomakGore","PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija})'" class="btn btn-warning btn-xs btn-grad">Gore</a>
                                                                         <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                     </td>
                                                                     <td class="col-md-1">

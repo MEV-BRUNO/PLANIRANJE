@@ -413,6 +413,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult NoviZadatak (int id, int pozicija)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PlanOs2View plan = new PlanOs2View();
             plan.Pozicija = pozicija;
             plan.Id = id;
@@ -421,6 +425,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult NoviZadatak(PlanOs2View plan)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             List<OS_Plan_2_podrucje> pod = new List<OS_Plan_2_podrucje>();
             int id = plan.Id;
             pod = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == id).ToList();
@@ -428,7 +436,18 @@ namespace Planiranje.Controllers
 
             OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
             podrucje = pod.ElementAt(plan.Pozicija);
-
+            int maxValue;
+            List<OS_Plan_2_aktivnost> aktivnosti = new List<OS_Plan_2_aktivnost>();
+            aktivnosti = baza.OsPlan2Aktivnost.Where(w => w.Id_podrucje == podrucje.Id_plan).ToList();
+            if (aktivnosti.Count == 0)
+            {
+                maxValue = 1;
+            }
+            else
+            {
+                maxValue = aktivnosti.Max(m => m.Red_br_aktivnost)+1;                
+            }
+            plan.OsPlan2Aktivnost.Red_br_aktivnost = maxValue;
             plan.OsPlan2Aktivnost.Id_podrucje = podrucje.Id_plan;
             using(var db = new BazaPodataka())
             {
@@ -444,6 +463,54 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("Details", new { id = plan.Id, pA = plan.Pozicija });
+        }
+        public ActionResult ZadatakPomakGore (int id, int pozicija)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            OS_Plan_2_aktivnost akt = new OS_Plan_2_aktivnost();
+            akt = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+            int idPodrucje = akt.Id_podrucje;
+            int idTrenutni = akt.Id_plan;
+            int pozTrenutni = akt.Red_br_aktivnost;
+
+            OS_Plan_2_podrucje p = new OS_Plan_2_podrucje();
+            p = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
+
+            List<OS_Plan_2_aktivnost> trenutne = new List<OS_Plan_2_aktivnost>();
+            trenutne = baza.OsPlan2Aktivnost.Where(w => w.Id_podrucje == idPodrucje && w.Red_br_aktivnost <= pozTrenutni).ToList();
+            if (trenutne.Count == 1)
+            {
+                return RedirectToAction("Details", new { id = p.Id_glavni_plan, pA = pozicija });
+            }
+            trenutne = trenutne.OrderBy(o => o.Red_br_aktivnost).ToList();
+
+            int idPrije = trenutne.ElementAt(trenutne.Count - 2).Id_plan;
+            int pozPrije = trenutne.ElementAt(trenutne.Count - 2).Red_br_aktivnost;
+
+            using(var db = new BazaPodataka())
+            {
+                var result = db.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == idTrenutni);
+                var result1 = db.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == idPrije);
+                if(result!=null && result1 != null)
+                {
+                    try
+                    {
+                        result.Red_br_aktivnost = pozPrije;
+                        result1.Red_br_aktivnost = pozTrenutni;
+                        db.SaveChanges();
+                        TempData["note"] = "Zadatak je pomaknut za jedno mjesto prema gore";
+                    }
+                    catch
+                    {
+                        TempData["note"] = "Zadatak nije pomaknut";
+                    }
+                }
+            }
+            
+            return RedirectToAction("Details", new { id=p.Id_glavni_plan, pA = pozicija});
         }
 	}
 }
