@@ -1,32 +1,33 @@
-﻿@model PagedList.IPagedList<Planiranje.Models.OS_Plan_2>
+﻿@model List<Planiranje.Models.OS_Plan_2>
 
 <table class="table table-bordered table-hover" id="dataTables-example">
     <thead>
         <tr>
             <td class="col-lg-1">
-                @Html.ActionLink("Id", "Index", "PlanOs2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                Id
             </td>
             <td class="col-lg-3">
-                @Html.ActionLink("Naziv", "Index", "PlanOs2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                Naziv
             </td>
             <td class="col-lg-1">
-                @Html.ActionLink("Ak. godina", "Index", "PlanOs2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                Ak. godina
             </td>
-            <td class="col-lg-6">
-                @Html.ActionLink("Opis", "Index", "PlanOs2", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            <td class="col-lg-5">
+                Opis
             </td>
-            <td class="col-lg-2">
+            <td class="col-lg-3">
                 Akcija
             </td>
         </tr>
     </thead>
     <tbody>
-
+        @{ int i = 0;}
         @foreach (var item in Model)
-	{
+        {
+            i++;
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_plan)
+                @i
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Naziv)
@@ -39,8 +40,9 @@
             </td>
             <td>
                 <div class="pull-right">
+                    <a onclick="location.href='@Url.Action("Details","PlanOs2", new { id=item.Id_plan})'" class="btn btn-success btn-xs">Detalji</a>
                     <a data-toggle="modal" data-url="@Url.Action("Edit","PlanOs2",new { id = item.Id_plan })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
-                    <a data-toggle="modal" data-url="@Url.Action("Delete","PlanOs2",new { id = item.Id_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
+                    <a data-toggle="modal" data-url="@Url.Action("Delete","PlanOs2",new { id = item.Id_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
                 </div>
             </td>
         </tr>

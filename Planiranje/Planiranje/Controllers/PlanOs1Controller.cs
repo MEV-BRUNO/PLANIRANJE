@@ -888,8 +888,10 @@ namespace Planiranje.Controllers
                     plan.OsPlan1Aktivnost.Add(i);
                 }
             }
-
-            PlanOs1DetailsReport report = new PlanOs1DetailsReport(plan);
+            Pedagog p = new Pedagog();
+            int id_p = PlaniranjeSession.Trenutni.PedagogId;
+            p = baza.Pedagog.SingleOrDefault(s => s.Id_Pedagog == id_p);
+            PlanOs1DetailsReport report = new PlanOs1DetailsReport(plan, p);
 
             return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
         }
