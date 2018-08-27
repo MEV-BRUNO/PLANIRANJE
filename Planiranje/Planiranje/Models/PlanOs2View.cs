@@ -38,5 +38,6 @@ namespace Planiranje.Models
         }
         [DisplayName("Redni broj")]
         public int Broj { get; set; }
+        public int Pozicija { get; set; }
     }
 }

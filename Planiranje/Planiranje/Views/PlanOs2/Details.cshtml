@@ -1,4 +1,5 @@
 ﻿@model Planiranje.Models.PlanOs2View
+    @{ Layout= Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";}
 <html>
 <head>
     <style>
@@ -37,6 +38,7 @@
     {
         <div id="snackbar">@TempData["note"]</div>
     }
+    <div style="visibility:hidden" id="provjeraPrikaz">@TempData["prikaz"]</div>
     <div class="inner">
         <div class="row">
             <div class="col-lg-12">
@@ -70,7 +72,7 @@
                                             <a href="#poslovi" data-toggle="tab">Poslovi</a>
                                         </li>
                                         <li>
-                                            <a href="#zadaci" data-toggle="tab">Zadatci</a>
+                                            <a id="zadaciTab" href="#zadaci" data-toggle="tab">Zadatci</a>
                                         </li>
                                         <li>
                                             <a href="#vrijeme" data-toggle="tab">Aktivnosti i sati</a>
@@ -135,12 +137,26 @@
                                                 </div>
                                                 <div class="col-lg-10">
                                                     <div class="form-group">
-                                                        <label class="control-label col-lg-2">Odabri posla iz god. plana:</label>
+                                                        <label class="control-label col-lg-2">Odaberi posla iz god. plana:</label>
                                                         <div class="col-lg-7">
-                                                            <select class="form-control">
-                                                                <option>1. Izvedbeno planiranje i programiranje</option>
-                                                                <option>2. Uvođenje novih programa i inovacija</option>
-                                                                <option>3. Savjetodavni rad</option>
+                                                            <select onchange="promjenaPosao()" id="selectPosao" class="form-control">
+                                                                @{ int a = 0;}
+                                                                @foreach(var posao in Model.OsPlan2Podrucja)
+                                                                {
+                                                                    a++;
+                                                                    if (a - 1 == Model.Pozicija)
+                                                                    {
+                                                                        <option selected="selected">@a. @posao.Opis_podrucje</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        a--;
+                                                                        <option value="@a">
+                                                                        @{a++;}
+                                                                         @a. @posao.Opis_podrucje</option>
+                                                                        
+                                                                    }
+                                                                }
                                                             </select>
                                                         </div>
                                                     </div>
@@ -160,9 +176,13 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                @{ int b = 0;}
+                                                                @foreach (var zadatak in Model.OsPlan2Aktivnosti)
+                                                                {
+                                                                    b++;
                                                                 <tr>
-                                                                    <td class="col-md-1">1.1</td>
-                                                                    <td class="col-md-9">Zadatak aaaaaaaaaaaaaaaaaaaa</td>
+                                                                    <td class="col-md-1">@Model.Pozicija.@b</td>
+                                                                    <td class="col-md-9">@zadatak.Opis_aktivnost</td>
                                                                     <td class="col-md-1">
                                                                         <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
                                                                         <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
@@ -172,30 +192,7 @@
                                                                         <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td class="col-md-1">1.2</td>
-                                                                    <td class="col-md-9">Zadatak aaaaaaaaaaaaaaaaaaaa</td>
-                                                                    <td class="col-md-1">
-                                                                        <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                        <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
-                                                                    </td>
-                                                                    <td class="col-md-1">
-                                                                        <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                                        <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="col-md-1">1.3</td>
-                                                                    <td class="col-md-9">Zadatak aaaaaaaaaaaaaaaaaaaa</td>
-                                                                    <td class="col-md-1">
-                                                                        <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                        <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
-                                                                    </td>
-                                                                    <td class="col-md-1">
-                                                                        <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                                        <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
-                                                                    </td>
-                                                                </tr>
+                                                                }
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -294,10 +291,32 @@
         </div>
 
     </div>
+    <div style="visibility:hidden" id="idPlan">@Model.OsPlan2.Id_plan</div>
+
+  <script>
+      function promjenaPosao() {
+          var val = $("#selectPosao").val();
+          var id = $("#idPlan").text();
+          $.ajax({
+              url: '/PlanOs2/Details/' + id + '?pA=' + val,
+              success: function (data) {
+                  $("#content").html(data);
+              }
+          });
+      }
+  </script>
 
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var sadrzaj = $("#provjeraPrikaz").text();
+            if (sadrzaj == "1") {
+                $("#zadaciTab").click();
+            }
         });
     </script>
     <script>

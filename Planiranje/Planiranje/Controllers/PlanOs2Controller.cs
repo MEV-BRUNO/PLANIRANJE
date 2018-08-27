@@ -146,7 +146,7 @@ namespace Planiranje.Controllers
 
 			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
 		}
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, int? pA)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -166,6 +166,21 @@ namespace Planiranje.Controllers
             plan.Zadaci = zadaci_db.ReadZadaci();
             plan.Oblici = new List<Oblici>();
             plan.Oblici = oblici_db.ReadOblici();
+            if (pA == null)
+            {
+                pA = 0;
+            }
+            else
+            {
+                TempData["prikaz"] = "1";
+            }
+            int parametar = (Int32)pA;
+            int idPod = plan.OsPlan2Podrucja.ElementAt(parametar).Id_plan;
+            plan.OsPlan2Aktivnosti = new List<OS_Plan_2_aktivnost>();
+            plan.OsPlan2Aktivnosti = baza.OsPlan2Aktivnost.Where(w => w.Id_podrucje == idPod).ToList();
+            plan.OsPlan2Aktivnosti = plan.OsPlan2Aktivnosti.OrderBy(o => o.Red_br_aktivnost).ToList();
+            plan.Pozicija = parametar;
+
             return View(plan);
         }
         public ActionResult NoviPosao(int id)
