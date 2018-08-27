@@ -84,7 +84,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <p>
-                                                        <button data-toggle="modal" data-url="@Url.Action("NoviPosao","PlanOs2", new { id=Model.OsPlan2.Id_plan})" id="btnCreateAsset" class="btn btn-primary btn-xs btn-grad">Dodaj novi posao</button>
+                                                        <button  onclick="showModal('@Url.Action("NoviPosao","PlanOs2", new { id=Model.OsPlan2.Id_plan})')" class="btn btn-primary btn-xs btn-grad">Dodaj novi posao</button>
                                                     </p>
                                                     <div class="table-responsive">
                                                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -119,8 +119,8 @@
                                                 <a onclick="location.href='@Url.Action("PosaoPomakDolje","PlanOs2", new { id=item.Id_plan})'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                             </td>
                                             <td class="col-md-1">
-                                                <a id="editAsset" data-toggle="modal" data-url="@Url.Action("UrediPosao","PlanOs2", new { id=item.Id_plan, broj=br})" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                <a id="deleteAsset" data-toggle="modal" data-url="@Url.Action("ObrisiPosao","PlanOs2", new { id=item.Id_plan, broj=br})" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                                <a  onclick="showModal('@Url.Action("UrediPosao","PlanOs2", new { id=item.Id_plan, broj=br})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                                <a  onclick="showModal('@Url.Action("ObrisiPosao","PlanOs2", new { id=item.Id_plan, broj=br})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                             </td>
                                         </tr>
         }
@@ -318,86 +318,7 @@
                 $("#zadaciTab").click();
             }
         });
-    </script>
-    <script>
-        var rowDelete;
-        $(document).ready(function () {
-            $("#btnCreateAsset").click(function (e) {
-                var url = $(this).attr("data-url");
-                $.ajax({
-                    url: url,
-                    success: function (data) {
-                        $('#assetContainer').html(data);
-                        $('#assetModal').modal('show');
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
-                });
-            });
-            $("#btnCreateAktivnost").click(function (e) {
-                var url = $(this).attr("data-url");
-                $.ajax({
-                    url: url,
-                    success: function (data) {
-                        $('#assetContainer').html(data);
-                        $('#assetModal').modal('show');
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
-                });
-            });
-
-            $('#dataTables-example').on("click", "#editAsset", function (event) {
-                event.preventDefault();
-                var url = $(this).attr("data-url");
-                $.get(url, function (data) {
-                    $('#assetContainer').html(data);
-                    $('#assetModal').modal('show');
-                });
-            });
-
-            $('#dataTables').on("click", "#editAktivnost", function (event) {
-                event.preventDefault();
-                var url = $(this).attr("data-url");
-                $.get(url, function (data) {
-                    $('#assetContainer').html(data);
-                    $('#assetModal').modal('show');
-                });
-            });
-
-            $('#dataTables').on("click", "#deleteAktivnost", function (event) {
-                event.preventDefault();
-                var url = $(this).attr("data-url");
-                $.get(url, function (data) {
-                    $('#assetContainer').html(data);
-                    $('#assetModal').modal('show');
-                });
-            });
-
-            $('#dataTables-example').on("click", "#deleteAsset", function (event) {
-                event.preventDefault();
-                var url = $(this).attr("data-url");
-                $.get(url, function (data) {
-                    $('#assetContainer').html(data);
-                    $('#assetModal').modal('show');
-                });
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        function CreateSuccess() {
-            $('#assetModal').modal('hide');
-            $('#assetContainer').html("");
-            location.reload(true);
-        }
-
-        function EditSuccess() {
-            $('#assetModal').modal('hide');
-            $('#assetContainer').html("");
-            location.reload(true);
-        }
-
-        function DeleteSuccess() {
-            location.reload(true);
-        }
-    </script>
+    </script>    
+    
 </body>
 </html>
