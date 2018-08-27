@@ -1,6 +1,6 @@
 ﻿@model Planiranje.Models.PlanOs1View
 @using Planiranje.Models
-
+@{ Layout = Request.IsAjaxRequest()?null: "~/Views/Shared/_Layout.cshtml";}
 <!DOCTYPE html>
 <html>
 <head>
@@ -170,7 +170,7 @@
                                                         <label class="control-label col-lg-2">Odaberi područja rada:</label>
                                                         <div class="col-lg-7">
                                                             @*@Html.DropDownListFor(m=>m.Os_Plan_1_Aktivnost.Id_podrucje,Model.PodrucjeRadaSelectedItems,new { @class="form-control"})*@
-                                                            <select class="form-control">
+                                                            <select id="selectPodrucje" onchange="PromjenaPodrucje()" class="form-control">
                                                                 @{ int br = 1;}
                                                                 @foreach(var item in Model.OsPlan1Podrucje)
                                                                 {
@@ -182,7 +182,9 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                    <option onclick="location.href='@Url.Action("Details2","PlanOs1", new { id=Model.OsPlan1.Id_plan,pozicija=br-1})'">
+                                                                        br--;
+                                                                    <option value="@br">
+                                                                        @{ br++;}
                                                                         @br. @Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv
                                                                     </option>
                                                                     }
@@ -408,9 +410,20 @@
             </div>
 
         </div>
-
+        <div style="visibility:hidden" id="pozicija">@Model.OsPlan1.Id_plan</div>
     </div>
-
+    <script>
+        function PromjenaPodrucje() {
+            var val = $("#selectPodrucje").val();
+            var poz = $("#pozicija").text();
+            $.ajax({
+                url: '/PlanOs1/Details2/' + poz+'?pozicija=' + val,
+                success: function (data) {
+                    $("#content").html(data);
+                }
+            });
+        }
+    </script>
 
     <script>
         var rowDelete;

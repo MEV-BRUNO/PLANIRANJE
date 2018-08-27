@@ -21,7 +21,7 @@ namespace Planiranje.Controllers
 
 		public ActionResult Index(string Plan)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -64,7 +64,7 @@ namespace Planiranje.Controllers
 
 		public ActionResult NoviPlan(int id_godina)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -84,7 +84,7 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult NoviPlan(MjesecniModel _mjesecni_model)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -103,7 +103,7 @@ namespace Planiranje.Controllers
 		}
 		public ActionResult PrikaziDetalje (int id, int id_god)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -117,7 +117,7 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult Detalji(Mjesecni_plan mjesecni_plan)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -134,7 +134,7 @@ namespace Planiranje.Controllers
 		
 		public ActionResult Delete(int id, int id_god)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -151,7 +151,7 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult Delete(MjesecniModel mjesecni_model)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -183,7 +183,7 @@ namespace Planiranje.Controllers
 
 		public ActionResult NoviDetalji(int id, int id_god)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -221,6 +221,10 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult NoviDetalji(MjesecniModel _mjesecni_model)
 		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
 			_mjesecni_model.mjesecniDetalj.ID_plan = _mjesecni_model.ID_PLAN;
 			if (_mjesecni_model.mjesecniDetalj.Suradnici != null &&
 				_mjesecni_model.mjesecniDetalj.Aktivnost != null &&
@@ -235,6 +239,14 @@ namespace Planiranje.Controllers
 			}
 			else
 			{
+				if (DateTime.Compare(_mjesecni_model.mjesecniDetalj.Vrijeme, DateTime.Now.Date) <= 0 || (_mjesecni_model.mjesecniDetalj.Vrijeme.Year < 2))
+				{
+					ModelState.AddModelError("error_msg", "Datum mora biti noviji od trenutnog.");
+				}
+				else
+				{
+					ModelState.AddModelError("error_msg", " ");
+				}
 				_mjesecni_model.PodrucjaRada = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
 				{
 					Text = i.Naziv.ToString(),
@@ -261,7 +273,7 @@ namespace Planiranje.Controllers
 
 		public ActionResult DeleteDetails(int id, int id_god)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -278,7 +290,7 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult DeleteDetails(MjesecniModel model)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -299,7 +311,7 @@ namespace Planiranje.Controllers
 		}
 		public ActionResult UrediNoviPlan(int id_godina, int id_plan)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -319,7 +331,7 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult UrediNoviPlan(MjesecniModel _mjesecni_model)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -340,7 +352,7 @@ namespace Planiranje.Controllers
 
 		public ActionResult UpdateNoviDetalji(int id, int id_plan, int id_god)
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
@@ -379,6 +391,10 @@ namespace Planiranje.Controllers
 		[HttpPost]
 		public ActionResult UpdateNoviDetalji(MjesecniModel _mjesecni_model)
 		{
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+			{
+				return RedirectToAction("Index", "Planiranje");
+			}
 			if (_mjesecni_model.mjesecniDetalj.Suradnici != null &&
 				_mjesecni_model.mjesecniDetalj.Aktivnost != null &&
 				_mjesecni_model.mjesecniDetalj.Podrucje != null &&
@@ -392,6 +408,14 @@ namespace Planiranje.Controllers
 			}
 			else
 			{
+				if (DateTime.Compare(_mjesecni_model.mjesecniDetalj.Vrijeme, DateTime.Now.Date) <= 0 || (_mjesecni_model.mjesecniDetalj.Vrijeme.Year < 2))
+				{
+					ModelState.AddModelError("error_msg", "Datum mora biti noviji od trenutnog.");
+				}
+				else
+				{
+					ModelState.AddModelError("error_msg", " ");
+				}
 				_mjesecni_model.PodrucjaRada = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
 				{
 					Text = i.Naziv.ToString(),

@@ -16,7 +16,7 @@ CREATE TABLE ciljevi (
 
 CREATE TABLE oblici (
   id_oblici int(11) NOT NULL AUTO_INCREMENT,
-  naziv varchar(50),
+  naziv text,
   PRIMARY KEY (id_oblici)
 );
 
@@ -39,13 +39,13 @@ CREATE TABLE skola (
 
 CREATE TABLE subjekti (
   id_subjekt int(11) NOT NULL AUTO_INCREMENT,
-  naziv varchar(50) ,
+  naziv text ,
   PRIMARY KEY (id_subjekt)
 );
 
 CREATE TABLE zadaci (
   id_zadatak int(11) NOT NULL AUTO_INCREMENT,
-  naziv varchar(50) DEFAULT NULL,
+  naziv text,
   PRIMARY KEY (id_zadatak)
 );
 
@@ -80,7 +80,7 @@ CREATE TABLE os_plan_2 (
   id_plan int(11) NOT NULL AUTO_INCREMENT,
   id_pedagog int(11) NOT NULL,
   ak_godina varchar(25) NOT NULL,
-  naziv varchar(50) NOT NULL,
+  naziv text,
   opis text,
   PRIMARY KEY (id_plan),
   KEY id_pedagog (id_pedagog),
@@ -148,7 +148,7 @@ CREATE TABLE aktivnost_akcija (
   id_aktivnost int(11) DEFAULT NULL,
   PRIMARY KEY (id_akcija),
   KEY id_aktivnost (id_aktivnost),
-  CONSTRAINT aktivnost_akcija_ibfk_1 FOREIGN KEY (id_aktivnost) REFERENCES aktivnost (id_aktivnost)
+  CONSTRAINT aktivnost_akcija_ibfk_1 FOREIGN KEY (id_aktivnost) REFERENCES aktivnost (id_aktivnost) ON DELETE CASCADE
 );
 
 CREATE TABLE dnevnik_rada (
@@ -193,19 +193,13 @@ CREATE TABLE mjesecni_detalji (
 );
 
 CREATE TABLE os_plan_2_akcija (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  red_br_podrucje int(11) NOT NULL,
-  red_br_aktivnost int(11) NOT NULL,
+  id_plan int(11) NOT NULL AUTO_INCREMENT,  
+  id_aktivnost int(11) NOT NULL,
   red_br_akcija int(11) NOT NULL,
   opis_akcija text,
   sati int(11) NOT NULL,
-  PRIMARY KEY (id_plan),
-  KEY red_br_podrucje (red_br_podrucje),
-  KEY red_br_aktivnost (red_br_aktivnost),
-  KEY red_br_akcija (red_br_akcija),
-  CONSTRAINT os_plan_2_akcija_ibfk_1 FOREIGN KEY (red_br_podrucje) REFERENCES podrucje_rada (id_podrucje),
-  CONSTRAINT os_plan_2_akcija_ibfk_2 FOREIGN KEY (red_br_aktivnost) REFERENCES aktivnost (id_aktivnost),
-  CONSTRAINT os_plan_2_akcija_ibfk_3 FOREIGN KEY (red_br_akcija) REFERENCES aktivnost_akcija (id_akcija)
+  PRIMARY KEY (id_plan),  
+  CONSTRAINT os_plan_2_akcija_ibfk_2 FOREIGN KEY (id_aktivnost) REFERENCES aktivnost (id_aktivnost)  
 );
 
 CREATE TABLE os_plan_1_akcija (
@@ -292,45 +286,25 @@ CREATE TABLE os_plan_1_podrucje (
 
 CREATE TABLE os_plan_2_aktivnost (
   id_plan int(11) NOT NULL AUTO_INCREMENT,
-  red_br_podrucje int(11) NOT NULL,
+  id_podrucje int(11) NOT NULL,
   red_br_aktivnost int(11) NOT NULL,
-  opis_aktivnost text,
-  cilj int(11) NOT NULL,
-  zadaci int(11) DEFAULT NULL,
-  subjekti int(11) NOT NULL,
-  oblici int(11) NOT NULL,
-  vrijeme datetime NOT NULL,
-  sati int(11) NOT NULL,
-  PRIMARY KEY (id_plan),
-  KEY red_br_podrucje (red_br_podrucje),
-  KEY red_br_aktivnost (red_br_aktivnost),
-  KEY cilj (cilj),
-  KEY subjekti (subjekti),
-  KEY zadaci (zadaci),
-  CONSTRAINT os_plan_2_aktivnost_ibfk_1 FOREIGN KEY (red_br_podrucje) REFERENCES podrucje_rada (id_podrucje),
-  CONSTRAINT os_plan_2_aktivnost_ibfk_2 FOREIGN KEY (red_br_aktivnost) REFERENCES aktivnost (id_aktivnost),
-  CONSTRAINT os_plan_2_aktivnost_ibfk_3 FOREIGN KEY (cilj) REFERENCES ciljevi (id_cilj),
-  CONSTRAINT os_plan_2_aktivnost_ibfk_4 FOREIGN KEY (subjekti) REFERENCES subjekti (id_subjekt),
-  CONSTRAINT os_plan_2_aktivnost_ibfk_5 FOREIGN KEY (zadaci) REFERENCES zadaci (id_zadatak)
+  opis_aktivnost text, 
+  sati int(11) NOT NULL, 
+  PRIMARY KEY (id_plan)  
 );
 
 CREATE TABLE os_plan_2_podrucje (
   id_plan int(11) NOT NULL AUTO_INCREMENT,
+  id_glavni_plan int(11) NOT NULL,
   red_br_podrucje int(11) NOT NULL,
   opis_podrucje text,
   cilj int(11) NOT NULL,
   zadaci int(11) DEFAULT NULL,
   subjekti int(11) NOT NULL,
   oblici int(11) NOT NULL,
-  vrijeme datetime NOT NULL,
-  sati int(11) NOT NULL,
-  PRIMARY KEY (id_plan),
-  KEY red_br_podrucje (red_br_podrucje),
-  KEY cilj (cilj),
-  KEY subjekti (subjekti),
-  KEY oblici (oblici),
-  KEY zadaci (zadaci),
-  CONSTRAINT os_plan_2_podrucje_ibfk_1 FOREIGN KEY (red_br_podrucje) REFERENCES podrucje_rada (id_podrucje),
+  vrijeme text,
+  sati int(11) NOT NULL,   
+  PRIMARY KEY (id_plan),   
   CONSTRAINT os_plan_2_podrucje_ibfk_2 FOREIGN KEY (cilj) REFERENCES ciljevi (id_cilj),
   CONSTRAINT os_plan_2_podrucje_ibfk_3 FOREIGN KEY (subjekti) REFERENCES subjekti (id_subjekt),
   CONSTRAINT os_plan_2_podrucje_ibfk_4 FOREIGN KEY (oblici) REFERENCES oblici (id_oblici),

@@ -8,12 +8,11 @@ namespace Planiranje.Models
 {
     public class OS_Plan_2_akcija
     {
+        [Key]
         [Required]
-        public int Id_plan { get; set; }
+        public int Id_plan { get; set; }        
         [Required]
-        public int Red_br_podrucje { get; set; }
-        [Required]
-        public int Red_br_aktivnost { get; set; }
+        public int Id_aktivnost { get; set; }
         [Required]
         public int Red_br_akcija { get; set; }
         [Required]

@@ -18,7 +18,9 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.zadatak.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.zadatak.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.zadatak.Naziv, new { htmlAttributes = new { @class = "form-control", @id = "newName",
+				   onkeydown = "hideModalA(event, \"/Zadaci/NoviZadatak\", \"#noviZadatakView\", \"Novi zadatak je uspješno spremljen!\")"
+			   } })
                     @Html.ValidationMessageFor(model => model.zadatak.Naziv, "", new { @class = "text-danger" })
                 </div>
             </div>

@@ -19,7 +19,9 @@
 			<div class="form-group">
 				@Html.LabelFor(model => model.MjesecniPlan.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
 				<div class="col-md-9">
-					@Html.EditorFor(model => model.MjesecniPlan.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.EditorFor(model => model.MjesecniPlan.Naziv, new { htmlAttributes = new { @class = "form-control", @id = "newName",
+				   onkeydown = "hideModalA(event, \"/MjesecniPlan/NoviPlan\", \"#noviPlanModalView\", \"Plan uspješno spremljen\")"
+			   } })
 					@Html.ValidationMessageFor(model => model.MjesecniPlan.Naziv, "", new { @class = "text-danger" })
 				</div>
 			</div>

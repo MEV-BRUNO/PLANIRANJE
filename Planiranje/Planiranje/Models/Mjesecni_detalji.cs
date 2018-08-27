@@ -24,7 +24,7 @@ namespace Planiranje.Models
 		[Required(ErrorMessage = "Obavezno polje.")]
 		[DisplayName("Suradnici")]
 		public string Suradnici { get; set; }
-		[Required(ErrorMessage = "Datum mora biti veći od trenutnog.")]
+		[Required(ErrorMessage = "Obavezno polje.")]
 		[DataType(DataType.Date)]
 		[DisplayName("Vrijeme izvršenja")]
 		[DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]

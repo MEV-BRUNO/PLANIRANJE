@@ -240,6 +240,7 @@
     <Compile Include="Models\PlaniranjeModel.cs" />
     <Compile Include="Models\Planiranje_DBHandle.cs" />
     <Compile Include="Models\PlanOs1View.cs" />
+    <Compile Include="Models\PlanOs2View.cs" />
     <Compile Include="Models\PodrucjaRadaModel.cs" />
     <Compile Include="Models\Podrucje_rada.cs" />
     <Compile Include="Models\Podrucje_rada_DBHandle.cs" />
@@ -405,6 +406,10 @@
     <Content Include="Views\PlanSs\TableDetails.cshtml" />
     <Content Include="Views\PlanSs\ObrisiDetalje.cshtml" />
     <Content Include="Views\PlanSs\UrediDetalje.cshtml" />
+    <Content Include="Views\PlanOs2\Details.cshtml" />
+    <Content Include="Views\PlanOs2\NoviPosao.cshtml" />
+    <Content Include="Views\PlanOs2\UrediPosao.cshtml" />
+    <Content Include="Views\PlanOs2\ObrisiPosao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

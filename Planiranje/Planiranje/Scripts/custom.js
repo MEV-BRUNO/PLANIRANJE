@@ -48,6 +48,15 @@ function reloadWithData(path, id, message) {
 	});
 }
 
+function hideModalA(event, path, id, message) {
+	if (event.type === "keydown") {
+		if (event.keyCode == 13) {
+			event.preventDefault();
+			hideModal(path, id, message);
+		}
+	}
+}
+
 function hideModal(path, id, message) {
 	var dt = $(id).serialize();
 	$.ajax({
@@ -57,6 +66,7 @@ function hideModal(path, id, message) {
 		success: function (data) {
 			if ($(data)[0].className === "modal-dialog") {
 				$("#modalContainer").html(data);
+				$('#newName').focus();
 			} else if ($(data)[0].className === "inner") {
 				$('#modal').modal('hide');
 				$('#modalContainer').removeData();

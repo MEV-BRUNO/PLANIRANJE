@@ -17,7 +17,7 @@ namespace Planiranje.Controllers
 		
         public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -29,7 +29,7 @@ namespace Planiranje.Controllers
         }
         public ActionResult NovaAkcija()
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -46,7 +46,7 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult NovaAkcija(AkcijeModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -63,7 +63,7 @@ namespace Planiranje.Controllers
 
         public ActionResult Edit(int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -80,7 +80,7 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Edit(AkcijeModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -97,7 +97,7 @@ namespace Planiranje.Controllers
 
         public ActionResult Delete(int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -105,8 +105,8 @@ namespace Planiranje.Controllers
             akcija_plan = akcije_planovi.ReadAktivnostAkcija(id);
             if (Request.IsAjaxRequest())
             {
-                ViewBag.IsUpdate = false;
-                return View("Obrisi", akcija_plan);
+				ViewBag.ErrorMessage = null;
+				return View("Obrisi", akcija_plan);
             }
             return View("Obrisi");
         }
@@ -114,12 +114,13 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Delete(Aktivnost_akcija akcija_plan)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
             if (!akcije_planovi.DeleteAktivnostAkcija(akcija_plan.Id_akcija))
             {
+				ViewBag.ErrorMessage = "Dogodila se greška, nije moguće obrisati akciju!";
 				return View("Obrisi", akcija_plan);
 			}
             else
