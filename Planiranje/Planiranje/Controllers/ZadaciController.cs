@@ -98,6 +98,7 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
+				ViewBag.ErrorMessage = null;
 				ZadaciModel model = new ZadaciModel();
 				model.zadatak = zadaci.ReadZadaci(id);
                 return View("Obrisi", model);
@@ -114,6 +115,7 @@ namespace Planiranje.Controllers
             }
             if (!zadaci.DeleteZadaci(model.zadatak.ID_zadatak))
             {
+				ViewBag.ErrorMessage = "Dogodila se greška, nije moguće obrisati zadatak!";
 				return View("Obrisi", model);
 			}
             else

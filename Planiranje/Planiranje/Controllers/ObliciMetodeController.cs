@@ -100,6 +100,7 @@ namespace Planiranje.Controllers
 
             if (Request.IsAjaxRequest())
 			{
+				ViewBag.ErrorMessage = null;
 				ObliciMetodeModel model = new ObliciMetodeModel();
 				model.oblik = oblici.ReadOblici(id);
 				return View("Obrisi", model);
@@ -116,6 +117,7 @@ namespace Planiranje.Controllers
             }
             if (!oblici.DeleteOblici(model.oblik.Id_oblici))
             {
+				ViewBag.ErrorMessage = "Dogodila se greška, nije moguće obrisati oblik!";
 				return View("Obrisi", model);
 			}
             else

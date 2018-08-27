@@ -15,16 +15,26 @@
             <div class="modal-body">
             @Html.HiddenFor(model => model.zadatak.ID_zadatak)
             <div class="form-group">
-                <div class="col-md-10">
-                    <h5>
-                        Jeste li sigurni da želite obrisati "@Html.DisplayFor(model => model.zadatak.Naziv, new { htmlAttributes = new { @class = "form-control" } })"?
-                    </h5>
-                </div>
+				<div class="col-md-10">
+				@if (ViewBag.ErrorMessage == null)
+				{
+				<h5>
+					Jeste li sigurni da želite obrisati "@Html.DisplayFor(model => model.zadatak.Naziv, new { htmlAttributes = new { @class = "form-control" } })"?
+				</h5>
+				}
+				else
+				{
+					@ViewBag.ErrorMessage;
+				}
+				</div>
             </div>
             <div class="modal-footer">
 				<div class="form-group">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-					<input type="button" class="btn btn-danger" value="Obriši" onclick='hideModal("/Zadaci/Delete", "#obrisiZadatakView", "Zadatak uspješno obrisan!")' />
+					@if (ViewBag.ErrorMessage == null)
+					{
+						<input type="button" class="btn btn-danger" value="Obriši" onclick='hideModal("/Zadaci/Delete", "#obrisiZadatakView", "Zadatak uspješno obrisan!")' />
+					}
 				</div>
             </div>
         </div>

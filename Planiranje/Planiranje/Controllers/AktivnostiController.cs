@@ -101,8 +101,8 @@ namespace Planiranje.Controllers
             aktivnost = aktivnosti.ReadAktivnost(id);
             if (Request.IsAjaxRequest())
             {
-                ViewBag.IsUpdate = false;
-                return View("Obrisi", aktivnost);
+				ViewBag.ErrorMessage = null;
+				return View("Obrisi", aktivnost);
 			}
 			return RedirectToAction("Index");
 		}
@@ -116,6 +116,7 @@ namespace Planiranje.Controllers
             }
             if (!aktivnosti.DeleteAktivnost(aktivnost.Id_aktivnost))
             {
+				ViewBag.ErrorMessage = "Dogodila se greška, nije moguće obrisati aktivnost!";
 				return View("Obrisi", aktivnost);
 			}
             else

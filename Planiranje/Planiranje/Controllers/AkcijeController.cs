@@ -105,8 +105,8 @@ namespace Planiranje.Controllers
             akcija_plan = akcije_planovi.ReadAktivnostAkcija(id);
             if (Request.IsAjaxRequest())
             {
-                ViewBag.IsUpdate = false;
-                return View("Obrisi", akcija_plan);
+				ViewBag.ErrorMessage = null;
+				return View("Obrisi", akcija_plan);
             }
             return View("Obrisi");
         }
@@ -120,6 +120,7 @@ namespace Planiranje.Controllers
             }
             if (!akcije_planovi.DeleteAktivnostAkcija(akcija_plan.Id_akcija))
             {
+				ViewBag.ErrorMessage = "Dogodila se greška, nije moguće obrisati akciju!";
 				return View("Obrisi", akcija_plan);
 			}
             else

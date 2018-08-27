@@ -99,6 +99,7 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
+				ViewBag.ErrorMessage = null;
 				CIljeviModel model = new CIljeviModel();
 				model.cilj = ciljevi_DB.ReadCiljevi(id);
                 return View("Obrisi", model);
@@ -115,6 +116,7 @@ namespace Planiranje.Controllers
             }
             if (!ciljevi_DB.DeleteCiljevi(model.cilj.ID_cilj))
             {
+				ViewBag.ErrorMessage = "Dogodila se greška, nije moguće obrisati cilj!";
 				return View("Obrisi", model);
 			}
             else

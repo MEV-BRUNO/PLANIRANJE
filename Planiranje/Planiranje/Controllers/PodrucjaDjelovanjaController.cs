@@ -97,15 +97,15 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Podrucje_rada podrucje = new Podrucje_rada();
-            podrucje = podrucja_djelovanja.ReadPodrucjeRada(id);
             if (Request.IsAjaxRequest())
             {
-                ViewBag.IsUpdate = false;
-                return View("Obrisi", podrucje);
+				ViewBag.ErrorMessage = null;
+				Podrucje_rada podrucje = new Podrucje_rada();
+				podrucje = podrucja_djelovanja.ReadPodrucjeRada(id);
+				return View("Obrisi", podrucje);
             }
-            return View("Obrisi");
-        }
+			return RedirectToAction("Index");
+		}
 
         [HttpPost]
         public ActionResult Delete(Podrucje_rada podrucje)
@@ -116,13 +116,13 @@ namespace Planiranje.Controllers
             }
             if (!podrucja_djelovanja.DeletePodrucjeRada(podrucje.Id_podrucje))
             {
-                TempData["alert"] = "<script>alert('Podrucje djelovanja nije obrisano, dogodila se greska!');</script>";
-            }
+				ViewBag.ErrorMessage = "Dogodila se greška, nije moguće obrisati podrucje djelovanja!";
+				return View("Obrisi", podrucje);
+			}
             else
             {
-                TempData["alert"] = "<script>alert('Podrucje djelovanja je uspjesno obrisano!');</script>";
-            }
-            return RedirectToAction("Index");
+				return RedirectToAction("Index");
+			}
         }
     }
 }

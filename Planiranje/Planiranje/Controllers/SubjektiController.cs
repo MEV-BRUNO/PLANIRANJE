@@ -100,6 +100,7 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
+				ViewBag.ErrorMessage = null;
 				SubjektiModel model = new SubjektiModel();
 				model.subjekt = _subjekti.ReadSubjekti(id);
 				return View("Obrisi", model);
@@ -116,6 +117,7 @@ namespace Planiranje.Controllers
             }
             if (!_subjekti.DeleteSubjekti(model.subjekt.ID_subjekt))
             {
+				ViewBag.ErrorMessage = "Dogodila se greška, nije moguće obrisati subjekt!";
 				return View("Obrisi", model);
 			}
             else
