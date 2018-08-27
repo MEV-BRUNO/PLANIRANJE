@@ -411,5 +411,39 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Details", new { id = idGlavniPlan });
         }
+        public ActionResult NoviZadatak (int id, int pozicija)
+        {
+            PlanOs2View plan = new PlanOs2View();
+            plan.Pozicija = pozicija;
+            plan.Id = id;
+            return View(plan);
+        }
+        [HttpPost]
+        public ActionResult NoviZadatak(PlanOs2View plan)
+        {
+            List<OS_Plan_2_podrucje> pod = new List<OS_Plan_2_podrucje>();
+            int id = plan.Id;
+            pod = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == id).ToList();
+            pod = pod.OrderBy(o => o.Red_br_podrucje).ToList();
+
+            OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
+            podrucje = pod.ElementAt(plan.Pozicija);
+
+            plan.OsPlan2Aktivnost.Id_podrucje = podrucje.Id_plan;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.OsPlan2Aktivnost.Add(plan.OsPlan2Aktivnost);
+                    db.SaveChanges();
+                    TempData["note"] = "Novi zadatak je dodan";
+                }
+                catch
+                {
+                    TempData["note"] = "Novi zadatak nije dodan";
+                }
+            }
+            return RedirectToAction("Details", new { id = plan.Id, pA = plan.Pozicija });
+        }
 	}
 }

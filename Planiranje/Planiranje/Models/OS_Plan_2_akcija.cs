@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,7 @@ namespace Planiranje.Models
         [Required]
         public int Red_br_akcija { get; set; }
         [Required]
+        [DisplayName("Naziv aktivnosti")]
         public string Opis_akcija { get; set; }
         [Required]
         public int Sati { get; set; }

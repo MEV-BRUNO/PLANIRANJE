@@ -410,6 +410,7 @@
     <Content Include="Views\PlanOs2\NoviPosao.cshtml" />
     <Content Include="Views\PlanOs2\UrediPosao.cshtml" />
     <Content Include="Views\PlanOs2\ObrisiPosao.cshtml" />
+    <Content Include="Views\PlanOs2\NoviZadatak.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -133,7 +133,7 @@
                                         <div class="tab-pane fade" id="zadaci">
                                             <div class="row">
                                                 <div class="col-lg-2">
-                                                    <a href="#" class="btn btn-primary btn-xs btn-grad">Dodaj novi zadatak</a>
+                                                    <a onclick="showModal('@Url.Action("NoviZadatak","PlanOs2", new {id=Model.OsPlan2.Id_plan, pozicija = Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Dodaj novi zadatak</a>
                                                 </div>
                                                 <div class="col-lg-10">
                                                     <div class="form-group">
@@ -176,12 +176,12 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @{ int b = 0;}
+                                                                @{ int b = 0;int ab = Model.Pozicija+1;}
                                                                 @foreach (var zadatak in Model.OsPlan2Aktivnosti)
                                                                 {
                                                                     b++;
                                                                 <tr>
-                                                                    <td class="col-md-1">@Model.Pozicija.@b</td>
+                                                                    <td class="col-md-1">@ab.@b</td>
                                                                     <td class="col-md-9">@zadatak.Opis_aktivnost</td>
                                                                     <td class="col-md-1">
                                                                         <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
