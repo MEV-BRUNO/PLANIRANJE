@@ -1,7 +1,6 @@
 ﻿@model Planiranje.Models.PlanOs2View
     @{ Layout= Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";}
-<html>
-<head>
+
      <script>
          $(document).ready(function () {
              if ($("#poruka").text() == "1") {
@@ -10,8 +9,7 @@
          })
      </script>
    
-</head>
-<body>
+
     @if (TempData["note"] != null)
     {
         <div id="poruka">1</div>
@@ -304,5 +302,3 @@
         });
     </script>    
     
-</body>
-</html>
