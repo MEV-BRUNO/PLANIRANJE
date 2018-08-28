@@ -592,5 +592,40 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = plan.Pozicija });
         }
+        public ActionResult ObrisiZadatak (int id, int pozicija, string tekst)
+        {
+            PlanOs2View plan = new PlanOs2View();
+            plan.OsPlan2Aktivnost = new OS_Plan_2_aktivnost();
+            plan.OsPlan2Aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+            plan.Pozicija = pozicija;
+            plan.Tekst = tekst;
+            return View(plan);
+        }
+        [HttpPost]
+        public ActionResult ObrisiZadatak(PlanOs2View plan)
+        {
+            int id = plan.OsPlan2Aktivnost.Id_plan;
+            int idPodrucje = plan.OsPlan2Aktivnost.Id_podrucje;
+            OS_Plan_2_podrucje pod = new OS_Plan_2_podrucje();
+            pod = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
+            using(var db = new BazaPodataka())
+            {
+                var result = db.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+                if (result != null)
+                {
+                    try
+                    {
+                        db.OsPlan2Aktivnost.Remove(result);
+                        db.SaveChanges();
+                        TempData["note"] = "Zadatak je obrisan";
+                    }
+                    catch
+                    {
+                        TempData["note"] = "Zadatak nije obrisan";
+                    }
+                }
+            }
+            return RedirectToAction("Details", new { id = pod.Id_glavni_plan, pA = plan.Pozicija });
+        }
 	}
 }
