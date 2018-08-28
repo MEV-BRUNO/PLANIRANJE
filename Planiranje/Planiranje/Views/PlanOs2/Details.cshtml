@@ -32,6 +32,7 @@
             setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
         }
     </script>    
+   
 </head>
 <body onload="myFunction()">
     @if (TempData["note"] != null)
@@ -137,7 +138,7 @@
                                         <div class="tab-pane fade" id="zadaci">
                                             <div class="row">
                                                 <div class="col-lg-2">
-                                                    <a id="btnNoviZadatak" onclick="showModal('@Url.Action("NoviZadatak","PlanOs2", new {id=Model.OsPlan2.Id_plan, pozicija = Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Dodaj novi zadatak</a>
+                                                    <button id="btnNoviZadatak" onclick="showModal('@Url.Action("NoviZadatak","PlanOs2", new {id=Model.OsPlan2.Id_plan, pozicija = Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Dodaj novi zadatak</button>
                                                 </div>
                                                 <div class="col-lg-10">
                                                     <div class="form-group">
@@ -324,6 +325,7 @@
             if ($("#provjeraPodrucje").text() == "1") {
                 $("#btnNoviZadatak").prop("disabled", true);
             }
+            
         });
     </script>    
     
