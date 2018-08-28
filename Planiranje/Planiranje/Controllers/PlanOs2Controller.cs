@@ -166,6 +166,11 @@ namespace Planiranje.Controllers
             plan.Zadaci = zadaci_db.ReadZadaci();
             plan.Oblici = new List<Oblici>();
             plan.Oblici = oblici_db.ReadOblici();
+            plan.OsPlan2Aktivnosti = new List<OS_Plan_2_aktivnost>();
+            if (plan.OsPlan2Podrucja.Count == 0)
+            {
+                return View(plan);
+            }
             if (pA == null)
             {
                 pA = 0;
@@ -176,7 +181,7 @@ namespace Planiranje.Controllers
             }
             int parametar = (Int32)pA;
             int idPod = plan.OsPlan2Podrucja.ElementAt(parametar).Id_plan;
-            plan.OsPlan2Aktivnosti = new List<OS_Plan_2_aktivnost>();
+            
             plan.OsPlan2Aktivnosti = baza.OsPlan2Aktivnost.Where(w => w.Id_podrucje == idPod).ToList();
             plan.OsPlan2Aktivnosti = plan.OsPlan2Aktivnosti.OrderBy(o => o.Red_br_aktivnost).ToList();
             plan.Pozicija = parametar;
@@ -511,6 +516,45 @@ namespace Planiranje.Controllers
             }
             
             return RedirectToAction("Details", new { id=p.Id_glavni_plan, pA = pozicija});
+        }
+        public ActionResult ZadatakPomakDolje (int id, int pozicija)
+        {
+            OS_Plan_2_aktivnost aktivnost = new OS_Plan_2_aktivnost();
+            aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+            int idPodrucje = aktivnost.Id_podrucje;
+            OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
+            podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
+
+            int pozicijaTrenutni = aktivnost.Red_br_aktivnost;
+            List<OS_Plan_2_aktivnost> trenutne = new List<OS_Plan_2_aktivnost>();
+            trenutne = baza.OsPlan2Aktivnost.Where(w => w.Id_podrucje == idPodrucje && w.Red_br_aktivnost >= pozicijaTrenutni).ToList();
+            if (trenutne.Count == 1)
+            {
+                return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = pozicija });
+            }
+            trenutne = trenutne.OrderBy(o => o.Red_br_aktivnost).ToList();
+            int idPoslije = trenutne.ElementAt(1).Id_plan;
+            int pozicijaPoslije = trenutne.ElementAt(1).Red_br_aktivnost;
+            using(var db=new BazaPodataka())
+            {
+                var result = db.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+                var result1 = db.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == idPoslije);
+                if(result!=null && result1 != null)
+                {
+                    try
+                    {
+                        result.Red_br_aktivnost = pozicijaPoslije;
+                        result1.Red_br_aktivnost = pozicijaTrenutni;
+                        db.SaveChanges();
+                        TempData["note"] = "Zadatak je pomaknut za jedno mjesto prema dolje";
+                    }
+                    catch
+                    {
+                        TempData["note"] = "Zadatak nije pomaknut";
+                    }
+                }
+            }
+            return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = pozicija });
         }
 	}
 }

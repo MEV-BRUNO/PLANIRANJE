@@ -31,12 +31,16 @@
             x.className = "show";
             setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
         }
-    </script>
+    </script>    
 </head>
 <body onload="myFunction()">
     @if (TempData["note"] != null)
     {
         <div id="snackbar">@TempData["note"]</div>
+    }
+    @if (Model.OsPlan2Podrucja.Count == 0)
+    {
+        <div id="provjeraPodrucje" style="visibility:hidden">1</div>
     }
     <div style="visibility:hidden" id="provjeraPrikaz">@TempData["prikaz"]</div>
     <div class="inner">
@@ -133,7 +137,7 @@
                                         <div class="tab-pane fade" id="zadaci">
                                             <div class="row">
                                                 <div class="col-lg-2">
-                                                    <a onclick="showModal('@Url.Action("NoviZadatak","PlanOs2", new {id=Model.OsPlan2.Id_plan, pozicija = Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Dodaj novi zadatak</a>
+                                                    <a id="btnNoviZadatak" onclick="showModal('@Url.Action("NoviZadatak","PlanOs2", new {id=Model.OsPlan2.Id_plan, pozicija = Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Dodaj novi zadatak</a>
                                                 </div>
                                                 <div class="col-lg-10">
                                                     <div class="form-group">
@@ -182,14 +186,14 @@
                                                                     b++;
                                                                 <tr>
                                                                     <td class="col-md-1">@ab.@b</td>
-                                                                    <td class="col-md-9">@zadatak.Opis_aktivnost</td>
-                                                                    <td class="col-md-1">
+                                                                    <td class="col-md-7">@zadatak.Opis_aktivnost</td>
+                                                                    <td class="col-md-2">
                                                                         <a onclick="location.href='@Url.Action("ZadatakPomakGore","PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija})'" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                        <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+                                                                        <a onclick="location.href='@Url.Action("ZadatakPomakDolje","PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija})'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                     </td>
-                                                                    <td class="col-md-1">
+                                                                    <td class="col-md-2">
                                                                         <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                                        <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+                                                                        <a href="#" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                                                     </td>
                                                                 </tr>
                                                                 }
@@ -316,6 +320,9 @@
             var sadrzaj = $("#provjeraPrikaz").text();
             if (sadrzaj == "1") {
                 $("#zadaciTab").click();
+            }
+            if ($("#provjeraPodrucje").text() == "1") {
+                $("#btnNoviZadatak").prop("disabled", true);
             }
         });
     </script>    
