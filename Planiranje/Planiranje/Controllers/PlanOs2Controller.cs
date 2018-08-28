@@ -519,6 +519,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult ZadatakPomakDolje (int id, int pozicija)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             OS_Plan_2_aktivnost aktivnost = new OS_Plan_2_aktivnost();
             aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
             int idPodrucje = aktivnost.Id_podrucje;
@@ -555,6 +559,38 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = pozicija });
+        }
+        public ActionResult UrediZadatak(int id, int pozicija, string tekst)
+        {
+            PlanOs2View plan = new PlanOs2View();
+            plan.OsPlan2Aktivnost = new OS_Plan_2_aktivnost();
+            plan.OsPlan2Aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+            plan.Pozicija = pozicija;
+            plan.Tekst = tekst;
+            return View(plan);
+        }
+        [HttpPost]
+        public ActionResult UrediZadatak(PlanOs2View plan)
+        {
+            OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
+            int idPod = plan.OsPlan2Aktivnost.Id_podrucje;
+            podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPod);
+
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.OsPlan2Aktivnost.Add(plan.OsPlan2Aktivnost);
+                    db.Entry(plan.OsPlan2Aktivnost).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["note"] = "Zadatak je promijenjen";
+                }
+                catch
+                {
+                    TempData["note"] = "Zadatak nije promijenjen";
+                }
+            }
+            return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = plan.Pozicija });
         }
 	}
 }

@@ -40,5 +40,6 @@ namespace Planiranje.Models
         public int Broj { get; set; }
         public int Pozicija { get; set; }
         public int Id { get; set; }
+        public string Tekst { get; set; }
     }
 }
