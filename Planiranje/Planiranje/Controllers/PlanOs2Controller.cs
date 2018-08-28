@@ -239,7 +239,7 @@ namespace Planiranje.Controllers
                 }
                 catch
                 {
-                    TempData["note"] = "Novi posao nije dodan.\nPobrinite se da sva polja pravilno ispunite";
+                    TempData["note"] = "Novi posao nije dodan. Pobrinite se da sva polja pravilno ispunite";
                 }
             }
             return RedirectToAction("Details", new { id = _id });
