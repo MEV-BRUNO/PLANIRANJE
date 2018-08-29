@@ -774,5 +774,89 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = plan.Pozicija, pB = plan.Pozicija2 });
         }
+        public ActionResult AktivnostPomakGore (int id, int pa, int pb)
+        {
+            OS_Plan_2_akcija akcija = new OS_Plan_2_akcija();
+            akcija = baza.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == id);
+            int idAktivnost = akcija.Id_aktivnost;
+            OS_Plan_2_aktivnost aktivnost = new OS_Plan_2_aktivnost();
+            aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == idAktivnost);
+            int idPodrucje = aktivnost.Id_podrucje;
+            OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
+            podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
+
+            int pozicija = akcija.Red_br_akcija;
+            List<OS_Plan_2_akcija> trenutne = new List<OS_Plan_2_akcija>();
+            trenutne = baza.OsPlan2Akcija.Where(w => w.Id_aktivnost == idAktivnost && w.Red_br_akcija <= pozicija).ToList();
+            if (trenutne.Count == 1)
+            {
+                return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = pa, pB = pb });
+            }
+            trenutne = trenutne.OrderBy(o => o.Red_br_akcija).ToList();
+            int idPrije = trenutne.ElementAt(trenutne.Count - 2).Id_plan;
+            int pozicijaPrije = trenutne.ElementAt(trenutne.Count - 2).Red_br_akcija;
+            using(var db = new BazaPodataka())
+            {
+                var result = db.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == id);
+                var result1 = db.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == idPrije);
+                try
+                {
+                    if(result!=null && result1 != null)
+                    {
+                        result.Red_br_akcija = pozicijaPrije;
+                        result1.Red_br_akcija = pozicija;
+                        db.SaveChanges();
+                        TempData["note"] = "Aktivnost je pomaknuta za jedno mjesto gore";
+                    }                    
+                }
+                catch
+                {
+                    TempData["note"] = "Aktivnost nije pomaknuta";
+                }
+            }
+            return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = pa, pB = pb });
+        }
+        public ActionResult AktivnostPomakDolje(int id, int pa, int pb)
+        {
+            OS_Plan_2_akcija akcija = new OS_Plan_2_akcija();
+            akcija = baza.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == id);
+            int idAktivnost = akcija.Id_aktivnost;
+            OS_Plan_2_aktivnost aktivnost = new OS_Plan_2_aktivnost();
+            aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == idAktivnost);
+            int idPodrucje = aktivnost.Id_podrucje;
+            OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
+            podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
+
+            int pozicija = akcija.Red_br_akcija;
+            List<OS_Plan_2_akcija> trenutne = new List<OS_Plan_2_akcija>();
+            trenutne = baza.OsPlan2Akcija.Where(w => w.Id_aktivnost == idAktivnost && w.Red_br_akcija >= pozicija).ToList();
+            if (trenutne.Count == 1)
+            {
+                return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = pa, pB = pb });
+            }
+            trenutne = trenutne.OrderBy(o => o.Red_br_akcija).ToList();
+            int idPoslije = trenutne.ElementAt(1).Id_plan;
+            int pozicijaPoslije = trenutne.ElementAt(1).Red_br_akcija;
+            using(var db = new BazaPodataka())
+            {
+                var result = db.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == id);
+                var result1 = db.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == idPoslije);
+                try
+                {
+                    if(result!=null && result1!= null)
+                    {
+                        result.Red_br_akcija = pozicijaPoslije;
+                        result1.Red_br_akcija = pozicija;
+                        db.SaveChanges();
+                        TempData["note"] = "Aktivnost je pomaknuta za jedno mjesto dolje";
+                    }
+                }
+                catch
+                {
+                    TempData["note"] = "Aktivnost nije pomaknuta";
+                }
+            }
+            return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = pa, pB = pb });
+        }
 	}
 }
