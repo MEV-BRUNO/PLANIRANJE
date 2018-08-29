@@ -702,6 +702,7 @@ namespace Planiranje.Controllers
         public ActionResult UrediAktivnost(int id,int pA, int pB, string tekst)
         {
             PlanOs2View plan = new PlanOs2View();
+            plan.OsPlan2Akcija = new OS_Plan_2_akcija();
             plan.OsPlan2Akcija = baza.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == id);
             plan.Pozicija = pA;
             plan.Pozicija2 = pB;
@@ -730,6 +731,45 @@ namespace Planiranje.Controllers
                 catch
                 {
                     TempData["note"] = "Aktivnost nije promijenjena";
+                }
+            }
+            return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = plan.Pozicija, pB = plan.Pozicija2 });
+        }
+        public ActionResult ObrisiAktivnost(int id, int pA, int pB, string tekst)
+        {
+            PlanOs2View plan = new PlanOs2View();
+            plan.OsPlan2Akcija = new OS_Plan_2_akcija();
+            plan.OsPlan2Akcija = baza.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == id);
+            plan.Pozicija = pA;
+            plan.Pozicija2 = pB;
+            plan.Tekst = tekst;
+            return View(plan);
+        }
+        [HttpPost]
+        public ActionResult ObrisiAktivnost(PlanOs2View plan)
+        {
+            int idAkcija = plan.OsPlan2Akcija.Id_plan;
+            int idAktivnost = plan.OsPlan2Akcija.Id_aktivnost;
+            OS_Plan_2_aktivnost aktivnost = new OS_Plan_2_aktivnost();
+            aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == idAktivnost);
+            int idPodrucje = aktivnost.Id_podrucje;
+            OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
+            podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
+            using(var db=new BazaPodataka())
+            {
+                var result = db.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == idAkcija);
+                try
+                {
+                    if (result != null)
+                    {
+                        db.OsPlan2Akcija.Remove(result);
+                        db.SaveChanges();
+                        TempData["note"] = "Aktivnost je obrisana";
+                    }                    
+                }
+                catch
+                {
+                    TempData["note"] = "Aktivnost nije obrisana";
                 }
             }
             return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = plan.Pozicija, pB = plan.Pozicija2 });

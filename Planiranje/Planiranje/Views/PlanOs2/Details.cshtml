@@ -233,15 +233,15 @@ else if (Model.OsPlan2Aktivnosti.Count == 0)
                                                              { e++;
                                                             <tr>
                                                                 <td class="col-md-1">@c.@d.@e</td>
-                                                                <td class="col-md-8">@akcija.Opis_akcija</td>
+                                                                <td class="col-md-6">@akcija.Opis_akcija</td>
                                                                 <td class="col-md-1">@akcija.Sati</td>
-                                                                <td class="col-md-1">
+                                                                <td class="col-md-2">
                                                                     <a href="#" class="btn btn-warning btn-xs btn-grad">Gore</a>
                                                                     <a href="#" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                 </td>
-                                                                <td class="col-md-1">
+                                                                <td class="col-md-2">
                                                                     <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs2",new { id=akcija.Id_plan, pA=Model.Pozicija, pB=Model.Pozicija2, tekst=c+"."+d+"."+e})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                                                    <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+                                                                    <a onclick="showModal('@Url.Action("ObrisiAktivnost","PlanOs2",new { id=akcija.Id_plan, pA=Model.Pozicija, pB=Model.Pozicija2, tekst=c+"."+d+"."+e})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                                                 </td>
                                                             </tr>                                                            
                                                             }
