@@ -414,6 +414,7 @@
     <Content Include="Views\PlanOs2\UrediZadatak.cshtml" />
     <Content Include="Views\PlanOs2\ObrisiZadatak.cshtml" />
     <Content Include="Views\PlanOs2\NovaAktivnost.cshtml" />
+    <Content Include="Views\PlanOs2\UrediAktivnost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
