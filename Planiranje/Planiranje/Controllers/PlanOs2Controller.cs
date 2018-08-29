@@ -146,7 +146,7 @@ namespace Planiranje.Controllers
 
 			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
 		}
-        public ActionResult Details(int id, int? pA)
+        public ActionResult Details(int id, int? pA, int? pB)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -167,6 +167,7 @@ namespace Planiranje.Controllers
             plan.Oblici = new List<Oblici>();
             plan.Oblici = oblici_db.ReadOblici();
             plan.OsPlan2Aktivnosti = new List<OS_Plan_2_aktivnost>();
+            plan.OsPlan2Akcije = new List<OS_Plan_2_akcija>();
             if (plan.OsPlan2Podrucja.Count == 0)
             {
                 return View(plan);
@@ -179,13 +180,30 @@ namespace Planiranje.Controllers
             {
                 TempData["prikaz"] = "1";
             }
+            if (pB == null)
+            {
+                pB = 0;
+            }
+            else
+            {
+                TempData["prikaz"] = "2";
+            }
             int parametar = (Int32)pA;
             int idPod = plan.OsPlan2Podrucja.ElementAt(parametar).Id_plan;
-            
+
+            int parametar2 = (Int32)pB;            
+
             plan.OsPlan2Aktivnosti = baza.OsPlan2Aktivnost.Where(w => w.Id_podrucje == idPod).ToList();
             plan.OsPlan2Aktivnosti = plan.OsPlan2Aktivnosti.OrderBy(o => o.Red_br_aktivnost).ToList();
             plan.Pozicija = parametar;
-
+            plan.Pozicija2 = parametar2;
+            if (plan.OsPlan2Aktivnosti.Count == 0)
+            {
+                return View(plan);
+            }
+            int idAktivnost = plan.OsPlan2Aktivnosti.ElementAt(parametar2).Id_plan;
+            plan.OsPlan2Akcije = baza.OsPlan2Akcija.Where(w => w.Id_aktivnost == idAktivnost).ToList();
+            plan.OsPlan2Akcije = plan.OsPlan2Akcije.OrderBy(o => o.Red_br_akcija).ToList();
             return View(plan);
         }
         public ActionResult NoviPosao(int id)
@@ -626,6 +644,60 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("Details", new { id = pod.Id_glavni_plan, pA = plan.Pozicija });
+        }
+        public ActionResult NovaAktivnost(int id,int pA, int pB)
+        {
+            PlanOs2View plan = new PlanOs2View();
+            plan.Pozicija = pA;
+            plan.Pozicija2 = pB;
+            plan.Id = id;
+            return View(plan);
+        }
+        [HttpPost]
+        public ActionResult NovaAktivnost(PlanOs2View plan)
+        {            
+            int idGlavniPlan = plan.Id;
+            List<OS_Plan_2_podrucje> podrucja = new List<OS_Plan_2_podrucje>();
+            podrucja = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == idGlavniPlan).ToList();
+            podrucja = podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
+            OS_Plan_2_podrucje pod = new OS_Plan_2_podrucje();
+            pod = podrucja.ElementAt(plan.Pozicija);
+            int idPodrucje = pod.Id_plan;
+            List<OS_Plan_2_aktivnost> aktivnosti = new List<OS_Plan_2_aktivnost>();
+            aktivnosti = baza.OsPlan2Aktivnost.Where(w => w.Id_podrucje == idPodrucje).ToList();
+            aktivnosti = aktivnosti.OrderBy(o => o.Red_br_aktivnost).ToList();
+            OS_Plan_2_aktivnost akt = new OS_Plan_2_aktivnost();
+            akt = aktivnosti.ElementAt(plan.Pozicija2);
+            int idAktivnost = akt.Id_plan;
+            plan.OsPlan2Akcija.Id_aktivnost = akt.Id_plan;
+
+            List<OS_Plan_2_akcija> akcije = new List<OS_Plan_2_akcija>();
+            akcije = baza.OsPlan2Akcija.Where(w => w.Id_aktivnost == idAktivnost).ToList();
+            int maxValue;
+            if (akcije.Count == 0)
+            {
+                maxValue = 1;
+            }
+            else
+            {
+                maxValue = akcije.Max(m => m.Red_br_akcija);
+                maxValue++;
+            }
+            plan.OsPlan2Akcija.Red_br_akcija = maxValue;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    db.OsPlan2Akcija.Add(plan.OsPlan2Akcija);
+                    db.SaveChanges();
+                    TempData["note"] = "Nova aktivnost je dodana";
+                }
+                catch
+                {
+                    TempData["note"] = "Nova aktivnost nije dodana";
+                }
+            }
+            return RedirectToAction("Details", new { id = pod.Id_glavni_plan, pA = plan.Pozicija, pB = plan.Pozicija2 });
         }
 	}
 }
