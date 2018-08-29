@@ -719,10 +719,20 @@ namespace Planiranje.Controllers
             int idPodrucje = aktivnost.Id_podrucje;
             OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
             podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
+            
+            OS_Plan_2_akcija akcija = new OS_Plan_2_akcija();
+            akcija = baza.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == idAkcija);
+            int sati = akcija.Sati;
             using(var db=new BazaPodataka())
             {
+                var result = db.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == idAktivnost);
+                var result1 = db.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
                 try
                 {
+                    result.Sati -= sati;
+                    result.Sati += plan.OsPlan2Akcija.Sati;
+                    result1.Sati -= sati;
+                    result1.Sati += plan.OsPlan2Akcija.Sati;
                     db.OsPlan2Akcija.Add(plan.OsPlan2Akcija);
                     db.Entry(plan.OsPlan2Akcija).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
@@ -758,10 +768,15 @@ namespace Planiranje.Controllers
             using(var db=new BazaPodataka())
             {
                 var result = db.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == idAkcija);
+                int sati = result.Sati;
+                var result1 = db.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == idAktivnost);
+                var result2 = db.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
                 try
                 {
-                    if (result != null)
+                    if (result != null && result1!=null)
                     {
+                        result1.Sati -= sati;
+                        result2.Sati -= sati;
                         db.OsPlan2Akcija.Remove(result);
                         db.SaveChanges();
                         TempData["note"] = "Aktivnost je obrisana";
