@@ -193,7 +193,7 @@ else if (Model.OsPlan2Aktivnosti.Count == 0)
                                                 <div class="form-group">
                                                     <label class="control-label col-lg-2">Odaberi zadatka iz god. plana:</label>
                                                     <div class="col-lg-7">
-                                                        <select class="form-control">
+                                                        <select id="selectZadatak" onchange="promjenaZadatak()" class="form-control">
                                                             @{ b = 0;}
                                                             @foreach(var item in Model.OsPlan2Aktivnosti)
                                                             {
@@ -204,9 +204,11 @@ else if (Model.OsPlan2Aktivnosti.Count == 0)
                                                                 }
                                                                 else
                                                                 {
-                                                                    <option onclick="location.href='@Url.Action("Details","PlanOs2",new { id=Model.OsPlan2.Id_plan,pA=Model.Pozicija, pB=b-1})'">@ab.@b @item.Opis_aktivnost</option>
+                                                                    b--;
+                                                                    <option value="pA=@Model.Pozicija&amp;pB=@b">@{b++;}@ab.@b @item.Opis_aktivnost</option>
+                                                                    
                                                                 }
-                                                                
+
                                                             }
                                                         </select>
                                                     </div>
@@ -271,6 +273,18 @@ else if (Model.OsPlan2Aktivnosti.Count == 0)
         var id = $("#idPlan").text();
         $.ajax({
             url: '/PlanOs2/Details/' + id + '?pA=' + val,
+            success: function (data) {
+                $("#content").html(data);
+            }
+        });
+    }
+</script>
+<script>
+    function promjenaZadatak() {
+        var val = $("#selectZadatak").val();
+        var id = $("#idPlan").text();
+        $.ajax({
+            url: '/PlanOs2/Details/' + id + '?' + val,
             success: function (data) {
                 $("#content").html(data);
             }
