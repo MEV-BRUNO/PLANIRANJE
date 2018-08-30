@@ -12,15 +12,15 @@
 
 @if (TempData["note"] != null)
 {
-    <div style="visibility:hidden" id="poruka">1</div>
+    <div style="display:none" id="poruka">1</div>
 }
 @if (Model.OsPlan2Podrucja.Count == 0)
 {
-    <div id="provjeraPodrucje" style="visibility:hidden">1</div>
+    <div id="provjeraPodrucje" style="display:none">1</div>
 }
 else if (Model.OsPlan2Aktivnosti.Count == 0)
 {
-    <div id="provjeraPodrucje" style="visibility:hidden">2</div>
+    <div id="provjeraPodrucje" style="display:none">2</div>
 }
 <div style="visibility:hidden" id="provjeraPrikaz">@TempData["prikaz"]</div>
 <div class="inner">
