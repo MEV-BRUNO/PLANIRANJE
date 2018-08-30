@@ -580,6 +580,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult UrediZadatak(int id, int pozicija, string tekst)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PlanOs2View plan = new PlanOs2View();
             plan.OsPlan2Aktivnost = new OS_Plan_2_aktivnost();
             plan.OsPlan2Aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
@@ -590,6 +594,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult UrediZadatak(PlanOs2View plan)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
             int idPod = plan.OsPlan2Aktivnost.Id_podrucje;
             podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPod);
@@ -612,6 +620,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult ObrisiZadatak (int id, int pozicija, string tekst)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PlanOs2View plan = new PlanOs2View();
             plan.OsPlan2Aktivnost = new OS_Plan_2_aktivnost();
             plan.OsPlan2Aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
@@ -622,6 +634,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult ObrisiZadatak(PlanOs2View plan)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int id = plan.OsPlan2Aktivnost.Id_plan;
             int idPodrucje = plan.OsPlan2Aktivnost.Id_podrucje;
             OS_Plan_2_podrucje pod = new OS_Plan_2_podrucje();
@@ -649,6 +665,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult NovaAktivnost(int id,int pA, int pB)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PlanOs2View plan = new PlanOs2View();
             plan.Pozicija = pA;
             plan.Pozicija2 = pB;
@@ -657,7 +677,11 @@ namespace Planiranje.Controllers
         }
         [HttpPost]
         public ActionResult NovaAktivnost(PlanOs2View plan)
-        {            
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int idGlavniPlan = plan.Id;
             List<OS_Plan_2_podrucje> podrucja = new List<OS_Plan_2_podrucje>();
             podrucja = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == idGlavniPlan).ToList();
@@ -708,6 +732,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult UrediAktivnost(int id,int pA, int pB, string tekst)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PlanOs2View plan = new PlanOs2View();
             plan.OsPlan2Akcija = new OS_Plan_2_akcija();
             plan.OsPlan2Akcija = baza.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == id);
@@ -719,6 +747,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult UrediAktivnost(PlanOs2View plan)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int idAkcija = plan.OsPlan2Akcija.Id_plan;
             int idAktivnost = plan.OsPlan2Akcija.Id_aktivnost;
             OS_Plan_2_aktivnost aktivnost = new OS_Plan_2_aktivnost();
@@ -754,6 +786,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult ObrisiAktivnost(int id, int pA, int pB, string tekst)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PlanOs2View plan = new PlanOs2View();
             plan.OsPlan2Akcija = new OS_Plan_2_akcija();
             plan.OsPlan2Akcija = baza.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == id);
@@ -765,6 +801,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult ObrisiAktivnost(PlanOs2View plan)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int idAkcija = plan.OsPlan2Akcija.Id_plan;
             int idAktivnost = plan.OsPlan2Akcija.Id_aktivnost;
             OS_Plan_2_aktivnost aktivnost = new OS_Plan_2_aktivnost();
@@ -798,6 +838,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult AktivnostPomakGore (int id, int pa, int pb)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             OS_Plan_2_akcija akcija = new OS_Plan_2_akcija();
             akcija = baza.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == id);
             int idAktivnost = akcija.Id_aktivnost;
@@ -840,6 +884,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult AktivnostPomakDolje(int id, int pa, int pb)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             OS_Plan_2_akcija akcija = new OS_Plan_2_akcija();
             akcija = baza.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == id);
             int idAktivnost = akcija.Id_aktivnost;
