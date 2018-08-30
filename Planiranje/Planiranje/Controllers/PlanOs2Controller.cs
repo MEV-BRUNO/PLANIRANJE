@@ -629,10 +629,12 @@ namespace Planiranje.Controllers
             using(var db = new BazaPodataka())
             {
                 var result = db.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+                var result1 = db.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
                 if (result != null)
                 {
                     try
                     {
+                        result1.Sati -= result.Sati;
                         db.OsPlan2Aktivnost.Remove(result);
                         db.SaveChanges();
                         TempData["note"] = "Zadatak je obrisan";
@@ -684,11 +686,16 @@ namespace Planiranje.Controllers
                 maxValue++;
             }
             plan.OsPlan2Akcija.Red_br_akcija = maxValue;
+            int sati = plan.OsPlan2Akcija.Sati;
             using(var db=new BazaPodataka())
             {
+                var result = db.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == idAktivnost);
+                var result1 = db.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
                 try
                 {
                     db.OsPlan2Akcija.Add(plan.OsPlan2Akcija);
+                    result.Sati += sati;
+                    result1.Sati += sati;
                     db.SaveChanges();
                     TempData["note"] = "Nova aktivnost je dodana";
                 }
