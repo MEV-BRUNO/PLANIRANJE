@@ -928,5 +928,40 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = pa, pB = pb });
         }
-	}
+        public FileStreamResult IspisDetalji(int id)
+        {
+            PlanOs2View plan = new PlanOs2View();
+            plan.OsPlan2 = planovi_os2.ReadOS_Plan_2(id);
+            plan.OsPlan2Podrucja = new List<OS_Plan_2_podrucje>();
+            plan.OsPlan2Podrucja = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == id).ToList();
+            plan.OsPlan2Podrucja = plan.OsPlan2Podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
+            plan.OsPlan2Aktivnosti = new List<OS_Plan_2_aktivnost>();
+            foreach(var item in plan.OsPlan2Podrucja)
+            {
+                int i = item.Id_plan;
+                plan.OsPlan2Aktivnosti.AddRange(baza.OsPlan2Aktivnost.Where(w => w.Id_podrucje == i));
+            }
+            plan.OsPlan2Akcije = new List<OS_Plan_2_akcija>();
+            foreach(var item in plan.OsPlan2Aktivnosti)
+            {
+                int i = item.Id_plan;
+                plan.OsPlan2Akcije.AddRange(baza.OsPlan2Akcija.Where(w => w.Id_aktivnost == i));
+            }
+            plan.Ciljevi = new List<Ciljevi>();
+            plan.Ciljevi = ciljevi_db.ReadCiljevi();
+            plan.Zadaci = new List<Zadaci>();
+            plan.Zadaci = zadaci_db.ReadZadaci();
+            plan.Subjekti = new List<Subjekti>();
+            plan.Subjekti = subjekti_db.ReadSubjekti();
+            plan.Oblici = new List<Oblici>();
+            plan.Oblici = oblici_db.ReadOblici();
+
+            Pedagog ped = new Pedagog();
+            int idPed = PlaniranjeSession.Trenutni.PedagogId;
+            ped = baza.Pedagog.SingleOrDefault(s => s.Id_Pedagog == idPed);
+
+            PlanOs2DetailsReport report = new PlanOs2DetailsReport(plan, ped);
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+        }
+    }
 }

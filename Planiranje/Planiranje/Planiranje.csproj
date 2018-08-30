@@ -266,6 +266,7 @@
     <Compile Include="Reports\MjesecniPlanReport.cs" />
     <Compile Include="Reports\PlanOs1DetailsReport.cs" />
     <Compile Include="Reports\PlanOs1Report.cs" />
+    <Compile Include="Reports\PlanOs2DetailsReport.cs" />
     <Compile Include="Reports\PlanOs2Report.cs" />
     <Compile Include="Reports\PlanSsPodrucjaReport.cs" />
     <Compile Include="Reports\PlanSsReport.cs" />
