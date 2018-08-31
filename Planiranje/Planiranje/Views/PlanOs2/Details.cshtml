@@ -38,7 +38,7 @@ else if (Model.OsPlan2Aktivnosti.Count == 0)
                             <h4> Kreiranje godišnjeg plana i programa</h4>
                             <h5> Naziv godišnjeg plana i programa: @Model.OsPlan2.Naziv</h5>
                             <p>
-                                <a onclick="location.href='@Url.Action("Index","PlanOs2")'" class="btn btn-success btn-xs btn-grad">Povratak na popis</a>
+                                <a onclick="reloadPage('@Url.Action("Index","PlanOs2")')" class="btn btn-success btn-xs btn-grad">Povratak na popis</a>
                             </p>
                         </div><!--END COL 10-->
                         <div class="col-lg-2">
@@ -99,8 +99,8 @@ else if (Model.OsPlan2Aktivnosti.Count == 0)
                                                                     <td class="col-md-1">@Model.Oblici.Single(s => s.Id_oblici == item.Oblici).Naziv</td>
                                                                     <td class="col-md-1">@item.Vrijeme</td>
                                                                     <td class="col-md-1">
-                                                                        <a onclick="location.href='@Url.Action("PosaoPomakGore","PlanOs2", new { id=item.Id_plan})'" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                        <a onclick="location.href='@Url.Action("PosaoPomakDolje","PlanOs2", new { id=item.Id_plan})'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+                                                                        <a onclick="reloadPage('@Url.Action("PosaoPomakGore","PlanOs2", new { id=item.Id_plan})')" class="btn btn-warning btn-xs btn-grad">Gore</a>
+                                                                        <a onclick="reloadPage('@Url.Action("PosaoPomakDolje","PlanOs2", new { id=item.Id_plan})')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                     </td>
                                                                     <td class="col-md-1">
                                                                         <a onclick="showModal('@Url.Action("UrediPosao","PlanOs2", new { id=item.Id_plan, broj=br})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
@@ -169,8 +169,8 @@ else if (Model.OsPlan2Aktivnosti.Count == 0)
                                                                     <td class="col-md-1">@ab.@b</td>
                                                                     <td class="col-md-7">@zadatak.Opis_aktivnost</td>
                                                                     <td class="col-md-2">
-                                                                        <a onclick="location.href='@Url.Action("ZadatakPomakGore","PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija})'" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                        <a onclick="location.href='@Url.Action("ZadatakPomakDolje","PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija})'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+                                                                        <a onclick="reloadPage('@Url.Action("ZadatakPomakGore","PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija})')" class="btn btn-warning btn-xs btn-grad">Gore</a>
+                                                                        <a onclick="reloadPage('@Url.Action("ZadatakPomakDolje","PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija})')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                     </td>
                                                                     <td class="col-md-2">
                                                                         <a onclick="showModal('@Url.Action("UrediZadatak","PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija, tekst=ab+"."+b})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
@@ -238,8 +238,8 @@ else if (Model.OsPlan2Aktivnosti.Count == 0)
                                                                 <td class="col-md-6">@akcija.Opis_akcija</td>
                                                                 <td class="col-md-1">@akcija.Sati</td>
                                                                 <td class="col-md-2">
-                                                                    <a onclick="location.href='@Url.Action("AktivnostPomakGore","PlanOs2",new { id=akcija.Id_plan, pa=Model.Pozicija, pb=Model.Pozicija2})'" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                    <a onclick="location.href='@Url.Action("AktivnostPomakDolje","PlanOs2", new { id=akcija.Id_plan, pa=Model.Pozicija, pb=Model.Pozicija2})'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+                                                                    <a onclick="reloadPage('@Url.Action("AktivnostPomakGore","PlanOs2",new { id=akcija.Id_plan, pa=Model.Pozicija, pb=Model.Pozicija2})')" class="btn btn-warning btn-xs btn-grad">Gore</a>
+                                                                    <a onclick="reloadPage('@Url.Action("AktivnostPomakDolje","PlanOs2", new { id=akcija.Id_plan, pa=Model.Pozicija, pb=Model.Pozicija2})')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                 </td>
                                                                 <td class="col-md-2">
                                                                     <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs2",new { id=akcija.Id_plan, pA=Model.Pozicija, pB=Model.Pozicija2, tekst=c+"."+d+"."+e})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>

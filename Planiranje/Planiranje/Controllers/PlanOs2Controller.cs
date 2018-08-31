@@ -62,11 +62,11 @@ namespace Planiranje.Controllers
             os_plan_2.Opis = gr.Opis;
             if (planovi_os2.CreateOS_Plan_2(os_plan_2))
 			{
-				TempData["alert"] = "<script>alert('Novi plan za osnovnu skolu 2 je uspjesno spremljen!');</script>";
+				TempData["note"] = "Novi plan za osnovnu skolu 2 je spremljen!";
 			}
 			else
 			{
-				TempData["alert"] = "<script>alert('Novi plan nije spremljen');</script>";
+				TempData["note"] = "Novi plan nije spremljen";
 			}
 			return RedirectToAction("Index");
         }
@@ -95,11 +95,11 @@ namespace Planiranje.Controllers
             }
             if (!planovi_os2.UpdateOS_Plan_2(os_plan_2))
 			{
-				TempData["alert"] = "<script>alert('Plan nije promjenjen!');</script>";
+				TempData["note"] = "Plan nije promjenjen!";
 			}
 			else
 			{
-				TempData["alert"] = "<script>alert('Plan je uspjesno promjenjen!');</script>";
+				TempData["note"] = "Plan je uspjesno promjenjen!";
 			}
 			return RedirectToAction("Index");
         }
@@ -129,11 +129,11 @@ namespace Planiranje.Controllers
             }
             if (!planovi_os2.DeleteOS_Plan_2(os_plan_2.Id_plan))
 			{
-				TempData["alert"] = "<script>alert('Plan nije obrisan, dogodila se greska!');</script>";
+				TempData["note"] = "Plan nije obrisan, dogodila se greška!";
 			}
 			else
 			{
-				TempData["alert"] = "<script>alert('Plan je uspjesno obrisan!');</script>";
+				TempData["note"] = "Plan je uspjesno obrisan!";
 			}
 			return RedirectToAction("Index");
 		}
