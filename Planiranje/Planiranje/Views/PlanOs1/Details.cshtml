@@ -37,7 +37,7 @@
                             <h4> Kreiranje plana i programa</h4>
                             <h5> Naziv plana i programa: @Model.OsPlan1.Naziv </h5>
                             <p>
-                                <a onclick="location.href='@Url.Action("Index", "PlanOs1")'" class="btn btn-success btn-xs btn-grad"> Povratak na popis</a>
+                                <a onclick="reloadPage('@Url.Action("Index", "PlanOs1")')" class="btn btn-success btn-xs btn-grad"> Povratak na popis</a>
                             </p>
                         </div><!--END COL 10-->
                         <div class="col-lg-2">
@@ -98,8 +98,8 @@
                                                                     <td class="col-md-2">@item.Potrebno_sati</td>
                                                                     <td class="col-md-3">@cilj.Naziv</td>
                                                                     <td class="col-md-1">
-                                                                        <a onclick="location.href='@Url.Action("PodrucjePomakGore", "PlanOs1", new { id = item.Id_plan })'" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                        <a onclick="location.href='@Url.Action("PodrucjePomakDolje", "PlanOs1", new { id = item.Id_plan })'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+                                                                        <a onclick="reloadPage('@Url.Action("PodrucjePomakGore", "PlanOs1", new { id = item.Id_plan })')" class="btn btn-warning btn-xs btn-grad">Gore</a>
+                                                                        <a onclick="reloadPage('@Url.Action("PodrucjePomakDolje", "PlanOs1", new { id = item.Id_plan })')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                     </td>
                                                                     <td class="col-md-1">
                                                                         <a onclick="showModal('@Url.Action("UrediPodrucje", "PlanOs1", new { id = item.Id_plan })')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
@@ -178,8 +178,8 @@
                                                                     <td class="col-md-7">@Model.Aktivnosti.Single(s => s.Id_aktivnost == item.Opis_aktivnost).Naziv</td>
                                                                     <td class="col-md-2">@item.Potrebno_sati</td>
                                                                     <td class="col-md-1">
-                                                                        <a onclick="location.href='@Url.Action("AktivnostPomakGore","PlanOs1", new { id=item.Id_plan, pozicija_podrucja=Model.Pozicija})'" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                                                        <a onclick="location.href='@Url.Action("AktivnostPomakDolje","PlanOs1", new { id=item.Id_plan, pozicija_podrucja = Model.Pozicija})'" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+                                                                        <a onclick="reloadPage('@Url.Action("AktivnostPomakGore","PlanOs1", new { id=item.Id_plan, pozicija_podrucja=Model.Pozicija})')" class="btn btn-warning btn-xs btn-grad">Gore</a>
+                                                                        <a onclick="reloadPage('@Url.Action("AktivnostPomakDolje","PlanOs1", new { id=item.Id_plan, pozicija_podrucja = Model.Pozicija})')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                                                     </td>
                                                                     <td class="col-md-1">
                                                                         <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs1",new { id=item.Id_plan, pozicija=a.ToString()+"."+i.ToString(), pozicija_podrucja=Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>

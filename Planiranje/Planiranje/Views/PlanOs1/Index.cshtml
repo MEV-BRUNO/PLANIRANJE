@@ -5,7 +5,10 @@
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Raw(TempData["alert"])
+@if (TempData["note"] != null)
+{
+    <div id="poruka" style="display:none">1</div>
+}
 <div class="inner">
 	<div class="row">
 		<div class="col-lg-12">
@@ -18,7 +21,7 @@
 				<div class="panel-body">
 					<div>
 						<div class="pull-left">
-							<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "PlanOs1")" id="btnCreateAsset">
+							<button type="button" class="btn btn-primary btn-md" onclick="showModal('@Url.Action("NoviPlan", "PlanOs1")')" >
 								Novi plan i program
 							</button>
 							<span class="glyphicon glyphicon-print"></span>
@@ -26,11 +29,8 @@
 						</div>
 						<br />
 					</div>
-					@Html.Partial("Table", Model)
+					@Html.Partial("Table", Model)					
 					
-					<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
-						<div id="assetContainer"></div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -38,59 +38,14 @@
 </div>
 
 <script>
-	var rowDelete;
-	$(document).ready(function () {
-		$("#btnCreateAsset").click(function (e) {
-			var url = $(this).attr("data-url");
-			$.ajax({
-				url: url,
-				success: function (data) {
-					$('#assetContainer').html(data);
-					$('#assetModal').modal('show');
-				},
-				error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
-			});
-		});
-
-		$('#dataTables-example').on("click", "#editAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-
-		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-	});
-</script>
-
-<script type="text/javascript">
-	function CreateSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function EditSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function DeleteSuccess() {
-		location.reload(true);
-	}
+    $(document).ready(function () {
+        $('#dataTables-example').dataTable();
+    });
 </script>
 <script>
     $(document).ready(function () {
-        $('#dataTables-example').dataTable();
+        if ($("#poruka").text() == "1") {
+            showSnackBar('@TempData["note"]');
+        }
     });
 </script>
