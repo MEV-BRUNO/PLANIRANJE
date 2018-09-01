@@ -12,9 +12,9 @@ namespace Planiranje.Models
 		[Key]
         [Required]
         public int Id_Pedagog { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Ime je obavezno")]
         public string Ime { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Prezime je obavezno")]
         public string Prezime { get; set; }
 		[Required(ErrorMessage = "Email adresa je obavezna.")]
 		[DataType(DataType.EmailAddress)]
@@ -30,7 +30,7 @@ namespace Planiranje.Models
         public int Id_skola { get; set; }
         [Required]
         public char Aktivan { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Titula je obavezna")]
         public string Titula { get; set; }
     }
 }

@@ -22,6 +22,7 @@ namespace Planiranje.Models
 
 		public List<Podrucje_rada> ReadPodrucjeRada()
 		{
+			int counter = 0;
 			List<Podrucje_rada> podrucje_rada = new List<Podrucje_rada>();
 			this.Connect();
 			using (MySqlCommand command = new MySqlCommand())
@@ -40,6 +41,7 @@ namespace Planiranje.Models
 						{
 							Podrucje_rada rad = new Podrucje_rada()
 							{
+								Red_br = ++counter,
 								Id_podrucje = Convert.ToInt32(sdr["id_podrucje"]),
 								Naziv = sdr["naziv"].ToString()								
 							};

@@ -1,0 +1,74 @@
+﻿@model Planiranje.Models.PlanOs2View
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Uređivanje poslova</h4>
+        </div>
+        @using (Ajax.BeginForm("UrediPosao", "PlanOs2", new AjaxOptions
+        {
+            HttpMethod = "Post",
+            OnSuccess = "EditSuccess"
+        }, new { @class = "form-horizontal", role = "form" }))
+        {
+        <div class="modal-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.OsPlan2Podrucje.Id_plan) 
+            @Html.HiddenFor(m=>m.OsPlan2Podrucje.Id_glavni_plan)
+            @Html.HiddenFor(m=>m.OsPlan2Podrucje.Red_br_podrucje)
+            @Html.HiddenFor(m=>m.OsPlan2Podrucje.Sati)
+            <div class="form-group">
+                @Html.LabelFor(m=>m.Broj, new { @class="control-label col-md-3"})
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m=>m.Broj, new { @class="form-control", @disabled="true"})
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.OsPlan2Podrucje.Cilj, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Cilj, Model.CiljeviItems, "Odaberi cilj", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.OsPlan2Podrucje.Opis_podrucje, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextAreaFor(model => model.OsPlan2Podrucje.Opis_podrucje, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.OsPlan2Podrucje.Zadaci, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Zadaci, Model.ZadaciItems, "Odaberi zadatak", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.OsPlan2Podrucje.Subjekti, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Subjekti, Model.SubjektiItems, "Odaberi subjekt", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.OsPlan2Podrucje.Oblici, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Oblici, Model.ObliciItems, "Odaberi oblik/metodu rada", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.OsPlan2Podrucje.Vrijeme, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.OsPlan2Podrucje.Vrijeme, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                <input type="submit" class="btn btn-primary" value="Spremi" />
+            </div>
+        </div>
+        }
+    </div>
+</div>
+

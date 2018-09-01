@@ -22,6 +22,7 @@ namespace Planiranje.Models
 
         public List<Oblici> ReadOblici()
         {
+			int counter = 0;
             List<Oblici> oblici = new List<Oblici>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
@@ -38,8 +39,9 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            Oblici oblik = new Oblici()
-                            {
+							Oblici oblik = new Oblici()
+							{
+								Red_br = ++counter,
                                 Id_oblici = Convert.ToInt32(sdr["id_oblici"]),
                                 Naziv = sdr["naziv"].ToString()                              
                             };

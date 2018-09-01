@@ -22,7 +22,7 @@ namespace Planiranje.Models
 
         public List<Akt_Akc> ReadAktivnostAkcija()
         {
-
+			int counter = 0;
             List<Akt_Akc> aktivnost_akcija = new List<Akt_Akc>();
             this.Connect();
             using (MySqlCommand command = new MySqlCommand())
@@ -42,6 +42,7 @@ namespace Planiranje.Models
                         {
 							Akt_Akc akt = new Akt_Akc()
 							{
+								Red_br = ++counter,
 								Id_akcija = Convert.ToInt32(sdr["id_akcija"]),
 								Naziv_Akcija = sdr["naziv_akcija"].ToString(),
 								Naziv_Aktivnost = sdr["naziv_aktivnost"].ToString()

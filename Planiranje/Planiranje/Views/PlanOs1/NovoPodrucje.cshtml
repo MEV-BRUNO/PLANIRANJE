@@ -1,0 +1,51 @@
+﻿@model Planiranje.Models.PlanOs1View
+
+@{
+    Layout = null;    
+}
+
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Novo područje rada</h4>
+        </div>
+        @using (Ajax.BeginForm("NovoPodrucje", "PlanOs1", new AjaxOptions
+        {
+            HttpMethod = "Post",
+            OnSuccess = "CreateSuccess"
+        }, new { @class = "form-horizontal", role = "form" }))
+        {
+        <div class="modal-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Podrucje.Id_plan, new { Value = 0 })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Podrucje.Opis_Podrucje, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.Podrucje.Opis_Podrucje, Model.PodrucjeItems, "Odaberi područje",new { @class="form-control"})
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Podrucje.Potrebno_sati, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Podrucje.Potrebno_sati, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Podrucje.Potrebno_sati, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Cilj", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.Podrucje.Cilj, Model.CiljeviItems, "Odaberi cilj", new { @class="form-control"})
+                </div>
+            </div>         
+            
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                <input type="submit" class="btn btn-primary" value="Spremi" />
+            </div>
+        </div>
+        }
+    </div>
+</div>

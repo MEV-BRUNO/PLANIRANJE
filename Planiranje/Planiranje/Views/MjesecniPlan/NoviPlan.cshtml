@@ -1,4 +1,4 @@
-﻿@model Planiranje.Models.Mjesecni_plan
+﻿@model Planiranje.Models.MjesecniModel
 
 @{
 	Layout = null;
@@ -8,43 +8,35 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h4 class="modal-title">Novi mjesecni plan</h4>
+			<h4 class="modal-title">@ViewBag.Title</h4>
 		</div>
-		@using (Ajax.BeginForm("NoviPlan", "MjesecniPlan", new AjaxOptions
+		@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviPlanModalView", @class = "form-horizontal", role = "form" }))
 		{
-			HttpMethod = "Post",
-			OnSuccess = "CreateSuccess"
-		}, new { @class = "form-horizontal", role = "form" }))
-		{
-			<div class="modal-body">
-				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-				@Html.HiddenFor(model => model.ID_plan, new { Value = 0 })
-				<div class="form-group">
-					@Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
-					<div class="col-md-9">
-						@Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
-						@Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
-					</div>
-				</div>
-				<div class="form-group">
-					@Html.LabelFor(model => model.Ak_godina, htmlAttributes: new { @class = "control-label col-md-3" })
-					<div class="col-md-9">
-						@Html.EditorFor(model => model.Ak_godina, new { htmlAttributes = new { @class = "form-control" } })
-						@Html.ValidationMessageFor(model => model.Ak_godina, "", new { @class = "text-danger" })
-					</div>
-				</div>
-				<div class="form-group">
-					@Html.LabelFor(model => model.Opis, htmlAttributes: new { @class = "control-label col-md-3" })
-					<div class="col-md-9">
-						@Html.TextAreaFor(model => model.Opis, new { @class = "edit-opis" })
-						@Html.ValidationMessageFor(model => model.Opis, "", new { @class = "text-danger" })
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-					<input type="submit" class="btn btn-primary" value="Spremi" />
+		@Html.HiddenFor(model => model.MjesecniPlan.ID_plan, new { Value = 0 })
+		@Html.HiddenFor(model => model.ID_GODINA)
+		<div class="modal-body">
+			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+			<div class="form-group">
+				@Html.LabelFor(model => model.MjesecniPlan.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
+				<div class="col-md-9">
+					@Html.EditorFor(model => model.MjesecniPlan.Naziv, new { htmlAttributes = new { @class = "form-control", @id = "newName",
+				   onkeydown = "hideModalA(event, \"/MjesecniPlan/NoviPlan\", \"#noviPlanModalView\", \"Plan uspješno spremljen\")"
+			   } })
+					@Html.ValidationMessageFor(model => model.MjesecniPlan.Naziv, "", new { @class = "text-danger" })
 				</div>
 			</div>
-		}
+			<div class="form-group">
+				@Html.LabelFor(model => model.MjesecniPlan.Opis, htmlAttributes: new { @class = "control-label col-md-3" })
+				<div class="col-md-9">
+					@Html.TextAreaFor(model => model.MjesecniPlan.Opis, new { @class = "edit-opis" })
+					@Html.ValidationMessageFor(model => model.MjesecniPlan.Opis, "", new { @class = "text-danger" })
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+				<input type="button" class="btn btn-primary" value="Spremi" onclick='hideModal("/MjesecniPlan/NoviPlan", "#noviPlanModalView", "Plan uspješno spremljen")' />
+			</div>
+		</div>
+}
 	</div>
 </div>

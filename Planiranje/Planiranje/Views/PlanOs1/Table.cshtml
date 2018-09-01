@@ -1,19 +1,19 @@
-﻿@model PagedList.IPagedList<Planiranje.Models.OS_Plan_1>
+﻿@model List<Planiranje.Models.OS_Plan_1>
 
 <table class="table table-bordered table-hover" id="dataTables-example">
     <thead>
         <tr>
             <td class="col-lg-1">
-                @Html.ActionLink("Id", "Index", "OsPlan1", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                Redni broj
             </td>
             <td class="col-lg-3">
-                @Html.ActionLink("Naziv", "Index", "OsPlan1", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+                Naziv
             </td>
-            <td class="col-lg-1">
-                @Html.ActionLink("Ak. godina", "Index", "OsPlan1", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            <td class="col-lg-2">
+                Ak. godina
             </td>
-            <td class="col-lg-6">
-                @Html.ActionLink("Opis", "Index", "OsPlan1", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            <td class="col-lg-4">
+               Opis
             </td>
             <td class="col-lg-2">
                 Akcija
@@ -21,12 +21,15 @@
         </tr>
     </thead>
     <tbody>
+        @{ var broj = 1;}
 
         @foreach (var item in Model)
 	{
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_plan)
+                @broj
+                @{broj++;}
+                
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Naziv)
@@ -39,8 +42,9 @@
             </td>
             <td>
                 <div class="pull-right">
-                    <a data-toggle="modal" data-url="@Url.Action("Edit","PlanOs1",new { id = item.Id_plan })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
-                    <a data-toggle="modal" data-url="@Url.Action("Delete","PlanOs1",new { id = item.Id_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
+                    <a onclick="reloadPage('@Url.Action("Details","PlanOs1",new { id=item.Id_plan})')" class="btn btn-success btn-xs ">Detalji</a>
+                    <a onclick="showModal('@Url.Action("Edit","PlanOs1",new { id = item.Id_plan })')"  class="btn btn-primary btn-xs ">Uredi</a>
+                    <a onclick="showModal('@Url.Action("Delete","PlanOs1",new { id = item.Id_plan })')"  class="btn btn-danger btn-xs ">Obriši</a>
                 </div>
             </td>
         </tr>

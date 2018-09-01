@@ -1,37 +1,33 @@
 ﻿@model Planiranje.Models.Godisnji_plan
 
 @{
-    Layout = null;
+	Layout = null;
 }
 
 <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Brisanje podatka</h4>
-        </div>
-        @using (Ajax.BeginForm("Delete", "GodisnjiPlan", new { id = Model.Id_god }, new AjaxOptions
-        {
-            HttpMethod = "Post",
-            OnSuccess = "DeleteSuccess"
-        }, new { @class = "form-horizontal", role = "form" }))
-        {
-        <div class="modal-body">
-            @Html.HiddenFor(model => model.Id_god)
-            <div class="form-group">
-                <div class="col-md-10">
-                    <h5>
-                        Jeste li sigurni da zelite obrisati plan sa šifrom godine "@Html.DisplayFor(model => model.Id_god, new { htmlAttributes = new { @class = "form-control" } })"?
-                    </h5>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="form-group">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                    <input type="submit" class="btn btn-danger" value="Obrisi" />
-                </div>
-            </div>
-        </div>
-        }
-    </div>
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="modal-title">@ViewBag.Title</h4>
+		</div>
+		@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiGodPlanModalView", @class = "form-horizontal", role = "form" }))
+		{
+			<div class="modal-body">
+				@Html.HiddenFor(model => model.Id_god)
+				<div class="form-group">
+					<div class="col-md-10">
+						<h5>
+							Jeste li sigurni da želite obrisati akademsku godinu "@Html.DisplayFor(model => model.Ak_godina, new { htmlAttributes = new { @class = "form-control" } })"?
+						</h5>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="form-group">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+						<input type="button" class="btn btn-danger" value="Obriši" onclick='hideModal("/GodisnjiPlan/Delete", "#obrisiGodPlanModalView", "Plan uspješno obrisan")' />
+					</div>
+				</div>
+			</div>
+		}
+	</div>
 </div>
