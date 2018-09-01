@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS planiranje;
+﻿DROP DATABASE IF EXISTS planiranje;
 CREATE DATABASE planiranje;
 USE PLANIRANJE;
 
@@ -198,8 +198,7 @@ CREATE TABLE os_plan_2_akcija (
   red_br_akcija int(11) NOT NULL,
   opis_akcija text,
   sati int(11) NOT NULL,
-  PRIMARY KEY (id_plan),  
-  CONSTRAINT os_plan_2_akcija_ibfk_2 FOREIGN KEY (id_aktivnost) REFERENCES aktivnost (id_aktivnost)  
+  PRIMARY KEY (id_plan)   
 );
 
 CREATE TABLE os_plan_1_akcija (

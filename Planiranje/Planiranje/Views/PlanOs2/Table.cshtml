@@ -40,9 +40,9 @@
             </td>
             <td>
                 <div class="pull-right">
-                    <a onclick="location.href='@Url.Action("Details","PlanOs2", new { id=item.Id_plan})'" class="btn btn-success btn-xs">Detalji</a>
-                    <a data-toggle="modal" data-url="@Url.Action("Edit","PlanOs2",new { id = item.Id_plan })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
-                    <a data-toggle="modal" data-url="@Url.Action("Delete","PlanOs2",new { id = item.Id_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
+                    <a onclick="reloadPage('@Url.Action("Details","PlanOs2", new { id=item.Id_plan})')" class="btn btn-success btn-xs">Detalji</a>
+                    <a onclick="showModal('@Url.Action("Edit","PlanOs2",new { id = item.Id_plan })')" class="btn btn-primary btn-xs ">Uredi</a>
+                    <a onclick="showModal('@Url.Action("Delete","PlanOs2",new { id = item.Id_plan })')" class="btn btn-danger btn-xs ">Obriši</a>
                 </div>
             </td>
         </tr>
