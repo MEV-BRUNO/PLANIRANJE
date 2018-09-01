@@ -27,7 +27,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            ViewBag.Title = "Pregled - osnovna skola 1";
+            ViewBag.Title = "Pregled - osnovna škola 1";
 
             List<OS_Plan_1> planovi = new List<OS_Plan_1>();
             planovi = planovi_os1.ReadOS_Plan_1();
@@ -62,11 +62,11 @@ namespace Planiranje.Controllers
             os_plan.Opis = gr.Opis;
             if (planovi_os1.CreateOS_Plan_1(os_plan))
 			{
-				TempData["alert"] = "<script>alert('Novi plan za osnovnu skolu 1 je uspjesno spremljen!');</script>";
+				TempData["note"] = "Novi plan za osnovnu školu 1 je uspješno spremljen!";
 			}
 			else
 			{
-				TempData["alert"] = "<script>alert('Novi plan nije spremljen');</script>";
+				TempData["note"] = "Novi plan nije spremljen";
 			}
 			return RedirectToAction("Index");
         }
@@ -95,11 +95,11 @@ namespace Planiranje.Controllers
             }
             if (!planovi_os1.UpdateOS_Plan_1(os_plan_1))
 			{
-				TempData["alert"] = "<script>alert('Plan nije promjenjen!');</script>";
+				TempData["note"] = "Plan nije promjenjen!";
 			}
 			else
 			{
-				TempData["alert"] = "<script>alert('Plan je uspjesno promjenjen!');</script>";
+				TempData["note"] = "Plan je uspješno promijenjen!";
 			}
 			return RedirectToAction("Index");
         }
@@ -129,11 +129,11 @@ namespace Planiranje.Controllers
             }
             if (!planovi_os1.DeleteOS_Plan_1(os_plan_1.Id_plan))
 			{
-				TempData["alert"] = "<script>alert('Plan nije obrisan, dogodila se greska!');</script>";
+				TempData["note"] = "Plan nije obrisan, dogodila se greška!";
 			}
 			else
 			{
-				TempData["alert"] = "<script>alert('Plan je uspjesno obrisan!');</script>";
+				TempData["note"] = "Plan je uspješno obrisan!";
 			}
 			return RedirectToAction("Index");
 		}
@@ -264,10 +264,10 @@ namespace Planiranje.Controllers
             }
             catch
             {
-                TempData["novop"] = "Novo područje nije dodano. Pripazite da popunite sva polja.";
+                TempData["note"] = "Novo područje nije dodano. Pripazite da popunite sva polja.";
                 return RedirectToAction("Details", new { id = _id });
             }
-            TempData["novop"] = "Novo područje je dodano";
+            TempData["note"] = "Novo područje je dodano";
             return RedirectToAction("Details",new { id=_id});
         }
 
@@ -332,7 +332,7 @@ namespace Planiranje.Controllers
                     }
                 }
             }
-            TempData["pomak"] = "Područje je pomaknuto prema gore";
+            TempData["note"] = "Područje je pomaknuto prema gore";
             return RedirectToAction("Details", new { id = id_glavni_plan });
         }
 
@@ -371,7 +371,7 @@ namespace Planiranje.Controllers
                     db.SaveChanges();
                 }
             }
-            TempData["pomak"] = "Područje je pomaknuto prema dolje";
+            TempData["note"] = "Područje je pomaknuto prema dolje";
             return RedirectToAction("Details", new { id = id_glavni_plan });
         }
 
@@ -680,11 +680,11 @@ namespace Planiranje.Controllers
                         rezultat.Red_broj_aktivnost = pozicija_prethodni;
                         rezultat1.Red_broj_aktivnost = pozicija;
                         db.SaveChanges();
-                        TempData["pomak"] = "Aktivnost je pomaknuta za jedno mjesto prema gore";
+                        TempData["note"] = "Aktivnost je pomaknuta za jedno mjesto prema gore";
                     }
                     catch
                     {
-                        TempData["pomak"] = "Aktivnost iz nekog razloga nije pomaknuta prema gore. Pokušajte ponovno ili se obratite adminu";
+                        TempData["note"] = "Aktivnost iz nekog razloga nije pomaknuta prema gore. Pokušajte ponovno ili se obratite adminu";
                     }
                 }
             }
@@ -727,11 +727,11 @@ namespace Planiranje.Controllers
                         rezultat.Red_broj_aktivnost = pozicija_slijedeći;
                         rezultat1.Red_broj_aktivnost = pozicija;
                         db.SaveChanges();
-                        TempData["pomak"] = "Aktivnost je pomaknuta za jedno mjesto prema dolje";
+                        TempData["note"] = "Aktivnost je pomaknuta za jedno mjesto prema dolje";
                     }
                     catch
                     {
-                        TempData["pomak"] = "Aktivnost iz nekog razloga nije pomaknuta prema dolje. Pokušajte ponovno ili se obratite adminu";
+                        TempData["note"] = "Aktivnost iz nekog razloga nije pomaknuta prema dolje. Pokušajte ponovno ili se obratite adminu";
                     }
                 }
             }
