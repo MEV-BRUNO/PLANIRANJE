@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -15,23 +14,61 @@ namespace Planiranje.Controllers
 {
     public class PlanOs2Controller : Controller
     {
-        private BazaPodataka baza = new BazaPodataka();
         private OS_Plan_2_DBHandle planovi_os2 = new OS_Plan_2_DBHandle();
-        private Ciljevi_DBHandle ciljevi_db = new Ciljevi_DBHandle();
-        private Podrucje_rada_DBHandle podrucje_rada_db = new Podrucje_rada_DBHandle();
-        private Aktivnost_DBHandle aktivnost_db = new Aktivnost_DBHandle();
+        int Page_No_Master = 1;
 
-        public ActionResult Index()
+        public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
             ViewBag.Title = "Pregled - osnovna skola 2";
+            ViewBag.CurrentSortOrder = Sort;
+            ViewBag.SortingName = String.IsNullOrEmpty(Sort) ? "Naziv" : "";
 
-            List<OS_Plan_2> planovi = new List<OS_Plan_2>();
-            planovi = planovi_os2.ReadOS_Plan_2();
-            return View("Index", planovi);
+            ViewBag.Message = "Grad";
+
+            ViewBag.FilterValue = Search;
+            if (Search != null)
+            {
+                Page_No = 1;
+            }
+            else
+            {
+                Search = Filter;
+            }
+            ViewBag.CurrentPage = 1;
+            if (Page_No != null)
+                ViewBag.CurrentPage = Page_No;
+
+
+            int Size_Of_Page = 10;
+            int No_Of_Page = (Page_No ?? 1);
+            if (Search == null || Search.Length == 0)
+            {
+
+                if (Request.IsAjaxRequest())
+                {
+                    int noP = (int)Page_No_Master;
+                    var Popis2 = planovi_os2.ReadOS_Plan_2().ToPagedList(No_Of_Page, Size_Of_Page);
+                    return PartialView("_GradView", Popis2);
+                }
+                Page_No_Master = No_Of_Page;
+                var Popis = planovi_os2.ReadOS_Plan_2().ToPagedList(No_Of_Page, Size_Of_Page);
+                return View(Popis);
+            }
+            else
+            {
+                Page_No_Master = No_Of_Page;
+                var Popis = planovi_os2.ReadOS_Plan_2(Search).ToPagedList(No_Of_Page, Size_Of_Page);
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView("_GradView", Popis);
+                }
+
+                return View(Popis);
+            }
         }
 
         public ActionResult NoviPlan()
@@ -55,20 +92,20 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            OS_Plan_2 os_plan = new OS_Plan_2();
-            os_plan.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-            os_plan.Ak_godina = gr.Ak_godina;
-            os_plan.Naziv = gr.Naziv;
-            os_plan.Opis = gr.Opis;
-            if (planovi_os2.CreateOS_Plan_2(os_plan))
-            {
-                TempData["alert"] = "<script>alert('Novi plan za osnovnu skolu 2 je uspjesno spremljen!');</script>";
-            }
-            else
-            {
-                TempData["alert"] = "<script>alert('Novi plan nije spremljen');</script>";
-            }
-            return RedirectToAction("Index");
+			OS_Plan_2 os_plan_2 = new OS_Plan_2();
+            os_plan_2.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+            os_plan_2.Ak_godina = gr.Ak_godina;
+            os_plan_2.Naziv = gr.Naziv;
+            os_plan_2.Opis = gr.Opis;
+            if (planovi_os2.CreateOS_Plan_2(os_plan_2))
+			{
+				TempData["alert"] = "<script>alert('Novi plan za osnovnu skolu 2 je uspjesno spremljen!');</script>";
+			}
+			else
+			{
+				TempData["alert"] = "<script>alert('Novi plan nije spremljen');</script>";
+			}
+			return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int id)
@@ -94,14 +131,14 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             if (!planovi_os2.UpdateOS_Plan_2(os_plan_2))
-            {
-                TempData["alert"] = "<script>alert('Plan nije promjenjen!');</script>";
-            }
-            else
-            {
-                TempData["alert"] = "<script>alert('Plan je uspjesno promjenjen!');</script>";
-            }
-            return RedirectToAction("Index");
+			{
+				TempData["alert"] = "<script>alert('Plan nije promjenjen!');</script>";
+			}
+			else
+			{
+				TempData["alert"] = "<script>alert('Plan je uspjesno promjenjen!');</script>";
+			}
+			return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id)
@@ -111,7 +148,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             OS_Plan_2 os_plan_2 = new OS_Plan_2();
-            os_plan_2 = planovi_os2.ReadOS_Plan_2(id);
+			os_plan_2 = planovi_os2.ReadOS_Plan_2(id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
@@ -128,92 +165,23 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             if (!planovi_os2.DeleteOS_Plan_2(os_plan_2.Id_plan))
-            {
-                TempData["alert"] = "<script>alert('Plan nije obrisan, dogodila se greska!');</script>";
-            }
-            else
-            {
-                TempData["alert"] = "<script>alert('Plan je uspjesno obrisan!');</script>";
-            }
-            return RedirectToAction("Index");
-        }
+			{
+				TempData["alert"] = "<script>alert('Plan nije obrisan, dogodila se greska!');</script>";
+			}
+			else
+			{
+				TempData["alert"] = "<script>alert('Plan je uspjesno obrisan!');</script>";
+			}
+			return RedirectToAction("Index");
+		}
 
-        public FileStreamResult Ispis()
-        {
-            List<OS_Plan_2> planovi = planovi_os2.ReadOS_Plan_2();
+		public FileStreamResult Ispis()
+		{
+			List<OS_Plan_2> planovi = planovi_os2.ReadOS_Plan_2();
 
-            PlanOs2Report report = new PlanOs2Report(planovi);
+			PlanOs2Report report = new PlanOs2Report(planovi);
 
-            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
-        }
-
-        public ActionResult Details(int id)
-        {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
-            {
-                return RedirectToAction("Index", "Planiranje");
-            }
-
-            List<OS_Plan_2_podrucje> podrucja = new List<OS_Plan_2_podrucje>();
-            podrucja = baza.OsPlan2Podrucje.Where(izraz => izraz.Id_glavni_plan == id).ToList();
-
-            PlanOs2View plan = new PlanOs2View();
-            OS_Plan_2 p = new OS_Plan_2();
-            p = planovi_os2.ReadOS_Plan_2(id);
-
-            List<Podrucje_rada> pod_rada = new List<Podrucje_rada>();
-            pod_rada = podrucje_rada_db.ReadPodrucjeRada();
-            plan.PodrucjeRada = pod_rada;
-
-            List<Ciljevi> ciljevi = new List<Ciljevi>();
-            ciljevi = ciljevi_db.ReadCiljevi();
-            plan.Ciljevi = ciljevi;
-
-            podrucja = podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
-            plan.OsPlan2 = p;
-            plan.OsPlan2Podrucje = podrucja;
-
-
-            /*dodatno*/
-            List<Podrucje_rada> pr = new List<Podrucje_rada>();
-            foreach (var i in podrucja)
-            {
-                Podrucje_rada pod = new Podrucje_rada();
-                pod = podrucje_rada_db.ReadPodrucjeRada(i.Opis_Podrucje);
-                pr.Add(pod);
-            }
-
-
-            List<Aktivnost> aktivnosti = new List<Aktivnost>();
-            aktivnosti = aktivnost_db.ReadAktivnost();
-            plan.Aktivnosti = aktivnosti;
-
-            List<OS_Plan_2_aktivnost> osPlan2Aktivnosti = new List<OS_Plan_2_aktivnost>();
-            if (podrucja.Count != 0)
-            {
-                int id_pod = podrucja.ElementAt(0).Id_plan;
-
-                osPlan2Aktivnosti = baza.OsPlan2Aktivnost.Where(w => w.Id_podrucje == id_pod).ToList();
-            }
-            plan.OsPlan2Aktivnost = osPlan2Aktivnosti;
-
-            OS_Plan_2_aktivnost ak = new OS_Plan_2_aktivnost();
-            if (podrucja.Count != 0)
-            {
-                ak.Id_podrucje = podrucja.ElementAt(0).Id_plan;
-                plan.Id = podrucja.ElementAt(0).Id_plan;
-            }
-            plan.Os_Plan_2_Aktivnost = ak;
-
-
-            return View("Details", plan);
-        }
-
-
-
-        
-
-
-
-    }
+			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+		}
+	}
 }
