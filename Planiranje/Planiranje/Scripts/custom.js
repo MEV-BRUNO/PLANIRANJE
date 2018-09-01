@@ -9,10 +9,10 @@ function reloadPage(path) {
 	$.ajax({
 		url: path,
 		success: function (data) {
-			if ($(data)[1].tagName === "META") {
-				location.reload();
-			} else {
+			if ($(data)[0].tagName === "DIV") {
 				$('#content').html(data);
+			} else {
+				location.reload();
 			}
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
@@ -25,11 +25,11 @@ function showModal(path) {
 	$.ajax({
 		url: path,
 		success: function (data) {
-			if ($(data)[1].tagName === "META") {
-				location.reload();
-			} else {
+			if ($(data)[0].tagName === "DIV") {
 				$('#modalContainer').html(data);
 				$('#modal').modal('show');
+			} else {
+				location.reload();
 			}
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
@@ -45,13 +45,13 @@ function reloadWithData(path, id, message) {
 		type: "POST",
 		data: dt,
 		success: function (data) {
-			if ($(data)[1].tagName === "META") {
-				location.reload();
-			} else {
+			if ($(data)[0].tagName === "DIV") {
 				$("#content").html(data);
 				if ($(data)[0].id !== "newPlan") {
 					showSnackBar(message);
 				}
+			} else {
+				location.reload();
 			}
 		},
 		error: function (request, status, error) {
@@ -76,9 +76,7 @@ function hideModal(path, id, message) {
 		type: "POST",
 		data: dt,
 		success: function (data) {
-			if ($(data)[1].tagName === "META") {
-				location.reload();
-			} else {
+			if ($(data)[0].tagName === "DIV") {
 				if ($(data)[0].className === "modal-dialog") {
 					$("#modalContainer").html(data);
 					$('#newName').focus();
@@ -91,6 +89,8 @@ function hideModal(path, id, message) {
 						showSnackBar(message);
 					}
 				}
+			} else {
+				location.reload();
 			}
 		},
 		error: function (request, status, error) {
