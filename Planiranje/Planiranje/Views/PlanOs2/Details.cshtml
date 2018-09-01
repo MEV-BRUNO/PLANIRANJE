@@ -42,7 +42,7 @@ else if (Model.OsPlan2Aktivnosti.Count == 0)
                             </p>
                         </div><!--END COL 10-->
                         <div class="col-lg-2">
-                            <button onclick="location.href='@Url.Action("IspisDetalji","PlanOs2", new { id=Model.OsPlan2.Id_plan})'" class="btn btn-success btn-sm">ISPIS / PDF DOKUMENT</button>
+                            <a href="@Url.Action("IspisDetalji","PlanOs2", new { id=Model.OsPlan2.Id_plan})" target="_blank" class="btn btn-success btn-sm">ISPIS / PDF DOKUMENT</a>
                         </div>
                     </div><!--END ROW -->
                 </div>

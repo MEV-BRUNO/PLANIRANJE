@@ -41,7 +41,7 @@
                             </p>
                         </div><!--END COL 10-->
                         <div class="col-lg-2">
-                            <button onclick="location.href='@Url.Action("IspisDetalji","PlanOs1",new { id=Model.OsPlan1.Id_plan})'" class="btn btn-success btn-sm">ISPIS / PDF DOKUMENT</button>
+                            <a href="@Url.Action("IspisDetalji","PlanOs1",new { id=Model.OsPlan1.Id_plan})" target="_blank" class="btn btn-success btn-sm">ISPIS / PDF DOKUMENT</a>
                         </div>
                     </div><!--END ROW -->
                 </div>
@@ -67,7 +67,7 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <p>
-                                                    <button class="btn btn-primary btn-md" onclick="showModal('@Url.Action("NovoPodrucje", "PlanOs1", new { id = Model.OsPlan1.Id_plan })')">
+                                                    <button class="btn btn-primary btn-xs btn-grad" onclick="showModal('@Url.Action("NovoPodrucje", "PlanOs1", new { id = Model.OsPlan1.Id_plan })')">
                                                         Dodaj područje djelovanja
                                                     </button>
                                                 </p>
