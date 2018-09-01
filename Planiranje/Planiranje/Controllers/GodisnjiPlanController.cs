@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -75,18 +76,30 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-
-			if (!godisnji_planovi.CreateGodisnjiPlan(model) || model.GodisnjiPlan.Ak_godina == null)
+			bool isMatch = false;
+			if (model.GodisnjiPlan.Ak_godina != null)
 			{
-				ViewBag.Mjeseci = mjeseci;
-				ViewBag.Title = "Novi godišnji plan";
-				return View("NoviPlan", model);
+				Regex regex = new Regex("^[2][0][0-9]{2}/[2][0][0-9]{2}$");
+				Match match = regex.Match(model.GodisnjiPlan.Ak_godina);
+				isMatch = match.Success;
+			}
+
+			if (isMatch == false)
+			{
+				ViewBag.ErrorMessage = null;
+			}
+			else if (!godisnji_planovi.CreateGodisnjiPlan(model))
+			{
+				ViewBag.ErrorMessage = "Akademska godina već postoji!";
 			}
 			else
 			{
 				return RedirectToAction("Index");
 			}
-        }
+			ViewBag.Mjeseci = mjeseci;
+			ViewBag.Title = "Novi godišnji plan";
+			return View("NoviPlan", model);
+		}
 
 		// UREĐIVANJE
         public ActionResult Edit(int id)
