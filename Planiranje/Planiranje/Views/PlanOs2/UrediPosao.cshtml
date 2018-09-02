@@ -30,7 +30,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.OsPlan2Podrucje.Cilj, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Cilj, Model.CiljeviItems, "Odaberi cilj", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Cilj, Model.CiljeviItems, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
@@ -42,19 +42,19 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.OsPlan2Podrucje.Zadaci, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Zadaci, Model.ZadaciItems, "Odaberi zadatak", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Zadaci, Model.ZadaciItems, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.OsPlan2Podrucje.Subjekti, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Subjekti, Model.SubjektiItems, "Odaberi subjekt", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Subjekti, Model.SubjektiItems, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.OsPlan2Podrucje.Oblici, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Oblici, Model.ObliciItems, "Odaberi oblik/metodu rada", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.OsPlan2Podrucje.Oblici, Model.ObliciItems, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">

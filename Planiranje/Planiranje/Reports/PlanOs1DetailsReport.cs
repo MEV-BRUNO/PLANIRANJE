@@ -48,11 +48,17 @@ namespace Planiranje.Reports
             t.WidthPercentage = 100;
             t.SetWidths(new float[] {1, 5, 2, 4,1,1,1,1,1,1,1,1,1,1,1,1,1 });
 
-            t.AddCell(VratiCeliju2("REDNI BROJ", bold, false, BaseColor.CYAN));
+            t.AddCell(VratiCeliju2("R. BR.", bold, false, BaseColor.CYAN));
             t.AddCell(VratiCeliju2("PODRUČJE RADA/AKTIVNOSTI", bold, false, BaseColor.CYAN));
-            t.AddCell(VratiCeliju2("POTREBNO SATI", bold, false, BaseColor.CYAN));
+            PdfPCell c = new PdfPCell();
+            c=VratiCeliju2("POTREBNO SATI", bold, false, BaseColor.CYAN);
+            c.Padding = 1;
+            t.AddCell(c);
             t.AddCell(VratiCeliju2("CILJ (po područjima)", bold, false, BaseColor.CYAN));
-            t.AddCell(VratiCeliju2("BROJ SATI", bold, false, BaseColor.CYAN));
+            c = new PdfPCell();
+            c=VratiCeliju2("BR. SATI", bold, false, BaseColor.CYAN);
+            c.Padding = 0.5F;
+            t.AddCell(c);
             t.AddCell(VratiCeliju2("IX", bold, false, BaseColor.CYAN));
             t.AddCell(VratiCeliju2("X", bold, false, BaseColor.CYAN));
             t.AddCell(VratiCeliju2("XI", bold, false, BaseColor.CYAN));
