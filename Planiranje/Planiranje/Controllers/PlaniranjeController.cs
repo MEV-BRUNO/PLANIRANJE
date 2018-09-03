@@ -36,8 +36,9 @@ namespace Planiranje.Controllers
 			}
 			else
 			{
-				ViewBag.Message = "Korisnik nije pronadjen!";
-				return RedirectToAction("Prijava");
+				ViewBag.Message = "Pogrešno korisničko ime ili lozinka!";
+                p = null;
+				return View(p);
 			}
 		}
 		public ActionResult Index()
