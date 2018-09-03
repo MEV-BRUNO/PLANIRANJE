@@ -9,7 +9,11 @@ function reloadPage(path) {
 	$.ajax({
 		url: path,
 		success: function (data) {
-			$('#content').html(data);
+			if ($(data)[0].tagName === "DIV") {
+				$('#content').html(data);
+			} else {
+				location.reload();
+			}
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
 			alert(xhr.responseText);
@@ -21,8 +25,12 @@ function showModal(path) {
 	$.ajax({
 		url: path,
 		success: function (data) {
-			$('#modalContainer').html(data);
-			$('#modal').modal('show');
+			if ($(data)[0].tagName === "DIV") {
+				$('#modalContainer').html(data);
+				$('#modal').modal('show');
+			} else {
+				location.reload();
+			}
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
 			alert(xhr.responseText);
@@ -37,9 +45,13 @@ function reloadWithData(path, id, message) {
 		type: "POST",
 		data: dt,
 		success: function (data) {
-			$("#content").html(data);
-			if ($(data)[0].id !== "newPlan") {
-				showSnackBar(message);
+			if ($(data)[0].tagName === "DIV") {
+				$("#content").html(data);
+				if ($(data)[0].id !== "newPlan") {
+					showSnackBar(message);
+				}
+			} else {
+				location.reload();
 			}
 		},
 		error: function (request, status, error) {
@@ -50,7 +62,7 @@ function reloadWithData(path, id, message) {
 
 function hideModalA(event, path, id, message) {
 	if (event.type === "keydown") {
-		if (event.keyCode == 13) {
+		if (event.keyCode === 13) {
 			event.preventDefault();
 			hideModal(path, id, message);
 		}
@@ -64,17 +76,21 @@ function hideModal(path, id, message) {
 		type: "POST",
 		data: dt,
 		success: function (data) {
-			if ($(data)[0].className === "modal-dialog") {
-				$("#modalContainer").html(data);
-				$('#newName').focus();
-			} else if ($(data)[0].className === "inner") {
-				$('#modal').modal('hide');
-				$('#modalContainer').removeData();
-				$('.modal-backdrop').remove();
-				$("#content").html(data);
-				if (message !== null) {
-					showSnackBar(message);
+			if ($(data)[0].tagName === "DIV") {
+				if ($(data)[0].className === "modal-dialog") {
+					$("#modalContainer").html(data);
+					$('#newName').focus();
+				} else if ($(data)[0].className === "inner") {
+					$('#modal').modal('hide');
+					$('#modalContainer').removeData();
+					$('.modal-backdrop').remove();
+					$("#content").html(data);
+					if (message !== null) {
+						showSnackBar(message);
+					}
 				}
+			} else {
+				location.reload();
 			}
 		},
 		error: function (request, status, error) {
@@ -136,5 +152,14 @@ $(document).ready(function () {
 				$("#content").html(data);
 			}
 		});
+	});
+	$('.modal').on('show.bs.modal', function () {
+		if ($(document).height() > $(window).height()) {
+			// no-scroll
+			$('body').addClass("modal-open-noscroll");
+		}
+		else {
+			$('body').removeClass("modal-open-noscroll");
+		}
 	});
 });

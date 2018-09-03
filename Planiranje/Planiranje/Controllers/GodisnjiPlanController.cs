@@ -110,7 +110,7 @@ namespace Planiranje.Controllers
             }
 			GodisnjiModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
 			ViewBag.Mjeseci = mjeseci;
-			ViewBag.Title = "Uredi godišnji plan " + detalji.GodisnjiPlan.Ak_godina;
+			ViewBag.Title = "Uredi godišnji plan";
 			return View("Uredi", detalji);
         }
 
@@ -121,17 +121,30 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-			if (model.GodisnjiPlan.Ak_godina == null || !godisnji_planovi.UpdateGodisnjiPlan(model))
+			bool isMatch = false;
+			if (model.GodisnjiPlan.Ak_godina != null)
 			{
-				ViewBag.Mjeseci = mjeseci;
-				ViewBag.Title = "Uredi godišnji plan " + model.GodisnjiPlan.Ak_godina;
-				return View("Uredi", model);
+				Regex regex = new Regex("^[2][0][0-9]{2}/[2][0][0-9]{2}$");
+				Match match = regex.Match(model.GodisnjiPlan.Ak_godina);
+				isMatch = match.Success;
+			}
+
+			if (isMatch == false)
+			{
+				ViewBag.ErrorMessage = null;
+			}
+			else if (!godisnji_planovi.UpdateGodisnjiPlan(model))
+			{
+				ViewBag.ErrorMessage = "Akademska godina već postoji!";
 			}
 			else
 			{
 				return RedirectToAction("Index");
 			}
-        }
+			ViewBag.Mjeseci = mjeseci;
+			ViewBag.Title = "Uredi godišnji plan";
+			return View("Uredi", model);
+		}
 
 		// BRISANJE
         public ActionResult Delete(int id)
