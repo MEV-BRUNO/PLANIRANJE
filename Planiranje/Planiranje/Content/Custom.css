@@ -1,4 +1,16 @@
-﻿.pointer {
+﻿.modal {
+	overflow-y: auto;
+}
+
+body.modal-open-noscroll {
+	margin-right: 0;
+}
+
+.modal-open-noscroll .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+	margin-right: 0;
+}
+
+.pointer {
 	cursor : pointer;
 }
 
