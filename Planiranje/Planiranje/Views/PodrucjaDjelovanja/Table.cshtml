@@ -1,38 +1,26 @@
-﻿@model PagedList.IPagedList<Planiranje.Models.Podrucje_rada>
+﻿@model Planiranje.Models.PodrucjaRadaModel
 
-<table class="table table-bordered table-hover" id="dataTables-example">
+<table class="table table-bordered table-hover" id="dataTable">
     <thead>
         <tr>
-            <td class="col-lg-1">
-                @Html.ActionLink("Id", "Index", "PodrucjaDjelovanja", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-            </td>
-            <td class="col-lg-9">
-                @Html.ActionLink("Naziv", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-            </td>            
-            <td class="col-lg-2">
-                Akcija
-            </td>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var item in Model)
-        {
-            <tr>
+            <td class="col-lg-1">#</td>
+            <td class="col-lg-9">Naziv</td>
+			<td class="col-lg-2">Akcija</td>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.podrucjaRada)
+		{
+			<tr>
+				<td>@Html.DisplayFor(modelItem => item.Red_br)</td>
+				<td>@Html.DisplayFor(modelItem => item.Naziv)</td>               
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id_podrucje)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Naziv)
-                </td>               
-                <td>
-                    <div class="pull-right">
-                        <a data-toggle="modal" data-url="@Url.Action("Edit","PodrucjaDjelovanja",new { id = item.Id_podrucje })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
-                        <a data-toggle="modal" data-url="@Url.Action("Delete","PodrucjaDjelovanja",new { id = item.Id_podrucje })" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
+					<div class="pull-right">
+						<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("Edit", "PodrucjaDjelovanja",new { id = item.Id_podrucje })")' />
+						<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete", "PodrucjaDjelovanja",new { id = item.Id_podrucje })")' />
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>
-

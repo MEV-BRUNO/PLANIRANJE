@@ -1,15 +1,18 @@
-﻿@model PagedList.IPagedList<Planiranje.Models.OS_Plan_1>
-@using PagedList.Mvc;
+﻿@model List<Planiranje.Models.OS_Plan_1>
 
 @{
-	Page.Title = ViewBag.Title;
+    Page.Title = ViewBag.Title;
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Raw(TempData["alert"])
+@if (TempData["note"] != null)
+{
+    <div id="poruka" style="display:none">1</div>
+}
 <div class="inner">
 	<div class="row">
 		<div class="col-lg-12">
-			<h3> Plan - osnovna skola 1 </h3>
+			<h3> Pregled okvirnih planova i programa rada stručnog suradnika </h3>
 		</div>
 	</div>
 	<div class="row">
@@ -18,32 +21,16 @@
 				<div class="panel-body">
 					<div>
 						<div class="pull-left">
-							<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "PlanOs1")" id="btnCreateAsset">
-								Novi plan
+							<button type="button" class="btn btn-primary btn-md" onclick="showModal('@Url.Action("NoviPlan", "PlanOs1")')" >
+								Novi plan i program
 							</button>
 							<span class="glyphicon glyphicon-print"></span>
 							@Html.ActionLink("Ispiši listu", "Ispis", new { target = "blank" })
 						</div>
-						<div class="pull-right">
-							@using (Html.BeginForm("Index", "PlanOs1", FormMethod.Get))
-							{
-								<p>
-									@Html.TextBox("Search", ViewBag.FilterValue as string, new { @class = "search-bar" })
-									<input class="btn btn-primary btn-md" type="submit" value="Trazi" />
-								</p>
-							}
-						</div>
-						<br>
+						<br />
 					</div>
-					@Html.Partial("Table", Model)
-					<div id="Paginator">
-						Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
-						@Html.PagedListPager(Model, Page_No => Url.Action("Index",
-							 new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
-					</div>
-					<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
-						<div id="assetContainer"></div>
-					</div>
+					@Html.Partial("Table", Model)					
+					
 				</div>
 			</div>
 		</div>
@@ -51,54 +38,14 @@
 </div>
 
 <script>
-	var rowDelete;
-	$(document).ready(function () {
-		$("#btnCreateAsset").click(function (e) {
-			var url = $(this).attr("data-url");
-			$.ajax({
-				url: url,
-				success: function (data) {
-					$('#assetContainer').html(data);
-					$('#assetModal').modal('show');
-				},
-				error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
-			});
-		});
-
-		$('#dataTables-example').on("click", "#editAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-
-		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-	});
+    $(document).ready(function () {
+        $('#dataTables-example').dataTable();
+    });
 </script>
-
-<script type="text/javascript">
-	function CreateSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function EditSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function DeleteSuccess() {
-		location.reload(true);
-	}
+<script>
+    $(document).ready(function () {
+        if ($("#poruka").text() == "1") {
+            showSnackBar('@TempData["note"]');
+        }
+    });
 </script>
