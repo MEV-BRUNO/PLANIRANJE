@@ -79,7 +79,7 @@ namespace Planiranje.Controllers
 			bool isMatch = false;
 			if (model.GodisnjiPlan.Ak_godina != null)
 			{
-				Regex regex = new Regex("^[2][0][0-9]{2}/[2][0][0-9]{2}$");
+				Regex regex = new Regex("^[0-9]{4}/[0-9]{4}$");
 				Match match = regex.Match(model.GodisnjiPlan.Ak_godina);
 				isMatch = match.Success;
 			}
@@ -90,7 +90,7 @@ namespace Planiranje.Controllers
 			}
 			else if (!godisnji_planovi.CreateGodisnjiPlan(model))
 			{
-				ViewBag.ErrorMessage = "Akademska godina već postoji!";
+				ViewBag.ErrorMessage = "Nije moguće spremiti, dogodila se greška!";
 			}
 			else
 			{
@@ -135,7 +135,7 @@ namespace Planiranje.Controllers
 			}
 			else if (!godisnji_planovi.UpdateGodisnjiPlan(model))
 			{
-				ViewBag.ErrorMessage = "Akademska godina već postoji!";
+				ViewBag.ErrorMessage = "Nije moguće preimenovati, dogodila se greška!";
 			}
 			else
 			{
