@@ -112,7 +112,7 @@ CREATE TABLE mjesecni_plan (
 CREATE TABLE godisnji_plan (
   id_god int(11) NOT NULL AUTO_INCREMENT,
   id_pedagog int(11) NOT NULL,
-  ak_godina varchar(25) NOT NULL UNIQUE,
+  ak_godina varchar(25) NOT NULL,
   br_radnih_dana int(11) DEFAULT NULL,
   br_dana_godina_odmor int(11) DEFAULT NULL,
   ukupni_rad_dana int(11) DEFAULT NULL,

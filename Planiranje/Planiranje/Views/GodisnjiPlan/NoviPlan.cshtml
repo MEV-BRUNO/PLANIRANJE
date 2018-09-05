@@ -24,7 +24,7 @@
 							<div class="form-group">
 								@Html.LabelFor(model => model.GodisnjiPlan.Ak_godina, htmlAttributes: new { @class = "control-label col-md-2" })
 								<div class="col-md-10">
-									@Html.EditorFor(model => model.GodisnjiPlan.Ak_godina, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.EditorFor(model => model.GodisnjiPlan.Ak_godina, new { htmlAttributes = new { @class = "form-control", Placeholder="xxxx/xxxx" } })
 									@if(@ViewBag.ErrorMessage == null)
 									{
 										@Html.ValidationMessageFor(model => model.GodisnjiPlan.Ak_godina, "", new { @class = "text-danger" })
