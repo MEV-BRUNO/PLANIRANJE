@@ -1,28 +1,32 @@
-DROP DATABASE IF EXISTS planiranje;
+﻿DROP DATABASE IF EXISTS planiranje;
 CREATE DATABASE planiranje;
 USE PLANIRANJE;
 
 CREATE TABLE aktivnost (
   id_aktivnost int(11) NOT NULL AUTO_INCREMENT,
   naziv text,
+  vrsta int NOT NULL,
   PRIMARY KEY (id_aktivnost)
 );
 
 CREATE TABLE ciljevi (
   id_cilj int(11) NOT NULL AUTO_INCREMENT,
   naziv text,
+  vrsta int NOT NULL,
   PRIMARY KEY (id_cilj)
 );
 
 CREATE TABLE oblici (
   id_oblici int(11) NOT NULL AUTO_INCREMENT,
   naziv text,
+  vrsta int NOT NULL,
   PRIMARY KEY (id_oblici)
 );
 
 CREATE TABLE podrucje_rada (
   id_podrucje int(11) NOT NULL AUTO_INCREMENT,
   naziv text,
+  vrsta int NOT NULL,
   PRIMARY KEY (id_podrucje)
 );
 
@@ -39,13 +43,15 @@ CREATE TABLE skola (
 
 CREATE TABLE subjekti (
   id_subjekt int(11) NOT NULL AUTO_INCREMENT,
-  naziv text ,
+  naziv text,
+  vrsta int NOT NULL,
   PRIMARY KEY (id_subjekt)
 );
 
 CREATE TABLE zadaci (
   id_zadatak int(11) NOT NULL AUTO_INCREMENT,
   naziv text,
+  vrsta int NOT NULL,
   PRIMARY KEY (id_zadatak)
 );
 
