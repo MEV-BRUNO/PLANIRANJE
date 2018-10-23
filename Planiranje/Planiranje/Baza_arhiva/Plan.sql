@@ -74,7 +74,7 @@ CREATE TABLE pedagog (
 CREATE TABLE os_plan_1 (
   id_plan int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
-  ak_godina varchar(25) NOT NULL,
+  ak_godina int(20) NOT NULL,
   naziv varchar(50) NOT NULL,
   opis text,
   PRIMARY KEY (id_plan),
@@ -85,7 +85,7 @@ CREATE TABLE os_plan_1 (
 CREATE TABLE os_plan_2 (
   id_plan int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
-  ak_godina varchar(25) NOT NULL,
+  ak_godina int(20) NOT NULL,
   naziv text,
   opis text,
   PRIMARY KEY (id_plan),
@@ -96,7 +96,7 @@ CREATE TABLE os_plan_2 (
 CREATE TABLE ss_plan (
   id_plan int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
-  id_godina int(20) NOT NULL,
+  ak_godina int(20) NOT NULL,
   naziv varchar(50) NOT NULL,
   opis text,
   PRIMARY KEY (id_plan),
@@ -107,7 +107,7 @@ CREATE TABLE ss_plan (
 CREATE TABLE mjesecni_plan (
   id_plan int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
-  id_godina int(20) NOT NULL,
+  ak_godina int(20) NOT NULL,
   naziv varchar(50),
   opis text,
   PRIMARY KEY (id_plan),
@@ -118,7 +118,7 @@ CREATE TABLE mjesecni_plan (
 CREATE TABLE godisnji_plan (
   id_god int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
-  ak_godina varchar(25) NOT NULL,
+  ak_godina int(20) NOT NULL,
   br_radnih_dana int(11) DEFAULT NULL,
   br_dana_godina_odmor int(11) DEFAULT NULL,
   ukupni_rad_dana int(11) DEFAULT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE godisnji_plan (
 
 CREATE TABLE godisnji_detalji (
   id int(20) NOT NULL AUTO_INCREMENT,
-  id_god int(20) NOT NULL,
+  ak_godina int(20) NOT NULL,
   mjesec int(11) NOT NULL,
   naziv_mjeseca varchar(25) NOT NULL,
   ukupno_dana int(11) NOT NULL,
@@ -160,7 +160,7 @@ CREATE TABLE aktivnost_akcija (
 CREATE TABLE dnevnik_rada (
   id_dnevnik int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
-  ak_godina varchar(25),
+  ak_godina int(20) NOT NULL,
   naziv varchar(50) NOT NULL,
   opis text,
   datum datetime NOT NULL,
