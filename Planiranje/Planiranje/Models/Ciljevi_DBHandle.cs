@@ -28,9 +28,10 @@ namespace Planiranje.Models
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_cilj, naziv " +
-                    "FROM ciljevi " +
+                command.CommandText = "SELECT id_cilj, naziv, vrsta " +
+                    "FROM ciljevi WHERE vrsta IN (0,@id_pedagog) " +
                     "ORDER BY id_cilj ASC";
+                command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {
@@ -42,7 +43,8 @@ namespace Planiranje.Models
                             {
 								Red_br = ++counter,
                                 ID_cilj = Convert.ToInt32(sdr["id_cilj"]),
-                                Naziv = sdr["naziv"].ToString()
+                                Naziv = sdr["naziv"].ToString(),
+                                Vrsta = Convert.ToInt32(sdr["vrsta"])
                             };
                             ciljevi.Add(cilj);
                         }
@@ -107,7 +109,8 @@ namespace Planiranje.Models
                             ciljevi = new Ciljevi()
                             {
                                 ID_cilj = Convert.ToInt32(sdr["id_cilj"]),
-                                Naziv = sdr["naziv"].ToString()
+                                Naziv = sdr["naziv"].ToString(),
+                                Vrsta = Convert.ToInt32(sdr["vrsta"])
                             };
                         }
                     }
@@ -126,10 +129,11 @@ namespace Planiranje.Models
                 {
                     command.Connection = connection;
                     command.CommandText = "INSERT INTO ciljevi " +
-                        "(naziv) " +
-                        " VALUES (@naziv)";
+                        "(naziv, vrsta) " +
+                        " VALUES (@naziv,@id_pedagog)";
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@naziv", cilj.Naziv);
+                    command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
