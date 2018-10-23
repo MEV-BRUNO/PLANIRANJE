@@ -3,35 +3,35 @@ CREATE DATABASE planiranje;
 USE PLANIRANJE;
 
 CREATE TABLE aktivnost (
-  id_aktivnost int(11) NOT NULL AUTO_INCREMENT,
+  id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
   vrsta int NOT NULL,
   PRIMARY KEY (id_aktivnost)
 );
 
 CREATE TABLE ciljevi (
-  id_cilj int(11) NOT NULL AUTO_INCREMENT,
+  id_cilj int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
   vrsta int NOT NULL,
   PRIMARY KEY (id_cilj)
 );
 
 CREATE TABLE oblici (
-  id_oblici int(11) NOT NULL AUTO_INCREMENT,
+  id_oblici int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
   vrsta int NOT NULL,
   PRIMARY KEY (id_oblici)
 );
 
 CREATE TABLE podrucje_rada (
-  id_podrucje int(11) NOT NULL AUTO_INCREMENT,
+  id_podrucje int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
   vrsta int NOT NULL,
   PRIMARY KEY (id_podrucje)
 );
 
 CREATE TABLE skola (
-  id_skola int(11) NOT NULL AUTO_INCREMENT,
+  id_skola int(20) NOT NULL AUTO_INCREMENT,
   naziv varchar(50) NOT NULL,
   adresa varchar(50) DEFAULT NULL,
   grad varchar(20) DEFAULT NULL,
@@ -42,27 +42,27 @@ CREATE TABLE skola (
 );
 
 CREATE TABLE subjekti (
-  id_subjekt int(11) NOT NULL AUTO_INCREMENT,
+  id_subjekt int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
   vrsta int NOT NULL,
   PRIMARY KEY (id_subjekt)
 );
 
 CREATE TABLE zadaci (
-  id_zadatak int(11) NOT NULL AUTO_INCREMENT,
+  id_zadatak int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
   vrsta int NOT NULL,
   PRIMARY KEY (id_zadatak)
 );
 
 CREATE TABLE pedagog (
-  id_pedagog int(11) NOT NULL AUTO_INCREMENT,
+  id_pedagog int(20) NOT NULL AUTO_INCREMENT,
   ime varchar(50) NOT NULL,
   prezime varchar(50) NOT NULL,
   email varchar(50) NOT NULL,
   lozinka varchar(40) NOT NULL,
   licenca datetime NOT NULL,
-  id_skola int(11) NOT NULL,
+  id_skola int(20) NOT NULL,
   aktivan char(1) NOT NULL,
   titula varchar(50) NOT NULL,
   PRIMARY KEY (id_pedagog),
@@ -72,8 +72,8 @@ CREATE TABLE pedagog (
 );
 
 CREATE TABLE os_plan_1 (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  id_pedagog int(11) NOT NULL,
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_pedagog int(20) NOT NULL,
   ak_godina varchar(25) NOT NULL,
   naziv varchar(50) NOT NULL,
   opis text,
@@ -83,8 +83,8 @@ CREATE TABLE os_plan_1 (
 );
 
 CREATE TABLE os_plan_2 (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  id_pedagog int(11) NOT NULL,
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_pedagog int(20) NOT NULL,
   ak_godina varchar(25) NOT NULL,
   naziv text,
   opis text,
@@ -94,9 +94,9 @@ CREATE TABLE os_plan_2 (
 );
 
 CREATE TABLE ss_plan (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  id_pedagog int(11) NOT NULL,
-  id_godina int(11) NOT NULL,
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_pedagog int(20) NOT NULL,
+  id_godina int(20) NOT NULL,
   naziv varchar(50) NOT NULL,
   opis text,
   PRIMARY KEY (id_plan),
@@ -105,9 +105,9 @@ CREATE TABLE ss_plan (
 );
 
 CREATE TABLE mjesecni_plan (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  id_pedagog int(11) NOT NULL,
-  id_godina int(11) NOT NULL,
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_pedagog int(20) NOT NULL,
+  id_godina int(20) NOT NULL,
   naziv varchar(50),
   opis text,
   PRIMARY KEY (id_plan),
@@ -116,8 +116,8 @@ CREATE TABLE mjesecni_plan (
 );
 
 CREATE TABLE godisnji_plan (
-  id_god int(11) NOT NULL AUTO_INCREMENT,
-  id_pedagog int(11) NOT NULL,
+  id_god int(20) NOT NULL AUTO_INCREMENT,
+  id_pedagog int(20) NOT NULL,
   ak_godina varchar(25) NOT NULL,
   br_radnih_dana int(11) DEFAULT NULL,
   br_dana_godina_odmor int(11) DEFAULT NULL,
@@ -129,8 +129,8 @@ CREATE TABLE godisnji_plan (
 );
 
 CREATE TABLE godisnji_detalji (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  id_god int(11) NOT NULL,
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_god int(20) NOT NULL,
   mjesec int(11) NOT NULL,
   naziv_mjeseca varchar(25) NOT NULL,
   ukupno_dana int(11) NOT NULL,
@@ -149,17 +149,17 @@ CREATE TABLE godisnji_detalji (
 );
 
 CREATE TABLE aktivnost_akcija (
-  id_akcija int(11) NOT NULL AUTO_INCREMENT,
+  id_akcija int(20) NOT NULL AUTO_INCREMENT,
   naziv varchar(50) NOT NULL,
-  id_aktivnost int(11) DEFAULT NULL,
+  id_aktivnost int(20) DEFAULT NULL,
   PRIMARY KEY (id_akcija),
   KEY id_aktivnost (id_aktivnost),
   CONSTRAINT aktivnost_akcija_ibfk_1 FOREIGN KEY (id_aktivnost) REFERENCES aktivnost (id_aktivnost) ON DELETE CASCADE
 );
 
 CREATE TABLE dnevnik_rada (
-  id_dnevnik int(11) NOT NULL AUTO_INCREMENT,
-  id_pedagog int(11) NOT NULL,
+  id_dnevnik int(20) NOT NULL AUTO_INCREMENT,
+  id_pedagog int(20) NOT NULL,
   ak_godina varchar(25),
   naziv varchar(50) NOT NULL,
   opis text,
@@ -170,12 +170,12 @@ CREATE TABLE dnevnik_rada (
 );
 
 CREATE TABLE dnevnik_detalji (
-  id_dnevnik int(11) NOT NULL AUTO_INCREMENT,
-  subjekt int(11) NOT NULL,
+  id_dnevnik int(20) NOT NULL AUTO_INCREMENT,
+  subjekt int(20) NOT NULL,
   vrijeme_od datetime NOT NULL,
   vrijeme_do datetime NOT NULL,
-  aktivnost int(11) NOT NULL,
-  suradnja int(11) DEFAULT NULL,
+  aktivnost int(20) NOT NULL,
+  suradnja int(20) DEFAULT NULL,
   zakljucak text,
   PRIMARY KEY (id_dnevnik),
   KEY aktivnost (aktivnost),
@@ -187,8 +187,8 @@ CREATE TABLE dnevnik_detalji (
 );
 
 CREATE TABLE mjesecni_detalji (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  id_plan int(11) NOT NULL,
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_plan int(20) NOT NULL,
   podrucje text,
   aktivnost text,
   suradnici text,
@@ -199,8 +199,8 @@ CREATE TABLE mjesecni_detalji (
 );
 
 CREATE TABLE os_plan_2_akcija (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,  
-  id_aktivnost int(11) NOT NULL,
+  id_plan int(20) NOT NULL AUTO_INCREMENT,  
+  id_aktivnost int(20) NOT NULL,
   red_br_akcija int(11) NOT NULL,
   opis_akcija text,
   sati int(11) NOT NULL,
@@ -208,10 +208,10 @@ CREATE TABLE os_plan_2_akcija (
 );
 
 CREATE TABLE os_plan_1_akcija (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  red_br_podrucje int(11) NOT NULL,
-  red_br_aktivnost int(11) NOT NULL,
-  red_br_akcija int(11) NOT NULL,
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  red_br_podrucje int(20) NOT NULL,
+  red_br_aktivnost int(20) NOT NULL,
+  red_br_akcija int(20) NOT NULL,
   opis_akcija text,
   red_br int(11) NOT NULL,
   potrebno_sati int(11) NOT NULL,
@@ -238,10 +238,10 @@ CREATE TABLE os_plan_1_akcija (
 );
 
 CREATE TABLE os_plan_1_aktivnost (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  id_podrucje int(11) NOT NULL,
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_podrucje int(20) NOT NULL,
   red_broj_aktivnost int(11) NOT NULL,
-  opis_aktivnost int(11) NOT NULL,  
+  opis_aktivnost int(20) NOT NULL,  
   potrebno_sati text,
   br_sati int(11) DEFAULT NULL,
   mj_1 int(11) DEFAULT NULL,
@@ -263,12 +263,12 @@ CREATE TABLE os_plan_1_aktivnost (
 );
 
 CREATE TABLE os_plan_1_podrucje (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  id_glavni_plan int(11) NOT NULL,
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_glavni_plan int(20) NOT NULL,
   red_br_podrucje int(11) NOT NULL,
-  opis_podrucje int(11) NOT NULL,
+  opis_podrucje int(20) NOT NULL,
   potrebno_sati text,
-  cilj int(11) NOT NULL,
+  cilj int(20) NOT NULL,
   br_sati int(11) DEFAULT NULL,
   mj_1 int(11) DEFAULT NULL,
   mj_2 int(11) DEFAULT NULL,
@@ -290,8 +290,8 @@ CREATE TABLE os_plan_1_podrucje (
 );
 
 CREATE TABLE os_plan_2_aktivnost (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  id_podrucje int(11) NOT NULL,
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_podrucje int(20) NOT NULL,
   red_br_aktivnost int(11) NOT NULL,
   opis_aktivnost text, 
   sati int(11) NOT NULL, 
@@ -299,14 +299,14 @@ CREATE TABLE os_plan_2_aktivnost (
 );
 
 CREATE TABLE os_plan_2_podrucje (
-  id_plan int(11) NOT NULL AUTO_INCREMENT,
-  id_glavni_plan int(11) NOT NULL,
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_glavni_plan int(20) NOT NULL,
   red_br_podrucje int(11) NOT NULL,
   opis_podrucje text,
-  cilj int(11) NOT NULL,
-  zadaci int(11) DEFAULT NULL,
-  subjekti int(11) NOT NULL,
-  oblici int(11) NOT NULL,
+  cilj int(20) NOT NULL,
+  zadaci int(20) DEFAULT NULL,
+  subjekti int(20) NOT NULL,
+  oblici int(20) NOT NULL,
   vrijeme text,
   sati int(11) NOT NULL,   
   PRIMARY KEY (id_plan),   
@@ -317,8 +317,8 @@ CREATE TABLE os_plan_2_podrucje (
 );
 
 CREATE TABLE ss_plan_podrucje (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  id_plan int(11) NOT NULL,
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_plan int(20) NOT NULL,
   opis_podrucje text,
   svrha text,
   zadaca text,
