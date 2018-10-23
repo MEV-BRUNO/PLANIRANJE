@@ -12,7 +12,7 @@ namespace Planiranje.Models
 		[Required]
 		public int Id { get; set; }
 		[Required]
-		public int Id_god { get; set; }
+		public int Ak_god { get; set; }
 		[Required]
 		[DisplayName("Mjesec")]
 		public int Mjesec { get; set; }
