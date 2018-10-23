@@ -43,7 +43,7 @@ namespace Planiranje.Models
 							{
 								Redni_broj = ++id,
 								Id_god = Convert.ToInt32(sdr["id_god"]),
-                                Ak_godina = sdr["ak_godina"].ToString(),
+                                Ak_godina = Convert.ToInt32(sdr["ak_godina"]),
                                 Br_radnih_dana = Convert.ToInt32(sdr["br_radnih_dana"]),
                                 Br_dana_godina_odmor = Convert.ToInt32(sdr["br_dana_godina_odmor"]),
                                 Ukupni_rad_dana = Convert.ToInt32(sdr["ukupni_rad_dana"]),
@@ -134,8 +134,8 @@ namespace Planiranje.Models
 							{
 								Id_god = Convert.ToInt32(sdr["id_god"]),
 								Id_pedagog = Convert.ToInt32(sdr["id_pedagog"]),
-								Ak_godina = sdr["ak_godina"].ToString(),
-								Br_radnih_dana = Convert.ToInt32(sdr["br_radnih_dana"]),
+								Ak_godina = Convert.ToInt32(sdr["ak_godina"]),
+                                Br_radnih_dana = Convert.ToInt32(sdr["br_radnih_dana"]),
 								Br_dana_godina_odmor = Convert.ToInt32(sdr["br_dana_godina_odmor"]),
 								Ukupni_rad_dana = Convert.ToInt32(sdr["ukupni_rad_dana"]),
 								God_fond_sati = Convert.ToInt32(sdr["god_fond_sati"]),
