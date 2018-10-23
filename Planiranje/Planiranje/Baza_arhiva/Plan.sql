@@ -130,7 +130,7 @@ CREATE TABLE godisnji_plan (
 
 CREATE TABLE godisnji_detalji (
   id int(20) NOT NULL AUTO_INCREMENT,
-  ak_godina int(20) NOT NULL,
+  id_god int(20) NOT NULL,
   mjesec int(11) NOT NULL,
   naziv_mjeseca varchar(25) NOT NULL,
   ukupno_dana int(11) NOT NULL,
