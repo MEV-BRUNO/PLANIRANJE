@@ -75,20 +75,9 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
-            }
-			bool isMatch = false;
-			if (model.GodisnjiPlan.Ak_godina != null)
-			{
-				Regex regex = new Regex("^[0-9]{4}/[0-9]{4}$");
-				Match match = regex.Match(model.GodisnjiPlan.Ak_godina);
-				isMatch = match.Success;
-			}
-
-			if (isMatch == false)
-			{
-				ViewBag.ErrorMessage = null;
-			}
-			else if (!godisnji_planovi.CreateGodisnjiPlan(model))
+            }			
+			
+			if (!godisnji_planovi.CreateGodisnjiPlan(model))
 			{
 				ViewBag.ErrorMessage = "Nije moguće spremiti, dogodila se greška!";
 			}
@@ -120,20 +109,10 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
-            }
-			bool isMatch = false;
-			if (model.GodisnjiPlan.Ak_godina != null)
-			{
-				Regex regex = new Regex("^[2][0][0-9]{2}/[2][0][0-9]{2}$");
-				Match match = regex.Match(model.GodisnjiPlan.Ak_godina);
-				isMatch = match.Success;
-			}
+            }			
 
-			if (isMatch == false)
-			{
-				ViewBag.ErrorMessage = null;
-			}
-			else if (!godisnji_planovi.UpdateGodisnjiPlan(model))
+			
+			if (!godisnji_planovi.UpdateGodisnjiPlan(model))
 			{
 				ViewBag.ErrorMessage = "Nije moguće preimenovati, dogodila se greška!";
 			}

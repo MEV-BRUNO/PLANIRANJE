@@ -83,7 +83,7 @@ namespace Planiranje.Models
 							Godisnji_detalji detalj = new Godisnji_detalji()
 							{
 								Id = Convert.ToInt32(sdr["id"]),
-								Ak_god = Convert.ToInt32(sdr["id_god"]),
+								Id_god = Convert.ToInt32(sdr["id_god"]),
 								Mjesec = Convert.ToInt32(sdr["mjesec"]),
 								Naziv_mjeseca = sdr["naziv_mjeseca"].ToString(),
 								Ukupno_dana = Convert.ToInt32(sdr["ukupno_dana"]),
@@ -342,7 +342,7 @@ namespace Planiranje.Models
 							"id = @id AND id_god = @id_god";
 						command.CommandType = CommandType.Text;
 						command.Parameters.AddWithValue("@id", detalj.Id);
-						command.Parameters.AddWithValue("@id_god", detalj.Ak_god);
+						command.Parameters.AddWithValue("@id_god", detalj.Id_god);
 						command.Parameters.AddWithValue("@mjesec", detalj.Mjesec);
 						command.Parameters.AddWithValue("@naziv_mjeseca", detalj.Naziv_mjeseca);
 						command.Parameters.AddWithValue("@radnih_dana", detalj.Radnih_dana);
@@ -453,7 +453,7 @@ namespace Planiranje.Models
                         "god_fond_sati = @god_fond_sati " +
                         "WHERE id_god = @id_god";
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@id_god", detalji.Ak_god);
+                    command.Parameters.AddWithValue("@id_god", detalji.Id_god);
 
                     command.Parameters.AddWithValue("@mjesec", detalji.Mjesec);
                     command.Parameters.AddWithValue("@naziv_mjeseca", detalji.Naziv_mjeseca);
