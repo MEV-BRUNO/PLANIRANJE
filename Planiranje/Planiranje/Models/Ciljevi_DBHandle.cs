@@ -94,7 +94,7 @@ namespace Planiranje.Models
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_cilj, naziv " +
+                command.CommandText = "SELECT id_cilj, naziv, vrsta " +
                     "FROM ciljevi " +
                     "WHERE id_cilj = @id ";
                 command.CommandType = CommandType.Text;
