@@ -9,12 +9,15 @@ namespace Planiranje.Models
 {
     public class Godisnji_plan
     {
-        [Required]
+		public int Redni_broj { get; set; }
+		[Required]
         public int Id_god { get; set; }
 		[Required]
 		public int Id_pedagog { get; set; }
-		[Required]
-		[DisplayName("Akademska godina")]
+		[DataType("Ak_godina")]
+		[Display(Name = "Akademska godina")]
+		[Required(ErrorMessage = "Obavezno polje!")]
+		[RegularExpression("^[0-9]{4}/[0-9]{4}$", ErrorMessage = "Pogrešan format akademske godine.")]
 		public string Ak_godina { get; set; }
         [Required]
 		[DisplayName("Broj radnih dana")]

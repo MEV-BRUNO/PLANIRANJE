@@ -1,50 +1,32 @@
-﻿@model PagedList.IPagedList<Planiranje.Models.Mjesecni_plan>
+﻿@model Planiranje.Models.MjesecniModel
 
-<table class="table table-bordered table-hover" id="dataTables-example">
+@Html.HiddenFor(model => Model.ID_GODINA)
+<table class="table table-bordered table-hover" id="dataTable">
 	<thead>
 		<tr>
-			<td class="col-lg-1">
-				@Html.ActionLink("Id", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-			</td>
-			<td class="col-lg-3">
-				@Html.ActionLink("Naziv", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-			</td>
-			<td class="col-lg-1">
-				@Html.ActionLink("Ak. godina", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-			</td>
-			<td class="col-lg-6">
-				@Html.ActionLink("Opis", "Index", "MjesecniPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-			</td>
-			<td class="col-lg-2">
-				Akcija
-			</td>
+			<td class="col-lg-1">#</td>
+			<td class="col-lg-3">Naslov dokumenta</td>
+			<td class="col-lg-5">Opis</td>
+			<td class="col-lg-1">Šk. godina</td>
+			<td class="col-lg-3">Akcija</td>
 		</tr>
 	</thead>
 	<tbody>
-
-		@foreach (var item in Model)
+	@foreach (var item in Model.MjesecniPlanovi)
 	{
 		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.ID_plan)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Naziv)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Ak_godina)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Opis)
-			</td>
+			<td>@Html.DisplayFor(modelItem => item.Red_br)</td>
+			<td>@Html.DisplayFor(modelItem => item.Naziv)</td>
+			<td>@Html.DisplayFor(modelItem => item.Opis)</td>
+			<td>@Html.DisplayFor(modelItem => item.Ak_godina)</td>
 			<td>
 				<div class="pull-right">
-					<a data-toggle="modal" data-url="@Url.Action("Edit","MjesecniPlan",new { id = item.ID_plan })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
-					<a data-toggle="modal" data-url="@Url.Action("Delete","MjesecniPlan",new { id = item.ID_plan })" id="deleteAsset" class="btn btn-danger btn-xs ">Briši</a>
+					<input type="button" class="btn btn-default btn-xs" value="Uredi"	onclick='showModal("@Html.Raw(@Url.Action("UrediNoviPlan", "MjesecniPlan", new { id_godina = Model.ID_GODINA, id_plan = item.ID_plan }))")'/>
+					<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='reloadPage("@Html.Raw(@Url.Action("PrikaziDetalje","MjesecniPlan",new { id = item.ID_plan, id_god = Model.ID_GODINA }))")'/>
+					<input type="button" class="btn btn-danger btn-xs" value="Briši"	onclick='showModal("@Html.Raw(@Url.Action("Delete","MjesecniPlan", new { id = item.ID_plan, id_god = Model.ID_GODINA }))")'/>
 				</div>
 			</td>
 		</tr>
-}
+	}
 	</tbody>
 </table>
-

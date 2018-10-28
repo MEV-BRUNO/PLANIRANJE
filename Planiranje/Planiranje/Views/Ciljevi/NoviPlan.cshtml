@@ -1,4 +1,4 @@
-﻿@model Planiranje.Models.Ciljevi
+﻿@model Planiranje.Models.CIljeviModel
 
 @{
     Layout = null;
@@ -10,26 +10,22 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Novi cilj</h4>
         </div>
-        @using (Ajax.BeginForm("NoviPlan", "Ciljevi", new AjaxOptions
-        {
-            HttpMethod = "Post",
-            OnSuccess = "CreateSuccess"
-        }, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviCiljView", @class = "form-horizontal", role = "form" }))
         {
         <div class="modal-body">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.ID_cilj, new { Value = 0 })
+            @Html.HiddenFor(model => model.cilj.ID_cilj, new { Value = 0 })
             <div class="form-group">
-                @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.LabelFor(model => model.cilj.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
+                    @Html.TextAreaFor(model => model.cilj.Naziv,new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.cilj.Naziv, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                <input type="submit" class="btn btn-primary" value="Spremi" />
-            </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+				<input type="button" class="btn btn-primary" value="Spremi" onclick='hideModal("/Ciljevi/NoviPlan", "#noviCiljView", "Nova cilj je uspješno spremljen!")' />
+			</div>
         </div>
         }
     </div>

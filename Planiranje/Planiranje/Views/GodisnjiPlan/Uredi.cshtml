@@ -1,780 +1,145 @@
-﻿@model Planiranje.Models.ViewModel
+﻿@model Planiranje.Models.GodisnjiModel
 
 @{
 	Page.Title = ViewBag.Title;
+	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+	int i = 0;
 }
 
-
-@Html.Raw(TempData["alert"])
-<div class="inner" style="margin-top:55px;">
+<div class="inner" id="newPlan">
 	<div class="row">
 		<div class="col-lg-12">
-			<h3> Novi godisnji plan </h3>
+			<h3> @ViewBag.Title </h3>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					@using (Ajax.BeginForm("Edit", "GodisnjiPlan", new AjaxOptions
-					{
-						HttpMethod = "Post",
-						OnSuccess = "CreateSuccess"
-					}, new { @class = "form-horizontal", role = "form" }))
+					@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "urediGodPlanView", @class = "form-horizontal", role = "form" }))
 					{
 
 
 
-					<div class="modal-body">
-						@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-						@Html.HiddenFor(model => model.GodisnjiPlan.Id_god)
-						@Html.HiddenFor(model => model.GodisnjiPlan.Id_pedagog)
-						@Html.HiddenFor(model => model.GodisnjiPlan.Br_radnih_dana)
-						@Html.HiddenFor(model => model.GodisnjiPlan.God_fond_sati)
-						@Html.HiddenFor(model => model.GodisnjiPlan.Ukupni_rad_dana)
-						@Html.HiddenFor(model => model.GodisnjiPlan.Br_dana_godina_odmor)
-						<div class="form-group">
-							@Html.LabelFor(model => model.GodisnjiPlan.Ak_godina, htmlAttributes: new { @class = "control-label col-md-2" })
-							<div class="col-md-10">
-								@Html.EditorFor(model => model.GodisnjiPlan.Ak_godina, new { htmlAttributes = new { @class = "form-control" } })
+				<div class="modal-body">
+					@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+					@Html.HiddenFor(model => model.GodisnjiPlan.Id_god)
+					@Html.HiddenFor(model => model.GodisnjiPlan.Id_pedagog)
+					@Html.HiddenFor(model => model.GodisnjiPlan.Br_radnih_dana)
+					@Html.HiddenFor(model => model.GodisnjiPlan.God_fond_sati)
+					@Html.HiddenFor(model => model.GodisnjiPlan.Ukupni_rad_dana)
+					@Html.HiddenFor(model => model.GodisnjiPlan.Br_dana_godina_odmor)
+					<div class="form-group">
+						@Html.LabelFor(model => model.GodisnjiPlan.Ak_godina, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							@Html.EditorFor(model => model.GodisnjiPlan.Ak_godina, new { htmlAttributes = new { @class = "form-control", Placeholder = "xxxx/xxxx" } })
+							@if(@ViewBag.ErrorMessage == null)
+							{
 								@Html.ValidationMessageFor(model => model.GodisnjiPlan.Ak_godina, "", new { @class = "text-danger" })
-							</div>
+							}
+							else
+							{
+							<p class="text-danger">@ViewBag.ErrorMessage</p>
+							}
 						</div>
 					</div>
-						<hr>
-
-						<div id="exTab2" class="">
-							<ul class="nav nav-tabs">
-								<li class="active">
-									<a href="#1" data-toggle="tab">Sijecanj</a>
-								</li>
-								<li>
-									<a href="#2" data-toggle="tab">Veljaca</a>
-								</li>
-								<li>
-									<a href="#3" data-toggle="tab">Ozujak</a>
-								</li>
-								<li>
-									<a href="#4" data-toggle="tab">Travanj</a>
-								</li>
-								<li>
-									<a href="#5" data-toggle="tab">Svibanj</a>
-								</li>
-								<li>
-									<a href="#6" data-toggle="tab">Lipanj</a>
-								</li>
-								<li>
-									<a href="#7" data-toggle="tab">Srpanj</a>
-								</li>
-								<li>
-									<a href="#8" data-toggle="tab">Kolovoz</a>
-								</li>
-								<li>
-									<a href="#9" data-toggle="tab">Rujan</a>
-								</li>
-								<li>
-									<a href="#10" data-toggle="tab">Listopad</a>
-								</li>
-								<li>
-									<a href="#11" data-toggle="tab">Studeni</a>
-								</li>
-								<li>
-									<a href="#12" data-toggle="tab">Prosinac</a>
-								</li>
-							</ul>
-
-							<div class="tab-content ">
-								<div class="tab-pane active" id="1">
-									<div class="row">
-										@Html.HiddenFor(model => model.GodisnjiDetalji[0].Naziv_mjeseca, new { @Value = "Sijecanj" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[0].Mjesec, new { @Value = 1 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[0].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[0].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[0].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[0].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[0].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[0].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[0].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[0].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Radnih_dana, "", new { @class = "text-danger" })
+				</div>
+				<hr>
+				<div id="exTab2">
+						<ul class="nav nav-tabs">
+							@foreach(var mjesec in ViewBag.Mjeseci)
+							{
+								if (i == 0)
+								{
+									@:<li class="active">
+								}
+								else
+								{
+									@:<li>
+								}
+									<a href="#@(++i)" data-toggle="tab">@mjesec.Value</a>
+								@:</li>
+							}
+						</ul>
+						<div class="tab-content ">
+							@{
+								i = 0;
+							}
+							@foreach(var mjesec in ViewBag.Mjeseci)
+							{
+								if (i == 0)
+								{
+									@:<div class="tab-pane active" id="@(i+1)">
+								}
+								else
+								{
+									@:<div class="tab-pane" id="@(i+1)">
+								}
+										  <div class="row">
+										  	@Html.HiddenFor(model => model.GodisnjiDetalji[i].Naziv_mjeseca, new { @Value = mjesec.Value })
+										  @Html.HiddenFor(model => model.GodisnjiDetalji[i].Mjesec, new { @Value = mjesec.Key })
+										  @Html.HiddenFor(model => model.GodisnjiDetalji[i].Id)
+										  @Html.HiddenFor(model => model.GodisnjiDetalji[i].Id_god)
+										  @Html.HiddenFor(model => model.GodisnjiDetalji[i].Br_sati)
+										  @Html.HiddenFor(model => model.GodisnjiDetalji[i].Odmor_sati)
+										  @Html.HiddenFor(model => model.GodisnjiDetalji[i].Mj_fond_sati)
+										  @Html.HiddenFor(model => model.GodisnjiDetalji[i].Ukupno_dana)
+										  @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+										  <div class="form-group">
+										  	@Html.LabelFor(model => model.GodisnjiDetalji[i].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+										  <div class="col-md-2">
+										  	@Html.EditorFor(model => model.GodisnjiDetalji[i].Radnih_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+										  </div>
+										  @Html.LabelFor(model => model.GodisnjiDetalji[i].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+										  <div class="col-md-2">
+										  	@Html.EditorFor(model => model.GodisnjiDetalji[i].Subota_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+										  </div>
+										  @Html.LabelFor(model => model.GodisnjiDetalji[i].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+										  <div class="col-md-2">
+										  	@Html.EditorFor(model => model.GodisnjiDetalji[i].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+										  </div>
+										  </div>
+										  </div>
+								<div class="row">
+									<div class="form-group">
+										@Html.LabelFor(model => model.GodisnjiDetalji[i].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+										<div class="col-md-2">
+											@Html.EditorFor(model => model.GodisnjiDetalji[i].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
 											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[0].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[0].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[0].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[0].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[0].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[0].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[0].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[0].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[0].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[0].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[0].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[0].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[0].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
+										@Html.LabelFor(model => model.GodisnjiDetalji[i].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+										<div class="col-md-2">
+											@Html.EditorFor(model => model.GodisnjiDetalji[i].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+										</div>
+										@Html.LabelFor(model => model.GodisnjiDetalji[i].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+										<div class="col-md-2">
+											@Html.EditorFor(model => model.GodisnjiDetalji[i].Praznika_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+										</div>
+										</div>
+									</div>
+								<div class="row">
+									<div class="form-group">
+										@Html.LabelFor(model => model.GodisnjiDetalji[i].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
+										<div class="col-md-2">
+											@Html.EditorFor(model => model.GodisnjiDetalji[i].Odmor_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
 										</div>
 									</div>
 								</div>
-								<div class="tab-pane" id="2">
-									<div class="row">
-
-										@Html.HiddenFor(model => model.GodisnjiDetalji[1].Naziv_mjeseca, new { @Value = "Veljaca" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[1].Mjesec, new { @Value = 2 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[1].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[1].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[1].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[1].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[1].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[1].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[1].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[1].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Radnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[1].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[1].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[1].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[1].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[1].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[1].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[1].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[1].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[1].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[1].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[1].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[1].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[1].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane" id="3">
-									<div class="row">
-
-										@Html.HiddenFor(model => model.GodisnjiDetalji[2].Naziv_mjeseca, new { @Value = "Ozujak" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[2].Mjesec, new { @Value = 3 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[2].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[2].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[2].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[2].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[2].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[2].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[2].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[2].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Radnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[2].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[2].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[2].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[2].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[2].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[2].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[2].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[2].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[2].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[2].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[2].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[2].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[2].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane" id="4">
-									<div class="row">
-
-										@Html.HiddenFor(model => model.GodisnjiDetalji[3].Naziv_mjeseca, new { @Value = "Travanj" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[3].Mjesec, new { @Value = 4 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[3].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[3].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[3].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[3].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[3].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[3].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[3].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[3].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[3].Radnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[3].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[3].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[3].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[3].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[3].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[3].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[3].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[3].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[3].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[3].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[3].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[3].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[3].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[3].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[3].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[3].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[3].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[3].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane" id="5">
-									<div class="row">
-
-										@Html.HiddenFor(model => model.GodisnjiDetalji[4].Naziv_mjeseca, new { @Value = "Svibanj" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[4].Mjesec, new { @Value = 5 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[4].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[4].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[4].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[4].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[4].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[4].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[4].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[4].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[4].Radnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[4].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[4].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[4].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[4].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[4].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[4].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[4].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[4].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[4].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[4].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[4].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[4].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[4].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[4].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[4].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[4].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[4].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[4].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane" id="6">
-									<div class="row">
-
-										@Html.HiddenFor(model => model.GodisnjiDetalji[5].Naziv_mjeseca, new { @Value = "Lipanj" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[5].Mjesec, new { @Value = 6 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[5].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[5].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[5].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[5].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[5].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[5].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[5].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[5].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[5].Radnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[5].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[5].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[5].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[5].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[5].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[5].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[5].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[5].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[5].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[5].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[5].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[5].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[5].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[5].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[5].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[5].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[5].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[5].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane" id="7">
-									<div class="row">
-
-										@Html.HiddenFor(model => model.GodisnjiDetalji[6].Naziv_mjeseca, new { @Value = "Srpanj" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[6].Mjesec, new { @Value = 7 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[6].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[6].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[6].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[6].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[6].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[6].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[6].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[6].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[6].Radnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[6].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[6].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[6].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[6].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[6].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[6].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[6].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[6].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[6].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[6].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[6].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[6].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[6].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[6].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[6].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[6].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[6].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[6].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane" id="8">
-									<div class="row">
-
-										@Html.HiddenFor(model => model.GodisnjiDetalji[7].Naziv_mjeseca, new { @Value = "Kolovoz" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[7].Mjesec, new { @Value = 8 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[7].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[7].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[7].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[7].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[7].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[7].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[7].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[7].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[7].Radnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[7].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[7].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[7].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[7].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[7].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[7].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[7].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[7].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[7].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[7].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[7].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[7].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[7].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[7].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[7].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[7].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[7].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[7].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane" id="9">
-									<div class="row">
-
-										@Html.HiddenFor(model => model.GodisnjiDetalji[8].Naziv_mjeseca, new { @Value = "Rujan" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[8].Mjesec, new { @Value = 9 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[8].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[8].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[8].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[8].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[8].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[8].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[8].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[8].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[8].Radnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[8].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[8].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[8].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[8].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[8].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[8].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[8].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[8].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[8].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[8].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[8].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[8].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[8].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[8].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[8].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[8].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[8].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[8].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane" id="10">
-									<div class="row">
-
-										@Html.HiddenFor(model => model.GodisnjiDetalji[9].Naziv_mjeseca, new { @Value = "Listopad" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[9].Mjesec, new { @Value = 10 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[9].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[9].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[9].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[9].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[9].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[9].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[9].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[9].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[9].Radnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[9].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[9].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[9].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[9].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[9].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[9].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[9].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[9].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[9].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[9].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[9].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[9].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[9].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[9].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[9].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[9].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[9].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[9].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane" id="11">
-									<div class="row">
-
-										@Html.HiddenFor(model => model.GodisnjiDetalji[10].Naziv_mjeseca, new { @Value = "Studeni" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[10].Mjesec, new { @Value = 11 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[10].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[10].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[10].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[10].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[10].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[10].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[10].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[10].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[10].Radnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[10].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[10].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[10].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[10].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[10].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[10].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[10].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[10].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[10].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[10].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[10].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[10].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[10].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[10].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[10].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[10].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[10].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[10].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane" id="12">
-									<div class="row">
-										@Html.HiddenFor(model => model.GodisnjiDetalji[11].Naziv_mjeseca, new { @Value = "Prosinac" })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[11].Mjesec, new { @Value = 12 })
-										@Html.HiddenFor(model => model.GodisnjiDetalji[11].Id)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[11].Id_god)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[11].Br_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[11].Odmor_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[11].Mj_fond_sati)
-										@Html.HiddenFor(model => model.GodisnjiDetalji[11].Ukupno_dana)
-										@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-										<div class="form-group">
-											@Html.LabelFor(model => model.GodisnjiDetalji[11].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[11].Radnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[11].Radnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[11].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[11].Subota_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[11].Subota_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[11].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[11].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[11].Nedjelja_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[11].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[11].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[11].Blagdana_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[11].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[11].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[11].Nastavnih_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[11].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[11].Praznika_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[11].Praznika_dana, "", new { @class = "text-danger" })
-											</div>
-											@Html.LabelFor(model => model.GodisnjiDetalji[11].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
-											<div class="col-md-2">
-												@Html.EditorFor(model => model.GodisnjiDetalji[11].Odmor_dana, new { htmlAttributes = new { @class = "form-control" } })
-												@Html.ValidationMessageFor(model => model.GodisnjiDetalji[11].Odmor_dana, "", new { @class = "text-danger" })
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							@:</div>
+							i++;
+							}
 						</div>
+					</div>
 
-
-
+					
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-							<input type="submit" class="btn btn-primary" value="Spremi" />
+							<input type="button" class="btn btn-default" value="Zatvori" onclick='reloadPage("@Url.Action("Index", "GodisnjiPlan")")' />
+							<input type="button" class="btn btn-primary" value="Spremi" onclick='reloadWithData("/GodisnjiPlan/Edit", "#urediGodPlanView", "Plan uspješno promjenjen")' />
 						</div>
 
 					}
 				</div>
-			</div>
+				</div>
+				</div>
 		</div>
 	</div>
 </div>
-
-<script>
-	var rowDelete;
-	$(document).ready(function () {
-		$("#btnCreateAsset").click(function (e) {
-			var url = $(this).attr("data-url");
-			$.ajax({
-				url: url,
-				success: function (data) {
-					$('#assetContainer').html(data);
-					$('#assetModal').modal('show');
-				},
-				error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
-			});
-		});
-
-		$('#dataTables-example').on("click", "#editAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-
-		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-
-		$('#dataTables-example').on("click", "#detailsAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-	});
-</script>
-
-<script type="text/javascript">
-	function CreateSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function EditSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function DeleteSuccess() {
-		location.reload(true);
-	}
-
-	function DetailsSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-</script>
