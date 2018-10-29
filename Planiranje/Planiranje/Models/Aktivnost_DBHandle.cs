@@ -112,7 +112,7 @@ namespace Planiranje.Models
                             {
                                 Id_aktivnost = Convert.ToInt32(sdr["id_aktivnost"]),
                                 Naziv = sdr["naziv"].ToString(),
-                                Vrsta = Convert.ToInt32(sdr["id_aktivnost"])
+                                Vrsta = Convert.ToInt32(sdr["vrsta"])
                             };
                         }
                     }
