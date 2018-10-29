@@ -69,7 +69,14 @@ namespace Planiranje.Controllers
             {
 				ObliciMetodeModel model = new ObliciMetodeModel();
 				model.oblik = oblici.ReadOblici(id);
-                return View("Uredi", model);
+                if (model.oblik.Vrsta == PlaniranjeSession.Trenutni.PedagogId)
+                {
+                    return View("Uredi", model);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Planiranje");
+                }
             }
 			return RedirectToAction("Index");
 		}
@@ -77,7 +84,8 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Edit(ObliciMetodeModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            Oblici oblik = oblici.ReadOblici(model.oblik.Id_oblici);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest() || oblik.Vrsta!=PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -103,6 +111,10 @@ namespace Planiranje.Controllers
 				ViewBag.ErrorMessage = null;
 				ObliciMetodeModel model = new ObliciMetodeModel();
 				model.oblik = oblici.ReadOblici(id);
+                if (model.oblik.Vrsta != PlaniranjeSession.Trenutni.PedagogId)
+                {
+                    return RedirectToAction("Index", "Planiranje");
+                }
 				return View("Obrisi", model);
             }
 			return RedirectToAction("Index");
@@ -111,7 +123,8 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Delete(ObliciMetodeModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            Oblici oblik = oblici.ReadOblici(model.oblik.Id_oblici);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest() || oblik.Vrsta!=PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }

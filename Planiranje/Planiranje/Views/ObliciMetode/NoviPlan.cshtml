@@ -8,7 +8,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Novi oblik</h4>
+            <h4 class="modal-title">Novi oblik/metoda</h4>
         </div>
         @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviOblikView", @class = "form-horizontal", role = "form" }))
         {
@@ -18,9 +18,9 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.oblik.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.oblik.Naziv, new { htmlAttributes = new { @class = "form-control", @id = "newName",
+                    @Html.TextAreaFor(model => model.oblik.Naziv, new { @class = "form-control", @id = "newName",
 				   onkeydown = "hideModalA(event, \"/ObliciMetode/NoviPlan\", \"#noviOblikView\", \"Nova oblik je uspješno spremljen\")"
-			   } })
+			   })
                     @Html.ValidationMessageFor(model => model.oblik.Naziv, "", new { @class = "text-danger" })
                 </div>
             </div>           

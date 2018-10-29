@@ -109,7 +109,8 @@ namespace Planiranje.Models
                             oblik = new Oblici()
                             {
                                 Id_oblici = Convert.ToInt32(sdr["id_oblici"]),                               
-                                Naziv = sdr["naziv"].ToString()                                
+                                Naziv = sdr["naziv"].ToString(),
+                                Vrsta = Convert.ToInt32(sdr["vrsta"])
                             };
                         }
                     }
