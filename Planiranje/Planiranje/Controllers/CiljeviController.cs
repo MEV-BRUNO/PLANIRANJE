@@ -61,14 +61,14 @@ namespace Planiranje.Controllers
 
         public ActionResult Edit(int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            CIljeviModel model = new CIljeviModel();
+            model.cilj = ciljevi_DB.ReadCiljevi(id);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest() || model.cilj.Vrsta!=PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
             if (Request.IsAjaxRequest())
-            {
-				CIljeviModel model = new CIljeviModel();
-				model.cilj = ciljevi_DB.ReadCiljevi(id);
+            {				
                 return View("Uredi", model);
             }
 			return RedirectToAction("Index");
@@ -77,7 +77,8 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Edit(CIljeviModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            Ciljevi cilj = ciljevi_DB.ReadCiljevi(model.cilj.ID_cilj);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest() || cilj.Vrsta!=PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -93,15 +94,15 @@ namespace Planiranje.Controllers
 
         public ActionResult Delete(int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            CIljeviModel model = new CIljeviModel();
+            model.cilj = ciljevi_DB.ReadCiljevi(id);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest() || model.cilj.Vrsta!=PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
             if (Request.IsAjaxRequest())
             {
-				ViewBag.ErrorMessage = null;
-				CIljeviModel model = new CIljeviModel();
-				model.cilj = ciljevi_DB.ReadCiljevi(id);
+				ViewBag.ErrorMessage = null;				
                 return View("Obrisi", model);
             }
 			return RedirectToAction("Index");
@@ -110,7 +111,8 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Delete(CIljeviModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            Ciljevi cilj = ciljevi_DB.ReadCiljevi(model.cilj.ID_cilj);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest() || cilj.Vrsta!=PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
