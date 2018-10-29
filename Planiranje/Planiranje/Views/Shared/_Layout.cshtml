@@ -76,6 +76,15 @@
 	<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
 	<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
 	<script src="~/Scripts/custom.js"></script>
+    <script>
+        function smoothscroll() {
+            var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            if (currentScroll > 0) {
+                window.requestAnimationFrame(smoothscroll);
+                window.scrollTo(0, currentScroll - (currentScroll / 5));
+            }
+        }
+    </script>
 </body>
 </html>
 
