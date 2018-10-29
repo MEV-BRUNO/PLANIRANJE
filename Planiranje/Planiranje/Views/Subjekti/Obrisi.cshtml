@@ -19,8 +19,9 @@
 					@if (ViewBag.ErrorMessage == null)
 					{
 					<h5>
-						Jeste li sigurni da želite obrisati "@Html.DisplayFor(model => model.subjekt.Naziv, new { htmlAttributes = new { @class = "form-control" } })"?
+						Jeste li sigurni da želite obrisati ovaj subjekt?
 					</h5>
+                    @Html.TextBoxFor(model => model.subjekt.Naziv, new { @class = "form-control", @disabled="" })
 					}
 					else
 					{

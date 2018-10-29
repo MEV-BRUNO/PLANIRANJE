@@ -111,7 +111,8 @@ namespace Planiranje.Models
                             subjekti = new Subjekti()
                             {
                                 ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
-                                Naziv = sdr["naziv"].ToString()
+                                Naziv = sdr["naziv"].ToString(),
+                                Vrsta = Convert.ToInt32(sdr["vrsta"])
                             };
                         }
                     }

@@ -70,8 +70,13 @@ namespace Planiranje.Controllers
             {
 				SubjektiModel model = new SubjektiModel();
 				model.subjekt = _subjekti.ReadSubjekti(id);
-                return View("Uredi", model);
-			}
+                if (model.subjekt.Vrsta == PlaniranjeSession.Trenutni.PedagogId)
+                {
+                    return View("Uredi", model);
+                }
+                else return RedirectToAction("Index", "Planiranje");
+
+            }
 			return RedirectToAction("Index");
 		}
 
@@ -79,6 +84,11 @@ namespace Planiranje.Controllers
         public ActionResult Edit(SubjektiModel model)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Subjekti subjekt = _subjekti.ReadSubjekti(model.subjekt.ID_subjekt);
+            if (subjekt.Vrsta != PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -103,7 +113,11 @@ namespace Planiranje.Controllers
 				ViewBag.ErrorMessage = null;
 				SubjektiModel model = new SubjektiModel();
 				model.subjekt = _subjekti.ReadSubjekti(id);
-				return View("Obrisi", model);
+                if (model.subjekt.Vrsta == PlaniranjeSession.Trenutni.PedagogId)
+                {
+                    return View("Obrisi", model);
+                }
+                else return RedirectToAction("Index", "Planiranje");
             }
 			return RedirectToAction("Index");
 		}
@@ -112,6 +126,11 @@ namespace Planiranje.Controllers
         public ActionResult Delete(SubjektiModel model)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Subjekti subjekt = _subjekti.ReadSubjekti(model.subjekt.ID_subjekt);
+            if (subjekt.Vrsta != PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
