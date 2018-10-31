@@ -122,6 +122,7 @@ CREATE TABLE mjesecni_plan (
 
 CREATE TABLE godisnji_plan (
   id_god int(20) NOT NULL AUTO_INCREMENT,
+  naziv text,
   id_pedagog int(20) NOT NULL,
   ak_godina int(20) NOT NULL,
   br_radnih_dana int(11) DEFAULT NULL,

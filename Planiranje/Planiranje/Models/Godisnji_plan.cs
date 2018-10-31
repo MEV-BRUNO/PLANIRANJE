@@ -12,6 +12,8 @@ namespace Planiranje.Models
 		public int Redni_broj { get; set; }
 		[Required]
         public int Id_god { get; set; }
+        [Required]
+        public string Naziv { get; set; }
 		[Required]
 		public int Id_pedagog { get; set; }
 		[DataType("Ak_godina")]
