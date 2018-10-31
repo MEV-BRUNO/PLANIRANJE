@@ -4,8 +4,8 @@
 	<thead>
         <tr>
             <td class="col-lg-1">#</td>
-            <td class="col-lg-2">Ak. godina</td>
-            <td class="col-lg-7">Ak. godina</td>            
+            <td class="col-lg-2">Školska godina</td>
+            <td class="col-lg-7">Naziv</td>            
             <td class="col-lg-2">Akcija</td>
         </tr>
 	</thead>
@@ -20,7 +20,7 @@
                 <div class="pull-right">
                     <input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='reloadPage("@Url.Action("Edit","GodisnjiPlan",new { id = item.Id_god })")' />
                     <input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='reloadPage("@Url.Action("Details","GodisnjiPlan",new { id = item.Id_god })")' />
-                    <input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete","GodisnjiPlan",new { id = item.Id_god })")' />
+                    <input type="button" class="btn btn-danger btn-xs" value="Obriši" onclick='showModal("@Url.Action("Delete","GodisnjiPlan",new { id = item.Id_god })")' />
                 </div>
             </td>
         </tr>

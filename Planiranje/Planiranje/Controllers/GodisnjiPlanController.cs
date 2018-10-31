@@ -67,6 +67,8 @@ namespace Planiranje.Controllers
 			}
 			ViewBag.Mjeseci = mjeseci;
 			ViewBag.Title = "Novi godišnji plan";
+            model.SkolskaGodina = new List<Sk_godina>();
+            model.SkolskaGodina = baza.SkolskaGodina.Where(god => god.Sk_Godina >= DateTime.Now.Year).ToList();
 			return View("NoviPlan", model);
 		}
 
@@ -101,6 +103,8 @@ namespace Planiranje.Controllers
 			GodisnjiModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
 			ViewBag.Mjeseci = mjeseci;
 			ViewBag.Title = "Uredi godišnji plan";
+            detalji.SkolskaGodina = new List<Sk_godina>();
+            detalji.SkolskaGodina = baza.SkolskaGodina.ToList();
 			return View("Uredi", detalji);
         }
 
