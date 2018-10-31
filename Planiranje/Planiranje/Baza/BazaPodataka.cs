@@ -20,6 +20,7 @@ namespace Planiranje.Controllers
         public DbSet<OS_Plan_2_podrucje> OsPlan2Podrucje { get; set; }
         public DbSet<OS_Plan_2_aktivnost> OsPlan2Aktivnost { get; set; }
         public DbSet<OS_Plan_2_akcija> OsPlan2Akcija { get; set; }
+        public DbSet<Sk_godina> SkolskaGodina { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

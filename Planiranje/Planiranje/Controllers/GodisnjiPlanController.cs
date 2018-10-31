@@ -15,6 +15,7 @@ namespace Planiranje.Controllers
 	public class GodisnjiPlanController : Controller
 	{
 		private Godisnji_plan_DBHandle godisnji_planovi = new Godisnji_plan_DBHandle();
+        private BazaPodataka baza = new BazaPodataka();
 
 		private List<KeyValuePair<int, String>> mjeseci = new List<KeyValuePair<int, String>>() {
 			new KeyValuePair<int, String>(9, "Rujan"),

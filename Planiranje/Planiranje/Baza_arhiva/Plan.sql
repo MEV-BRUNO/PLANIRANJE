@@ -2,6 +2,11 @@
 CREATE DATABASE planiranje;
 USE PLANIRANJE;
 
+CREATE TABLE sk_godina (
+  sk_godina int(20) NOT NULL,
+  PRIMARY KEY (sk_godina)
+);
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
