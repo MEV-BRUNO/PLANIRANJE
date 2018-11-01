@@ -32,21 +32,14 @@
 					<div class="form-group">
 						@Html.LabelFor(model => model.GodisnjiPlan.Ak_godina, htmlAttributes: new { @class = "control-label col-md-2" })
 						<div class="col-md-3">
-							@Html.DropDownListFor(model => model.GodisnjiPlan.Ak_godina,Model.SkolskaGodinaItems, new { @class = "form-control" })
-							@if(@ViewBag.ErrorMessage == null)
-							{
-								@Html.ValidationMessageFor(model => model.GodisnjiPlan.Ak_godina, "", new { @class = "text-danger" })
-							}
-							else
-							{
-							<p class="text-danger">@ViewBag.ErrorMessage</p>
-							}
+							@Html.DropDownListFor(model => model.GodisnjiPlan.Ak_godina,Model.SkolskaGodinaItems, new { @class = "form-control", @required="" })
+							
 						</div>
 					</div>
                     <div class="form-group">
                                 @Html.LabelFor(model => model.GodisnjiPlan.Naziv, new { @class = "control-label col-md-2"})
                                 <div class="col-md-6">
-                                    @Html.EditorFor(model=>model.GodisnjiPlan.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model=>model.GodisnjiPlan.Naziv, new { htmlAttributes = new { @class = "form-control", @required="" } })
                                 </div>
                      </div>
 				</div>
@@ -94,15 +87,15 @@
 										  <div class="form-group">
 										  	@Html.LabelFor(model => model.GodisnjiDetalji[i].Radnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
 										  <div class="col-md-2">
-										  	@Html.EditorFor(model => model.GodisnjiDetalji[i].Radnih_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+										  	@Html.EditorFor(model => model.GodisnjiDetalji[i].Radnih_dana, new { htmlAttributes = new { @class = "form-control", @min="0" } })
 										  </div>
 										  @Html.LabelFor(model => model.GodisnjiDetalji[i].Subota_dana, htmlAttributes: new { @class = "control-label col-md-2" })
 										  <div class="col-md-2">
-										  	@Html.EditorFor(model => model.GodisnjiDetalji[i].Subota_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+										  	@Html.EditorFor(model => model.GodisnjiDetalji[i].Subota_dana, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
 										  </div>
 										  @Html.LabelFor(model => model.GodisnjiDetalji[i].Nedjelja_dana, htmlAttributes: new { @class = "control-label col-md-2" })
 										  <div class="col-md-2">
-										  	@Html.EditorFor(model => model.GodisnjiDetalji[i].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+										  	@Html.EditorFor(model => model.GodisnjiDetalji[i].Nedjelja_dana, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
 										  </div>
 										  </div>
 										  </div>
@@ -110,15 +103,15 @@
 									<div class="form-group">
 										@Html.LabelFor(model => model.GodisnjiDetalji[i].Blagdana_dana, htmlAttributes: new { @class = "control-label col-md-2" })
 										<div class="col-md-2">
-											@Html.EditorFor(model => model.GodisnjiDetalji[i].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+											@Html.EditorFor(model => model.GodisnjiDetalji[i].Blagdana_dana, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
 											</div>
 										@Html.LabelFor(model => model.GodisnjiDetalji[i].Nastavnih_dana, htmlAttributes: new { @class = "control-label col-md-2" })
 										<div class="col-md-2">
-											@Html.EditorFor(model => model.GodisnjiDetalji[i].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+											@Html.EditorFor(model => model.GodisnjiDetalji[i].Nastavnih_dana, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
 										</div>
 										@Html.LabelFor(model => model.GodisnjiDetalji[i].Praznika_dana, htmlAttributes: new { @class = "control-label col-md-2" })
 										<div class="col-md-2">
-											@Html.EditorFor(model => model.GodisnjiDetalji[i].Praznika_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+											@Html.EditorFor(model => model.GodisnjiDetalji[i].Praznika_dana, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
 										</div>
 										</div>
 									</div>
@@ -126,7 +119,7 @@
 									<div class="form-group">
 										@Html.LabelFor(model => model.GodisnjiDetalji[i].Odmor_dana, htmlAttributes: new { @class = "control-label col-md-2" })
 										<div class="col-md-2">
-											@Html.EditorFor(model => model.GodisnjiDetalji[i].Odmor_dana, new { htmlAttributes = new { @class = "form-control", onkeydown = "return ValidateNumber(event);" } })
+											@Html.EditorFor(model => model.GodisnjiDetalji[i].Odmor_dana, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
 										</div>
 									</div>
 								</div>
@@ -139,7 +132,7 @@
 					
 						<div class="modal-footer">
 							<input type="button" class="btn btn-default" value="Zatvori" onclick='reloadPage("@Url.Action("Index", "GodisnjiPlan")")' />
-							<input type="button" class="btn btn-primary" value="Spremi" onclick='reloadWithData("/GodisnjiPlan/Edit", "#urediGodPlanView", "Plan uspješno promjenjen")' />
+							<input type="submit" class="btn btn-primary" value="Spremi" onclick='@Url.Action("Edit","GodisnjiPlan")' />
 						</div>
 
 					}
