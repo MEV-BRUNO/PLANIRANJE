@@ -112,8 +112,8 @@ CREATE TABLE ss_plan (
 CREATE TABLE mjesecni_plan (
   id_plan int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
-  id_godina int(20) NOT NULL,
-  naziv varchar(50),
+  ak_godina int(20) NOT NULL,
+  naziv text,
   opis text,
   PRIMARY KEY (id_plan),
   KEY id_pedagog (id_pedagog),

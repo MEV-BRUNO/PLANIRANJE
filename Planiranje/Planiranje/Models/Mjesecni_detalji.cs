@@ -12,6 +12,7 @@ namespace Planiranje.Models
 		[Required]
 		public int ID { get; set; }
 		[Required]
+        [Key]
 		public int ID_plan { get; set; }
 		[Required(ErrorMessage = "Obavezno polje.")]
 		public int Red_br { get; set; }
