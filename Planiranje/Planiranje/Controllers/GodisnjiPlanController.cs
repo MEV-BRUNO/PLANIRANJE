@@ -15,6 +15,7 @@ namespace Planiranje.Controllers
 	public class GodisnjiPlanController : Controller
 	{
 		private Godisnji_plan_DBHandle godisnji_planovi = new Godisnji_plan_DBHandle();
+        private BazaPodataka baza = new BazaPodataka();
 
 		private List<KeyValuePair<int, String>> mjeseci = new List<KeyValuePair<int, String>>() {
 			new KeyValuePair<int, String>(9, "Rujan"),
@@ -32,9 +33,9 @@ namespace Planiranje.Controllers
 		};
 
 		// INDEX
-        public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
+        public ActionResult Index()
         {
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -66,39 +67,32 @@ namespace Planiranje.Controllers
 			}
 			ViewBag.Mjeseci = mjeseci;
 			ViewBag.Title = "Novi godišnji plan";
+            model.SkolskaGodina = new List<Sk_godina>();
+            model.SkolskaGodina = baza.SkolskaGodina.Where(god => god.Sk_Godina >= DateTime.Now.Year).ToList();
 			return View("NoviPlan", model);
 		}
 
 		[HttpPost]
         public ActionResult NoviPlan(GodisnjiModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
+            }			
+			
+			if (!godisnji_planovi.CreateGodisnjiPlan(model))
+			{
+				TempData["poruka"] = "Nije moguće spremiti, dogodila se greška!";
+                return RedirectToAction("Index");
             }
-			bool isMatch = false;
-			if (model.GodisnjiPlan.Ak_godina != null)
-			{
-				Regex regex = new Regex("^[0-9]{4}/[0-9]{4}$");
-				Match match = regex.Match(model.GodisnjiPlan.Ak_godina);
-				isMatch = match.Success;
-			}
-
-			if (isMatch == false)
-			{
-				ViewBag.ErrorMessage = null;
-			}
-			else if (!godisnji_planovi.CreateGodisnjiPlan(model))
-			{
-				ViewBag.ErrorMessage = "Nije moguće spremiti, dogodila se greška!";
-			}
 			else
 			{
+                TempData["poruka"] = "Plan je spremljen!";
 				return RedirectToAction("Index");
 			}
-			ViewBag.Mjeseci = mjeseci;
-			ViewBag.Title = "Novi godišnji plan";
-			return View("NoviPlan", model);
+			//ViewBag.Mjeseci = mjeseci;
+			//ViewBag.Title = "Novi godišnji plan";
+			//return View("NoviPlan", model);
 		}
 
 		// UREĐIVANJE
@@ -108,42 +102,36 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-			GodisnjiModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);
+			GodisnjiModel detalji = godisnji_planovi.ReadGodisnjiDetalji(id);            
 			ViewBag.Mjeseci = mjeseci;
 			ViewBag.Title = "Uredi godišnji plan";
+            detalji.SkolskaGodina = new List<Sk_godina>();
+            detalji.SkolskaGodina = baza.SkolskaGodina.ToList();
 			return View("Uredi", detalji);
         }
 
         [HttpPost]
         public ActionResult Edit(GodisnjiModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
-            }
-			bool isMatch = false;
-			if (model.GodisnjiPlan.Ak_godina != null)
-			{
-				Regex regex = new Regex("^[2][0][0-9]{2}/[2][0][0-9]{2}$");
-				Match match = regex.Match(model.GodisnjiPlan.Ak_godina);
-				isMatch = match.Success;
-			}
+            }			
 
-			if (isMatch == false)
+			
+			if (!godisnji_planovi.UpdateGodisnjiPlan(model))
 			{
-				ViewBag.ErrorMessage = null;
-			}
-			else if (!godisnji_planovi.UpdateGodisnjiPlan(model))
-			{
-				ViewBag.ErrorMessage = "Nije moguće preimenovati, dogodila se greška!";
-			}
+				TempData["poruka"] = "Nije moguće promijeniti, dogodila se greška!";
+                return RedirectToAction("Index");
+            }
 			else
 			{
+                TempData["poruka"] = "Uspješno promijenjeno!";
 				return RedirectToAction("Index");
 			}
-			ViewBag.Mjeseci = mjeseci;
-			ViewBag.Title = "Uredi godišnji plan";
-			return View("Uredi", model);
+			//ViewBag.Mjeseci = mjeseci;
+			//ViewBag.Title = "Uredi godišnji plan";
+			//return View("Uredi", model);
 		}
 
 		// BRISANJE

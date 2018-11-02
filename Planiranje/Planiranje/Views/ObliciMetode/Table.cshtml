@@ -15,10 +15,13 @@
 				<td>@Html.DisplayFor(modelItem => item.Red_br)</td>
 				<td>@Html.DisplayFor(modelItem => item.Naziv)</td>
 				<td>
+                    @if (item.Vrsta != 0)
+                    {
 					<div class="pull-right">
-						<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("Edit","ObliciMetode",new { id = item.Id_oblici })")' />
-						<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete","ObliciMetode",new { id = item.Id_oblici })")' />
+						<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("Edit", "ObliciMetode", new { id = item.Id_oblici })")' />
+						<input type="button" class="btn btn-danger btn-xs" value="Obriši" onclick='showModal("@Url.Action("Delete", "ObliciMetode", new { id = item.Id_oblici })")' />
 					</div>
+                    }
 				</td>
 			</tr>
 		}

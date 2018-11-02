@@ -27,7 +27,7 @@ namespace Planiranje.Models
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_god, id_pedagog, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati" +
+                command.CommandText = "SELECT id_god, id_pedagog, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati, naziv" +
                     " FROM godisnji_plan " +
                     "WHERE id_pedagog = @id_pedagog " +
                     "ORDER BY ak_godina ASC";
@@ -43,11 +43,12 @@ namespace Planiranje.Models
 							{
 								Redni_broj = ++id,
 								Id_god = Convert.ToInt32(sdr["id_god"]),
-                                Ak_godina = sdr["ak_godina"].ToString(),
+                                Ak_godina = Convert.ToInt32(sdr["ak_godina"]),
                                 Br_radnih_dana = Convert.ToInt32(sdr["br_radnih_dana"]),
                                 Br_dana_godina_odmor = Convert.ToInt32(sdr["br_dana_godina_odmor"]),
                                 Ukupni_rad_dana = Convert.ToInt32(sdr["ukupni_rad_dana"]),
                                 God_fond_sati = Convert.ToInt32(sdr["god_fond_sati"]),
+                                Naziv = sdr["naziv"].ToString()
                             };
                             godisnji_planovi.Add(plan);
                         }
@@ -134,11 +135,12 @@ namespace Planiranje.Models
 							{
 								Id_god = Convert.ToInt32(sdr["id_god"]),
 								Id_pedagog = Convert.ToInt32(sdr["id_pedagog"]),
-								Ak_godina = sdr["ak_godina"].ToString(),
-								Br_radnih_dana = Convert.ToInt32(sdr["br_radnih_dana"]),
+								Ak_godina = Convert.ToInt32(sdr["ak_godina"]),
+                                Br_radnih_dana = Convert.ToInt32(sdr["br_radnih_dana"]),
 								Br_dana_godina_odmor = Convert.ToInt32(sdr["br_dana_godina_odmor"]),
 								Ukupni_rad_dana = Convert.ToInt32(sdr["ukupni_rad_dana"]),
 								God_fond_sati = Convert.ToInt32(sdr["god_fond_sati"]),
+                                Naziv = sdr["naziv"].ToString()
 							};
 							plan = g_plan;
 						}
@@ -169,8 +171,8 @@ namespace Planiranje.Models
                 {
                     command.Connection = connection;
                     command.CommandText = "INSERT INTO godisnji_plan " +
-                        "(id_god, id_pedagog, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati) " +
-                        " VALUES (@id_god, @id_pedagog, @ak_godina, @br_radnih_dana, @br_dana_godina_odmor, @ukupni_rad_dana, @god_fond_sati)";
+                        "(id_god, id_pedagog, ak_godina, br_radnih_dana, br_dana_godina_odmor, ukupni_rad_dana, god_fond_sati, naziv) " +
+                        " VALUES (@id_god, @id_pedagog, @ak_godina, @br_radnih_dana, @br_dana_godina_odmor, @ukupni_rad_dana, @god_fond_sati, @naziv)";
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@id_god", model.GodisnjiPlan.Id_god);
                     command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
@@ -179,6 +181,7 @@ namespace Planiranje.Models
                     command.Parameters.AddWithValue("@br_dana_godina_odmor", br_dana_godina_odmor);
                     command.Parameters.AddWithValue("@ukupni_rad_dana", ukupni_rad_dana);
                     command.Parameters.AddWithValue("@god_fond_sati", god_fond_sati);
+                    command.Parameters.AddWithValue("@naziv",model.GodisnjiPlan.Naziv);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -290,7 +293,8 @@ namespace Planiranje.Models
                         "br_radnih_dana = @br_radnih_dana, " +
                         "br_dana_godina_odmor = @br_dana_godina_odmor, " +
                         "ukupni_rad_dana = @ukupni_rad_dana, " +
-                        "god_fond_sati = @god_fond_sati "+
+                        "god_fond_sati = @god_fond_sati, "+
+                        "naziv = @naziv "+
                         "WHERE id_god = @id_god " +
                         "AND id_pedagog = @id_pedagog";
                     command.CommandType = CommandType.Text;
@@ -302,7 +306,8 @@ namespace Planiranje.Models
 					command.Parameters.AddWithValue("@br_dana_godina_odmor", br_dana_godina_odmor);
 					command.Parameters.AddWithValue("@ukupni_rad_dana", ukupni_rad_dana);
 					command.Parameters.AddWithValue("@god_fond_sati", god_fond_sati);
-					connection.Open();
+                    command.Parameters.AddWithValue("@naziv", model.GodisnjiPlan.Naziv);
+                    connection.Open();
                     command.ExecuteNonQuery();
                 }
             }

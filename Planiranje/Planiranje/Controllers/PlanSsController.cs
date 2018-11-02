@@ -36,7 +36,7 @@ namespace Planiranje.Controllers
 			SSModel model = new SSModel();
 			model.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 			{
-				Text = i.Ak_godina,
+				Text = i.Ak_godina.ToString(),
 				Value = i.Id_god.ToString()
 			}));
 
@@ -187,7 +187,7 @@ namespace Planiranje.Controllers
 			}
 			SSModel model = new SSModel();
 			model.SS_Podrucja = planovi_ss.ReadSsPodrucja(id);
-			model.Ak_godina = godisnji_planovi.ReadGodisnjiPlan(id_god).Ak_godina;
+			model.Ak_godina = godisnji_planovi.ReadGodisnjiPlan(id_god).Ak_godina.ToString();
 			model.ID_PLAN = id;
 			model.ID_GODINA = id_god;
 			return View("Detalji", model);

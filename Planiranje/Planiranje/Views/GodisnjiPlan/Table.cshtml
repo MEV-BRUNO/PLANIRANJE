@@ -2,34 +2,28 @@
 
 <table class="table table-bordered" id="dataTable">
 	<thead>
-		<tr>
-			<td class="col-lg-1">#</td>
-			<td class="col-lg-1">Ak. godina</td>
-			<td class="col-lg-2">Br. dana god. odmora</td>
-			<td class="col-lg-2">Br. radnih dana</td>
-			<td class="col-lg-2">God. fond sati</td>
-			<td class="col-lg-2">Ukupno radnih dana</td>
-			<td class="col-lg-2">Akcija</td>
-		</tr>
+        <tr>
+            <td class="col-lg-1">#</td>
+            <td class="col-lg-2">Školska godina</td>
+            <td class="col-lg-7">Naziv</td>            
+            <td class="col-lg-2">Akcija</td>
+        </tr>
 	</thead>
 	<tbody>
 		@foreach (var item in Model)
 		{
-			<tr>
-				<td>@Html.DisplayFor(modelitem => item.Redni_broj)</td>
-				<td>@Html.DisplayFor(modelItem => item.Ak_godina)</td>
-				<td>@Html.DisplayFor(modelItem => item.Br_dana_godina_odmor)</td>
-				<td>@Html.DisplayFor(modelItem => item.Br_radnih_dana)</td>
-				<td>@Html.DisplayFor(modelItem => item.God_fond_sati)</td>
-				<td>@Html.DisplayFor(modelItem => item.Ukupni_rad_dana)</td>
-				<td>
-					<div class="pull-right">
-						<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='reloadPage("@Url.Action("Edit","GodisnjiPlan",new { id = item.Id_god })")' />
-						<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='reloadPage("@Url.Action("Details","GodisnjiPlan",new { id = item.Id_god })")' />
-						<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete","GodisnjiPlan",new { id = item.Id_god })")' />
-					</div>
-				</td>
-			</tr>
+        <tr>
+            <td>@Html.DisplayFor(modelitem => item.Redni_broj)</td>
+            <td>@Html.DisplayFor(modelItem => item.Ak_godina)</td>
+            <td>@Html.DisplayFor(modelItem => item.Naziv)</td>            
+            <td>
+                <div class="pull-right">
+                    <input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='reloadPage("@Url.Action("Edit","GodisnjiPlan",new { id = item.Id_god })")' />
+                    <input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='reloadPage("@Url.Action("Details","GodisnjiPlan",new { id = item.Id_god })")' />
+                    <input type="button" class="btn btn-danger btn-xs" value="Obriši" onclick='showModal("@Url.Action("Delete","GodisnjiPlan",new { id = item.Id_god })")' />
+                </div>
+            </td>
+        </tr>
 		}
 	</tbody>
 </table>

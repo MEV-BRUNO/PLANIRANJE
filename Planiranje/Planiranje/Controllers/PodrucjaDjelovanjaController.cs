@@ -66,18 +66,19 @@ namespace Planiranje.Controllers
             }
             Podrucje_rada podrucje = new Podrucje_rada();
             podrucje = podrucja_djelovanja.ReadPodrucjeRada(id);
-            if (Request.IsAjaxRequest())
+            if (Request.IsAjaxRequest() && podrucje.Vrsta==PlaniranjeSession.Trenutni.PedagogId)
             {
                 ViewBag.IsUpdate = false;
                 return View("Uredi", podrucje);
             }
-            return View("Uredi", podrucje);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Edit(Podrucje_rada podrucje)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            Podrucje_rada pod = podrucja_djelovanja.ReadPodrucjeRada(podrucje.Id_podrucje);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest() || pod.Vrsta!=PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -102,6 +103,10 @@ namespace Planiranje.Controllers
 				ViewBag.ErrorMessage = null;
 				Podrucje_rada podrucje = new Podrucje_rada();
 				podrucje = podrucja_djelovanja.ReadPodrucjeRada(id);
+                if (podrucje.Vrsta != PlaniranjeSession.Trenutni.PedagogId)
+                {
+                    return RedirectToAction("Index", "Planiranje");
+                }
 				return View("Obrisi", podrucje);
             }
 			return RedirectToAction("Index");
@@ -110,13 +115,14 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Delete(Podrucje_rada podrucje)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            Podrucje_rada pod = podrucja_djelovanja.ReadPodrucjeRada(podrucje.Id_podrucje);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest() || pod.Vrsta!=PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
             if (!podrucja_djelovanja.DeletePodrucjeRada(podrucje.Id_podrucje))
             {
-				ViewBag.ErrorMessage = "Dogodila se greška, nije moguće obrisati podrucje djelovanja!";
+				ViewBag.ErrorMessage = "Dogodila se greška, nije moguće obrisati područje djelovanja!";
 				return View("Obrisi", podrucje);
 			}
             else

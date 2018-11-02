@@ -5,19 +5,22 @@
 }
 
 <div class="inner">
-	<div class="panel-body">
-		<div class="pull-left">
-			<h3> Detalji @Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Ak_godina) </h3>
-		</div>
-		<div class="pull-right">
-			<a href="@Url.Action("Ispis", "GodisnjiPlan", new { id = @Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Id_god) })"
-			   target="_blank"
-			   class="btn btn-primary btn-md">
-				Ispiši
-			</a>
-		</div>
-		<br>
-	</div>
+    <div class="panel-body">
+        <div class="pull-left">
+            <h3> Detalji za plan @Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Naziv)
+                 u školskoj godini @Html.DisplayFor(modelItem =>modelItem.GodisnjiPlan.Ak_godina).
+            </h3>
+        </div>
+        <div class="pull-right">
+            <a href="@Url.Action("Ispis", "GodisnjiPlan", new { id = @Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.Id_god) })"
+               target="_blank"
+               class="btn btn-primary btn-md">
+                Ispiši
+            </a>
+            <input type="button" class="btn btn-default" value="Zatvori" onclick='reloadPage("@Url.Action("Index", "GodisnjiPlan")")' />
+        </div>
+        <br>
+    </div>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
@@ -78,10 +81,7 @@
 							<td class="col-lg-1">@Html.DisplayFor(modelitem => modelitem.GodisnjiPlan.God_fond_sati)</td>
 						</tr>
 
-					</table>
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" value="Zatvori" onclick='reloadPage("@Url.Action("Index", "GodisnjiPlan")")' />
-					</div>
+					</table>					
 				</div>
 			</div>
 		</div>

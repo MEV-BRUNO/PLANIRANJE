@@ -43,7 +43,7 @@ namespace Planiranje.Models
                             {
                                 Id_plan = Convert.ToInt32(sdr["id_plan"]),
                                 Naziv = sdr["naziv"].ToString(),
-                                Ak_godina = sdr["ak_godina"].ToString(),
+                                Ak_godina = Convert.ToInt32(sdr["ak_godina"]),
                                 Opis = sdr["opis"].ToString(),
                             };
                             os_plan_1.Add(plan);
@@ -81,7 +81,7 @@ namespace Planiranje.Models
                             {
                                 Id_plan = Convert.ToInt32(sdr["id_plan"]),
                                 Naziv = sdr["naziv"].ToString(),
-                                Ak_godina = sdr["ak_godina"].ToString(),
+                                Ak_godina = Convert.ToInt32(sdr["ak_godina"]),
                                 Opis = sdr["opis"].ToString(),
                             };
                             os_plan_1.Add(plan);
@@ -117,7 +117,7 @@ namespace Planiranje.Models
 							os_plan_1 = new OS_Plan_1()
                             {
                                 Id_plan = Convert.ToInt32(sdr["id_plan"]),
-                                Ak_godina = sdr["ak_godina"].ToString(),
+                                Ak_godina = Convert.ToInt32(sdr["ak_godina"]),
                                 Naziv = sdr["naziv"].ToString(),
                                 Opis = sdr["opis"].ToString()
                             };

@@ -31,7 +31,7 @@ namespace Planiranje.Controllers
 			int idPlan = 0;
 			mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 			{
-				Text = i.Ak_godina,
+				Text = i.Ak_godina.ToString(),
 				Value = i.Id_god.ToString()
 			}));
 
@@ -74,7 +74,7 @@ namespace Planiranje.Controllers
 			mjesecniModel.ID_GODINA = id_godina;
 			mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 			{
-				Text = i.Ak_godina,
+				Text = i.Ak_godina.ToString(),
 				Value = i.Id_god.ToString()
 			}));
 			
@@ -207,7 +207,7 @@ namespace Planiranje.Controllers
 			}));
 			mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 			{
-				Text = i.Ak_godina,
+				Text = i.Ak_godina.ToString(),
 				Value = i.Id_god.ToString()
 			}));
 			mjesecniModel.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(id);
@@ -264,7 +264,7 @@ namespace Planiranje.Controllers
 				}));
 				_mjesecni_model.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 				{
-					Text = i.Ak_godina,
+					Text = i.Ak_godina.ToString(),
 					Value = i.Id_god.ToString()
 				}));
 				return PartialView("NoviDetalji", _mjesecni_model);
@@ -321,7 +321,7 @@ namespace Planiranje.Controllers
 			mjesecniModel.ID_GODINA = id_godina;
 			mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 			{
-				Text = i.Ak_godina,
+				Text = i.Ak_godina.ToString(),
 				Value = i.Id_god.ToString()
 			}));
 
@@ -341,7 +341,7 @@ namespace Planiranje.Controllers
 			mjesecni_plan.Naziv = _mjesecni_model.MjesecniPlan.Naziv;
 			mjesecni_plan.Opis = _mjesecni_model.MjesecniPlan.Opis;
 			mjesecni_plan.ID_plan = _mjesecni_model.ID_PLAN;
-			mjesecni_plan.Ak_godina = godisnji_planovi.ReadGodisnjiPlan(_mjesecni_model.ID_GODINA).Ak_godina;
+			mjesecni_plan.Ak_godina = godisnji_planovi.ReadGodisnjiPlan(_mjesecni_model.ID_GODINA).Ak_godina.ToString();
 
 			if (mjesecni_planovi.UpdateMjesecniPlan(mjesecni_plan))
 			{
@@ -376,7 +376,7 @@ namespace Planiranje.Controllers
 			}));
 			mjesecniModel.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 			{
-				Text = i.Ak_godina,
+				Text = i.Ak_godina.ToString(),
 				Value = i.Id_god.ToString()
 			}));
 			mjesecniModel.MjesecniPlan = mjesecni_planovi.ReadMjesecniPlan(id);
@@ -433,7 +433,7 @@ namespace Planiranje.Controllers
 				}));
 				_mjesecni_model.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
 				{
-					Text = i.Ak_godina,
+					Text = i.Ak_godina.ToString(),
 					Value = i.Id_god.ToString()
 				}));
 				return PartialView("UrediDetalje", _mjesecni_model);

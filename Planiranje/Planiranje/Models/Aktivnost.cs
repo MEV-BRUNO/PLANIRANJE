@@ -16,5 +16,6 @@ namespace Planiranje.Models
 		[Required(ErrorMessage = "Obavezno polje")]
 		[DisplayName("Naziv")]
 		public string Naziv { get; set; }
+        public int Vrsta { get; set; }
     }
 }
