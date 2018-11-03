@@ -28,5 +28,7 @@ namespace Planiranje.Models
 		public int Br_sati { get; set; }		
 		[DisplayName("Bilješke")]
 		public string Biljeska { get; set; }
+        [DisplayName("Subjekti")]
+        public string Subjekti { get; set; }
     }
 }

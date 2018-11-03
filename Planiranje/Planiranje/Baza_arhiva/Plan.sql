@@ -195,6 +195,7 @@ CREATE TABLE dnevnik_detalji (
 CREATE TABLE mjesecni_detalji (
   id int(20) NOT NULL AUTO_INCREMENT,
   id_plan int(20) NOT NULL,
+  subjekti text,
   podrucje text,
   aktivnost text,
   suradnici text,
@@ -458,3 +459,11 @@ INSERT INTO zadaci (vrsta, naziv) VALUES (0, "Primijeniti nove spoznaje u radu s
 INSERT INTO zadaci (vrsta, naziv) VALUES (0, "Utvrditi stilove života i navike učenja učenika");
 INSERT INTO zadaci (vrsta, naziv) VALUES (0, "Upoznati učenike s osnovnim pojmovima i zakonitostima učenja, pamćenja i zaboravljanja");
 INSERT INTO zadaci (vrsta, naziv) VALUES (0, "Unaprijediti učinkovitost procesa i rezultata odgojno-obrazovnog rada");
+
+INSERT INTO sk_godina VALUES (2016);
+INSERT INTO sk_godina VALUES (2017);
+INSERT INTO sk_godina VALUES (2018);
+INSERT INTO sk_godina VALUES (2019);
+INSERT INTO sk_godina VALUES (2020);
+INSERT INTO sk_godina VALUES (2021);
+INSERT INTO sk_godina VALUES (2022);
