@@ -35,7 +35,14 @@ namespace Planiranje.Controllers
             }
             else
             {
-                mjesecniModel.GODINA = mjesecniModel.MjesecniPlanovi.Min(m => m.Ak_godina);
+                if (mjesecniModel.MjesecniPlanovi.Count==0)
+                {
+                    mjesecniModel.GODINA = mjesecniModel.SkolskaGodina.Min(m => m.Sk_Godina);
+                }
+                else
+                {
+                    mjesecniModel.GODINA = mjesecniModel.MjesecniPlanovi.Min(m => m.Ak_godina);
+                }
             }
             int god = mjesecniModel.GODINA;
             mjesecniModel.MjesecniPlanovi = baza.MjesecniPlan.Where(w => w.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId && w.Ak_godina == god).ToList();
@@ -113,6 +120,43 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("Index",new { godina = god});
+        }
+        public ActionResult UrediPlan(int id)
+        {
+            MjesecniModel model = new MjesecniModel();
+            model.SkolskaGodina = new List<Sk_godina>();
+            model.SkolskaGodina = baza.SkolskaGodina.ToList();
+            model.MjesecniPlan = new Mjesecni_plan();
+            model.MjesecniPlan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == id && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if(model.MjesecniPlan==null || model.SkolskaGodina == null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            return View("UrediNoviPlan", model);
+        }
+        [HttpPost]
+        public ActionResult UrediPlan(MjesecniModel model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.MjesecniPlan.ID_pedagog!=PlaniranjeSession.Trenutni.PedagogId)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int god = model.MjesecniPlan.Ak_godina;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.MjesecniPlan.Add(model.MjesecniPlan);
+                    db.Entry(model.MjesecniPlan).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["poruka"] = "Plan je promijenjen!";
+                }
+                catch
+                {
+                    TempData["poruka"] = "Plan iz nekog razloga nije promijenjen! Pokušajte ponovno.";
+                }
+            }
+            return RedirectToAction("Index",new { godina=god});
         }
     }
 }
