@@ -22,5 +22,17 @@ namespace Planiranje.Models
         {
             get { return new SelectList(SkolskaGodina, "Sk_Godina", "Sk_Godina"); }
         }
+        public IEnumerable<SelectListItem> AktivnostiItems
+        {
+            get { return new SelectList(Aktivnosti, "Naziv", "Naziv"); }
+        }
+        public IEnumerable<SelectListItem> PodrucjeRadaItems
+        {
+            get { return new SelectList(PodrucjaRada, "Naziv", "Naziv"); }
+        }
+        public IEnumerable<SelectListItem> SubjektiItems
+        {
+            get { return new SelectList(Subjekti, "Naziv", "Naziv"); }
+        }
     }
 }

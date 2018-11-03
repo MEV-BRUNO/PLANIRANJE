@@ -73,7 +73,7 @@
                                             <td class="col-md-1">@item.Ak_godina./@godina.</td>
                                             <td class="col-md-8">@item.Naziv</td>
                                             <td class="col-md-2">
-                                                <a href="#" class="btn btn-info btn-xs btn-grad">Detalji</a>
+                                                <a onclick="reloadPage('@Url.Action("Detalji","MjesecniPlan",new { id=item.ID_plan})')" class="btn btn-info btn-xs btn-grad">Detalji</a>
                                                 <a onclick="showModal('@Url.Action("UrediPlan","MjesecniPlan",new { id=item.ID_plan})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
                                                 <a onclick="showModal('@Url.Action("ObrisiPlan","MjesecniPlan",new { id=item.ID_plan})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                             </td>

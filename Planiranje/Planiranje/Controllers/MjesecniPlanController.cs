@@ -158,6 +158,60 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Index",new { godina=god});
         }
+        public ActionResult Detalji (int id)
+        {
+            MjesecniModel model = new MjesecniModel();
+            model.MjesecniPlan = new Mjesecni_plan();
+            model.MjesecniPlan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == id && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.MjesecniPlan==null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            model.MjesecniDetalji = new List<Mjesecni_detalji>();
+            model.MjesecniDetalji = baza.MjesecniDetalji.Where(w => w.ID_plan == id).ToList();
+            return View(model);
+        }
+        public ActionResult NoviDetalji (int idPlan)
+        {            
+            MjesecniModel model = new MjesecniModel();
+            model.ID_PLAN = idPlan;
+            model.MjesecniPlan = new Mjesecni_plan();
+            model.MjesecniPlan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == idPlan && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.MjesecniPlan==null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            model.Aktivnosti = new List<Aktivnost>();
+            model.Subjekti = new List<Subjekti>();
+            model.PodrucjaRada = new List<Podrucje_rada>();
+            model.Aktivnosti = aktivnosti.ReadAktivnost();
+            model.Subjekti = subjekti.ReadSubjekti();
+            model.PodrucjaRada = podrucja_rada.ReadPodrucjeRada();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult NoviDetalji (MjesecniModel model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.mjesecniDetalj == null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            model.mjesecniDetalj.ID_plan = model.ID_PLAN;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    db.MjesecniDetalji.Add(model.mjesecniDetalj);
+                    db.SaveChanges();
+                    TempData["poruka"] = "Novi detalj je spremljen!";
+                }
+                catch
+                {
+                    TempData["poruka"] = "Novi detalj nije spremljen! Pokušajte ponovno.";
+                }
+            }
+            return RedirectToAction("Detalji",new { id = model.ID_PLAN});
+        }
     }
 }
 		

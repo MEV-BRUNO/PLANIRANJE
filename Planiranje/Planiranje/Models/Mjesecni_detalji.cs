@@ -9,32 +9,23 @@ namespace Planiranje.Models
 {
     public class Mjesecni_detalji
 	{
+        [Key]
 		[Required]
 		public int ID { get; set; }
-		[Required]
-        [Key]
-		public int ID_plan { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
-		public int Red_br { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
+		[Required]        
+		public int ID_plan { get; set; }			
 		[DisplayName("Područje rada")]
-		public string Podrucje { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
+		public string Podrucje { get; set; }		
 		[DisplayName("Aktivnost")]
-		public string Aktivnost { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
+		public string Aktivnost { get; set; }		
 		[DisplayName("Suradnici")]
-		public string Suradnici { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
+		public string Suradnici { get; set; }		
 		[DataType(DataType.Date)]
 		[DisplayName("Vrijeme izvršenja")]
 		[DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
-		public DateTime Vrijeme { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
-		[DisplayName("Vrijeme rada")]
-		[Range(1, 999, ErrorMessage = "Vrijeme rada može biti iymeđu 1 i 999 sati")]
-		public int Br_sati { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
+		public DateTime Vrijeme { get; set; }		
+		[DisplayName("Vrijeme rada")]		
+		public int Br_sati { get; set; }		
 		[DisplayName("Bilješke")]
 		public string Biljeska { get; set; }
     }
