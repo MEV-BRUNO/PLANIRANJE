@@ -20,8 +20,8 @@ namespace Planiranje.Models
 		public string Aktivnost { get; set; }		
 		[DisplayName("Suradnici")]
 		public string Suradnici { get; set; }		
-		[DataType(DataType.Date)]
-		[DisplayName("Vrijeme izvršenja")]
+		//[DataType(DataType.Date)]
+		[DisplayName("Datum izvršenja")]
 		[DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
 		public DateTime Vrijeme { get; set; }		
 		[DisplayName("Vrijeme rada")]		

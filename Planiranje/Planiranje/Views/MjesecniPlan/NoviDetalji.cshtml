@@ -41,6 +41,7 @@
                     </div>
                 </div>
             </div>
+            <!--//PODRUCJA RADA-->
             <!--SUBJEKTI-->
             <div class="form-group">
                 <div class="col-lg-12">
@@ -64,8 +65,7 @@
                         <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("subjektiList", "subjektiText")' value="Dodaj" />
                     </div>
                 </div>
-            </div>
-            <!--//PODRUCJA RADA-->
+            </div>            
             <!--AKTIVNOSTI-->
             <div class="form-group">
                 <div class="col-lg-12">
@@ -120,7 +120,7 @@
             <div class="form-group">
                 <div class="col-md-7">
                     @Html.LabelFor(model => model.mjesecniDetalj.Vrijeme)
-                    @Html.EditorFor(model => model.mjesecniDetalj.Vrijeme, "{0:dd-MM-yyyy}", new { htmlAttributes = new { @class = "form-control", @required = "" } })
+                    @Html.EditorFor(model => model.mjesecniDetalj.Vrijeme, "{0:dd-MM-yyyy}", new { htmlAttributes = new { @class = "form-control", @required = "",@placeholder="dd.mm.yyyy." } })
                     @Html.ValidationMessageFor(model => model.mjesecniDetalj.Vrijeme, "", new { @class = "text-danger" })
                     @Html.ValidationMessage("error_msg", new { @class = "text-danger" })
                 </div>

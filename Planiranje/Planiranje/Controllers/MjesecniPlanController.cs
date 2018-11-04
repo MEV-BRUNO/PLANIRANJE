@@ -212,6 +212,51 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Detalji",new { id = model.ID_PLAN});
         }
+        public ActionResult UrediDetalje(int id)
+        {
+            MjesecniModel model = new MjesecniModel();
+            model.mjesecniDetalj = new Mjesecni_detalji();
+            model.mjesecniDetalj = baza.MjesecniDetalji.SingleOrDefault(w => w.ID == id);
+            if (model.mjesecniDetalj == null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int idPlan = model.mjesecniDetalj.ID_plan;
+            model.MjesecniPlan = new Mjesecni_plan();
+            model.MjesecniPlan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == idPlan && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.MjesecniPlan == null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            model.PodrucjaRada = podrucja_rada.ReadPodrucjeRada();
+            model.Subjekti = subjekti.ReadSubjekti();
+            model.Aktivnosti = aktivnosti.ReadAktivnost();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UrediDetalje (MjesecniModel model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.MjesecniDetalji.Add(model.mjesecniDetalj);
+                    db.Entry(model.mjesecniDetalj).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["poruka"] = "Detalji su promijenjeni!";
+                }
+                catch
+                {
+                    TempData["poruka"] = "Detalji nisu promijenjeni! Pokušajte ponovno.";
+                }
+            }
+            return RedirectToAction("Detalji",new { id=model.MjesecniPlan.ID_plan});
+        }
+        
     }
 }
 		
