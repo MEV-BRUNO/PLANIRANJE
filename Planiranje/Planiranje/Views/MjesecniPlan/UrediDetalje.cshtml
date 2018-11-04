@@ -137,7 +137,7 @@
                     @Html.LabelFor(model => model.mjesecniDetalj.Biljeska)
                 </div>
                 <div class="col-md-12">
-                    @Html.TextAreaFor(model => model.mjesecniDetalj.Biljeska, new { @class = "edit-opis", id = "podRada", @required = "" })
+                    @Html.TextAreaFor(model => model.mjesecniDetalj.Biljeska, new { @class = "edit-opis", id = "podRada", @required = "",@rows="4" })
                     @Html.ValidationMessageFor(model => model.mjesecniDetalj.Biljeska, "", new { @class = "text-danger" })
                 </div>
             </div>
