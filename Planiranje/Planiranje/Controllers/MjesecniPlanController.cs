@@ -256,7 +256,49 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Detalji",new { id=model.MjesecniPlan.ID_plan});
         }
-        
+        public ActionResult ObrisiDetalj(int id)
+        {
+            MjesecniModel model = new MjesecniModel();            
+            model.mjesecniDetalj = baza.MjesecniDetalji.SingleOrDefault(s => s.ID == id);            
+            if (model.mjesecniDetalj == null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int idPlan = model.mjesecniDetalj.ID_plan;
+            model.MjesecniPlan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == idPlan && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.MjesecniPlan==null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ObrisiDetalj(MjesecniModel model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }            
+            int id = model.mjesecniDetalj.ID;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    var item = db.MjesecniDetalji.SingleOrDefault(s => s.ID == id);
+                    if (item != null)
+                    {
+                        db.MjesecniDetalji.Remove(item);
+                        db.SaveChanges();
+                        TempData["poruka"] = "Detalj je obrisan!";
+                    }
+                }
+                catch
+                {
+                    TempData["poruka"] = "Detalj nije obrisan! Pokušajte ponovno.";
+                }
+            }
+            return RedirectToAction("Detalji", new { id = model.MjesecniPlan.ID_plan });
+        }
     }
 }
 		
