@@ -299,6 +299,19 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Detalji", new { id = model.MjesecniPlan.ID_plan });
         }
+
+        public FileStreamResult Ispis (int idPlan)
+        {
+            MjesecniModel model = new MjesecniModel();
+            model.MjesecniDetalji = new List<Mjesecni_detalji>();
+            model.MjesecniPlan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == idPlan && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model.MjesecniPlan != null)
+            {
+                model.MjesecniDetalji = baza.MjesecniDetalji.Where(w => w.ID_plan == idPlan).ToList();
+            }
+            MjesecniPlanReport report = new MjesecniPlanReport(model);
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+        }
     }
 }
 		

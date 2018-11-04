@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-lg-2 pull-right">
                             <button onclick="reloadPage('@Url.Action("Index","MjesecniPlan",new { godina=Model.MjesecniPlan.Ak_godina})')" class="btn btn-info btn-sm">Natrag</button>
-                            <button class="btn btn-success btn-sm">ISPIS</button>
+                            <a href="@Url.Action("Ispis","MjesecniPlan",new { idPlan=Model.MjesecniPlan.ID_plan})" target="_blank" class="btn btn-success btn-sm">ISPIS</a>
                         </div>
 
                     </div><!--END ROW -->
