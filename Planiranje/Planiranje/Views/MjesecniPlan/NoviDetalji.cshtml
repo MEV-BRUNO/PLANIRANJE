@@ -1,142 +1,151 @@
 ﻿@model Planiranje.Models.MjesecniModel
 
 @{
-	Page.Title = ViewBag.Title;
+    Layout = null;
 }
 
 <div class="modal-dialog" style="width:50%; min-width:800px;">
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h4 class="modal-title">@ViewBag.Title</h4>
+			<h4 class="modal-title">Novi detalj za mjesečni plan <b>@Model.MjesecniPlan.Naziv</b></h4>
 		</div>
 		@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "NoviDetaljModalView", @class = "form-horizontal", role = "form" }))
 		{
-			<div class="modal-body">
-				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-				@Html.HiddenFor(model => model.MjesecniPlan.ID_plan)
-				@Html.HiddenFor(model => model.ID_PLAN)
-				@Html.HiddenFor(model => model.ID_GODINA)
-				<!--PODRUCJA RADA-->
-				<div class="form-group">
-					<div class="col-lg-12">
-						@Html.LabelFor(model => model.PodrucjaRada)
-					</div>
-					<div class="col-lg-7">
-						<div class="form-group">
-							<div class="col-lg-12">
-								@Html.TextAreaFor(model => model.mjesecniDetalj.Podrucje, new { @class = "edit-text-area", id = "podrucjeRadaText", @readOnly = "false" })
-								@Html.ValidationMessageFor(model => model.mjesecniDetalj.Podrucje, "", new { @class = "text-danger" })
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-5">
-						<div class="form-group">
-							<div class="col-lg-12">
-								@Html.DropDownList("PodrucjaRada", Model.PodrucjaRada, "---Odaberi---", new { @class = "form-control", id = "podrucjeRadaList" })
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-6">
-								<input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("podrucjeRadaList", "podrucjeRadaText")' value="Dodaj" />
-							</div>
-							<div class="col-lg-6">
-								<input type="button" class="btn btn-danger" style="width:100%;" onclick='removeText("podrucjeRadaList", "podrucjeRadaText")' value="Ukloni" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--//PODRUCJA RADA-->
-				<!--AKTIVNOSTI-->
-				<div class="form-group">
-					<div class="col-lg-12">
-						@Html.LabelFor(model => model.Aktivnosti)
-					</div>
-					<div class="col-lg-7">
-						<div class="form-group">
-							<div class="col-lg-12">
-								@Html.TextAreaFor(model => model.mjesecniDetalj.Aktivnost, new { @class = "edit-text-area", id = "aktivnostText", @readOnly = "false" })
-								@Html.ValidationMessageFor(model => model.mjesecniDetalj.Aktivnost, "", new { @class = "text-danger" })
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-5">
-						<div class="form-group">
-							<div class="col-lg-12">
-								@Html.DropDownList("PodrucjaRada", Model.Aktivnosti, "---Odaberi---", new { @class = "form-control", id = "aktivnostList" })
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-6">
-								<input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("aktivnostList", "aktivnostText")' value="Dodaj" />
-							</div>
-							<div class="col-lg-6">
-								<input type="button" class="btn btn-danger" style="width:100%;" onclick='removeText("aktivnostList", "aktivnostText")' value="Ukloni" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--//AKTIVNOSTI-->
-				<!--SUBJEKTI-->
-				<div class="form-group">
-					<div class="col-lg-12">
-						@Html.LabelFor(model => model.Subjekti)
-					</div>
-					<div class="col-lg-7">
-						<div class="form-group">
-							<div class="col-lg-12">
-								@Html.TextAreaFor(model => model.mjesecniDetalj.Suradnici, new { @class = "edit-text-area", id = "suradniciText", @readOnly = "false" })
-								@Html.ValidationMessageFor(model => model.mjesecniDetalj.Suradnici, "", new { @class = "text-danger" })
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-5">
-						<div class="form-group">
-							<div class="col-lg-12">
-								@Html.DropDownList("PodrucjaRada", Model.Subjekti, "---Odaberi---", new { @class = "form-control", id = "suradniciList" })
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-6">
-								<input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("suradniciList", "suradniciText")' value="Dodaj" />
-							</div>
-							<div class="col-lg-6">
-								<input type="button" class="btn btn-danger" style="width:100%;" onclick='removeText("suradniciList", "suradniciText")' value="Ukloni" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--//SUBJEKTI-->
-				<!--VRIJEME-->
-				<div class="form-group">
-					<div class="col-md-7">
-						@Html.LabelFor(model => model.mjesecniDetalj.Vrijeme)
-						@Html.EditorFor(model => model.mjesecniDetalj.Vrijeme, "{0:dd-MM-yyyy}", new { htmlAttributes = new { @class = "form-control" } })
-						@Html.ValidationMessageFor(model => model.mjesecniDetalj.Vrijeme, "", new { @class = "text-danger" })
-						@Html.ValidationMessage("error_msg", new { @class = "text-danger" })
-					</div>
-					<div class="col-md-5">
-						@Html.LabelFor(model => model.mjesecniDetalj.Br_sati)
-						@Html.EditorFor(model => model.mjesecniDetalj.Br_sati, new { htmlAttributes = new { @class = "form-control" } })
-						@Html.ValidationMessageFor(model => model.mjesecniDetalj.Br_sati, "", new { @class = "text-danger" })
-					</div>
-				</div>
-				<!--//VRIJEME-->
-				<!--//BILJESKA-->
-				<div class="form-group">
-					<div class="col-md-12">
-						@Html.LabelFor(model => model.mjesecniDetalj.Biljeska)
-					</div>
-					<div class="col-md-12">
-						@Html.TextAreaFor(model => model.mjesecniDetalj.Biljeska, new { @class = "edit-opis", id = "podRada" })
-						@Html.ValidationMessageFor(model => model.mjesecniDetalj.Biljeska, "", new { @class = "text-danger" })
-					</div>
-				</div>	
-				<!--//BILJESKA-->
-			</div>
+        <div class="modal-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MjesecniPlan.ID_plan)
+            @Html.HiddenFor(model => model.ID_PLAN)
+            @Html.HiddenFor(model => model.GODINA)
+            <!--PODRUCJA RADA-->
+            <div class="form-group">
+                <div class="col-lg-12">
+                    @Html.LabelFor(model => model.mjesecniDetalj.Podrucje)
+                </div>
+                <div class="col-lg-7">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.TextAreaFor(model => model.mjesecniDetalj.Podrucje, new { @class = "edit-text-area", id = "podrucjeRadaText", @required = "" })
+                            @Html.ValidationMessageFor(model => model.mjesecniDetalj.Podrucje, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.DropDownList("PodrucjaRada", Model.PodrucjeRadaItems, "---Odaberi---", new { @class = "form-control", id = "podrucjeRadaList" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("podrucjeRadaList", "podrucjeRadaText")' value="Dodaj" />
+                    </div>
+                </div>
+            </div>
+            <!--//PODRUCJA RADA-->
+            <!--SUBJEKTI-->
+            <div class="form-group">
+                <div class="col-lg-12">
+                    @Html.LabelFor(model => model.mjesecniDetalj.Subjekti)
+                </div>
+                <div class="col-lg-7">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.TextAreaFor(model => model.mjesecniDetalj.Subjekti, new { @class = "edit-text-area", id = "subjektiText", @required = "" })
+                            @Html.ValidationMessageFor(model => model.mjesecniDetalj.Subjekti, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.DropDownList("PodrucjaRada", Model.SubjektiItems, "---Odaberi---", new { @class = "form-control", id = "subjektiList" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("subjektiList", "subjektiText")' value="Dodaj" />
+                    </div>
+                </div>
+            </div>            
+            <!--AKTIVNOSTI-->
+            <div class="form-group">
+                <div class="col-lg-12">
+                    @Html.LabelFor(model => model.mjesecniDetalj.Aktivnost)
+                </div>
+                <div class="col-lg-7">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.TextAreaFor(model => model.mjesecniDetalj.Aktivnost, new { @class = "edit-text-area", id = "aktivnostText", @required = "" })
+                            @Html.ValidationMessageFor(model => model.mjesecniDetalj.Aktivnost, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.DropDownList("PodrucjaRada", Model.AktivnostiItems, "---Odaberi---", new { @class = "form-control", id = "aktivnostList" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("aktivnostList", "aktivnostText")' value="Dodaj" />
+                    </div>
+                </div>
+            </div>
+            <!--//AKTIVNOSTI-->
+            <!--SUBJEKTI-->
+            <div class="form-group">
+                <div class="col-lg-12">
+                    @Html.LabelFor(model => model.mjesecniDetalj.Suradnici)
+                </div>
+                <div class="col-lg-7">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.TextAreaFor(model => model.mjesecniDetalj.Suradnici, new { @class = "edit-text-area", id = "suradniciText", @required = "" })
+                            @Html.ValidationMessageFor(model => model.mjesecniDetalj.Suradnici, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.DropDownList("PodrucjaRada", Model.SubjektiItems, "---Odaberi---", new { @class = "form-control", id = "suradniciList" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("suradniciList", "suradniciText")' value="Dodaj" />
+                    </div>
+                </div>
+            </div>
+            <!--//SUBJEKTI-->
+            <!--VRIJEME-->
+            <div class="form-group">
+                <div class="col-md-7">
+                    @Html.LabelFor(model => model.mjesecniDetalj.Vrijeme)
+                    @Html.EditorFor(model => model.mjesecniDetalj.Vrijeme, "{0:dd-MM-yyyy}", new { htmlAttributes = new { @class = "form-control", @required = "",@placeholder="dd.mm.yyyy." } })
+                    @Html.ValidationMessageFor(model => model.mjesecniDetalj.Vrijeme, "", new { @class = "text-danger" })
+                    @Html.ValidationMessage("error_msg", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-5">
+                    @Html.LabelFor(model => model.mjesecniDetalj.Br_sati)
+                    @Html.EditorFor(model => model.mjesecniDetalj.Br_sati, new { htmlAttributes = new { @class = "form-control", @required = "", @min = "0" } })
+                    @Html.ValidationMessageFor(model => model.mjesecniDetalj.Br_sati, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <!--//VRIJEME-->
+            <!--//BILJESKA-->
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.mjesecniDetalj.Biljeska)
+                </div>
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.mjesecniDetalj.Biljeska, new { @class = "edit-opis", id = "podRada", @required = "",@rows="4" })
+                    @Html.ValidationMessageFor(model => model.mjesecniDetalj.Biljeska, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <!--//BILJESKA-->
+        </div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-				<input type="button" class="btn btn-primary" value="Spremi" onclick='hideModal("/MjesecniPlan/NoviDetalji", "#NoviDetaljModalView", "Detalji uspješno spremljeni")' />
+				<input type="submit" class="btn btn-primary" value="Spremi" />
 			</div>
 		}
 	</div>

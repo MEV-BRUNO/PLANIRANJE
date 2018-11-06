@@ -199,14 +199,14 @@ namespace Planiranje.Controllers
 			{
 				return RedirectToAction("Index", "Planiranje");
 			}
-			if (!mjesecni_planovi.UpdateMjesecniPlan(mjesecni_plan))
-			{
-				TempData["alert"] = "<script>alert('Mjesecni plan nije promjenjen!');</script>";
-			}
-			else
-			{
-				TempData["alert"] = "<script>alert('Mjesecni plan je uspjesno promjenjen!');</script>";
-			}
+			//if (!mjesecni_planovi.UpdateMjesecniPlan(mjesecni_plan))
+			//{
+			//	TempData["alert"] = "<script>alert('Mjesecni plan nije promjenjen!');</script>";
+			//}
+			//else
+			//{
+			//	TempData["alert"] = "<script>alert('Mjesecni plan je uspjesno promjenjen!');</script>";
+			//}
 			return RedirectToAction("Detalji");
 		}
 

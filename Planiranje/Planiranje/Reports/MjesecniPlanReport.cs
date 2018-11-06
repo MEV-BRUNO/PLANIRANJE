@@ -21,7 +21,7 @@ namespace Planiranje.Reports
             // novi dokument, sa veličinom stranice i marginama
             // mjere u iText# -> point = 1/72 inch
             Document pdfDokument = new Document(
-                PageSize.A4, 50, 50, 20, 50);
+                PageSize.A4.Rotate(), 50, 50, 20, 50);
 
             MemoryStream memStream = new MemoryStream();
             PdfWriter.GetInstance(pdfDokument, memStream).
@@ -50,7 +50,8 @@ namespace Planiranje.Reports
             pdfDokument.Add(logo);*/
 
             // header
-            Paragraph p = new Paragraph("MJESEČNI (TJEDNI) PLAN I PROGRAM za: " + model.MjesecniPlan.Ak_godina, header);
+            Paragraph p = new Paragraph("MJESEČNI PLAN I PROGRAM za: " + model.MjesecniPlan.Naziv+" u" +
+                " školskoj godini "+model.MjesecniPlan.Ak_godina+"./ "+(model.MjesecniPlan.Ak_godina+1).ToString()+".", header);
             pdfDokument.Add(p);
 
             // naslov 
@@ -61,12 +62,13 @@ namespace Planiranje.Reports
             pdfDokument.Add(p);
 
             // tablica sa popisom studenata
-            PdfPTable t = new PdfPTable(6); // 5 kolona
+            PdfPTable t = new PdfPTable(7); // 5 kolona
             t.WidthPercentage = 100; // širina tablice
-            t.SetWidths(new float[] { 2, 2, 2, 2, 1, 3 });
+            t.SetWidths(new float[] { 2, 2, 2, 2, 2, 1, 3 });
 
             // dodati zaglavlje
-            t.AddCell(VratiCeliju("PODRUČJE/\nSUBJEKT RADA", tekst, true, BaseColor.LIGHT_GRAY));
+            t.AddCell(VratiCeliju("PODRUČJE RADA", tekst, false, BaseColor.LIGHT_GRAY));
+            t.AddCell(VratiCeliju("SUBJEKT RADA", tekst, false, BaseColor.LIGHT_GRAY));
             t.AddCell(VratiCeliju("AKTIVNOSTI/\nSADRŽAJI", tekst, false, BaseColor.LIGHT_GRAY));
 			t.AddCell(VratiCeliju("SURADNICI", tekst, true, BaseColor.LIGHT_GRAY));
 			t.AddCell(VratiCeliju("VRIJEME\nOSTVARENJA", tekst, true, BaseColor.LIGHT_GRAY));
@@ -79,6 +81,7 @@ namespace Planiranje.Reports
             foreach (Mjesecni_detalji detalj in model.MjesecniDetalji)
             {
                 t.AddCell(VratiCeliju(detalj.Podrucje, tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(detalj.Subjekti, tekst, false, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(detalj.Aktivnost, tekst, false, BaseColor.WHITE));
 				t.AddCell(VratiCeliju(detalj.Suradnici, tekst, false, BaseColor.WHITE));
 				t.AddCell(VratiCeliju(detalj.Vrijeme.ToShortDateString(), tekst, false, BaseColor.WHITE));
