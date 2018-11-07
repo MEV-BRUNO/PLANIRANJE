@@ -28,7 +28,7 @@ namespace Planiranje.Controllers
 			return View(god_planovi);
 		}
 
-
+/*
             int Size_Of_Page = 10;
             int No_Of_Page = (Page_No ?? 1);
             if (Search == null || Search.Length == 0)
@@ -56,6 +56,7 @@ namespace Planiranje.Controllers
             }
 
         }
+        */
         public ActionResult NoviPlan()
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
@@ -69,26 +70,36 @@ namespace Planiranje.Controllers
 			return RedirectToAction("NoviPlan", "GodisnjiPlan");
 		}
 
+
 		[HttpPost]
+        public ActionResult NoviPlan(int x)
+        {
+            
+			return RedirectToAction("Index");
+        }
+
+        /*
+        [HttpPost]
         public ActionResult NoviPlan(ViewModel model)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            
-            if (godisnji_planovi.CreateGodisnjiPlan(model))
-			{
-				TempData["alert"] = "<script>alert('Novi godisnji plan je uspjesno spremljen!');</script>";
-			}
-			else
-			{
-				TempData["alert"] = "<script>alert('Novi godisnji plan nije spremljen');</script>";
-			}
-			return RedirectToAction("Index");
-        }
 
-		// UREĐIVANJE
+            if (godisnji_planovi.CreateGodisnjiPlan(model))
+            {
+                TempData["alert"] = "<script>alert('Novi godisnji plan je uspjesno spremljen!');</script>";
+            }
+            else
+            {
+                TempData["alert"] = "<script>alert('Novi godisnji plan nije spremljen');</script>";
+            }
+            return RedirectToAction("Index");
+        }
+        */
+
+        // UREĐIVANJE
         public ActionResult Edit(int id)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
