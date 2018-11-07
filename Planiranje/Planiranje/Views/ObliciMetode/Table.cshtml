@@ -1,26 +1,38 @@
 ﻿@model Planiranje.Models.ObliciMetodeModel
 
-<table class="table table-bordered table-hover" id="dataTable">
-	<thead>
-		<tr>
-			<td class="col-lg-1">#</td>
-			<td class="col-lg-9">Naziv</td>
-			<td class="col-lg-2">Akcija</td>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model.oblici)
-		{
-			<tr>
-				<td>@Html.DisplayFor(modelItem => item.Red_br)</td>
-				<td>@Html.DisplayFor(modelItem => item.Naziv)</td>
-				<td>
-					<div class="pull-right">
-						<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("Edit","ObliciMetode",new { id = item.Id_oblici })")' />
-						<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete","ObliciMetode",new { id = item.Id_oblici })")' />
-					</div>
-				</td>
-			</tr>
-		}
-	</tbody>
+<table class="table table-bordered table-hover" id="dataTables-example">
+    <thead>
+        <tr>
+            <td class="col-lg-1">
+                @Html.ActionLink("Id", "Index", "ObliciMetode", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            </td>
+            <td class="col-lg-9">
+                @Html.ActionLink("Naziv", "Index", "ObliciMetode", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+            </td>            
+            <td class="col-lg-2">
+                Akcija
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id_oblici)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naziv)
+                </td>
+                
+                <td>
+                    <div class="pull-right">
+                        <a data-toggle="modal" data-url="@Url.Action("Edit","ObliciMetode",new { id = item.Id_oblici })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
+                        <a data-toggle="modal" data-url="@Url.Action("Delete","ObliciMetode",new { id = item.Id_oblici })" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

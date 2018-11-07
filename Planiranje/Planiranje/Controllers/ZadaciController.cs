@@ -66,9 +66,8 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
-				ZadaciModel model = new ZadaciModel();
-				model.zadatak = zadaci.ReadZadaci(id);
-                return View("Uredi", model);
+                ViewBag.IsUpdate = false;
+                return View("Uredi", zadatak);
             }
 			return RedirectToAction("Index");
 		}
@@ -76,7 +75,7 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Edit(ZadaciModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -98,10 +97,8 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
-				ViewBag.ErrorMessage = null;
-				ZadaciModel model = new ZadaciModel();
-				model.zadatak = zadaci.ReadZadaci(id);
-                return View("Obrisi", model);
+                ViewBag.IsUpdate = false;
+                return View("Obrisi", zadatak);
             }
 			return RedirectToAction("Index");
 		}
@@ -109,7 +106,7 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Delete(ZadaciModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }

@@ -8,14 +8,11 @@ using System.Web;
 namespace Planiranje.Models
 {
     public class Subjekti
-	{
-		public int Red_br { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
-		[DisplayName("Id")]
-		public int ID_subjekt { get; set; }
-		[Required(ErrorMessage = "Obavezno polje.")]
-		[DisplayName("Naziv")]
-		public string Naziv { get; set; }
+    {
+        [Required]
+        public int ID_subjekt { get; set; }
+        [Required]
+        public string Naziv { get; set; }
 
         
     }

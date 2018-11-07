@@ -21,7 +21,7 @@ namespace Planiranje.Reports
             // novi dokument, sa veličinom stranice i marginama
             // mjere u iText# -> point = 1/72 inch
             Document pdfDokument = new Document(
-                PageSize.A4, 50, 50, 20, 50);
+                PageSize.A4.Rotate(), 50, 50, 20, 50);
 
             MemoryStream memStream = new MemoryStream();
             PdfWriter.GetInstance(pdfDokument, memStream).
@@ -50,7 +50,7 @@ namespace Planiranje.Reports
             pdfDokument.Add(logo);*/
 
             // header
-            Paragraph p = new Paragraph("MJESEČNI (TJEDNI) PLAN I PROGRAM za: " + model.MjesecniPlan.Ak_godina, header);
+            Paragraph p = new Paragraph("IZVJEŠTAJ", header);
             pdfDokument.Add(p);
 
             // naslov 
@@ -61,30 +61,26 @@ namespace Planiranje.Reports
             pdfDokument.Add(p);
 
             // tablica sa popisom studenata
-            PdfPTable t = new PdfPTable(6); // 5 kolona
+            PdfPTable t = new PdfPTable(4); // 5 kolona
             t.WidthPercentage = 100; // širina tablice
-            t.SetWidths(new float[] { 2, 2, 2, 2, 1, 3 });
+            t.SetWidths(new float[] { 1, 3, 4, 5 });
 
             // dodati zaglavlje
-            t.AddCell(VratiCeliju("PODRUČJE/\nSUBJEKT RADA", tekst, true, BaseColor.LIGHT_GRAY));
-            t.AddCell(VratiCeliju("AKTIVNOSTI/\nSADRŽAJI", tekst, false, BaseColor.LIGHT_GRAY));
-			t.AddCell(VratiCeliju("SURADNICI", tekst, true, BaseColor.LIGHT_GRAY));
-			t.AddCell(VratiCeliju("VRIJEME\nOSTVARENJA", tekst, true, BaseColor.LIGHT_GRAY));
-			t.AddCell(VratiCeliju("BROJ\nSATI", tekst, true, BaseColor.LIGHT_GRAY));
-			t.AddCell(VratiCeliju("BILJEŠKA O\nREALIZACIJI", tekst, true, BaseColor.LIGHT_GRAY));
-
+            t.AddCell(VratiCeliju("R.br.", tekst, true, BaseColor.LIGHT_GRAY));
+            t.AddCell(VratiCeliju("Ak. godina", tekst, false, BaseColor.LIGHT_GRAY));
+            t.AddCell(VratiCeliju("Naziv", tekst, true, BaseColor.LIGHT_GRAY));
+            t.AddCell(VratiCeliju("Opis", tekst, true, BaseColor.LIGHT_GRAY));
+            
 
 			// dodajemo popis studenata
 			//int i = 1;
             foreach (Mjesecni_detalji detalj in model.MjesecniDetalji)
             {
-                t.AddCell(VratiCeliju(detalj.Podrucje, tekst, false, BaseColor.WHITE));
-                t.AddCell(VratiCeliju(detalj.Aktivnost, tekst, false, BaseColor.WHITE));
-				t.AddCell(VratiCeliju(detalj.Suradnici, tekst, false, BaseColor.WHITE));
-				t.AddCell(VratiCeliju(detalj.Vrijeme.ToShortDateString(), tekst, false, BaseColor.WHITE));
-				t.AddCell(VratiCeliju(detalj.Br_sati.ToString(), tekst, false, BaseColor.WHITE));
-				t.AddCell(VratiCeliju(detalj.Biljeska, tekst, false, BaseColor.WHITE));
-			}
+                t.AddCell(VratiCeliju((i++).ToString(), tekst, true, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(plan.Ak_godina, tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(plan.Naziv, tekst, true, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(plan.Opis, tekst, true, BaseColor.WHITE));               
+            }
 
             // dodati tablicu na dokument
             pdfDokument.Add(t);

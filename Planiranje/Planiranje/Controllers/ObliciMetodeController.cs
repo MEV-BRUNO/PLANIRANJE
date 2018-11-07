@@ -67,9 +67,8 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
-				ObliciMetodeModel model = new ObliciMetodeModel();
-				model.oblik = oblici.ReadOblici(id);
-                return View("Uredi", model);
+                ViewBag.IsUpdate = false;
+                return View("Uredi", oblik);
             }
 			return RedirectToAction("Index");
 		}
@@ -77,7 +76,7 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Edit(ObliciMetodeModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -99,11 +98,9 @@ namespace Planiranje.Controllers
             }
 
             if (Request.IsAjaxRequest())
-			{
-				ViewBag.ErrorMessage = null;
-				ObliciMetodeModel model = new ObliciMetodeModel();
-				model.oblik = oblici.ReadOblici(id);
-				return View("Obrisi", model);
+            {
+                ViewBag.IsUpdate = false;
+                return View("Obrisi", oblik);
             }
 			return RedirectToAction("Index");
 		}
@@ -111,7 +108,7 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Delete(ObliciMetodeModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }

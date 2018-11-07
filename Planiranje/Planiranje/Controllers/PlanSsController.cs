@@ -33,12 +33,7 @@ namespace Planiranje.Controllers
             }
             ViewBag.Title = "Pregled srednjih skola";
 
-			SSModel model = new SSModel();
-			model.GodisnjiPlanovi = new List<SelectListItem>(godisnji_planovi.ReadGodisnjePlanove().Select(i => new SelectListItem()
-			{
-				Text = i.Ak_godina,
-				Value = i.Id_god.ToString()
-			}));
+            ViewBag.Message = "Grad";
 
 			int idPlan = 0;
 			if (Plan != null)
@@ -170,134 +165,31 @@ namespace Planiranje.Controllers
 			return RedirectToAction("Index", new { Plan = model.ID_GODINA });
 		}
 
-		public FileStreamResult Ispis(int id)
-		{
-			List<SS_Plan_podrucje> podrucja = planovi_ss.ReadSsPodrucja(id);
-
-			PlanSsPodrucjaReport report = new PlanSsPodrucjaReport(podrucja);
-
-			return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
-		}
-
-		public ActionResult Detalji(int id, int id_god)
-		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+        public ActionResult Edit(int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            SS_Plan ss_plan = new SS_Plan();
+            ss_plan = planovi_ss.ReadSSPlan(id);
+            if (Request.IsAjaxRequest())
+            {
+                ViewBag.IsUpdate = false;
+                return View("Uredi", ss_plan);
+            }
+            return View("Uredi", ss_plan);
+        }
+        [HttpPost]
+        public ActionResult Edit(SS_Plan ss_plan)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (!planovi_ss.UpdateSSPlan(ss_plan))
 			{
-				return RedirectToAction("Index", "Planiranje");
-			}
-			SSModel model = new SSModel();
-			model.SS_Podrucja = planovi_ss.ReadSsPodrucja(id);
-			model.Ak_godina = godisnji_planovi.ReadGodisnjiPlan(id_god).Ak_godina;
-			model.ID_PLAN = id;
-			model.ID_GODINA = id_god;
-			return View("Detalji", model);
-		}
-		[HttpPost]
-		public ActionResult Detalji(Mjesecni_plan mjesecni_plan)
-		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
-			{
-				return RedirectToAction("Index", "Planiranje");
-			}
-			if (!mjesecni_planovi.UpdateMjesecniPlan(mjesecni_plan))
-			{
-				TempData["alert"] = "<script>alert('Mjesecni plan nije promjenjen!');</script>";
-			}
-			else
-			{
-				TempData["alert"] = "<script>alert('Mjesecni plan je uspjesno promjenjen!');</script>";
-			}
-			return RedirectToAction("Detalji");
-		}
-
-		public ActionResult NoviDetalji(int id, int id_god)
-		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
-			{
-				return RedirectToAction("Index", "Planiranje");
-			}
-			SSModel model = new SSModel();
-			model.PodrucjaDjelovanja = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
-			{
-				Text = i.Naziv,
-				Value = i.Id_podrucje.ToString()
-			}));
-			model.Zadace = new List<SelectListItem>(zadaci.ReadZadaci().Select(i => new SelectListItem()
-			{
-				Text = i.Naziv,
-				Value = i.ID_zadatak.ToString()
-			}));
-			model.Oblici = new List<SelectListItem>(oblici.ReadOblici().Select(i => new SelectListItem()
-			{
-				Text = i.Naziv,
-				Value = i.Id_oblici.ToString()
-			}));
-
-			model.Suradnici = new List<SelectListItem>(subjekti.ReadSubjekti().Select(i => new SelectListItem()
-			{
-				Text = i.Naziv,
-				Value = i.ID_subjekt.ToString()
-			}));
-
-			model.Ciljevi = new List<SelectListItem>(ciljevi.ReadCiljevi().Select(i => new SelectListItem()
-			{
-				Text = i.Naziv,
-				Value = i.ID_cilj.ToString()
-			}));
-
-			model.ID_GODINA = id_god;
-			model.ID_PLAN = id;
-
-			return PartialView("NoviDetalji", model);
-		}
-		[HttpPost]
-		public ActionResult NoviDetalji(SSModel model)
-		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
-			{
-				return RedirectToAction("Index", "Planiranje");
-			}
-
-			if (model.SS_Plan_Podrucje.Ishodi == null ||
-				model.SS_Plan_Podrucje.Mjesto == null ||
-				model.SS_Plan_Podrucje.Oblici == null ||
-				model.SS_Plan_Podrucje.Opis_podrucje == null ||
-				model.SS_Plan_Podrucje.Sadrzaj == null ||
-				model.SS_Plan_Podrucje.Sati < 1 ||
-				model.SS_Plan_Podrucje.Suradnici == null ||
-				model.SS_Plan_Podrucje.Svrha == null ||
-				model.SS_Plan_Podrucje.Vrijeme <= DateTime.Now ||
-				model.SS_Plan_Podrucje.Zadaca == null ||
-				!planovi_ss.CreateSSPlanPodrucje(model))
-			{
-				model.PodrucjaDjelovanja = new List<SelectListItem>(podrucja_rada.ReadPodrucjeRada().Select(i => new SelectListItem()
-				{
-					Text = i.Naziv,
-					Value = i.Id_podrucje.ToString()
-				}));
-				model.Zadace = new List<SelectListItem>(zadaci.ReadZadaci().Select(i => new SelectListItem()
-				{
-					Text = i.Naziv,
-					Value = i.ID_zadatak.ToString()
-				}));
-				model.Oblici = new List<SelectListItem>(oblici.ReadOblici().Select(i => new SelectListItem()
-				{
-					Text = i.Naziv,
-					Value = i.Id_oblici.ToString()
-				}));
-
-				model.Suradnici = new List<SelectListItem>(subjekti.ReadSubjekti().Select(i => new SelectListItem()
-				{
-					Text = i.Naziv,
-					Value = i.ID_subjekt.ToString()
-				}));
-
-				model.Ciljevi = new List<SelectListItem>(ciljevi.ReadCiljevi().Select(i => new SelectListItem()
-				{
-					Text = i.Naziv,
-					Value = i.ID_cilj.ToString()
-				}));
-				return PartialView("NoviDetalji", model);
+				TempData["alert"] = "<script>alert('Plan nije promjenjen!');</script>";
 			}
 			else
 			{

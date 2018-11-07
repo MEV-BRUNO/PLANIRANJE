@@ -66,18 +66,18 @@ namespace Planiranje.Controllers
             }
             Podrucje_rada podrucje = new Podrucje_rada();
             podrucje = podrucja_djelovanja.ReadPodrucjeRada(id);
-            if (Request.IsAjaxRequest())
+            if (Request.IsAjaxRequest() && podrucje.Vrsta==PlaniranjeSession.Trenutni.PedagogId)
             {
                 ViewBag.IsUpdate = false;
                 return View("Uredi", podrucje);
             }
-            return View("Uredi", podrucje);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Edit(Podrucje_rada podrucje)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -97,12 +97,12 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            Podrucje_rada podrucje = new Podrucje_rada();
+            podrucje = podrucja_djelovanja.ReadPodrucjeRada(id);
             if (Request.IsAjaxRequest())
             {
-				ViewBag.ErrorMessage = null;
-				Podrucje_rada podrucje = new Podrucje_rada();
-				podrucje = podrucja_djelovanja.ReadPodrucjeRada(id);
-				return View("Obrisi", podrucje);
+                ViewBag.IsUpdate = false;
+                return View("Obrisi", podrucje);
             }
 			return RedirectToAction("Index");
 		}
@@ -110,15 +110,14 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Delete(Podrucje_rada podrucje)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
             if (!podrucja_djelovanja.DeletePodrucjeRada(podrucje.Id_podrucje))
             {
-				ViewBag.ErrorMessage = "Dogodila se greška, nije moguće obrisati podrucje djelovanja!";
-				return View("Obrisi", podrucje);
-			}
+                TempData["alert"] = "<script>alert('Podrucje djelovanja nije obrisano, dogodila se greska!');</script>";
+            }
             else
             {
 				return RedirectToAction("Index");

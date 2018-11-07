@@ -15,12 +15,12 @@
 				<td>@Html.DisplayFor(modelItem => item.Red_br)</td>
 				<td>@Html.DisplayFor(modelItem => item.Naziv)</td>               
                 <td>
-					<div class="pull-right">
-						<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("Edit", "PodrucjaDjelovanja",new { id = item.Id_podrucje })")' />
-						<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete", "PodrucjaDjelovanja",new { id = item.Id_podrucje })")' />
-					</div>
-				</td>
-			</tr>
-		}
-	</tbody>
+                    <div class="pull-right">
+                        <a data-toggle="modal" data-url="@Url.Action("Edit","PodrucjaDjelovanja",new { id = item.Id_podrucje })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
+                        <a data-toggle="modal" data-url="@Url.Action("Delete","PodrucjaDjelovanja",new { id = item.Id_podrucje })" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

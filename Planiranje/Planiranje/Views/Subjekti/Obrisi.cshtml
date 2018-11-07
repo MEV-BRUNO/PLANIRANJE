@@ -15,18 +15,11 @@
             <div class="modal-body">
                 @Html.HiddenFor(model => model.subjekt.ID_subjekt)
                 <div class="form-group">
-					<div class="col-md-10">
-					@if (ViewBag.ErrorMessage == null)
-					{
-					<h5>
-						Jeste li sigurni da želite obrisati "@Html.DisplayFor(model => model.subjekt.Naziv, new { htmlAttributes = new { @class = "form-control" } })"?
-					</h5>
-					}
-					else
-					{
-						@ViewBag.ErrorMessage;
-					}
-					</div>
+                    <div class="col-md-10">
+                        <h5>
+                            Jeste li sigurni da zelite obrisati "@Html.DisplayFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })"?
+                        </h5>
+                    </div>
                 </div>
                 <div class="modal-footer">
 					<div class="form-group">

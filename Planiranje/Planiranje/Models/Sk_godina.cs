@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace Planiranje.Models
 {
-    public class Oblici
+    public class Sk_godina
     {
+        [Key]
         [Required]
-        public int Id_oblici { get; set; }
-        [Required]
-        public string Naziv { get; set; }
-
+        public int Sk_Godina { get; set; }
     }
 }

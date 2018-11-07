@@ -9,19 +9,17 @@ namespace Planiranje.Models
 {
     public class Mjesecni_plan
     {
-		public int Red_br { get; set; }
-		[Required]
+        [Required]
         public int ID_plan { get; set; }
         [Required]
         public int ID_pedagog { get; set; }
-		public int Id_godina { get; set; }
-		[Required]
+        [Required]
 		[DisplayName("Ak. godina")]
 		public string Ak_godina { get; set; }
-        [Required(ErrorMessage = "Obavezno polje")]
+        [Required]
 		[DisplayName("Naziv plana")]
 		public string Naziv { get; set; }
-		[Required(ErrorMessage = "Obavezno polje")]
+        [Required]
 		[DisplayName("Opis plana")]
 		public string Opis { get; set; }
     }

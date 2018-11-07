@@ -68,17 +68,16 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
-				SubjektiModel model = new SubjektiModel();
-				model.subjekt = _subjekti.ReadSubjekti(id);
-                return View("Uredi", model);
-			}
-			return RedirectToAction("Index");
-		}
+                ViewBag.IsUpdate = false;
+                return View("Uredi", subjekti);
+            }
+            return View("Uredi", subjekti);
+        }
 
         [HttpPost]
-        public ActionResult Edit(SubjektiModel model)
+        public ActionResult Edit(Subjekti subjekti)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -100,18 +99,16 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
-				ViewBag.ErrorMessage = null;
-				SubjektiModel model = new SubjektiModel();
-				model.subjekt = _subjekti.ReadSubjekti(id);
-				return View("Obrisi", model);
+                ViewBag.IsUpdate = false;
+                return View("Obrisi", subjekti);
             }
 			return RedirectToAction("Index");
 		}
 
         [HttpPost]
-        public ActionResult Delete(SubjektiModel model)
+        public ActionResult Delete(Subjekti subjekti)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }

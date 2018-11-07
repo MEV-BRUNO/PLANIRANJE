@@ -28,10 +28,10 @@ namespace Planiranje.Models
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_subjekt, naziv " +
-                    "FROM subjekti " +
+                command.CommandText = "SELECT id_subjekt, naziv, vrsta " +
+                    "FROM subjekti WHERE vrsta IN (0, @id_pedagog) " +
                     "ORDER BY id_subjekt ASC";
-                //command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+                command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {
@@ -43,7 +43,8 @@ namespace Planiranje.Models
                             {
 								Red_br = ++counter,
                                 ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
-                                Naziv = sdr["naziv"].ToString()
+                                Naziv = sdr["naziv"].ToString(),
+                                Vrsta = Convert.ToInt32(sdr["vrsta"])
                             };
                             subjekti.Add(subj);
                         }
@@ -94,7 +95,7 @@ namespace Planiranje.Models
             using (MySqlCommand command = new MySqlCommand())
             {
                 command.Connection = connection;
-                command.CommandText = "SELECT id_subjekt, naziv " +
+                command.CommandText = "SELECT id_subjekt, naziv, vrsta " +
                     "FROM subjekti " +
                     "WHERE id_subjekt = @id ";
                 command.CommandType = CommandType.Text;
@@ -110,7 +111,8 @@ namespace Planiranje.Models
                             subjekti = new Subjekti()
                             {
                                 ID_subjekt = Convert.ToInt32(sdr["id_subjekt"]),
-                                Naziv = sdr["naziv"].ToString()
+                                Naziv = sdr["naziv"].ToString(),
+                                Vrsta = Convert.ToInt32(sdr["vrsta"])
                             };
                         }
                     }
@@ -129,11 +131,12 @@ namespace Planiranje.Models
 				{
 					command.Connection = connection;
 					command.CommandText = "INSERT INTO subjekti " +
-						"(naziv) " +
-						" VALUES (@naziv)";
+						"(naziv, vrsta) " +
+						" VALUES (@naziv, @id_pedagog)";
 					command.CommandType = CommandType.Text;
 					command.Parameters.AddWithValue("@naziv", subjekt.Naziv);
-					connection.Open();
+                    command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+                    connection.Open();
 					command.ExecuteNonQuery();
 				}
 			}

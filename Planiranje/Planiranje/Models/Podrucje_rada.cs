@@ -11,7 +11,7 @@ namespace Planiranje.Models
 		public int Red_br { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
         public int Id_podrucje { get; set; }
-		[Required(ErrorMessage = "Obavezno polje")]
-		public string Naziv { get; set; }
+        [Required]
+        public string Naziv { get; set; }
     }
 }

@@ -12,12 +12,12 @@ namespace Planiranje.Models
 		public int Redni_broj { get; set; }
 		[Required]
         public int Id_god { get; set; }
+        [Required(ErrorMessage ="Obavezno polje!")]
+        public string Naziv { get; set; }
 		[Required]
 		public int Id_pedagog { get; set; }
-		[DataType("Ak_godina")]
-		[Display(Name = "Akademska godina")]
-		[Required(ErrorMessage = "Obavezno polje!")]
-		[RegularExpression("^[0-9]{4}/[0-9]{4}$", ErrorMessage = "Pogrešan format akademske godine.")]
+		[Required]
+		[DisplayName("Akademska godina")]
 		public string Ak_godina { get; set; }
         [Required]
 		[DisplayName("Broj radnih dana")]

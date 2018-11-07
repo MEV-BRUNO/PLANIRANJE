@@ -13,8 +13,7 @@ namespace Planiranje.Models
 		[Required(ErrorMessage = "Obavezno polje")]
 		[DisplayName("Id")]
 		public int Id_aktivnost { get; set; }
-		[Required(ErrorMessage = "Obavezno polje")]
-		[DisplayName("Naziv")]
-		public string Naziv { get; set; }
+        [Required]
+        public string Naziv { get; set; }
     }
 }
