@@ -68,16 +68,27 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
-                ViewBag.IsUpdate = false;
-                return View("Uredi", subjekti);
+				SubjektiModel model = new SubjektiModel();
+				model.subjekt = _subjekti.ReadSubjekti(id);
+                if (model.subjekt.Vrsta == PlaniranjeSession.Trenutni.PedagogId)
+                {
+                    return View("Uredi", model);
+                }
+                else return RedirectToAction("Index", "Planiranje");
+
             }
-            return View("Uredi", subjekti);
-        }
+			return RedirectToAction("Index");
+		}
 
         [HttpPost]
-        public ActionResult Edit(Subjekti subjekti)
+        public ActionResult Edit(SubjektiModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Subjekti subjekt = _subjekti.ReadSubjekti(model.subjekt.ID_subjekt);
+            if (subjekt.Vrsta != PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -99,16 +110,27 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
-                ViewBag.IsUpdate = false;
-                return View("Obrisi", subjekti);
+				ViewBag.ErrorMessage = null;
+				SubjektiModel model = new SubjektiModel();
+				model.subjekt = _subjekti.ReadSubjekti(id);
+                if (model.subjekt.Vrsta == PlaniranjeSession.Trenutni.PedagogId)
+                {
+                    return View("Obrisi", model);
+                }
+                else return RedirectToAction("Index", "Planiranje");
             }
 			return RedirectToAction("Index");
 		}
 
         [HttpPost]
-        public ActionResult Delete(Subjekti subjekti)
+        public ActionResult Delete(SubjektiModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Subjekti subjekt = _subjekti.ReadSubjekti(model.subjekt.ID_subjekt);
+            if (subjekt.Vrsta != PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }

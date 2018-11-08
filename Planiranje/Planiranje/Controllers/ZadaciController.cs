@@ -66,8 +66,13 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
-                ViewBag.IsUpdate = false;
-                return View("Uredi", zadatak);
+				ZadaciModel model = new ZadaciModel();
+				model.zadatak = zadaci.ReadZadaci(id);
+                if (model.zadatak.Vrsta == PlaniranjeSession.Trenutni.PedagogId)
+                {
+                    return View("Uredi", model);
+                }
+                else return RedirectToAction("Index", "Planiranje");
             }
 			return RedirectToAction("Index");
 		}
@@ -75,7 +80,8 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Edit(ZadaciModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            Zadaci zadatak = zadaci.ReadZadaci(model.zadatak.ID_zadatak);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest() || zadatak.Vrsta!=PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
@@ -97,8 +103,13 @@ namespace Planiranje.Controllers
             }
             if (Request.IsAjaxRequest())
             {
-                ViewBag.IsUpdate = false;
-                return View("Obrisi", zadatak);
+				ViewBag.ErrorMessage = null;
+				ZadaciModel model = new ZadaciModel();
+				model.zadatak = zadaci.ReadZadaci(id);
+                if (model.zadatak.Vrsta == PlaniranjeSession.Trenutni.PedagogId)
+                {
+                    return View("Obrisi", model);
+                }
             }
 			return RedirectToAction("Index");
 		}
@@ -106,7 +117,8 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Delete(ZadaciModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            Zadaci zadatak = zadaci.ReadZadaci(model.zadatak.ID_zadatak);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest() || zadatak.Vrsta!=PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
