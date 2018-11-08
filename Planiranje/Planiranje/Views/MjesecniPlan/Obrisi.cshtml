@@ -1,4 +1,4 @@
-﻿@model Planiranje.Models.MjesecniModel
+﻿@model Planiranje.Models.Mjesecni_plan
 
 @{
 	Layout = null;
@@ -8,27 +8,26 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h4 class="modal-title">Brisanje podatka</h4>
+			<h4 class="modal-title">Brisanje plana</h4>
 		</div>
-		@using (Ajax.BeginForm("Delete", "MjesecniPlan", new { id = Model.ID_plan }, new AjaxOptions
-		{
-			HttpMethod = "Post",
-			OnSuccess = "DeleteSuccess"
-		}, new { @class = "form-horizontal", role = "form" }))
+		@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiPlanModalView", @class = "form-horizontal", role = "form" }))
 		{
 			<div class="modal-body">
-				@Html.HiddenFor(model => model.ID_plan)
+				@Html.HiddenFor(model => model.ID_plan)		
+                @Html.HiddenFor(model=>model.Ak_godina)
 				<div class="form-group">
 					<div class="col-md-10">
 						<h5>
-							Jeste li sigurni da zelite obrisati "@Html.DisplayFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })"?
+                            @{ int god = Model.Ak_godina + 1;}
+							Jeste li sigurni da želite obrisati <b>@Html.DisplayFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })</b>
+                            za školsku godinu <b>@Model.Ak_godina./@god.</b> ?
 						</h5>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<div class="form-group">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-						<input type="submit" class="btn btn-danger" value="Obrisi" />
+						<input type="submit" class="btn btn-danger" value="Obriši"/>
 					</div>
 				</div>
 			</div>

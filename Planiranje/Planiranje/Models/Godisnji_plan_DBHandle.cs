@@ -39,13 +39,11 @@ namespace Planiranje.Models
                     {
                         while (sdr.Read())
                         {
-                            Godisnji_plan plan = new Godisnji_plan()
-                            {
-                                //Id_pedagog = Convert.ToInt32(sdr["id_pedagog"]),
-                                Id_god = Convert.ToInt32(sdr["id_god"]),
-                                //Naziv = sdr["naziv"].ToString(),
-                                Ak_godina = sdr["ak_godina"].ToString(),
-                                //Opis = sdr["opis"].ToString(),
+							Godisnji_plan plan = new Godisnji_plan()
+							{
+								Redni_broj = ++id,
+								Id_god = Convert.ToInt32(sdr["id_god"]),
+                                Ak_godina = Convert.ToInt32(sdr["ak_godina"]),
                                 Br_radnih_dana = Convert.ToInt32(sdr["br_radnih_dana"]),
                                 Br_dana_godina_odmor = Convert.ToInt32(sdr["br_dana_godina_odmor"]),
                                 Ukupni_rad_dana = Convert.ToInt32(sdr["ukupni_rad_dana"]),

@@ -15,10 +15,10 @@ namespace Planiranje.Models
         [Required(ErrorMessage ="Obavezno polje!")]
         public string Naziv { get; set; }
 		[Required]
-		public int Id_pedagog { get; set; }
-		[Required]
-		[DisplayName("Akademska godina")]
-		public string Ak_godina { get; set; }
+		public int Id_pedagog { get; set; }		
+		[Display(Name = "Školska godina")]
+		[Required(ErrorMessage = "Obavezno polje!")]        
+		public int Ak_godina { get; set; }
         [Required]
 		[DisplayName("Broj radnih dana")]
 		public int Br_radnih_dana { get; set; }

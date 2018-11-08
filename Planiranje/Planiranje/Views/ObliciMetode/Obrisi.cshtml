@@ -15,11 +15,19 @@
         <div class="modal-body">
             @Html.HiddenFor(model => model.oblik.Id_oblici)
             <div class="form-group">
-                <div class="col-md-10">
-                    <h5>
-                        Jeste li sigurni da zelite obrisati "@Html.DisplayFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })"?
-                    </h5>
-                </div>
+				<div class="col-md-10">
+				@if (ViewBag.ErrorMessage == null)
+				{
+				<h5>
+					Jeste li sigurni da želite obrisati slijedeći oblik/metodu?
+				</h5>
+                @Html.TextAreaFor(model => model.oblik.Naziv, new { @class = "form-control", @disabled="" })
+				}
+				else
+				{
+					@ViewBag.ErrorMessage;
+				}
+				</div>
             </div>
             <div class="modal-footer">
 				<div class="form-group">

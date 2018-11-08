@@ -8,23 +8,27 @@ using System.Web;
 namespace Planiranje.Models
 {
     public class Mjesecni_detalji
-    {
-        [Required]
-        public int ID_plan { get; set; }
-        [Required]
-        public int Red_br { get; set; }
-        [Required]
-        public int Podrucje { get; set; }
-        [Required]
-        public int Aktivnost { get; set; }
-        [Required]
-        public string Suradnici { get; set; }
-        [Required]
-        [DataType(DataType.DateTime)]
-        public DateTime Vrijeme { get; set; }
-        [Required]
-        public int Br_sati { get; set; }
-        [Required]
-        public string Biljeska { get; set; }
+	{
+        [Key]
+		[Required]
+		public int ID { get; set; }
+		[Required]        
+		public int ID_plan { get; set; }			
+		[DisplayName("Područje rada")]
+		public string Podrucje { get; set; }		
+		[DisplayName("Aktivnost")]
+		public string Aktivnost { get; set; }		
+		[DisplayName("Suradnici")]
+		public string Suradnici { get; set; }		
+		//[DataType(DataType.Date)]
+		[DisplayName("Datum izvršenja")]
+		[DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+		public DateTime Vrijeme { get; set; }		
+		[DisplayName("Vrijeme rada")]		
+		public int Br_sati { get; set; }		
+		[DisplayName("Bilješke")]
+		public string Biljeska { get; set; }
+        [DisplayName("Subjekti")]
+        public string Subjekti { get; set; }
     }
 }

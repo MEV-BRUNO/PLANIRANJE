@@ -31,7 +31,7 @@ namespace Planiranje.Models
                 command.CommandText = "SELECT id_cilj, naziv, vrsta " +
                     "FROM ciljevi WHERE vrsta IN (0,@id_pedagog) " +
                     "ORDER BY id_cilj ASC";
-                //command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
+                command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())
                 {

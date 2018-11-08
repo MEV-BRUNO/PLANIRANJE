@@ -1,62 +1,29 @@
 ﻿@model List<Planiranje.Models.Godisnji_plan>
 
-<table class="table table-bordered table-hover" id="dataTables-example">
-    <thead>
+<table class="table table-bordered" id="dataTable">
+	<thead>
         <tr>
-            <td class="col-lg-1">
-                @Html.ActionLink("Id god", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-            </td>            
-            <td class="col-lg-1">
-                @Html.ActionLink("Ak. godina", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-            </td>
-            <td class="col-lg-2">
-                @Html.ActionLink("Br. dana god. odmora", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-            </td>
-            <td class="col-lg-2">
-                @Html.ActionLink("Br. radnih dana", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-            </td>
-            <td class="col-lg-2">
-                @Html.ActionLink("God. fond sati", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-            </td>
-            <td class="col-lg-2">
-                @Html.ActionLink("Ukupno radnih dana", "Index", "GodisnjiPlan", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
-            </td>
-            <td class="col-lg-2">
-                Akcija
-            </td>
+            <td class="col-lg-1">#</td>
+            <td class="col-lg-2">Školska godina</td>
+            <td class="col-lg-7">Naziv</td>            
+            <td class="col-lg-2">Akcija</td>
         </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var item in Model)
-        {
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
         <tr>
-            <td>
-                @Html.DisplayFor(modelitem => item.Id_god)
-            </td>            
-            <td>
-                @Html.DisplayFor(modelItem => item.Ak_godina)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Br_dana_godina_odmor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Br_radnih_dana)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.God_fond_sati)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ukupni_rad_dana)
-            </td>
+            <td>@Html.DisplayFor(modelitem => item.Redni_broj)</td>
+            <td>@Html.DisplayFor(modelItem => item.Ak_godina)</td>
+            <td>@Html.DisplayFor(modelItem => item.Naziv)</td>            
             <td>
                 <div class="pull-right">
-                    <a data-toggle="modal" data-url="@Url.Action("Edit","GodisnjiPlan",new { id = item.Id_god })" id="editAsset" class="btn btn-primary btn-xs ">Uredi</a>
-                    <a data-toggle="modal" data-url="@Url.Action("Delete","GodisnjiPlan",new { id = item.Id_god })" id="deleteAsset" class="btn btn-danger btn-xs ">Obriši</a>
-                    <a data-toggle="modal" data-url="@Url.Action("Details","GodisnjiPlan",new { id = item.Id_god })" id="detailsAsset" class="btn btn-primary btn-xs ">Detalji</a>
+                    <input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='reloadPage("@Url.Action("Edit","GodisnjiPlan",new { id = item.Id_god })")' />
+                    <input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='reloadPage("@Url.Action("Details","GodisnjiPlan",new { id = item.Id_god })")' />
+                    <input type="button" class="btn btn-danger btn-xs" value="Obriši" onclick='showModal("@Url.Action("Delete","GodisnjiPlan",new { id = item.Id_god })")' />
                 </div>
             </td>
         </tr>
-        }
-    </tbody>
+		}
+	</tbody>
 </table>

@@ -8,19 +8,16 @@ using System.Web;
 namespace Planiranje.Models
 {
     public class Mjesecni_plan
-    {
-        [Required]
+    {		
+		[Required]
+        [Key]
         public int ID_plan { get; set; }
         [Required]
         public int ID_pedagog { get; set; }
-        [Required]
-		[DisplayName("Ak. godina")]
-		public string Ak_godina { get; set; }
-        [Required]
+        [DisplayName("Školska godina")]
+		public int Ak_godina { get; set; }        
 		[DisplayName("Naziv plana")]
-		public string Naziv { get; set; }
-        [Required]
-		[DisplayName("Opis plana")]
+		public string Naziv { get; set; }		
 		public string Opis { get; set; }
     }
 }

@@ -1,7 +1,8 @@
 ﻿@model Planiranje.Models.MjesecniModel
 
 @{
-	Page.Title = ViewBag.Title;
+    Page.Title = "Planovi za " + Model.GODINA + ". godinu";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 @if (TempData["poruka"] != null)
 {
@@ -9,99 +10,108 @@
 }
 
 <div class="inner">
-	<div class="row">
-		<div class="col-lg-12">
-			<h3> Pregled mjesečnih planova </h3>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<div>
-						<div class="pull-left">
-							<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-url="@Url.Action("NoviPlan", "MjesecniPlan")" id="btnCreateAsset">
-								Novi plan
-							</button>
-							<span class="glyphicon glyphicon-print"></span>
-							@Html.ActionLink("Ispiši listu", "Ispis", new { target = "blank" })
-						</div>
-						<div class="pull-right">
-							@using (Html.BeginForm("Index", "MjesecniPlan", FormMethod.Get))
-							{
-								<p>
-									@Html.TextBox("Search", ViewBag.FilterValue as string, new { @class = "search-bar" })
-									<input class="btn btn-primary btn-md" type="submit" value="Trazi" />
-								</p>
-							}
-						</div>
-						<br>
-					</div>
-					@Html.Partial("Table", Model)
-					<div id="Paginator">
-						Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
-						@Html.PagedListPager(Model, Page_No => Url.Action("Index",
-					    new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
-					</div>
-					<div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="assetModal" aria-hidden="true" data-backdrop="static">
-						<div id="assetContainer"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4> Pregled mjesečnih planova</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>Školska godina:</label>
+                                <select id="selectGodina" onchange="promjenaGodine()" class="form-control">
+                                    @foreach (var item in Model.SkolskaGodina)
+                                    {
+                                        var broj = item.Sk_Godina + 1;
+                                        if (item.Sk_Godina == Model.GODINA)
+                                        {
+                                            <option selected="selected">@item.Sk_Godina./@broj.</option>
+                                        }
+                                        else
+                                        {
+                                        <option value="@item.Sk_Godina">@item.Sk_Godina./@broj.</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div><!--END COL 2-->
+                        <div class="col-lg-9">
+
+                        </div>
+
+                    </div><!--END ROW -->
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>
+                                <a onclick="showModal('@Url.Action("NoviPlan","MjesecniPlan",new { godina=Model.GODINA})')" class="btn btn-primary btn-xs btn-grad"> Novi plan</a>
+                            </p>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Šk. godina</th>
+                                            <th>Naziv</th>
+                                            <th>Aktivnost</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ 
+                                            var br = 0;
+                                        }
+                                        @foreach (var item in Model.MjesecniPlanovi)
+                                        { br++;
+                                            var godina = item.Ak_godina + 1;
+                                        <tr>
+                                            <td class="col-md-1">@br.</td>
+                                            <td class="col-md-1">@item.Ak_godina./@godina.</td>
+                                            <td class="col-md-8">@item.Naziv</td>
+                                            <td class="col-md-2">
+                                                <a onclick="reloadPage('@Url.Action("Detalji","MjesecniPlan",new { id=item.ID_plan})')" class="btn btn-info btn-xs btn-grad">Detalji</a>
+                                                <a onclick="showModal('@Url.Action("UrediPlan","MjesecniPlan",new { id=item.ID_plan})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                                <a onclick="showModal('@Url.Action("ObrisiPlan","MjesecniPlan",new { id=item.ID_plan})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                            </td>
+                                        </tr>
+                                        }                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><!--END COL 3-->
+                        <div class="col-lg-1">
+                        </div>
+                    </div><!--END ROW -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 
 <script>
-	var rowDelete;
-	$(document).ready(function () {
-		$("#btnCreateAsset").click(function (e) {
-			var url = $(this).attr("data-url");
-			$.ajax({
-				url: url,
-				success: function (data) {
-					$('#assetContainer').html(data);
-					$('#assetModal').modal('show');
-				},
-				error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
-			});
-		});
-
-		$('#dataTables-example').on("click", "#editAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-
-		$('#dataTables-example').on("click", "#deleteAsset", function (event) {
-			event.preventDefault();
-			var url = $(this).attr("data-url");
-			$.get(url, function (data) {
-				$('#assetContainer').html(data);
-				$('#assetModal').modal('show');
-			});
-		});
-	});
+    $(document).ready(function () {
+        $("#dataTable").dataTable();
+        if ($("#poruka").text() == "1") {
+            showSnackBar('@TempData["poruka"]');
+        }
+    });
 </script>
-
-<script type="text/javascript">
-	function CreateSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function EditSuccess() {
-		$('#assetModal').modal('hide');
-		$('#assetContainer').html("");
-		location.reload(true);
-	}
-
-	function DeleteSuccess() {
-		location.reload(true);
-	}
+<script>
+    function promjenaGodine() {
+        var val = $("#selectGodina").val();        
+        $.ajax({
+            url: '/MjesecniPlan/Index?godina='+ val,
+            success: function (data) {
+                $("#content").html(data);
+            }
+        });
+    }
 </script>
