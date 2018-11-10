@@ -71,23 +71,19 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            OS_Plan_1 os_plan_1 = new OS_Plan_1();
-            os_plan_1 = planovi_os1.ReadOS_Plan_1(id);
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("Uredi", os_plan_1);
-            }
-            return View("Uredi", os_plan_1);
+            PlanOs1View plan = new PlanOs1View();
+            plan.OsPlan1 = planovi_os1.ReadOS_Plan_1(id);
+            plan.SkolskaGodina = baza.SkolskaGodina.ToList();
+            return View("Uredi", plan);
         }
         [HttpPost]
-        public ActionResult Edit(OS_Plan_1 os_plan_1)
+        public ActionResult Edit(PlanOs1View plan)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!planovi_os1.UpdateOS_Plan_1(os_plan_1))
+            if (!planovi_os1.UpdateOS_Plan_1(plan.OsPlan1))
 			{
 				TempData["note"] = "Plan nije promjenjen!";
 			}
@@ -100,18 +96,13 @@ namespace Planiranje.Controllers
 
         public ActionResult Delete(int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            OS_Plan_1 os_plan_1 = new OS_Plan_1();
-			os_plan_1 = planovi_os1.ReadOS_Plan_1(id);
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("Obrisi", os_plan_1);
-            }
-            return View("Obrisi");
+            OS_Plan_1 plan = new OS_Plan_1();
+			plan = planovi_os1.ReadOS_Plan_1(id);            
+            return View("Obrisi",plan);
         }
 
         [HttpPost]
