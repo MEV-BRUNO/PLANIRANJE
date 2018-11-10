@@ -101,7 +101,7 @@ function hideModal(path, id, message) {
 
 function appendText(source, destination) {
 	var dropDown = document.getElementById(source);
-	var sourceText = " - " + dropDown.options[dropDown.selectedIndex].text;
+	var sourceText = dropDown.options[dropDown.selectedIndex].text;
 	if (dropDown.options[dropDown.selectedIndex].value !== "") {
 		var destinationText = document.getElementById(destination).value;
 		var lines = destinationText.split('\n');
