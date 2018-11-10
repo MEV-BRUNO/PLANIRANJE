@@ -207,13 +207,8 @@ namespace Planiranje.Controllers
             ciljevi = ciljevi_db.ReadCiljevi();
             plan.Ciljevi = ciljevi;
             plan.PodrucjeRada = podrucje;
-            plan.Id = id;
+            plan.Id = id;            
             
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("NovoPodrucje",plan);
-            }
             return View("NovoPodrucje",plan);
         }
 

@@ -18,7 +18,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.aktivnost.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.TextAreaFor(model => model.aktivnost.Naziv, new { @class = "form-control", @id = "newName",
+                        @Html.TextAreaFor(model => model.aktivnost.Naziv, new { @class = "edit-opis", @id = "newName",
 					   onkeydown = "hideModalA(event, \"/Aktivnosti/NovaAktivnost\", \"#novaAktivnostView\", \"Nova aktivnost je uspješno spremljena\")"
 				   })
                         @Html.ValidationMessageFor(model => model.aktivnost.Naziv, "", new { @class = "text-danger" })
