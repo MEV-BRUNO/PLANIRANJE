@@ -40,29 +40,23 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("NoviPlan");
-            }
-            return View("NoviPlan");
+            PlanOs1View plan = new PlanOs1View();
+            plan.SkolskaGodina = baza.SkolskaGodina.ToList();
+            return View("NoviPlan", plan);
         }
 
         [HttpPost]
-        public ActionResult NoviPlan(OS_Plan_1 gr)
+        public ActionResult NoviPlan(PlanOs1View plan)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
-            }
-			OS_Plan_1 os_plan = new OS_Plan_1();
-            os_plan.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-            os_plan.Ak_godina = gr.Ak_godina;
-            os_plan.Naziv = gr.Naziv;
-            os_plan.Opis = gr.Opis;
-            if (planovi_os1.CreateOS_Plan_1(os_plan))
+            }			
+            plan.OsPlan1.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+            
+            if (planovi_os1.CreateOS_Plan_1(plan.OsPlan1))
 			{
-				TempData["note"] = "Novi plan za osnovnu školu 1 je uspješno spremljen!";
+				TempData["note"] = "Novi plan za osnovnu školu 1 je spremljen!";
 			}
 			else
 			{
