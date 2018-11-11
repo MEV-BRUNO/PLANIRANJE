@@ -226,7 +226,12 @@ namespace Planiranje.Controllers
         public ActionResult NovoPodrucje(PlanOs1View plan)
         {
             //test            
-            
+            if (plan.Podrucje.Potrebno_sati == null)
+            {
+                plan.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();
+                plan.Ciljevi = ciljevi_db.ReadCiljevi();
+                return View("NovoPodrucje", plan);
+            }
             //kraj testa
             //int id = plan.Podrucje.Red_br_podrucje; 
             plan.Podrucje.Id_glavni_plan = plan.Id;
