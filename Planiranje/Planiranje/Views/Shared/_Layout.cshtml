@@ -85,6 +85,32 @@
             }
         }
     </script>
+    <script>
+        function reload(path, id) {
+            var dt = $(id).serialize();
+            $.ajax({
+                url: path,
+                type: "POST",
+                data: dt,
+                success: function (data) {
+                    if ($(data)[0].className === "inner") {
+                        $("#content").html(data);
+                        $('#modal').modal('hide');
+                        $('#modalContainer').removeData();
+                        $('.modal-backdrop').remove();
+                    }
+                    else {
+                        $("#modalContainer").html(data);
+                        $('#newName').focus();
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log(request.responseText);
+                }
+            });
+        }    
+        
+    </script>
 </body>
 </html>
 

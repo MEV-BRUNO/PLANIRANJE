@@ -19,14 +19,14 @@
                 @Html.LabelFor(model => model.OsPlan1.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.OsPlan1.Naziv, new { htmlAttributes = new { @class = "form-control",@required="" } })
-                    @*@Html.ValidationMessageFor(model => model.OsPlan1.Naziv, "", new { @class = "text-danger" })*@
+                    @Html.ValidationMessageFor(model => model.OsPlan1.Naziv, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.OsPlan1.Ak_godina, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @*@Html.DropDownListFor(model => model.OsPlan1.Ak_godina,Model.SkGodinaItems,"Odaberi školsku godinu", new { @class = "form-control", @required = "" } )*@
-                    @*@Html.ValidationMessageFor(model => model.Ak_godina, "", new { @class = "text-danger" })*@
+                    
                     <select class="form-control" data-val="true" data-val-number="The field Ak. godina must be a number." data-val-required="The Ak. godina field is required." id="OsPlan1_Ak_godina" name="OsPlan1.Ak_godina" required="">
                         <option value="">Odaberite školsku godinu</option>
                         @foreach(var item in Model.SkolskaGodina)
@@ -35,18 +35,19 @@
                             <option value="@item.Sk_Godina">@item.Sk_Godina./@godina.</option>
                         }
                     </select>
+                    @Html.ValidationMessageFor(model => model.OsPlan1.Ak_godina, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.OsPlan1.Opis, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.TextAreaFor(model => model.OsPlan1.Opis, new { @class = "edit-opis",@required="" })
-                    @*@Html.ValidationMessageFor(model => model.Opis, "", new { @class = "text-danger" })*@
+                    @Html.ValidationMessageFor(model => model.OsPlan1.Opis, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                <input type="submit" class="btn btn-primary" value="Spremi" />
+                <input type="button" class="btn btn-primary" onclick="reload('@Url.Action("NoviPlan","PlanOs1")','#noviPlanModalView')" value="Spremi" />
             </div>
         </div>
 		}

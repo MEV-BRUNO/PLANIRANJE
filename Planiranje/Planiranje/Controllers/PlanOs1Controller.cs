@@ -52,6 +52,11 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }			
+            if(plan.OsPlan1.Ak_godina==0||plan.OsPlan1.Naziv==""|| plan.OsPlan1.Opis == null)
+            {
+                plan.SkolskaGodina = baza.SkolskaGodina.ToList();
+                return View(plan);
+            }
             plan.OsPlan1.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
             
             if (planovi_os1.CreateOS_Plan_1(plan.OsPlan1))
