@@ -65,6 +65,10 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if (model.MjesecniPlan.Naziv == null)
+            {
+                return View(model);
+            }
             model.MjesecniPlan.Ak_godina = model.GODINA;
             model.MjesecniPlan.ID_pedagog = PlaniranjeSession.Trenutni.PedagogId;
             using (var db = new BazaPodataka())
@@ -140,6 +144,10 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.MjesecniPlan.ID_pedagog!=PlaniranjeSession.Trenutni.PedagogId)
             {
                 return RedirectToAction("Index", "Planiranje");
+            }
+            if (model.MjesecniPlan.Naziv == null || model.MjesecniPlan.Ak_godina==0)
+            {
+                return View(model);
             }
             int god = model.MjesecniPlan.Ak_godina;
             using(var db = new BazaPodataka())

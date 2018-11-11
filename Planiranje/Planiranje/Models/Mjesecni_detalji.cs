@@ -13,22 +13,29 @@ namespace Planiranje.Models
 		[Required]
 		public int ID { get; set; }
 		[Required]        
-		public int ID_plan { get; set; }			
+		public int ID_plan { get; set; }	
+        [Required(ErrorMessage ="Područje rada je obavezno")]
 		[DisplayName("Područje rada")]
-		public string Podrucje { get; set; }		
-		[DisplayName("Aktivnost")]
-		public string Aktivnost { get; set; }		
-		[DisplayName("Suradnici")]
+		public string Podrucje { get; set; }
+        [Required(ErrorMessage = "Aktivnost je obavezna")]
+        [DisplayName("Aktivnost")]
+		public string Aktivnost { get; set; }
+        [Required(ErrorMessage = "Suradnici su obavezni")]
+        [DisplayName("Suradnici")]
 		public string Suradnici { get; set; }		
 		//[DataType(DataType.Date)]
 		[DisplayName("Datum izvršenja")]
-		[DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
-		public DateTime Vrijeme { get; set; }		
-		[DisplayName("Vrijeme rada")]		
+        [Required(ErrorMessage = "Datum je obavezan")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+		public DateTime Vrijeme { get; set; }
+        [Required(ErrorMessage = "Vrijeme je obavezno")]
+        [DisplayName("Vrijeme rada")]		
 		public int Br_sati { get; set; }		
 		[DisplayName("Bilješke")]
-		public string Biljeska { get; set; }
+        [Required(ErrorMessage = "Bilješka je obavezna")]
+        public string Biljeska { get; set; }
         [DisplayName("Subjekti")]
+        [Required(ErrorMessage = "Subjekti su obavezni")]
         public string Subjekti { get; set; }
     }
 }

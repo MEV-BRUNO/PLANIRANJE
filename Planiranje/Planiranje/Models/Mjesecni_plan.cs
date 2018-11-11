@@ -15,8 +15,10 @@ namespace Planiranje.Models
         [Required]
         public int ID_pedagog { get; set; }
         [DisplayName("Školska godina")]
+        [Required(ErrorMessage ="Šk godina je obavezna")]
 		public int Ak_godina { get; set; }        
 		[DisplayName("Naziv plana")]
+        [Required(ErrorMessage ="Naziv je obavezan")]
 		public string Naziv { get; set; }		
 		public string Opis { get; set; }
     }
