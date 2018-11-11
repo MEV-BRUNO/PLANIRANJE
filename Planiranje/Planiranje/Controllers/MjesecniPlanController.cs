@@ -147,7 +147,8 @@ namespace Planiranje.Controllers
             }
             if (model.MjesecniPlan.Naziv == null || model.MjesecniPlan.Ak_godina==0)
             {
-                return View(model);
+                model.SkolskaGodina = baza.SkolskaGodina.ToList();
+                return View("UrediNoviPlan",model);
             }
             int god = model.MjesecniPlan.Ak_godina;
             using(var db = new BazaPodataka())

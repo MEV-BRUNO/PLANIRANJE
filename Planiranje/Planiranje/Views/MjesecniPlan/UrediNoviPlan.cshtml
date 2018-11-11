@@ -25,10 +25,24 @@
 				</div>
 				<div class="form-group">
 					@Html.LabelFor(model => model.MjesecniPlan.Ak_godina, htmlAttributes: new { @class = "control-label col-md-3" })
-					<div class="col-md-3">
-						@Html.DropDownListFor(model => model.MjesecniPlan.Ak_godina, Model.SkGodinaItems, new { @class="form-control", @required=""})
-						@Html.ValidationMessageFor(model => model.MjesecniPlan.Ak_godina, "", new { @class = "text-danger" })
-					</div>
+                    <div class="col-md-5">
+                        @*@Html.DropDownListFor(model => model.MjesecniPlan.Ak_godina, Model.SkGodinaItems, new { @class="form-control", @required=""})*@
+                        <select class="form-control" data-val="true" data-val-number="The field Školska godina must be a number." data-val-required="Šk godina je obavezna" id="MjesecniPlan_Ak_godina" name="MjesecniPlan.Ak_godina" required="">
+                            @foreach(var item in Model.SkolskaGodina)
+                            {
+                                var god = item.Sk_Godina + 1;
+                                if (item.Sk_Godina == Model.MjesecniPlan.Ak_godina)
+                                {
+                                    <option selected="selected" value="@item.Sk_Godina">@item.Sk_Godina./@god.</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Sk_Godina">@item.Sk_Godina./@god.</option>
+                                }
+                            }
+                        </select>
+                            @Html.ValidationMessageFor(model => model.MjesecniPlan.Ak_godina, "", new { @class = "text-danger" })
+                    </div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
