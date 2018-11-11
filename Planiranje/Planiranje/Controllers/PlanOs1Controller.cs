@@ -88,6 +88,11 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if (plan.OsPlan1.Ak_godina == 0 || plan.OsPlan1.Naziv == "" || plan.OsPlan1.Opis == null)
+            {
+                plan.SkolskaGodina = baza.SkolskaGodina.ToList();
+                return View("Uredi", plan);
+            }
             if (!planovi_os1.UpdateOS_Plan_1(plan.OsPlan1))
 			{
 				TempData["note"] = "Plan nije promjenjen!";
