@@ -11,10 +11,11 @@
 	</thead>
 	<tbody>
 		@foreach (var item in Model)
-		{
+        {
+            int god = item.Ak_godina + 1;
         <tr>
             <td>@Html.DisplayFor(modelitem => item.Redni_broj)</td>
-            <td>@Html.DisplayFor(modelItem => item.Ak_godina)</td>
+            <td>@item.Ak_godina./@god.</td>
             <td>@Html.DisplayFor(modelItem => item.Naziv)</td>            
             <td>
                 <div class="pull-right">
