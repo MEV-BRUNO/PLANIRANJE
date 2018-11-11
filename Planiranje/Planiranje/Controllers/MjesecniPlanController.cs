@@ -205,8 +205,9 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            DateTime date = new DateTime(1, 1, 1, 0, 0, 0);
             if (model.mjesecniDetalj.Aktivnost == null||model.mjesecniDetalj.Subjekti==null||model.mjesecniDetalj.Suradnici==null
-                || model.mjesecniDetalj.Podrucje==null||model.mjesecniDetalj.Vrijeme==null||model.mjesecniDetalj.Br_sati==0
+                || model.mjesecniDetalj.Podrucje==null||model.mjesecniDetalj.Vrijeme.CompareTo(date)==0||model.mjesecniDetalj.Br_sati==0
                 || model.mjesecniDetalj.Biljeska==null)
             {
                 model.Aktivnosti = aktivnosti.ReadAktivnost();

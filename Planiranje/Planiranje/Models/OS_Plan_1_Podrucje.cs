@@ -16,11 +16,14 @@ namespace Planiranje.Models
         public int Id_glavni_plan { get; set; }
         [Required]
         public int Red_br_podrucje { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Ovo je obavezno polje")]
+        [DisplayName("Opis područja")]
         public int Opis_Podrucje { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Ovo je obavezno polje")]
+        [DisplayName("Potrebno sati")]
         public string Potrebno_sati { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Ovo je obavezno polje")]
+        [DisplayName("Ciljevi")]
         public int Cilj { get; set; }
         [Required]
         public int Br_sati { get; set; }

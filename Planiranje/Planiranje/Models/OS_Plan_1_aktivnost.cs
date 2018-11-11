@@ -14,12 +14,12 @@ namespace Planiranje.Models
         public int Id_plan { get; set; }
         [Required]
         public int Id_podrucje { get; set; }        
-        [Required]
+        [Required(ErrorMessage = "Ovo je obavezno polje")]
         [DisplayName("Opis aktivnosti")]
         public int Opis_aktivnost { get; set; }
         [Required]
         public int Red_broj_aktivnost { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Ovo je obavezno polje")]
         [DisplayName("Potrebno sati")]
         public string Potrebno_sati { get; set; }
         [Required]
