@@ -204,6 +204,15 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if (model.mjesecniDetalj.Aktivnost == null||model.mjesecniDetalj.Subjekti==null||model.mjesecniDetalj.Suradnici==null
+                || model.mjesecniDetalj.Podrucje==null||model.mjesecniDetalj.Vrijeme==null||model.mjesecniDetalj.Br_sati==0
+                || model.mjesecniDetalj.Biljeska==null)
+            {
+                model.Aktivnosti = aktivnosti.ReadAktivnost();
+                model.Subjekti = subjekti.ReadSubjekti();
+                model.PodrucjaRada = podrucja_rada.ReadPodrucjeRada();
+                return View(model);
+            }
             model.mjesecniDetalj.ID_plan = model.ID_PLAN;
             using(var db=new BazaPodataka())
             {
@@ -248,7 +257,16 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            using(var db = new BazaPodataka())
+            if (model.mjesecniDetalj.Aktivnost == null || model.mjesecniDetalj.Subjekti == null || model.mjesecniDetalj.Suradnici == null
+                || model.mjesecniDetalj.Podrucje == null || model.mjesecniDetalj.Vrijeme == null || model.mjesecniDetalj.Br_sati == 0
+                || model.mjesecniDetalj.Biljeska == null)
+            {
+                model.Aktivnosti = aktivnosti.ReadAktivnost();
+                model.Subjekti = subjekti.ReadSubjekti();
+                model.PodrucjaRada = podrucja_rada.ReadPodrucjeRada();
+                return View(model);
+            }
+            using (var db = new BazaPodataka())
             {
                 try
                 {
