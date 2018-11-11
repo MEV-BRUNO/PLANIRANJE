@@ -408,6 +408,12 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if (plan.Podrucje.Potrebno_sati == null)
+            {
+                plan.Ciljevi = ciljevi_db.ReadCiljevi();
+                plan.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();
+                return View(plan);
+            }
             int _id=0;
             TempData["note"] = "Glavni plan nije pronađen.";
             using (var db = new BazaPodataka())
@@ -502,13 +508,7 @@ namespace Planiranje.Controllers
 
             List<Aktivnost> aktivnosti = new List<Aktivnost>();
             aktivnosti = aktivnost_db.ReadAktivnost();
-            plan.Aktivnosti = aktivnosti;
-
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("NovaAktivnost", plan);
-            }
+            plan.Aktivnosti = aktivnosti;            
             return View("NovaAktivnost", plan);
         }
         [HttpPost]
@@ -517,6 +517,11 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
+            }
+            if (plan.Os_Plan_1_Aktivnost.Potrebno_sati == null)
+            {
+                plan.Aktivnosti = aktivnost_db.ReadAktivnost();
+                return View(plan);
             }
             int i = plan.Id;
             OS_Plan_1_aktivnost ak = new OS_Plan_1_aktivnost();
@@ -756,6 +761,11 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
+            }
+            if (plan.Os_Plan_1_Aktivnost.Potrebno_sati == null)
+            {
+                plan.Aktivnosti = aktivnost_db.ReadAktivnost();
+                return View(plan);
             }
             int _id, poz = plan.Pozicija;
             OS_Plan_1_aktivnost aktivnost = new OS_Plan_1_aktivnost();

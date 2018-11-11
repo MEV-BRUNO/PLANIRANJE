@@ -9,12 +9,8 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Brisanje područja djelovanja</h4>
         </div>
-        @using (Ajax.BeginForm("ObrisiPodrucje", "PlanOs1", new { id = Model.Podrucje.Id_plan }, new AjaxOptions
-        {
-            HttpMethod = "Post",
-            OnSuccess = "DeleteSuccess"
-        }, new { @class = "form-horizontal", role = "form" }))
-        {
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "NoviDetaljModalView", @class = "form-horizontal", role = "form" }))
+		{
         <div class="modal-body">
             @Html.HiddenFor(model => model.Podrucje.Id_plan)
             <div class="form-group">
@@ -51,7 +47,7 @@
             <div class="modal-footer">
                 <div class="form-group">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                    <input type="submit" class="btn btn-danger" value="Obriši" />
+                    <input type="button" onclick="reload('@Url.Action("ObrisiPodrucje","PlanOs1")','#NoviDetaljModalView')" class="btn btn-danger" value="Obriši" />
                 </div>
             </div>
         </div>
