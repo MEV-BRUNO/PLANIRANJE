@@ -40,11 +40,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("NoviPlan");
-            }
+            ViewBag.godina = baza.SkolskaGodina.ToList();            
             return View("NoviPlan");
         }
 
@@ -55,14 +51,15 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-			OS_Plan_2 os_plan_2 = new OS_Plan_2();
-            os_plan_2.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-            os_plan_2.Ak_godina = gr.Ak_godina;
-            os_plan_2.Naziv = gr.Naziv;
-            os_plan_2.Opis = gr.Opis;
-            if (planovi_os2.CreateOS_Plan_2(os_plan_2))
+            if(gr.Naziv==null || gr.Opis==null || gr.Ak_godina == 0)
+            {
+                ViewBag.godina = baza.SkolskaGodina.ToList();                
+                return View(gr);
+            }			
+            gr.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;            
+            if (planovi_os2.CreateOS_Plan_2(gr))
 			{
-				TempData["note"] = "Novi plan za osnovnu skolu 2 je spremljen!";
+				TempData["note"] = "Novi plan za osnovnu školu 2 je spremljen!";
 			}
 			else
 			{
@@ -79,27 +76,28 @@ namespace Planiranje.Controllers
             }
             OS_Plan_2 os_plan_2 = new OS_Plan_2();
             os_plan_2 = planovi_os2.ReadOS_Plan_2(id);
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("Uredi", os_plan_2);
-            }
+            ViewBag.godina = baza.SkolskaGodina.ToList();
             return View("Uredi", os_plan_2);
         }
         [HttpPost]
-        public ActionResult Edit(OS_Plan_2 os_plan_2)
+        public ActionResult Edit(OS_Plan_2 plan)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!planovi_os2.UpdateOS_Plan_2(os_plan_2))
+            if(plan.Ak_godina==0 || plan.Naziv==null || plan.Opis == null)
+            {
+                ViewBag.godina = baza.SkolskaGodina.ToList();
+                return View("Uredi", plan);
+            }
+            if (!planovi_os2.UpdateOS_Plan_2(plan))
 			{
 				TempData["note"] = "Plan nije promjenjen!";
 			}
 			else
 			{
-				TempData["note"] = "Plan je uspjesno promjenjen!";
+				TempData["note"] = "Plan je uspješno promjenjen!";
 			}
 			return RedirectToAction("Index");
         }
