@@ -226,7 +226,7 @@ namespace Planiranje.Controllers
         public ActionResult NovoPodrucje(PlanOs1View plan)
         {
             //test            
-            if (plan.Podrucje.Potrebno_sati == null)
+            if (plan.Podrucje.Potrebno_sati == null || plan.Podrucje.Opis_Podrucje==0 || plan.Podrucje.Cilj==0)
             {
                 plan.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();
                 plan.Ciljevi = ciljevi_db.ReadCiljevi();
@@ -518,7 +518,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (plan.Os_Plan_1_Aktivnost.Potrebno_sati == null)
+            if (plan.Os_Plan_1_Aktivnost.Potrebno_sati == null || plan.Os_Plan_1_Aktivnost.Opis_aktivnost==0)
             {
                 plan.Aktivnosti = aktivnost_db.ReadAktivnost();
                 return View(plan);
