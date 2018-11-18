@@ -88,15 +88,13 @@
 															@foreach (var item in Model.OsPlan1Podrucje)
 															{
 																var podrucje = new Podrucje_rada();
-																podrucje = Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje);
-																var cilj = new Ciljevi();
-																cilj = Model.Ciljevi.Single(c => c.ID_cilj == item.Cilj);
+																podrucje = Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje);																
 
 																<tr>
 																	<td class="col-md-1">@brojac</td>
 																	<td class="col-md-4">@podrucje.Naziv</td>
 																	<td class="col-md-2">@item.Potrebno_sati</td>
-																	<td class="col-md-3">@cilj.Naziv</td>
+																	<td class="col-md-3" style="white-space:pre-line">@item.Cilj</td>
 																	<td class="col-md-1">
 																		<a onclick="reloadPage('@Url.Action("PodrucjePomakGore", "PlanOs1", new { id = item.Id_plan })')" class="btn btn-warning btn-xs btn-grad">Gore</a>
 																		<a onclick="reloadPage('@Url.Action("PodrucjePomakDolje", "PlanOs1", new { id = item.Id_plan })')" class="btn btn-warning btn-xs btn-grad">Dolje</a>

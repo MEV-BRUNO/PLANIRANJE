@@ -24,7 +24,7 @@ namespace Planiranje.Models
         public string Potrebno_sati { get; set; }
         [Required(ErrorMessage = "Ovo je obavezno polje")]
         [DisplayName("Ciljevi")]
-        public int Cilj { get; set; }
+        public string Cilj { get; set; }
         [Required]
         public int Br_sati { get; set; }
 		[Required]

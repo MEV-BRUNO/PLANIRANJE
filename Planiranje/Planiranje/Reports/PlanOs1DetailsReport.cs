@@ -88,7 +88,7 @@ namespace Planiranje.Reports
                 aktivnosti = plan.OsPlan1Aktivnost.Where(w => w.Id_podrucje == item.Id_plan).ToList();
                 aktivnosti = aktivnosti.OrderBy(o => o.Red_broj_aktivnost).ToList();
 
-                PdfPCell cell = new PdfPCell(new Phrase(plan.Ciljevi.Single(s => s.ID_cilj == item.Cilj).Naziv,tekst));
+                PdfPCell cell = new PdfPCell(new Phrase(item.Cilj,tekst));
                 cell.Rowspan = aktivnosti.Count + 1;
                 cell.VerticalAlignment = PdfPCell.ALIGN_TOP;
                 cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;

@@ -53,7 +53,7 @@ namespace Planiranje.Models
         /// </summary>
         public IEnumerable<SelectListItem> CiljeviItems
         {
-            get { return new SelectList(Ciljevi, "Id_cilj", "Naziv"); }
+            get { return new SelectList(Ciljevi, "Naziv", "Naziv"); }
         }
         /// <summary>
         /// lista svih aktivnosti za dropdown list

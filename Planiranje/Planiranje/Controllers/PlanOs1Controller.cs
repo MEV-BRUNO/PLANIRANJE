@@ -226,7 +226,7 @@ namespace Planiranje.Controllers
         public ActionResult NovoPodrucje(PlanOs1View plan)
         {
             //test            
-            if (plan.Podrucje.Potrebno_sati == null || plan.Podrucje.Opis_Podrucje==0 || plan.Podrucje.Cilj==0)
+            if (plan.Podrucje.Potrebno_sati == null || plan.Podrucje.Opis_Podrucje==0 || plan.Podrucje.Cilj==null)
             {
                 plan.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();
                 plan.Ciljevi = ciljevi_db.ReadCiljevi();
@@ -390,14 +390,7 @@ namespace Planiranje.Controllers
             plan.Ciljevi = ciljevi;
             plan.Podrucje = podrucje;
             plan.PodrucjeRada = podrucja_rada;
-
-            
-
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("UrediPodrucje", plan);
-            }
+           
             return View("UrediPodrucje", plan);
         }
 
@@ -408,7 +401,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (plan.Podrucje.Potrebno_sati == null)
+            if (plan.Podrucje.Potrebno_sati == null || plan.Podrucje.Cilj==null || plan.Podrucje.Opis_Podrucje==0)
             {
                 plan.Ciljevi = ciljevi_db.ReadCiljevi();
                 plan.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();
@@ -447,21 +440,17 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             OS_Plan_1_podrucje podrucje = new OS_Plan_1_podrucje();
-            PlanOs1View plan = new PlanOs1View();
-            Ciljevi cilj = new Ciljevi();
+            PlanOs1View plan = new PlanOs1View();            
             Podrucje_rada podrucjeRada = new Podrucje_rada();
 
             podrucje = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id);
-            cilj = ciljevi_db.ReadCiljevi(podrucje.Cilj);
+            
             podrucjeRada = podrucje_rada_db.ReadPodrucjeRada(podrucje.Opis_Podrucje);
 
             plan.Pozicija = pozicija;
             plan.Podrucje = podrucje;
             plan.PodrucjeRada = new List<Podrucje_rada>();
             plan.PodrucjeRada.Add(podrucjeRada);
-            plan.Ciljevi = new List<Ciljevi>();
-            plan.Ciljevi.Add(cilj);
-
             return View("ObrisiPodrucje", plan);
         }
 

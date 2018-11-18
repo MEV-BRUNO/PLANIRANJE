@@ -28,13 +28,31 @@
                     @Html.ValidationMessageFor(model => model.Podrucje.Potrebno_sati, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <!--CILJEVI-->
             <div class="form-group">
-                @Html.LabelFor(model => model.Podrucje.Cilj, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.DropDownListFor(model => model.Podrucje.Cilj, Model.CiljeviItems, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Podrucje.Cilj, "", new { @class = "text-danger" })
+                <div class="col-lg-12">
+                    @Html.LabelFor(model => model.Podrucje.Cilj)
+                </div>
+                <div class="col-lg-7">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.TextAreaFor(model => model.Podrucje.Cilj, new { @class = "edit-text-area", id = "ciljeviText", @required = "" })
+                            @Html.ValidationMessageFor(model => model.Podrucje.Cilj, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.DropDownList("Ciljevi", Model.CiljeviItems, "--Odaberi ciljeve--", new { @class = "form-control", id = "ciljeviList" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("ciljeviList", "ciljeviText")' value="Dodaj" />
+                    </div>
                 </div>
             </div>
+            <!--//CILJEVI-->
             <div class="modal-footer">
                 <div class="form-group">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
