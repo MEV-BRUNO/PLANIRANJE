@@ -16,10 +16,11 @@ namespace Planiranje.Models
         public int Id_aktivnost { get; set; }
         [Required]
         public int Red_br_akcija { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Ovo je obavezno polje")]
         [DisplayName("Naziv aktivnosti")]
         public string Opis_akcija { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Ovo je obavezno polje")]
+        [Range(0,Int32.MaxValue,ErrorMessage ="Vrijednost mora biti 0 ili veća")]
         public int Sati { get; set; }
     }
 }

@@ -26,7 +26,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.OsPlan2Aktivnost.Opis_aktivnost, new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.TextAreaFor(model => model.OsPlan2Aktivnost.Opis_aktivnost, new { @class = "form-control" })
+                        @Html.TextAreaFor(model => model.OsPlan2Aktivnost.Opis_aktivnost, new { @class = "edit-opis", @rows="3" })
+                        @Html.ValidationMessageFor(model => model.OsPlan2Aktivnost.Opis_aktivnost, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="modal-footer">
