@@ -22,19 +22,19 @@ namespace Planiranje.Models
         public List<Oblici> Oblici { get; set; }
         public IEnumerable<SelectListItem> CiljeviItems
         {
-            get { return new SelectList(Ciljevi, "ID_cilj", "Naziv"); }
+            get { return new SelectList(Ciljevi, "Naziv", "Naziv"); }
         }
         public IEnumerable<SelectListItem> ZadaciItems
         {
-            get { return new SelectList(Zadaci, "ID_zadatak", "Naziv"); }
+            get { return new SelectList(Zadaci, "Naziv", "Naziv"); }
         }
         public IEnumerable<SelectListItem> SubjektiItems
         {
-            get { return new SelectList(Subjekti, "ID_subjekt", "Naziv"); }
+            get { return new SelectList(Subjekti, "Naziv", "Naziv"); }
         }
         public IEnumerable<SelectListItem> ObliciItems
         {
-            get { return new SelectList(Oblici, "Id_oblici", "Naziv"); }
+            get { return new SelectList(Oblici, "Naziv", "Naziv"); }
         }
         [DisplayName("Redni broj")]
         public int Broj { get; set; }

@@ -92,11 +92,11 @@
 																br++;
 																<tr>
 																	<td class="col-md-1">@br</td>
-																	<td class="col-md-4">@item.Opis_podrucje</td>
-																	<td class="col-md-1">@Model.Ciljevi.Single(s => s.ID_cilj == item.Cilj).Naziv</td>
-																	<td class="col-md-1">@Model.Zadaci.Single(s => s.ID_zadatak == item.Zadaci).Naziv</td>
-																	<td class="col-md-1">@Model.Subjekti.Single(s => s.ID_subjekt == item.Subjekti).Naziv</td>
-																	<td class="col-md-1">@Model.Oblici.Single(s => s.Id_oblici == item.Oblici).Naziv</td>
+																	<td class="col-md-3">@item.Opis_podrucje</td>
+																	<td class="col-md-2" style="white-space:pre-line">@item.Cilj</td>
+																	<td class="col-md-2" style="white-space:pre-line">@item.Zadaci</td>
+																	<td class="col-md-1" style="white-space:pre-line">@item.Subjekti</td>
+																	<td class="col-md-1" style="white-space:pre-line">@item.Oblici</td>
 																	<td class="col-md-1">@item.Vrijeme</td>
 																	<td class="col-md-1">
 																		<a onclick="reloadPage('@Url.Action("PosaoPomakGore","PlanOs2", new { id=item.Id_plan})')" class="btn btn-warning btn-xs btn-grad">Gore</a>

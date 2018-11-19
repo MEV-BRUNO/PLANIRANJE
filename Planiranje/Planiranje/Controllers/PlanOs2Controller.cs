@@ -155,15 +155,7 @@ namespace Planiranje.Controllers
             plan.OsPlan2 = planovi_os2.ReadOS_Plan_2(id);
             plan.OsPlan2Podrucja = new List<OS_Plan_2_podrucje>();
             plan.OsPlan2Podrucja = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == id).ToList();
-            plan.OsPlan2Podrucja = plan.OsPlan2Podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
-            plan.Ciljevi = new List<Ciljevi>();
-            plan.Ciljevi = ciljevi_db.ReadCiljevi();
-            plan.Subjekti = new List<Subjekti>();
-            plan.Subjekti = subjekti_db.ReadSubjekti();
-            plan.Zadaci = new List<Zadaci>();
-            plan.Zadaci = zadaci_db.ReadZadaci();
-            plan.Oblici = new List<Oblici>();
-            plan.Oblici = oblici_db.ReadOblici();
+            plan.OsPlan2Podrucja = plan.OsPlan2Podrucja.OrderBy(o => o.Red_br_podrucje).ToList();           
             plan.OsPlan2Aktivnosti = new List<OS_Plan_2_aktivnost>();
             plan.OsPlan2Akcije = new List<OS_Plan_2_akcija>();
             if (plan.OsPlan2Podrucja.Count == 0)
@@ -230,6 +222,15 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if(plan.OsPlan2Podrucje.Opis_podrucje==null || plan.OsPlan2Podrucje.Cilj==null || plan.OsPlan2Podrucje.Zadaci==null
+                || plan.OsPlan2Podrucje.Subjekti==null || plan.OsPlan2Podrucje.Oblici==null || plan.OsPlan2Podrucje.Vrijeme == null)
+            {
+                plan.Ciljevi = ciljevi_db.ReadCiljevi();
+                plan.Subjekti = subjekti_db.ReadSubjekti();
+                plan.Zadaci = zadaci_db.ReadZadaci();
+                plan.Oblici = oblici_db.ReadOblici();
+                return View(plan);
+            }
             plan.OsPlan2Podrucje.Id_glavni_plan = plan.OsPlan2.Id_plan;
             int _id = plan.OsPlan2.Id_plan;
             int br;
@@ -286,6 +287,15 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if(plan.OsPlan2Podrucje.Opis_podrucje==null || plan.OsPlan2Podrucje.Cilj==null || plan.OsPlan2Podrucje.Zadaci==null
+                || plan.OsPlan2Podrucje.Subjekti==null || plan.OsPlan2Podrucje.Oblici==null || plan.OsPlan2Podrucje.Vrijeme == null)
+            {
+                plan.Ciljevi = ciljevi_db.ReadCiljevi();
+                plan.Subjekti = subjekti_db.ReadSubjekti();
+                plan.Zadaci = zadaci_db.ReadZadaci();
+                plan.Oblici = oblici_db.ReadOblici();
+                return View(plan);
+            }
             int id_ = plan.OsPlan2Podrucje.Id_glavni_plan;
             using (var db = new BazaPodataka())
             {
@@ -312,9 +322,7 @@ namespace Planiranje.Controllers
             PlanOs2View plan = new PlanOs2View();
             plan.Broj = broj;
             plan.OsPlan2Podrucje = new OS_Plan_2_podrucje();
-            plan.OsPlan2Podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
-            plan.Ciljevi = new List<Ciljevi>();
-            plan.Ciljevi.Add(ciljevi_db.ReadCiljevi(plan.OsPlan2Podrucje.Cilj));
+            plan.OsPlan2Podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);            
             return View(plan);
         }
         [HttpPost]
@@ -945,15 +953,6 @@ namespace Planiranje.Controllers
                 int i = item.Id_plan;
                 plan.OsPlan2Akcije.AddRange(baza.OsPlan2Akcija.Where(w => w.Id_aktivnost == i));
             }
-            plan.Ciljevi = new List<Ciljevi>();
-            plan.Ciljevi = ciljevi_db.ReadCiljevi();
-            plan.Zadaci = new List<Zadaci>();
-            plan.Zadaci = zadaci_db.ReadZadaci();
-            plan.Subjekti = new List<Subjekti>();
-            plan.Subjekti = subjekti_db.ReadSubjekti();
-            plan.Oblici = new List<Oblici>();
-            plan.Oblici = oblici_db.ReadOblici();
-
             Pedagog ped = new Pedagog();
             int idPed = PlaniranjeSession.Trenutni.PedagogId;
             ped = baza.Pedagog.SingleOrDefault(s => s.Id_Pedagog == idPed);

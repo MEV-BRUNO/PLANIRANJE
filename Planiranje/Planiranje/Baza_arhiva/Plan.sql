@@ -308,17 +308,13 @@ CREATE TABLE os_plan_2_podrucje (
   id_glavni_plan int(20) NOT NULL,
   red_br_podrucje int(11) NOT NULL,
   opis_podrucje text,
-  cilj int(20) NOT NULL,
-  zadaci int(20) DEFAULT NULL,
-  subjekti int(20) NOT NULL,
-  oblici int(20) NOT NULL,
+  cilj text,
+  zadaci text,
+  subjekti text,
+  oblici text,
   vrijeme text,
   sati int(11) NOT NULL,   
-  PRIMARY KEY (id_plan),   
-  CONSTRAINT os_plan_2_podrucje_ibfk_2 FOREIGN KEY (cilj) REFERENCES ciljevi (id_cilj),
-  CONSTRAINT os_plan_2_podrucje_ibfk_3 FOREIGN KEY (subjekti) REFERENCES subjekti (id_subjekt),
-  CONSTRAINT os_plan_2_podrucje_ibfk_4 FOREIGN KEY (oblici) REFERENCES oblici (id_oblici),
-  CONSTRAINT os_plan_2_podrucje_ibfk_5 FOREIGN KEY (zadaci) REFERENCES zadaci (id_zadatak)
+  PRIMARY KEY (id_plan)  
 );
 
 CREATE TABLE ss_plan_podrucje (
