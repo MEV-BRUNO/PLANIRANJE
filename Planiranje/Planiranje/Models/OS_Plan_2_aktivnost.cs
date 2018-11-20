@@ -16,7 +16,7 @@ namespace Planiranje.Models
         public int Id_podrucje { get; set; }
         [Required]
         public int Red_br_aktivnost { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Ovo je obavezno polje")]
         [DisplayName("Naziv zadatka")]
         public string Opis_aktivnost { get; set; }
         [Required]

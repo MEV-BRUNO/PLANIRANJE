@@ -40,11 +40,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("NoviPlan");
-            }
+            ViewBag.godina = baza.SkolskaGodina.ToList();            
             return View("NoviPlan");
         }
 
@@ -55,14 +51,15 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-			OS_Plan_2 os_plan_2 = new OS_Plan_2();
-            os_plan_2.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-            os_plan_2.Ak_godina = gr.Ak_godina;
-            os_plan_2.Naziv = gr.Naziv;
-            os_plan_2.Opis = gr.Opis;
-            if (planovi_os2.CreateOS_Plan_2(os_plan_2))
+            if(gr.Naziv==null || gr.Opis==null || gr.Ak_godina == 0)
+            {
+                ViewBag.godina = baza.SkolskaGodina.ToList();                
+                return View(gr);
+            }			
+            gr.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;            
+            if (planovi_os2.CreateOS_Plan_2(gr))
 			{
-				TempData["note"] = "Novi plan za osnovnu skolu 2 je spremljen!";
+				TempData["note"] = "Novi plan za osnovnu školu 2 je spremljen!";
 			}
 			else
 			{
@@ -79,27 +76,28 @@ namespace Planiranje.Controllers
             }
             OS_Plan_2 os_plan_2 = new OS_Plan_2();
             os_plan_2 = planovi_os2.ReadOS_Plan_2(id);
-            if (Request.IsAjaxRequest())
-            {
-                ViewBag.IsUpdate = false;
-                return View("Uredi", os_plan_2);
-            }
+            ViewBag.godina = baza.SkolskaGodina.ToList();
             return View("Uredi", os_plan_2);
         }
         [HttpPost]
-        public ActionResult Edit(OS_Plan_2 os_plan_2)
+        public ActionResult Edit(OS_Plan_2 plan)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!planovi_os2.UpdateOS_Plan_2(os_plan_2))
+            if(plan.Ak_godina==0 || plan.Naziv==null || plan.Opis == null)
+            {
+                ViewBag.godina = baza.SkolskaGodina.ToList();
+                return View("Uredi", plan);
+            }
+            if (!planovi_os2.UpdateOS_Plan_2(plan))
 			{
 				TempData["note"] = "Plan nije promjenjen!";
 			}
 			else
 			{
-				TempData["note"] = "Plan je uspjesno promjenjen!";
+				TempData["note"] = "Plan je uspješno promjenjen!";
 			}
 			return RedirectToAction("Index");
         }
@@ -157,15 +155,7 @@ namespace Planiranje.Controllers
             plan.OsPlan2 = planovi_os2.ReadOS_Plan_2(id);
             plan.OsPlan2Podrucja = new List<OS_Plan_2_podrucje>();
             plan.OsPlan2Podrucja = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == id).ToList();
-            plan.OsPlan2Podrucja = plan.OsPlan2Podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
-            plan.Ciljevi = new List<Ciljevi>();
-            plan.Ciljevi = ciljevi_db.ReadCiljevi();
-            plan.Subjekti = new List<Subjekti>();
-            plan.Subjekti = subjekti_db.ReadSubjekti();
-            plan.Zadaci = new List<Zadaci>();
-            plan.Zadaci = zadaci_db.ReadZadaci();
-            plan.Oblici = new List<Oblici>();
-            plan.Oblici = oblici_db.ReadOblici();
+            plan.OsPlan2Podrucja = plan.OsPlan2Podrucja.OrderBy(o => o.Red_br_podrucje).ToList();           
             plan.OsPlan2Aktivnosti = new List<OS_Plan_2_aktivnost>();
             plan.OsPlan2Akcije = new List<OS_Plan_2_akcija>();
             if (plan.OsPlan2Podrucja.Count == 0)
@@ -232,6 +222,15 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if(plan.OsPlan2Podrucje.Opis_podrucje==null || plan.OsPlan2Podrucje.Cilj==null || plan.OsPlan2Podrucje.Zadaci==null
+                || plan.OsPlan2Podrucje.Subjekti==null || plan.OsPlan2Podrucje.Oblici==null || plan.OsPlan2Podrucje.Vrijeme == null)
+            {
+                plan.Ciljevi = ciljevi_db.ReadCiljevi();
+                plan.Subjekti = subjekti_db.ReadSubjekti();
+                plan.Zadaci = zadaci_db.ReadZadaci();
+                plan.Oblici = oblici_db.ReadOblici();
+                return View(plan);
+            }
             plan.OsPlan2Podrucje.Id_glavni_plan = plan.OsPlan2.Id_plan;
             int _id = plan.OsPlan2.Id_plan;
             int br;
@@ -288,6 +287,15 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if(plan.OsPlan2Podrucje.Opis_podrucje==null || plan.OsPlan2Podrucje.Cilj==null || plan.OsPlan2Podrucje.Zadaci==null
+                || plan.OsPlan2Podrucje.Subjekti==null || plan.OsPlan2Podrucje.Oblici==null || plan.OsPlan2Podrucje.Vrijeme == null)
+            {
+                plan.Ciljevi = ciljevi_db.ReadCiljevi();
+                plan.Subjekti = subjekti_db.ReadSubjekti();
+                plan.Zadaci = zadaci_db.ReadZadaci();
+                plan.Oblici = oblici_db.ReadOblici();
+                return View(plan);
+            }
             int id_ = plan.OsPlan2Podrucje.Id_glavni_plan;
             using (var db = new BazaPodataka())
             {
@@ -314,9 +322,7 @@ namespace Planiranje.Controllers
             PlanOs2View plan = new PlanOs2View();
             plan.Broj = broj;
             plan.OsPlan2Podrucje = new OS_Plan_2_podrucje();
-            plan.OsPlan2Podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
-            plan.Ciljevi = new List<Ciljevi>();
-            plan.Ciljevi.Add(ciljevi_db.ReadCiljevi(plan.OsPlan2Podrucje.Cilj));
+            plan.OsPlan2Podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);            
             return View(plan);
         }
         [HttpPost]
@@ -451,6 +457,10 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
+            }
+            if (plan.OsPlan2Aktivnost.Opis_aktivnost == null)
+            {
+                return View(plan);
             }
             List<OS_Plan_2_podrucje> pod = new List<OS_Plan_2_podrucje>();
             int id = plan.Id;
@@ -598,6 +608,10 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if (plan.OsPlan2Aktivnost.Opis_aktivnost == null)
+            {
+                return View(plan);
+            }
             OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
             int idPod = plan.OsPlan2Aktivnost.Id_podrucje;
             podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPod);
@@ -682,6 +696,10 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if(plan.OsPlan2Akcija.Opis_akcija==null || plan.OsPlan2Akcija.Sati < 0)
+            {
+                return View(plan);
+            }
             int idGlavniPlan = plan.Id;
             List<OS_Plan_2_podrucje> podrucja = new List<OS_Plan_2_podrucje>();
             podrucja = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == idGlavniPlan).ToList();
@@ -750,6 +768,10 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
+            }
+            if(plan.OsPlan2Akcija.Opis_akcija==null || plan.OsPlan2Akcija.Sati < 0)
+            {
+                return View(plan);
             }
             int idAkcija = plan.OsPlan2Akcija.Id_plan;
             int idAktivnost = plan.OsPlan2Akcija.Id_aktivnost;
@@ -947,15 +969,6 @@ namespace Planiranje.Controllers
                 int i = item.Id_plan;
                 plan.OsPlan2Akcije.AddRange(baza.OsPlan2Akcija.Where(w => w.Id_aktivnost == i));
             }
-            plan.Ciljevi = new List<Ciljevi>();
-            plan.Ciljevi = ciljevi_db.ReadCiljevi();
-            plan.Zadaci = new List<Zadaci>();
-            plan.Zadaci = zadaci_db.ReadZadaci();
-            plan.Subjekti = new List<Subjekti>();
-            plan.Subjekti = subjekti_db.ReadSubjekti();
-            plan.Oblici = new List<Oblici>();
-            plan.Oblici = oblici_db.ReadOblici();
-
             Pedagog ped = new Pedagog();
             int idPed = PlaniranjeSession.Trenutni.PedagogId;
             ped = baza.Pedagog.SingleOrDefault(s => s.Id_Pedagog == idPed);

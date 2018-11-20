@@ -4,37 +4,40 @@
     Page.Title = ViewBag.Title;
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
-
-@if (TempData["note"] != null)
-{
-    <div id="poruka" style="display:none">1</div>
-}
 <div class="inner">
-	<div class="row">
-		<div class="col-lg-12">
-			<h3> Plan - osnovna skola 2 </h3>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<div>
-						<div class="pull-left">
-							<button type="button" class="btn btn-primary btn-md" onclick="showModal('@Url.Action("NoviPlan", "PlanOs2")')">
-								Novi plan
-							</button>
-							<span class="glyphicon glyphicon-print"></span>
-							@Html.ActionLink("Ispiši listu", "Ispis", new { target = "blank" })
-						</div>						
-						<br>
-					</div>
-					@Html.Partial("Table", Model)					
-					
-				</div>
-			</div>
-		</div>
-	</div>
+    @if (TempData["note"] != null)
+    {
+        <div id="poruka" style="display:none">1</div>
+    }
+    <div class="row">
+        <div class="col-lg-12">
+            <h3> Planovi - osnovna škola 2 </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <div class="pull-left">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="showModal('@Url.Action("NoviPlan", "PlanOs2")')">
+                                Novi plan
+                            </button>                           
+                            @*@Html.ActionLink("Ispiši listu", "Ispis", new { target = "blank" })*@
+                        </div>
+                        <div class="pull-right">
+                            <a href="@Url.Action("Ispis", "PlanOs2")" class="btn btn-success btn-sm" target="_blank">ISPIS POPISA</a>
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                    @Html.Partial("Table", Model)
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>

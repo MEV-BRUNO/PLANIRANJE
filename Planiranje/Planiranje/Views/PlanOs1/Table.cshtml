@@ -10,7 +10,7 @@
                 Naziv
             </td>
             <td class="col-lg-2">
-                Ak. godina
+                Šk. godina
             </td>
             <td class="col-lg-4">
                Opis
@@ -28,14 +28,14 @@
         <tr>
             <td>
                 @broj
-                @{broj++;}
+                @{broj++;int godina = item.Ak_godina + 1;}
                 
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Naziv)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Ak_godina)
+                @Html.DisplayFor(modelItem => item.Ak_godina)./@godina.
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Opis)

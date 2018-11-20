@@ -1,45 +1,47 @@
 ﻿@model List<Planiranje.Models.OS_Plan_1>
-
 @{
     Page.Title = ViewBag.Title;
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
-
-@if (TempData["note"] != null)
-{
-    <div id="poruka" style="display:none">1</div>
-}
 <div class="inner">
-	<div class="row">
-		<div class="col-lg-12">
-			<h3> Pregled okvirnih planova i programa rada stručnog suradnika </h3>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<div>
-						<div class="pull-left">
-							<button type="button" class="btn btn-primary btn-md" onclick="showModal('@Url.Action("NoviPlan", "PlanOs1")')" >
-								Novi plan i program
-							</button>
-							<span class="glyphicon glyphicon-print"></span>
-							@Html.ActionLink("Ispiši listu", "Ispis", new { target = "blank" })
-						</div>
-						<br />
-					</div>
-					@Html.Partial("Table", Model)					
-					
-				</div>
-			</div>
-		</div>
-	</div>
+    @if (TempData["note"] != null)
+    {
+        <div id="poruka" style="display:none">1</div>
+    }
+    <div class="row">
+        <div class="col-lg-12">
+            <h3> Pregled okvirnih planova i programa rada stručnog suradnika </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <div class="pull-left">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="showModal('@Url.Action("NoviPlan", "PlanOs1")')">
+                                Novi plan i program
+                            </button>
+
+                            @*@Html.ActionLink("Ispiši listu", "Ispis", new { target = "blank" })*@
+                        </div>
+                        <div class="pull-right">
+                            <a href="@Url.Action("Ispis", "PlanOs1")" class="btn btn-success btn-sm" target="_blank">ISPIS POPISA</a>
+                        </div>
+                    </div>
+                    <br /><br /><br />
+                    <div>
+                        @Html.Partial("Table", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
     $(document).ready(function () {
-        $('#dataTables-example').dataTable();
+        $('#dataTables-example').dataTable();        
     });
 </script>
 <script>

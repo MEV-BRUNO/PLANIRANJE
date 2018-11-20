@@ -6,7 +6,7 @@
 	int i = 0;
 }
 
-<div class="inner" id="newPlan">
+<div class="inner">
 	<div class="row">
 		<div class="col-lg-12">
 			<h3> @ViewBag.Title </h3>
@@ -23,15 +23,24 @@
 							@Html.HiddenFor(model => model.GodisnjiPlan.Id_god, new { Value = 0 })
 							<div class="form-group">
 								@Html.LabelFor(model => model.GodisnjiPlan.Ak_godina, htmlAttributes: new { @class = "control-label col-md-2" })
-								<div class="col-md-3">
-									@Html.DropDownListFor(model => model.GodisnjiPlan.Ak_godina,Model.SkolskaGodinaItems,"Odaberi školsku godinu",  new { @class = "form-control", @required="" })
-									
-								</div>
+                                <div class="col-md-3">
+                                    @*@Html.DropDownListFor(model => model.GodisnjiPlan.Ak_godina, Model.SkolskaGodinaItems, "Odaberi školsku godinu", new { @class = "form-control", @required = "" })*@
+                                    <select class="form-control" data-val="true" data-val-number="The field Školska godina must be a number." data-val-required="Šk godina je obavezna" id="GodisnjiPlan_Ak_godina" name="GodisnjiPlan.Ak_godina" required="">
+                                        <option selected="selected"value="">Odaberite školsku godinu</option>
+                                        @foreach(var item in Model.SkolskaGodina)
+                                        {
+                                            int god = item.Sk_Godina + 1;
+                                            <option value="@item.Sk_Godina">@item.Sk_Godina./@god.</option>
+                                        }
+                                    </select>
+                                        @Html.ValidationMessageFor(model => model.GodisnjiPlan.Ak_godina, "", new { @class = "text-danger" })
+                                </div>
 							</div>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.GodisnjiPlan.Naziv, new { @class = "control-label col-md-2"})
                                 <div class="col-md-6">
-                                    @Html.EditorFor(model=>model.GodisnjiPlan.Naziv, new { htmlAttributes = new { @class = "form-control", @required="" } })
+                                    @Html.EditorFor(model => model.GodisnjiPlan.Naziv, new { htmlAttributes = new { @class = "form-control", @required = "" } })
+                                    @Html.ValidationMessageFor(model => model.GodisnjiPlan.Naziv, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 						</div>
@@ -116,7 +125,7 @@
 					</div>
 						<div class="modal-footer">
 							<input type="button" class="btn btn-default" value="Odustani" onclick='reloadPage("@Url.Action("Index", "GodisnjiPlan")")' />
-							<input type="submit" class="btn btn-primary" value="Spremi" onclick="@Url.Action("NoviPlan","GodisnjiPlan")" />
+							<input type="button" class="btn btn-primary" value="Spremi" onclick="reload('@Url.Action("NoviPlan","GodisnjiPlan")','#noviGodPlanView')" />
 						</div>
 					}
 					</div>

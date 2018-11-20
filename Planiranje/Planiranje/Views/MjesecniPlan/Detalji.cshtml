@@ -4,11 +4,11 @@
     Page.Title = "Pregled detalja za mjesečni plan";
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
-@if (TempData["poruka"] != null)
-{
-    <div id="poruka" style="display:none">1</div>
-}
 <div class="inner">
+    @if (TempData["poruka"] != null)
+    {
+        <div id="poruka" style="display:none">1</div>
+    }
     <div class="row">
         <div class="col-lg-12">
             <h4> Pregled mjesečnih detalja za plan: <b>@Model.MjesecniPlan.Naziv</b></h4>

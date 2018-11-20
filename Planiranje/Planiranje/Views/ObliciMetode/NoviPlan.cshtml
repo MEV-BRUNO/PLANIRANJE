@@ -18,7 +18,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.oblik.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.TextAreaFor(model => model.oblik.Naziv, new { @class = "form-control", @id = "newName",
+                    @Html.TextAreaFor(model => model.oblik.Naziv, new { @class = "edit-opis", @id = "newName",
 				   onkeydown = "hideModalA(event, \"/ObliciMetode/NoviPlan\", \"#noviOblikView\", \"Nova oblik je uspješno spremljen\")"
 			   })
                     @Html.ValidationMessageFor(model => model.oblik.Naziv, "", new { @class = "text-danger" })

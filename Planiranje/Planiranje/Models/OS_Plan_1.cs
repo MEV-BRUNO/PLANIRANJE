@@ -14,13 +14,13 @@ namespace Planiranje.Models
         public int Id_plan { get; set; }
         [Required]
         public int Id_pedagog { get; set; }
-        [Required]
-		[DisplayName("Ak. godina")]
+        [Required(ErrorMessage ="Školska godina je obavezna")]
+		[DisplayName("Šk. godina")]        
 		public int Ak_godina { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Naziv plana je obavezan")]
 		[DisplayName("Naziv plana")]
 		public string Naziv { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Opis plana je obavezan")]
 		[DisplayName("Opis plana")]
 		public string Opis { get; set; }
     }

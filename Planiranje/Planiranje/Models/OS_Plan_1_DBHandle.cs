@@ -30,7 +30,7 @@ namespace Planiranje.Models
                 command.CommandText = "SELECT id_plan, ak_godina, naziv, opis " +
                     "FROM os_plan_1 " +
                     "WHERE id_pedagog = @id_pedagog " +
-                    "ORDER BY id_plan ASC";
+                    "ORDER BY ak_godina ASC";
                 command.Parameters.AddWithValue("@id_pedagog", PlaniranjeSession.Trenutni.PedagogId);
                 connection.Open();
                 using (MySqlDataReader sdr = command.ExecuteReader())

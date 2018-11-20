@@ -73,7 +73,7 @@ namespace Planiranje.Reports
                     listaAkcija.AddRange(plan.OsPlan2Akcije.Where(w => w.Id_aktivnost == item.Id_plan));
                 }
                 int spoji = aktivnost.Count + listaAkcija.Count + 1;
-                PdfPCell cell = new PdfPCell(new Phrase(plan.Ciljevi.Single(s => s.ID_cilj == podrucje.Cilj).Naziv, tekst));
+                PdfPCell cell = new PdfPCell(new Phrase(podrucje.Cilj, tekst));
                 cell.BackgroundColor = BaseColor.WHITE;
                 cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;                
                 cell.Padding = 5;
@@ -81,7 +81,7 @@ namespace Planiranje.Reports
                 cell.Rowspan = spoji;
                 t.AddCell(cell);
 
-                cell = new PdfPCell(new Phrase(plan.Zadaci.Single(s => s.ID_zadatak == podrucje.Zadaci).Naziv, tekst));
+                cell = new PdfPCell(new Phrase(podrucje.Zadaci, tekst));
                 cell.BackgroundColor = BaseColor.WHITE;
                 cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
                 cell.Padding = 5;
@@ -89,7 +89,7 @@ namespace Planiranje.Reports
                 cell.Rowspan = spoji;
                 t.AddCell(cell);
 
-                cell = new PdfPCell(new Phrase(plan.Subjekti.Single(s => s.ID_subjekt == podrucje.Subjekti).Naziv, tekst));
+                cell = new PdfPCell(new Phrase(podrucje.Subjekti, tekst));
                 cell.BackgroundColor = BaseColor.WHITE;
                 cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
                 cell.Padding = 5;
@@ -97,7 +97,7 @@ namespace Planiranje.Reports
                 cell.Rowspan = spoji;
                 t.AddCell(cell);
 
-                cell = new PdfPCell(new Phrase(plan.Oblici.Single(s => s.Id_oblici == podrucje.Oblici).Naziv, tekst));
+                cell = new PdfPCell(new Phrase(podrucje.Oblici, tekst));
                 cell.BackgroundColor = BaseColor.WHITE;
                 cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
                 cell.Padding = 5;

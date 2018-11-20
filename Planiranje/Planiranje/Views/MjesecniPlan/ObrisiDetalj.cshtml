@@ -8,7 +8,7 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h4 class="modal-title">Brisanje mjesečnih detalja</h4>
+			<h4 class="modal-title">Brisanje mjesečnog detalja</h4>
 		</div>
 		@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiDetaljModalView", @class = "form-horizontal", role = "form" }))
 		{
@@ -18,13 +18,13 @@
                 @Html.HiddenFor(model=>model.MjesecniPlan.ID_plan)
 				<div class="form-group">
 					<div class="col-md-10">
-						<h5>Jeste li sigurni da želite obrisati ove detalje?</h5>
+						<h5>Jeste li sigurni da želite obrisati odabrani detalj?</h5>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<div class="form-group">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-						<input type="submit" class="btn btn-danger" value="Obriši"/>
+						<input type="button" onclick="reload('@Url.Action("ObrisiDetalj","MjesecniPlan")','#obrisiDetaljModalView')" class="btn btn-danger" value="Obriši"/>
 					</div>
 				</div>
 			</div>

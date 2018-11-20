@@ -18,7 +18,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.zadatak.Naziv, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.zadatak.Naziv, new { @class = "form-control" })
+                    @Html.TextAreaFor(model => model.zadatak.Naziv, new { @class = "edit-opis" })
                     @Html.ValidationMessageFor(model => model.zadatak.Naziv, "", new { @class = "text-danger" })
                 </div>
             </div>

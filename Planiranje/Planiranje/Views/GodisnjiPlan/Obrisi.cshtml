@@ -3,7 +3,6 @@
 @{
 	Layout = null;
 }
-
 <div class="modal-dialog">
 	<div class="modal-content">
 		<div class="modal-header">
@@ -17,15 +16,16 @@
 				<div class="form-group">
 					<div class="col-md-10">
                         <h5>
-                            Jeste li sigurni da želite obrisati plan "@Html.DisplayFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })"
-                            za školsku godinu @Html.DisplayFor(model => model.Ak_godina, new { htmlAttributes = new { @class = "form-control" } }).?
+                            @{ int god = Model.Ak_godina + 1;}
+                            Jeste li sigurni da želite obrisati plan <b>@Html.DisplayFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })</b>
+                            za školsku godinu <b>@Model.Ak_godina./@god.</b>?
                         </h5>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<div class="form-group">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-						<input type="button" class="btn btn-danger" value="Obriši" onclick='hideModal("/GodisnjiPlan/Delete", "#obrisiGodPlanModalView", "Plan uspješno obrisan")' />
+						<input type="button" class="btn btn-danger" value="Obriši" onclick="reload('@Url.Action("Delete","GodisnjiPlan")','#obrisiGodPlanModalView')" />
 					</div>
 				</div>
 			</div>

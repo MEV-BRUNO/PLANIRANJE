@@ -68,7 +68,7 @@ namespace Planiranje.Controllers
 			ViewBag.Mjeseci = mjeseci;
 			ViewBag.Title = "Novi godišnji plan";
             model.SkolskaGodina = new List<Sk_godina>();
-            model.SkolskaGodina = baza.SkolskaGodina.Where(god => god.Sk_Godina >= DateTime.Now.Year).ToList();
+            model.SkolskaGodina = baza.SkolskaGodina.ToList();
 			return View("NoviPlan", model);
 		}
 
@@ -78,8 +78,28 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
-            }			
-			
+            }
+            if (model.GodisnjiPlan.Ak_godina == 0 || model.GodisnjiPlan.Naziv == null)
+            {
+                model.GodisnjiDetalji = new List<Godisnji_detalji>();
+                for (int i = 0; i < 12; i++)
+                {
+                    model.GodisnjiDetalji.Add(new Godisnji_detalji
+                    {
+                        Radnih_dana = 0,
+                        Subota_dana = 0,
+                        Nedjelja_dana = 0,
+                        Blagdana_dana = 0,
+                        Nastavnih_dana = 0,
+                        Praznika_dana = 0,
+                        Odmor_dana = 0
+                    });
+                }
+                ViewBag.Mjeseci = mjeseci;
+                ViewBag.Title = "Novi godišnji plan";
+                model.SkolskaGodina = baza.SkolskaGodina.ToList();
+                return View("NoviPlan", model);
+            }
 			if (!godisnji_planovi.CreateGodisnjiPlan(model))
 			{
 				TempData["poruka"] = "Nije moguće spremiti, dogodila se greška!";
@@ -89,10 +109,7 @@ namespace Planiranje.Controllers
 			{
                 TempData["poruka"] = "Plan je spremljen!";
 				return RedirectToAction("Index");
-			}
-			//ViewBag.Mjeseci = mjeseci;
-			//ViewBag.Title = "Novi godišnji plan";
-			//return View("NoviPlan", model);
+			}			
 		}
 
 		// UREĐIVANJE
@@ -116,10 +133,15 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
-            }			
-
-			
-			if (!godisnji_planovi.UpdateGodisnjiPlan(model))
+            }
+            if (model.GodisnjiPlan.Ak_godina == 0 || model.GodisnjiPlan.Naziv == null)
+            {
+                ViewBag.Mjeseci = mjeseci;
+                ViewBag.Title = "Uredi godišnji plan";
+                model.SkolskaGodina = baza.SkolskaGodina.ToList();
+                return View("Uredi", model);
+            }
+            if (!godisnji_planovi.UpdateGodisnjiPlan(model))
 			{
 				TempData["poruka"] = "Nije moguće promijeniti, dogodila se greška!";
                 return RedirectToAction("Index");
@@ -128,10 +150,7 @@ namespace Planiranje.Controllers
 			{
                 TempData["poruka"] = "Uspješno promijenjeno!";
 				return RedirectToAction("Index");
-			}
-			//ViewBag.Mjeseci = mjeseci;
-			//ViewBag.Title = "Uredi godišnji plan";
-			//return View("Uredi", model);
+			}			
 		}
 
 		// BRISANJE

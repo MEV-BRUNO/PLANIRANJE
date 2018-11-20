@@ -17,11 +17,7 @@ namespace Planiranje.Models
 		public List<Subjekti> Subjekti { get; set; }
 		public Mjesecni_detalji mjesecniDetalj { get; set; }
 		public int ID_PLAN { get; set; }
-		public int GODINA { get; set; }
-        public IEnumerable<SelectListItem> SkGodinaItems
-        {
-            get { return new SelectList(SkolskaGodina, "Sk_Godina", "Sk_Godina"); }
-        }
+		public int GODINA { get; set; }        
         public IEnumerable<SelectListItem> AktivnostiItems
         {
             get { return new SelectList(Aktivnosti, "Naziv", "Naziv"); }

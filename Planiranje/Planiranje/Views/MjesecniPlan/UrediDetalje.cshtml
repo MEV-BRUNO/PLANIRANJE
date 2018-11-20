@@ -3,7 +3,6 @@
 @{
     Layout = null;
 }
-
 <div class="modal-dialog" style="width:50%; min-width:800px;">
 	<div class="modal-content">
 		<div class="modal-header">
@@ -120,7 +119,7 @@
             <div class="form-group">
                 <div class="col-md-7">
                     @Html.LabelFor(model => model.mjesecniDetalj.Vrijeme)
-                    @Html.EditorFor(model => model.mjesecniDetalj.Vrijeme, new { htmlAttributes = new { @class = "form-control", @required = "", @placeholder = "dd.mm.yyyy." } })
+                    @Html.EditorFor(model => model.mjesecniDetalj.Vrijeme, new { htmlAttributes = new { @class = "form-control", @required = "",@type="date"} })
                     @Html.ValidationMessageFor(model => model.mjesecniDetalj.Vrijeme, "", new { @class = "text-danger" })
                     @Html.ValidationMessage("error_msg", new { @class = "text-danger" })
                 </div>
@@ -145,8 +144,20 @@
         </div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-				<input type="submit" class="btn btn-primary" value="Spremi" />
+				<input type="button" onclick="reload('@Url.Action("UrediDetalje","MjesecniPlan")','#UrediNoviDetaljModalView')" class="btn btn-primary" value="Promijeni" />
 			</div>
 		}
 	</div>
 </div>
+@{ 
+    IFormatProvider culture = new System.Globalization.CultureInfo("fr-FR", true);
+
+}
+<div id="datum" style="display:none">@Model.mjesecniDetalj.Vrijeme.GetDateTimeFormats(culture).ElementAt(4)</div>
+<script>
+    $(document).ready(function () {
+        var dateControl = document.querySelector('input[type="date"]');
+        var dat = $("#datum").text()
+            dateControl.value = dat;
+    })
+</script>

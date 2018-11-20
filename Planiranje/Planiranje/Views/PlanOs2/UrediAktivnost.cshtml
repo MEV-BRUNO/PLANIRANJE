@@ -9,12 +9,8 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Uređivanje aktivnosti</h4>
         </div>
-        @using (Ajax.BeginForm("UrediAktivnost", "PlanOs2", new AjaxOptions
-        {
-            HttpMethod = "Post",
-            OnSuccess = "EditSuccess"
-        }, new { @class = "form-horizontal", role = "form" }))
-        {
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviPlanModalView", @class = "form-horizontal", role = "form" }))
+		{
         <div class="modal-body">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Pozicija)
@@ -32,19 +28,21 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.OsPlan2Akcija.Opis_akcija, new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.TextAreaFor(model => model.OsPlan2Akcija.Opis_akcija, new { @class = "form-control" })
+                    @Html.TextAreaFor(model => model.OsPlan2Akcija.Opis_akcija, new { @class = "edit-opis", @rows="3" })
+                    @Html.ValidationMessageFor(model => model.OsPlan2Akcija.Opis_akcija, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.OsPlan2Akcija.Sati, new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.OsPlan2Akcija.Sati, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.OsPlan2Akcija.Sati, new { htmlAttributes = new { @class = "form-control", @min="0" } })
+                    @Html.ValidationMessageFor(model => model.OsPlan2Akcija.Sati, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                <input type="submit" class="btn btn-primary" value="Spremi" />
+                <input type="button" onclick="reload('@Url.Action("UrediAktivnost","PlanOs2")','#noviPlanModalView')" class="btn btn-primary" value="Promijeni" />
             </div>
         </div>
         }

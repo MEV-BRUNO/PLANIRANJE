@@ -3,19 +3,14 @@
 @{
     Layout = null;    
 }
-
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Uređivanje aktivnosti</h4>
         </div>
-        @using (Ajax.BeginForm("UrediAktivnost", "PlanOs1", new AjaxOptions
-        {
-            HttpMethod = "Post",
-            OnSuccess = "CreateSuccess"
-        }, new { @class = "form-horizontal", role = "form" }))
-        {
+       @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "NoviDetaljModalView", @class = "form-horizontal", role = "form" }))
+		{
             <div class="modal-body">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.Os_Plan_1_Aktivnost.Id_plan)
@@ -48,37 +43,37 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_9, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_9, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_9, new { htmlAttributes = new { @class = "form-control",min="0" } })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_10, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_10, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_10, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_11, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_11, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_11, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_12, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_12, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_12, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_1, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_1, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_1, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_2, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_2, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_2, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                             </div>
                         </div>
                     </div>
@@ -86,37 +81,37 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_3, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_3, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_3, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_4, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_4, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_4, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_5, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_5, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_5, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_6, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_6, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_6, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_7, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_7, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_7, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_8, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
-                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_8, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_8, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                             </div>
                         </div>
                     </div>
@@ -124,7 +119,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                    <input type="submit" class="btn btn-primary" value="Spremi" />
+                    <input type="button" onclick="reload('@Url.Action("UrediAktivnost","PlanOs1")','#NoviDetaljModalView')" class="btn btn-primary" value="Spremi" />
                 </div>
             </div>
         }

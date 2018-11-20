@@ -53,7 +53,7 @@ namespace Planiranje.Models
         /// </summary>
         public IEnumerable<SelectListItem> CiljeviItems
         {
-            get { return new SelectList(Ciljevi, "Id_cilj", "Naziv"); }
+            get { return new SelectList(Ciljevi, "Naziv", "Naziv"); }
         }
         /// <summary>
         /// lista svih aktivnosti za dropdown list
@@ -74,5 +74,10 @@ namespace Planiranje.Models
         /// označava poziciju područja u listi za izbor područja u select elementu aktivnosti
         /// </summary>
         public int Pozicija { get; set; }
+        public List<Sk_godina> SkolskaGodina { get; set; }
+        public IEnumerable<SelectListItem> SkGodinaItems
+        {
+            get { return new SelectList(SkolskaGodina, "Sk_Godina", "Sk_Godina"); }
+        }
     }
 }
