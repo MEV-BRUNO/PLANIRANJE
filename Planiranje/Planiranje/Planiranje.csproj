@@ -253,7 +253,6 @@
     <Compile Include="Models\Sk_godina.cs" />
     <Compile Include="Models\SSModel.cs" />
     <Compile Include="Models\SS_Plan.cs" />
-    <Compile Include="Models\SS_Plan_DBHandle.cs" />
     <Compile Include="Models\SS_Plan_podrucje.cs" />
     <Compile Include="Models\Subjekti.cs" />
     <Compile Include="Models\SubjektiModel.cs" />

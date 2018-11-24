@@ -5,23 +5,26 @@
         <tr>
             <td class="col-lg-1">#</td>
             <td class="col-lg-3">Naziv</td>
-            <td class="col-lg-1">Ak. godina</td>
+            <td class="col-lg-1">Šk. godina</td>
             <td class="col-lg-5">Opis</td>
             <td class="col-lg-3">Akcija</td>
         </tr>
     </thead>
     <tbody>
+        @{ int br = 0;}
         @foreach (var item in Model.SS_Planovi)
-		{
+        {
+            br++;
+            int godina = item.Ak_godina + 1;
         <tr>
-            <td>@Html.DisplayFor(modelItem => item.Red_br)</td>
+            <td>@br</td>
             <td>@Html.DisplayFor(modelItem => item.Naziv)</td>
-            <td>@Html.DisplayFor(modelItem => item.Ak_godina)</td>
+            <td>@item.Ak_godina./@godina.</td>
             <td>@Html.DisplayFor(modelItem => item.Opis)</td>
             <td>
 				<div class="pull-right">
 					<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("Edit","PlanSs",new { id = item.Id_plan })")' />
-					<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='reloadPage("@Url.Action("Detalji","PlanSs",new { id = item.Id_plan, id_god = Model.ID_GODINA })")' />
+					<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='reloadPage("@Url.Action("Detalji","PlanSs",new { id = item.Id_plan })")' />
 					<input type="button" class="btn btn-danger btn-xs" value="Briši" onclick='showModal("@Url.Action("Delete","PlanSs",new { id = item.Id_plan, id_god = Model.ID_GODINA })")' />
 				</div>
             </td>

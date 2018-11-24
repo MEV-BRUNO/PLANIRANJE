@@ -51,7 +51,7 @@ namespace Planiranje.Reports
             foreach (SS_Plan plan in ss_plan)
             {
                 t.AddCell(VratiCeliju((i++).ToString(), tekst, true, BaseColor.WHITE));
-                t.AddCell(VratiCeliju(plan.Id_godina.ToString(), tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(plan.Ak_godina.ToString(), tekst, false, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(plan.Naziv, tekst, true, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(plan.Opis, tekst, true, BaseColor.WHITE));               
             }

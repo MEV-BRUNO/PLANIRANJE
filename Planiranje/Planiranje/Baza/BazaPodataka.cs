@@ -23,6 +23,8 @@ namespace Planiranje.Controllers
         public DbSet<Sk_godina> SkolskaGodina { get; set; }
         public DbSet<Mjesecni_plan> MjesecniPlan { get; set; }
         public DbSet<Mjesecni_detalji> MjesecniDetalji { get; set; }
+        public DbSet<SS_Plan> SSPlan { get; set; }
+        public DbSet<SS_Plan_podrucje> SSPodrucje { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

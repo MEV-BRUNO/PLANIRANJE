@@ -1,43 +1,54 @@
 ﻿@model Planiranje.Models.SSModel
 
 @{
-	Layout = null;
-	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
 <div class="modal-dialog">
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h4 class="modal-title">@ViewBag.Title</h4>
+			<h4 class="modal-title">Novi plan za srednju školu</h4>
 		</div>
 		@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviPlanSSView", @class = "form-horizontal", role = "form" }))
-		{
-			@Html.HiddenFor(model => model.SS_Plan.Id_plan, new { Value = 0 })
-			@Html.HiddenFor(model => model.ID_GODINA)
-			<div class="modal-body">
-				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-				<div class="form-group">
-					@Html.LabelFor(model => model.SS_Plan.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
-					<div class="col-md-9">
-						@Html.EditorFor(model => model.SS_Plan.Naziv, new { htmlAttributes = new { @class = "form-control", @id = "newName",
-					   onkeydown = "hideModalA(event, \"/PlanSs/NoviPlan\", \"#noviPlanSSView\", \"Plan uspješno spremljen\")"
-				   } })
-						@Html.ValidationMessageFor(model => model.SS_Plan.Naziv, "", new { @class = "text-danger" })
-					</div>
-				</div>
-				<div class="form-group">
-					@Html.LabelFor(model => model.SS_Plan.Opis, htmlAttributes: new { @class = "control-label col-md-3" })
-					<div class="col-md-9">
-						@Html.TextAreaFor(model => model.SS_Plan.Opis, new { @class = "edit-opis" })
-						@Html.ValidationMessageFor(model => model.SS_Plan.Opis, "", new { @class = "text-danger" })
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-					<input type="button" class="btn btn-primary" value="Spremi" onclick='hideModal("/PlanSs/NoviPlan", "#noviPlanSSView", "Plan uspješno spremljen")' />
-				</div>
-			</div>
+        {
+			@Html.HiddenFor(model => model.SS_Plan.Id_plan, new { Value = 0 })			
+        <div class="modal-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.SS_Plan.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.SS_Plan.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SS_Plan.Naziv, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.SS_Plan.Ak_godina, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @*@Html.DropDownListFor(model => model.SS_Plan.Ak_godina,Model.SKGodinaItems, new { @class = "form-control" })*@
+                    <select class="form-control" data-val="true" data-val-number="The field Ak. godina must be a number." data-val-required="Obavezno polje" id="SS_Plan_Ak_godina" name="SS_Plan.Ak_godina">
+                        <option value="0">--Odaberite školsku godinu--</option>
+                        @foreach(var item in Model.SkGodina)
+                        {
+                            int godina = item.Sk_Godina + 1;
+                            <option value="@item.Sk_Godina">@item.Sk_Godina./@godina.</option>
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(model => model.SS_Plan.Ak_godina, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.SS_Plan.Opis, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextAreaFor(model => model.SS_Plan.Opis, new { @class = "edit-opis" })
+                    @Html.ValidationMessageFor(model => model.SS_Plan.Opis, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                <input type="button" class="btn btn-primary" value="Spremi" onclick="reload('@Url.Action("NoviPlan","PlanSs")','#noviPlanSSView')" />
+            </div>
+        </div>
 		}
 	</div>
 </div>
