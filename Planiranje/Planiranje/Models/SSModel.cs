@@ -8,6 +8,7 @@ namespace Planiranje.Models
 {
 	public class SSModel
 	{
+        public string Tekst { get; set; }
 		public int ID_GODINA { get; set; }
 		public int ID_PLAN { get; set; }
 		public List<SS_Plan> SS_Planovi { get; set; }		

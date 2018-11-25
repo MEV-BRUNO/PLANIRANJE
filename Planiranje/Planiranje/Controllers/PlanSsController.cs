@@ -77,5 +77,97 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Index");
         }
+        public ActionResult Uredi(int id, int pozicija)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            SSModel model = new SSModel();
+            model.SS_Plan = baza.SSPlan.SingleOrDefault(s => s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId && s.Id_plan == id);
+            if (model.SS_Plan == null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            model.SkGodina = baza.SkolskaGodina.ToList();
+            model.ID_PLAN = pozicija;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Uredi(SSModel model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (model.SS_Plan.Naziv == null || model.SS_Plan.Opis == null || model.SS_Plan.Ak_godina < baza.SkolskaGodina.Min(m => m.Sk_Godina))
+            {
+                model.SkGodina = baza.SkolskaGodina.ToList();
+                return View(model);
+            }
+            model.SS_Plan.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.SSPlan.Add(model.SS_Plan);
+                    db.Entry(model.SS_Plan).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["poruka"] = "Plan je promijenjen";
+                }
+                catch
+                {
+                    TempData["poruka"] = "Plan nije promijenjen! Pokušajte ponovno.";
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult Obrisi (int id, int pozicija)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            SSModel model = new SSModel();
+            model.SS_Plan = baza.SSPlan.SingleOrDefault(s => s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId && s.Id_plan == id);
+            if (model.SS_Plan == null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            model.ID_PLAN = pozicija;
+            model.Tekst = model.SS_Plan.Ak_godina + "./" + (model.SS_Plan.Ak_godina + 1).ToString() + ".";
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Obrisi(SSModel model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.SS_Plan.Id_pedagog!=PlaniranjeSession.Trenutni.PedagogId)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int id = model.SS_Plan.Id_plan;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.SSPlan.SingleOrDefault(s => s.Id_plan == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (result != null)
+                    {
+                        db.SSPlan.Remove(result);
+                        db.SaveChanges();
+                        TempData["poruka"] = "Plan je obrisan";
+                    }
+                    else
+                    {
+                        TempData["poruka"] = "Plan kojeg želite obrisati ne postoji!";
+                    }
+                }
+                catch
+                {
+                    TempData["poruka"] = "Plan nije obrisan! Pokušajte ponovno";
+                }
+            }
+            return RedirectToAction("Index");
+        }
 	}
 }
