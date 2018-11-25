@@ -16,6 +16,20 @@
 	<script src="~/assets/plugins/jquery-2.0.3.min.js"></script>
 	<script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 	<script src="~/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <style>
+        .loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;  
+  left:50%;
+  bottom:50%;
+  position:fixed;
+}
+    </style>
 </head>
 <body class="padTop53 ">
 	<div id="wrap">
@@ -67,6 +81,7 @@
 		<div id="content">
 			@RenderBody()
 		</div>
+        <div id="loading" class="loader"></div>
 		<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" data-backdrop="static">
 			<div id="modalContainer"></div>
 		</div>
@@ -110,6 +125,16 @@
             });
         }    
         
+    </script>
+    <script>
+        var element = $("#loading").hide();
+        $(document)
+            .ajaxStart(function () {
+                element.show();
+            })
+            .ajaxStop(function () {
+                element.hide();
+            });
     </script>
 </body>
 </html>
