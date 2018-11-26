@@ -331,5 +331,17 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Detalji", new { id = idPlan });
         }
+        public FileStreamResult Ispis (int id)
+        {
+            SSModel model = new SSModel();
+            model.SS_Plan = baza.SSPlan.SingleOrDefault(s => s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId && s.Id_plan == id);
+            model.SS_Podrucja = new List<SS_Plan_podrucje>();
+            if (model.SS_Plan != null)
+            {
+                model.SS_Podrucja = baza.SSPodrucje.Where(w => w.ID_plan == id).ToList();
+            }
+            PlanSsPodrucjaReport report = new PlanSsPodrucjaReport(model.SS_Podrucja);
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+        }
 	}
 }

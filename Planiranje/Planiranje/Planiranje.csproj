@@ -218,7 +218,6 @@
     <Compile Include="Models\Ciljevi_DBHandle.cs" />
     <Compile Include="Models\Godisnji_plan_DBHandle.cs" />
     <Compile Include="Models\MjesecniModel.cs" />
-    <Compile Include="Models\Mjesecni_plan_DBHandle.cs" />
     <Compile Include="Models\Oblici.cs" />
     <Compile Include="Models\ObliciMetodeModel.cs" />
     <Compile Include="Models\Oblici_DBHandle.cs" />
@@ -403,7 +402,6 @@
     <Content Include="Views\PlanOs1\ObrisiAktivnost.cshtml" />
     <Content Include="Views\PlanSs\Detalji.cshtml" />
     <Content Include="Views\PlanSs\NoviDetalji.cshtml" />
-    <Content Include="Views\PlanSs\ObrisiNoviDetalj.cshtml" />
     <Content Include="Views\PlanSs\TableDetails.cshtml" />
     <Content Include="Views\PlanSs\ObrisiDetalje.cshtml" />
     <Content Include="Views\PlanSs\UrediDetalje.cshtml" />

@@ -32,15 +32,15 @@ namespace Planiranje.Reports
 			Paragraph p = new Paragraph("IZVJEŠTAJ", header);
 			pdfDokument.Add(p);
 
-			p = new Paragraph("Plan srednja škola", naslov);
+			p = new Paragraph("Detalji plana za srednju školu", naslov);
 			p.Alignment = Element.ALIGN_CENTER;
 			p.SpacingBefore = 30;
 			p.SpacingAfter = 30;
 			pdfDokument.Add(p);
 
-			PdfPTable t = new PdfPTable(10);
+			PdfPTable t = new PdfPTable(11);
 			t.WidthPercentage = 100;
-			t.SetWidths(new float[] { 1, 1, 1, 2, 1, 1, 1, 1, 1, 2 });
+			t.SetWidths(new float[] { 1, 2, 2, 3, 2, 2, 2, 2, 2, 3, 1 });
 
 			t.AddCell(VratiCeliju("R.br.", tekst, false, BaseColor.LIGHT_GRAY));
 			t.AddCell(VratiCeliju("Područja rada", tekst, false, BaseColor.LIGHT_GRAY));
@@ -52,8 +52,9 @@ namespace Planiranje.Reports
 			t.AddCell(VratiCeliju("Mjesto ostvarenja", tekst, false, BaseColor.LIGHT_GRAY));
 			t.AddCell(VratiCeliju("Vrijeme/broj sati", tekst, false, BaseColor.LIGHT_GRAY));
 			t.AddCell(VratiCeliju("Ishodi", tekst, false, BaseColor.LIGHT_GRAY));
+            t.AddCell(VratiCeliju("Sati", tekst, false, BaseColor.LIGHT_GRAY));
 
-			int i = 1;
+            int i = 1;
 			foreach (SS_Plan_podrucje plan in ss_plan_podrucja)
 			{
 				t.AddCell(VratiCeliju((i++).ToString(), tekst, false, BaseColor.WHITE));
@@ -66,7 +67,8 @@ namespace Planiranje.Reports
 				t.AddCell(VratiCeliju(plan.Mjesto, tekst, false, BaseColor.WHITE));
 				t.AddCell(VratiCeliju(plan.Sati.ToString(), tekst, false, BaseColor.WHITE));
 				t.AddCell(VratiCeliju(plan.Ishodi, tekst, false, BaseColor.WHITE));
-			}
+                t.AddCell(VratiCeliju(plan.Sati.ToString(), tekst, false, BaseColor.WHITE));
+            }
 
 			pdfDokument.Add(t);
 
