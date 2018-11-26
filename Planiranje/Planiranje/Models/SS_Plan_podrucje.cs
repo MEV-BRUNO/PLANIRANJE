@@ -36,9 +36,8 @@ namespace Planiranje.Models
 		[Required(ErrorMessage = "Obavezno polje")]
 		[DisplayName("Mjesto")]
 		public string Mjesto { get; set; }
-		[Required(ErrorMessage = "Obavezno polje")]
-		[DataType(DataType.Date)]
-		public DateTime Vrijeme { get; set; }
+		[Required(ErrorMessage = "Obavezno polje")]		
+		public string Vrijeme { get; set; }
 		[Required(ErrorMessage = "Obavezno polje")]
 		[DisplayName("Ishodi")]
 		public string Ishodi { get; set; }

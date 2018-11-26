@@ -130,10 +130,11 @@
         var element = $("#loading").hide();
         $(document)
             .ajaxStart(function () {
-                element.show();
+                element.show();                
             })
             .ajaxStop(function () {
                 element.hide();
+                smoothscroll();
             });
     </script>
 </body>

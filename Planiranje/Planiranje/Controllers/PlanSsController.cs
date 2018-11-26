@@ -169,5 +169,67 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Index");
         }
+        public ActionResult Detalji(int id)
+        {
+            SSModel model = new SSModel();
+            model.SS_Plan = baza.SSPlan.SingleOrDefault(s => s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId && s.Id_plan == id);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.SS_Plan==null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            model.SS_Podrucja = new List<SS_Plan_podrucje>();
+            model.SS_Podrucja = baza.SSPodrucje.Where(w => w.ID_plan == id).ToList();
+            return View(model);
+        }
+        public ActionResult NoviDetalji(int id)
+        {            
+            SSModel model = new SSModel();
+            model.SS_Plan = baza.SSPlan.SingleOrDefault(s => s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId && s.Id_plan == id);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.SS_Plan==null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            model.Ciljevi = ciljevi.ReadCiljevi();
+            model.PodrucjeRada = podrucja_rada.ReadPodrucjeRada();
+            model.Oblici = oblici.ReadOblici();
+            model.Subjekti = subjekti.ReadSubjekti();
+            model.Zadaci = zadaci.ReadZadaci();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult NoviDetalji(SSModel model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if(model.SS_Plan_Podrucje.Opis_podrucje==null || model.SS_Plan_Podrucje.Svrha==null || model.SS_Plan_Podrucje.Zadaca==null ||
+                model.SS_Plan_Podrucje.Sadrzaj==null || model.SS_Plan_Podrucje.Oblici==null || model.SS_Plan_Podrucje.Suradnici==null ||
+                model.SS_Plan_Podrucje.Mjesto==null || model.SS_Plan_Podrucje.Vrijeme==null || model.SS_Plan_Podrucje.Ishodi == null ||
+                model.SS_Plan_Podrucje.Sati<0)
+            {
+                model.Ciljevi = ciljevi.ReadCiljevi();
+                model.PodrucjeRada = podrucja_rada.ReadPodrucjeRada();
+                model.Oblici = oblici.ReadOblici();
+                model.Subjekti = subjekti.ReadSubjekti();
+                model.Zadaci = zadaci.ReadZadaci();
+                return View(model);
+            }
+            model.SS_Plan_Podrucje.ID_plan = model.SS_Plan.Id_plan;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    db.SSPodrucje.Add(model.SS_Plan_Podrucje);
+                    db.SaveChanges();
+                    TempData["poruka"] = "Detalj je spremljen";
+                }
+                catch
+                {
+                    TempData["poruka"] = "Detalj nije spremljen! Pokušajte ponovno";
+                }
+            }
+            return RedirectToAction("Detalji", new { id = model.SS_Plan.Id_plan });
+        }
 	}
 }

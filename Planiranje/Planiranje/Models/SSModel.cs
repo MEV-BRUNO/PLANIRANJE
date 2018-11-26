@@ -21,6 +21,7 @@ namespace Planiranje.Models
         public List<Oblici> Oblici { get; set; }
         public List<Subjekti> Subjekti { get; set; }
         public List<Ciljevi> Ciljevi { get; set; }
+        public List<Zadaci> Zadaci { get; set; }
         public IEnumerable<SelectListItem> SubjektiItems
         {
             get { return new SelectList(Subjekti, "Naziv", "Naziv"); }
@@ -40,6 +41,10 @@ namespace Planiranje.Models
         public IEnumerable<SelectListItem> SKGodinaItems
         {
             get { return new SelectList(SkGodina, "sk_godina", "sk_godina"); }
+        }
+        public IEnumerable<SelectListItem> ZadaciItems
+        {
+            get { return new SelectList(Zadaci, "Naziv", "Naziv"); }
         }
     }
 }

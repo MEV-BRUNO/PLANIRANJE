@@ -327,7 +327,7 @@ CREATE TABLE ss_plan_podrucje (
   oblici text,
   suradnici text,
   mjesto text,
-  vrijeme datetime NOT NULL,
+  vrijeme text,
   ishodi text,
   sati int(11) NOT NULL,
   PRIMARY KEY (id)
