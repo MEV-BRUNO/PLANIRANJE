@@ -1,69 +1,63 @@
 ﻿@model Planiranje.Models.SSModel
-@using PagedList.Mvc;
 
 @{
-	Page.Title = ViewBag.Title;
-	Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    Page.Title = "Detalji plana za srednju školu";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    int godina = Model.SS_Plan.Ak_godina + 1;
 }
 
 <div class="inner">
-	@Html.HiddenFor(model => Model.ID_PLAN)
-	@Html.HiddenFor(model => Model.ID_GODINA)
-	<div class="row">
-		<div class="col-lg-12">
-			<h3>@ViewBag.Title</h3>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-lg-2">
-							<p>Školska godina: @Model.Ak_godina</p>
-						</div>
-					</div>
-				</div>
-				<div class="panel-body">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="pull-left">
-								<input type="button" class="btn btn-primary btn-md" value="Novi detalji" onclick='reloadPage("@Html.Raw(@Url.Action("NoviDetalji", "PlanSs" ,new { id=Model.ID_PLAN, id_god = Model.ID_GODINA }))")' />
-							</div>
-							@if (Model.SS_Podrucja.Count > 0)
-							{
-							<div class="pull-right">
-								<a href="@Url.Action("Ispis", "PlanSs", new { target="_blank", id = Model.ID_PLAN })"
-								   target="_blank"
-								   class="btn btn-primary btn-md">
-									Ispiši
-								</a>
-							</div>
-							}
-							<br>
-						</div>
-					</div>
-					<br>
-					@if (Model.SS_Podrucja.Count > 0)
-					{
-						@Html.Partial("TableDetails", Model)
-					}
-					else
-					{
-						<p>Nema detalja</p>
-					}
-					<br>
-					<div class="pull-right">
-						<input type="button" class="btn btn-default btn-md" value="Zatvori" onclick='reloadPage("@Url.Action("Index", "PlanSs", new { Plan=Model.ID_GODINA.ToString() })")' />
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    @if (TempData["poruka"] != null)
+    {
+        <div id="poruka" style="display:none">1</div>
+    }
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Detalji plana za srednju školu: <b>@Model.SS_Plan.Naziv</b></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <p>Školska godina</p>
+                            <b>@Model.SS_Plan.Ak_godina./@godina.</b>
+                        </div>
+                        <div class="col-lg-2 pull-right">                            
+                            <input type="button" class="btn btn-info btn-sm" value="Natrag" onclick='reloadPage("@Url.Action("Index", "PlanSs")")' />
+                            <a href="@Url.Action("Ispis", "PlanSs", new { id = Model.SS_Plan.Id_plan })" target="_blank" class="btn btn-success btn-sm">Ispiši</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="pull-left">
+                                <input type="button" class="btn btn-primary btn-xs" value="Novi detalj" onclick="showModal('@Url.Action("NoviDetalji","PlanSs",new { id=Model.SS_Plan.Id_plan})')" />
+                            </div>                           
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    @Html.Partial("TableDetails", Model)
+                    <br>                    
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
 	$(document).ready(function () {
 		$('#dataTables-example').dataTable();
 	});
+</script>
+<script>
+    $(document).ready(function () {
+        if ($("#poruka").text() == "1") {
+            showSnackBar("@TempData["poruka"]");
+        }
+    });
 </script>

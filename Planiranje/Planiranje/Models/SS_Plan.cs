@@ -9,15 +9,15 @@ namespace Planiranje.Models
 {
     public class SS_Plan
     {
-		public int Red_br { get; set; }
+        [Key]
         [Required]
         public int Id_plan { get; set; }
         [Required]
         public int Id_pedagog { get; set; }
 		[Required(ErrorMessage = "Obavezno polje")]
-		[DisplayName("Ak. godina")]
-		public string Ak_godina { get; set; }
-		public int Id_godina { get; set; }
+        [Range(1,Int32.MaxValue,ErrorMessage ="Obavezno polje")]
+		[DisplayName("Šk. godina")]		
+		public int Ak_godina { get; set; }
 		[Required(ErrorMessage = "Obavezno polje")]
 		[DisplayName("Naziv plana")]
 		public string Naziv { get; set; }

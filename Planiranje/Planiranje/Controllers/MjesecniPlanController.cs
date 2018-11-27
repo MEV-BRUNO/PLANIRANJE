@@ -12,8 +12,7 @@ using Planiranje.Reports;
 namespace Planiranje.Controllers
 {
     public class MjesecniPlanController : Controller
-    {
-        private Mjesecni_plan_DBHandle mjesecni_planovi = new Mjesecni_plan_DBHandle();
+    {        
         private BazaPodataka baza = new BazaPodataka();
         private Podrucje_rada_DBHandle podrucja_rada = new Podrucje_rada_DBHandle();
         private Subjekt_DBHandle subjekti = new Subjekt_DBHandle();

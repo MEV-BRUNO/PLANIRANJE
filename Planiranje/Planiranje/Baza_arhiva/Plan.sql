@@ -101,8 +101,8 @@ CREATE TABLE os_plan_2 (
 CREATE TABLE ss_plan (
   id_plan int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
-  id_godina int(20) NOT NULL,
-  naziv varchar(50) NOT NULL,
+  ak_godina int(20) NOT NULL,
+  naziv text,
   opis text,
   PRIMARY KEY (id_plan),
   KEY id_pedagog (id_pedagog),
@@ -327,7 +327,7 @@ CREATE TABLE ss_plan_podrucje (
   oblici text,
   suradnici text,
   mjesto text,
-  vrijeme datetime NOT NULL,
+  vrijeme text,
   ishodi text,
   sati int(11) NOT NULL,
   PRIMARY KEY (id)
