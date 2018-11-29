@@ -45,5 +45,6 @@ namespace Planiranje.Models
 		[Required(ErrorMessage = "Obavezno polje")]
 		[Range(0, Int32.MaxValue, ErrorMessage = "Broj mora biti 0 ili veći")]
 		public int Sati { get; set; }
+        public int Red_br { get; set; }
     }
 }

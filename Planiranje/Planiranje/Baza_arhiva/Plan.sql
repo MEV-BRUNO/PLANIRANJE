@@ -329,7 +329,8 @@ CREATE TABLE ss_plan_podrucje (
   mjesto text,
   vrijeme text,
   ishodi text,
-  sati int(11) NOT NULL,
+  sati int(20) NOT NULL,
+  red_br int(20) NOT NULL,
   PRIMARY KEY (id)
 );
 

@@ -32,6 +32,7 @@
             <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Sati)</td>
             <td>
                 <div class="pull-right">
+                    <input type="button" class="btn btn-warning btn-xs" value="Gore" onclick='reloadPage("@Url.Action("DetaljPomakGore","PlanSs", new { id = item.Id })")' />
                     <input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("UrediDetalje","PlanSs", new { id = item.Id })")' />
                     <input type="button" class="btn btn-danger btn-xs" value="Obriši" onclick='showModal("@Url.Action("ObrisiDetalje","PlanSs", new { id = item.Id })")' />
                 </div>

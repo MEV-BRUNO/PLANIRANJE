@@ -178,7 +178,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             model.SS_Podrucja = new List<SS_Plan_podrucje>();
-            model.SS_Podrucja = baza.SSPodrucje.Where(w => w.ID_plan == id).ToList();
+            model.SS_Podrucja = baza.SSPodrucje.Where(w => w.ID_plan == id).ToList().OrderBy(o=>o.Red_br).ToList();
             return View(model);
         }
         public ActionResult NoviDetalji(int id)
@@ -216,6 +216,18 @@ namespace Planiranje.Controllers
                 return View(model);
             }
             model.SS_Plan_Podrucje.ID_plan = model.SS_Plan.Id_plan;
+            int idPlan = model.SS_Plan.Id_plan;
+            List<SS_Plan_podrucje> podrucja = new List<SS_Plan_podrucje>();
+            podrucja = baza.SSPodrucje.Where(w => w.ID_plan == idPlan).ToList();
+            if (podrucja.Count != 0)
+            {
+                model.SS_Plan_Podrucje.Red_br = podrucja.Max(m => m.Red_br) + 1;
+            }
+            else
+            {
+                model.SS_Plan_Podrucje.Red_br = 1;
+            }
+            
             using(var db=new BazaPodataka())
             {
                 try
@@ -331,6 +343,49 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Detalji", new { id = idPlan });
         }
+        public ActionResult DetaljPomakGore(int id)
+        {
+            int idPlan = 0;
+            SS_Plan_podrucje podrucje = baza.SSPodrucje.SingleOrDefault(s => s.Id == id);
+            if (podrucje != null)
+            {
+                idPlan = podrucje.ID_plan;
+            }
+            SS_Plan plan = baza.SSPlan.SingleOrDefault(s => s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId && s.Id_plan == idPlan);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || podrucje == null || plan==null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int pozicijaTrenutni = podrucje.Red_br;
+            List<SS_Plan_podrucje> podrucja = new List<SS_Plan_podrucje>();
+            podrucja = baza.SSPodrucje.Where(w => w.ID_plan == idPlan && w.Red_br<pozicijaTrenutni).ToList().OrderBy(o=>o.Red_br).ToList();
+            if (podrucja.Count == 0)
+            {
+                return RedirectToAction("Detalji", new { id = idPlan });
+            }
+            int pozicijaPrethodni = podrucja.ElementAt(podrucja.Count - 1).Red_br;
+            int idPrethodni = podrucja.ElementAt(podrucja.Count - 1).Id;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.SSPodrucje.SingleOrDefault(s => s.Id == id);
+                    var result1 = db.SSPodrucje.SingleOrDefault(s => s.Id == idPrethodni);
+                    if(result!=null && result1 != null)
+                    {
+                        result.Red_br = pozicijaPrethodni;
+                        result1.Red_br = pozicijaTrenutni;
+                        db.SaveChanges();
+                        TempData["poruka"] = "Detalj je pomaknut za 1 mjesto gore";
+                    }
+                }
+                catch
+                {
+                    TempData["poruka"] = "Detalj nije pomaknut! Pokušajte ponovno";
+                }
+            }
+            return RedirectToAction("Detalji", new { id = idPlan });
+        }
         public FileStreamResult Ispis (int id)
         {
             SSModel model = new SSModel();
@@ -338,7 +393,7 @@ namespace Planiranje.Controllers
             model.SS_Podrucja = new List<SS_Plan_podrucje>();
             if (model.SS_Plan != null)
             {
-                model.SS_Podrucja = baza.SSPodrucje.Where(w => w.ID_plan == id).ToList();
+                model.SS_Podrucja = baza.SSPodrucje.Where(w => w.ID_plan == id).ToList().OrderBy(o=>o.Red_br).ToList();
             }
             PlanSsPodrucjaReport report = new PlanSsPodrucjaReport(model.SS_Podrucja);
             return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");

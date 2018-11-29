@@ -14,7 +14,8 @@
         {
             @Html.HiddenFor(model => model.SS_Plan_Podrucje.Id)
             @Html.HiddenFor(model => model.SS_Plan_Podrucje.ID_plan)
-            @Html.HiddenFor(model => model.SS_Plan.Id_plan)            
+            @Html.HiddenFor(model => model.SS_Plan.Id_plan)     
+            @Html.HiddenFor(model => model.SS_Plan_Podrucje.Red_br)
             <div class="modal-body">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
