@@ -386,6 +386,49 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Detalji", new { id = idPlan });
         }
+        public ActionResult DetaljPomakDolje(int id)
+        {
+            int idPlan = 0;
+            SS_Plan_podrucje podrucje = baza.SSPodrucje.SingleOrDefault(s => s.Id == id);
+            if (podrucje != null)
+            {
+                idPlan = podrucje.ID_plan;
+            }
+            SS_Plan plan = baza.SSPlan.SingleOrDefault(s => s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId && s.Id_plan == idPlan);
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || podrucje == null || plan == null)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int pozicijaTrenutni = podrucje.Red_br;
+            List<SS_Plan_podrucje> podrucja = new List<SS_Plan_podrucje>();
+            podrucja = baza.SSPodrucje.Where(w => w.ID_plan == idPlan && w.Red_br > pozicijaTrenutni).ToList().OrderBy(o => o.Red_br).ToList();
+            if (podrucja.Count == 0)
+            {
+                return RedirectToAction("Detalji", new { id = idPlan });
+            }
+            int pozicijaPrethodni = podrucja.ElementAt(0).Red_br;
+            int idPrethodni = podrucja.ElementAt(0).Id;
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.SSPodrucje.SingleOrDefault(s => s.Id == id);
+                    var result1 = db.SSPodrucje.SingleOrDefault(s => s.Id == idPrethodni);
+                    if (result != null && result1 != null)
+                    {
+                        result.Red_br = pozicijaPrethodni;
+                        result1.Red_br = pozicijaTrenutni;
+                        db.SaveChanges();
+                        TempData["poruka"] = "Detalj je pomaknut za 1 mjesto dolje";
+                    }
+                }
+                catch
+                {
+                    TempData["poruka"] = "Detalj nije pomaknut! Pokušajte ponovno";
+                }
+            }
+            return RedirectToAction("Detalji", new { id = idPlan });
+        }
         public FileStreamResult Ispis (int id)
         {
             SSModel model = new SSModel();

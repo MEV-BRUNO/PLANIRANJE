@@ -3,36 +3,27 @@
 <table class="table table-bordered table-hover" id="dataTables-example">
 	<thead>
         <tr>
-            <td class="col-lg-1">Područje rada</td>
-            <td class="col-lg-1">Cilj</td>
-            <td class="col-lg-2">Zadaća</td>
-            <td class="col-lg-1">Sadržaj</td>
-            <td class="col-lg-1">Metode rada</td>
-            <td class="col-lg-1">Subjekti</td>
-            <td class="col-lg-1">Mjesto</td>
-            <td class="col-lg-1">Vrijeme</td>
-            <td class="col-lg-1">Ishodi</td>
-            <td class="col-lg-1">Sati</td>
-            <td class="col-lg-1">Akcija</td>
+            <td class="col-lg-1">#</td>
+            <td class="col-lg-2">Područje rada</td>
+            <td class="col-lg-4">Cilj</td>
+            <td class="col-lg-3">Zadaća</td>   
+            <td class="col-lg-2">Akcija</td>
         </tr>
 	</thead>
 	<tbody>
+        @{ int broj = 0;}
 		@foreach (var item in Model.SS_Podrucja)
-		{
+        {
+            broj++;
         <tr>
+            <td>@broj</td>
             <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Opis_podrucje)</td>
             <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Svrha)</td>
-            <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Zadaca)</td>
-            <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Sadrzaj)</td>
-            <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Oblici)</td>
-            <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Suradnici)</td>
-            <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Mjesto)</td>
-            <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Vrijeme)</td>
-            <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Ishodi)</td>
-            <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Sati)</td>
+            <td style="white-space: pre-line;">@Html.DisplayFor(modelItem => item.Zadaca)</td>            
             <td>
                 <div class="pull-right">
                     <input type="button" class="btn btn-warning btn-xs" value="Gore" onclick='reloadPage("@Url.Action("DetaljPomakGore","PlanSs", new { id = item.Id })")' />
+                    <input type="button" class="btn btn-warning btn-xs" value="Dolje" onclick='reloadPage("@Url.Action("DetaljPomakDolje","PlanSs", new { id = item.Id })")' />
                     <input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("UrediDetalje","PlanSs", new { id = item.Id })")' />
                     <input type="button" class="btn btn-danger btn-xs" value="Obriši" onclick='showModal("@Url.Action("ObrisiDetalje","PlanSs", new { id = item.Id })")' />
                 </div>
