@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using Planiranje.Models;
+using Planiranje.Models.Ucenici;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Planiranje.Controllers
@@ -25,6 +26,10 @@ namespace Planiranje.Controllers
         public DbSet<Mjesecni_detalji> MjesecniDetalji { get; set; }
         public DbSet<SS_Plan> SSPlan { get; set; }
         public DbSet<SS_Plan_podrucje> SSPodrucje { get; set; }
+
+        //pedagog i učenici
+        public DbSet<RazredniOdjel> RazredniOdjel { get; set; }
+        public DbSet<Pedagog_skola> PedagogSkola { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

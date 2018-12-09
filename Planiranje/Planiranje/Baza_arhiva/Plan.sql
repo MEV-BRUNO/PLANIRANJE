@@ -7,6 +7,13 @@ CREATE TABLE sk_godina (
   PRIMARY KEY (sk_godina)
 );
 
+CREATE TABLE pedagog_skola (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_pedagog int(20) NOT NULL,
+  id_skola int(20) NOT NULL,
+  PRIMARY KEY (id)   
+);
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
@@ -43,6 +50,7 @@ CREATE TABLE skola (
   tel varchar(20) DEFAULT NULL,
   url varchar(50) DEFAULT NULL,
   kontakt varchar(20) DEFAULT NULL,
+  vrsta tinyint NOT NULL,
   PRIMARY KEY (id_skola)
 );
 
@@ -66,14 +74,11 @@ CREATE TABLE pedagog (
   prezime varchar(50) NOT NULL,
   email varchar(50) NOT NULL,
   lozinka varchar(40) NOT NULL,
-  licenca datetime NOT NULL,
-  id_skola int(20) NOT NULL,
+  licenca datetime NOT NULL,  
   aktivan char(1) NOT NULL,
   titula varchar(50) NOT NULL,
   PRIMARY KEY (id_pedagog),
-  UNIQUE KEY email (email),
-  KEY id_skola (id_skola),
-  CONSTRAINT pedagog_ibfk_1 FOREIGN KEY (id_skola) REFERENCES skola (id_skola)
+  UNIQUE KEY email (email)  
 );
 
 CREATE TABLE os_plan_1 (
@@ -335,11 +340,11 @@ CREATE TABLE ss_plan_podrucje (
 );
 
 INSERT INTO skola VALUES (
-  1, "Međimursko veleučiliste", "Bana Josipa Jelačića", "Čakovec", "", "", ""
+  1, "Međimursko veleučiliste", "Bana Josipa Jelačića", "Čakovec", "", "", "",1
 );
 
 INSERT INTO skola VALUES (
-  2, "Sveučiliste Sjever", "", "Varaždin", "", "", ""
+  2, "Sveučiliste Sjever", "", "Varaždin", "", "", "",1
 );
 
 INSERT INTO aktivnost (vrsta, naziv) VALUES (0, "Utvrđivanje obrazovnih potreba učenika, škole i okruženja");

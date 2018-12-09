@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Planiranje.Models;
+using Planiranje.Models.Ucenici;
 using System.Web.Security;
 using System.Runtime.Remoting.Messaging;
 using System.Net.Mail;
@@ -134,15 +135,20 @@ namespace Planiranje.Controllers
 					Value = i.Id_skola.ToString()
 				}));
 				return View("Registracija", model);
-            }
-			
-            model.Pedagog.Id_skola = model.SelectedSchool;
+            }	
+            
+            Pedagog_skola ps = new Pedagog_skola();
+            string email = model.Pedagog.Email;
+            ps.Id_skola = model.SelectedSchool;
 			model.Pedagog.Licenca = DateTime.Now.AddYears(2);
 			model.Pedagog.Aktivan = '1';
 
             try
             {
-                baza.Pedagog.Add(model.Pedagog);
+                baza.Pedagog.Add(model.Pedagog);               
+                baza.SaveChanges();
+                ps.Id_pedagog = baza.Pedagog.SingleOrDefault(s => s.Email == email).Id_Pedagog;
+                baza.PedagogSkola.Add(ps);
                 baza.SaveChanges();
             }
             catch
@@ -156,6 +162,8 @@ namespace Planiranje.Controllers
 				return View("Registracija", model);
             }
             ViewBag.Message = "Registracija je uspješna. Možete se prijaviti";
+            model.Pedagog = new Pedagog();
+            ViewBag.uspjesno = true;
 			model.PopisSkola = new List<SelectListItem>(planovi.ReadSkole().Select(i => new SelectListItem()
 			{
 				Text = i.Naziv,
