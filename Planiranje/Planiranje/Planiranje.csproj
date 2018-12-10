@@ -419,6 +419,7 @@
     <Content Include="Views\PlanOs2\UrediAktivnost.cshtml" />
     <Content Include="Views\PlanOs2\ObrisiAktivnost.cshtml" />
     <Content Include="Views\OpciPodaci\RazredniOdjel.cshtml" />
+    <Content Include="Views\Planiranje\OdabirSkole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

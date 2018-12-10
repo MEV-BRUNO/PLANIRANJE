@@ -1,0 +1,24 @@
+﻿@model List<Planiranje.Models.Skola>
+@{
+    Layout = null;
+}
+<select id="selectSkola" onchange="promjenaSkole()" class="form-control">
+    @foreach (var item in Model)
+    {
+        if (TempData["odabrana"] != null)
+        {
+            if (item.Id_skola == Int32.Parse(TempData["odabrana"].ToString()))
+            {
+                <option selected="selected" value="@item.Id_skola">@item.Naziv</option>
+            }
+            else
+            {
+                <option value="@item.Id_skola">@item.Naziv</option>
+            }
+        }
+        else
+        {
+            <option value="@item.Id_skola">@item.Naziv</option>
+        }
+    }
+</select>

@@ -8,6 +8,7 @@ namespace Planiranje.Models
 {
     public class Skola
     {
+        [Key]
         [Required]
         public int Id_skola { get; set; }
         [Required]

@@ -9,6 +9,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Net.Mail;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Planiranje.Controllers
 {
@@ -170,6 +171,31 @@ namespace Planiranje.Controllers
 				Value = i.Id_skola.ToString()
 			}));
 			return View("Registracija", model);
+        }
+        public ActionResult OdabirSkole()
+        {
+            List<Skola> skole = new List<Skola>();
+            int idPed = PlaniranjeSession.Trenutni.PedagogId;
+            var result = (from sk in baza.Skola join ps in baza.PedagogSkola on sk.Id_skola equals ps.Id_skola join p in baza.Pedagog
+                          on ps.Id_pedagog equals p.Id_Pedagog where p.Id_Pedagog == idPed select sk);
+            skole = result.ToList();
+            if (PlaniranjeSession.Trenutni.OdabranaSkola != 0)
+            {
+                TempData["odabrana"] = PlaniranjeSession.Trenutni.OdabranaSkola;
+            }
+            else
+            {
+                if (skole.FirstOrDefault() != null)
+                {
+                    PlaniranjeSession.Trenutni.OdabranaSkola = skole.FirstOrDefault().Id_skola;
+                }
+            }
+            return View(skole);
+        }
+        public ActionResult PromjenaSkole(int id)
+        {
+            PlaniranjeSession.Trenutni.OdabranaSkola = id;
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }
