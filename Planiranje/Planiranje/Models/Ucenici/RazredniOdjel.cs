@@ -12,9 +12,10 @@ namespace Planiranje.Models.Ucenici
         [Key]
         public int Id { get; set; }
         public int Id_skola { get; set; }
-        public int Id_skGodina { get; set; }
+        public int Sk_godina { get; set; }
         public string Naziv { get; set; }
         public int Razred { get; set; }
         public int Id_razrednik { get; set; }
+        public int Id_pedagog { get; set; }
     }
 }
