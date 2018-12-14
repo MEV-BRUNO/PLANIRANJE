@@ -166,7 +166,25 @@
 	@Html.Partial("../Shared/Footer")
 	<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
 	<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-	<script src="~/Scripts/custom.js"></script>
+    <script src="~/Scripts/custom.js"></script>
+    <script>
+        function reloadPage(path) {
+            $.ajax({
+                url: path,
+                success: function (data) {
+                    if ($(data)[0].tagName === "DIV") {
+                        $('#content').html(data);
+                        window.history.replaceState(data, "Naslov", path);
+                    } else {
+                        location.reload();
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+    </script>
     <script>
         function smoothscroll() {
             var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
@@ -188,7 +206,7 @@
                         $("#content").html(data);
                         $('#modal').modal('hide');
                         $('#modalContainer').removeData();
-                        $('.modal-backdrop').remove();
+                        $('.modal-backdrop').remove();                        
                     }
                     else {
                         $("#modalContainer").html(data);

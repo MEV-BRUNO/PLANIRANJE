@@ -5,22 +5,6 @@
 	setTimeout(function () {x.className = x.className.replace("show", ""); }, 3000);
 }
 
-function reloadPage(path) {
-	$.ajax({
-		url: path,
-		success: function (data) {
-			if ($(data)[0].tagName === "DIV") {
-				$('#content').html(data);
-			} else {
-				location.reload();
-			}
-		},
-		error: function (xhr, ajaxOptions, thrownError) {
-			alert(xhr.responseText);
-		}
-	});
-}
-
 function showModal(path) {
 	$.ajax({
 		url: path,
