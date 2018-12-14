@@ -11,15 +11,55 @@ namespace Planiranje.Controllers
     public class OpciPodaciController : Controller
     {
         private BazaPodataka baza = new BazaPodataka();
-        public ActionResult RazredniOdjel()
+        public ActionResult RazredniOdjel(int? godina)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 RedirectToAction("Index", "Planiranje");
             }
+            int god;
             List<RazredniOdjel> odjeli = new List<RazredniOdjel>();
-            odjeli = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();            
+            odjeli = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
+            if (godina != null)
+            {
+                god = (Int32)godina;
+            }
+            else
+            {
+                if (odjeli.Count > 0)
+                {
+                    god = odjeli.Min(m => m.Sk_godina);
+                }
+                else
+                {
+                    god = baza.SkolskaGodina.Min(m => m.Sk_Godina);
+                }
+            }            
+            odjeli = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola && w.Sk_godina==god).ToList();
+            List<Nastavnik> razrednici = new List<Nastavnik>();
+            razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
+            ViewBag.razrednici = razrednici;
+            ViewBag.selected = god;
+            ViewBag.godina = baza.SkolskaGodina.ToList();
             return View(odjeli);
+        }
+        public ActionResult NoviRazredniOdjel()
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                RedirectToAction("Index", "Planiranje");
+            }
+            List<Nastavnik> razrednici = new List<Nastavnik>();
+            razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();            
+            if (razrednici.Count == 0)
+            {
+                string tekst = "Nije pronađen niti jedan nastavnik.<br/>Da biste kreirali razredni odjel, prvo morate dodati nastavika";
+                List<string> lista = new List<string>();
+                lista.Add(tekst);
+                return View("Info", lista);
+            }
+            ViewBag.razrednici = razrednici;
+            return View();
         }
         public ActionResult Nastavnik()
         {
@@ -166,6 +206,16 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("Nastavnik");
+        }
+        public ActionResult SkolskaGodina()
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                RedirectToAction("Index", "Planiranje");
+            }
+            List<Sk_godina> godine = new List<Sk_godina>();
+            godine = baza.SkolskaGodina.ToList();
+            return View(godine);
         }
     }
 }

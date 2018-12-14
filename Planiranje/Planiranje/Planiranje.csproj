@@ -426,6 +426,8 @@
     <Content Include="Views\OpciPodaci\UrediNastavnik.cshtml" />
     <Content Include="Views\OpciPodaci\ObrisiNastavnika.cshtml" />
     <Content Include="Views\OpciPodaci\Info.cshtml" />
+    <Content Include="Views\OpciPodaci\SkolskaGodina.cshtml" />
+    <Content Include="Views\OpciPodaci\NoviRazredniOdjel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
