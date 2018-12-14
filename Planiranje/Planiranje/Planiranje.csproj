@@ -258,6 +258,7 @@
     <Compile Include="Models\SubjektiModel.cs" />
     <Compile Include="Models\Subjekt_DBHandle.cs" />
     <Compile Include="Models\GodisnjiModel.cs" />
+    <Compile Include="Models\Ucenici\Nastavnik.cs" />
     <Compile Include="Models\Ucenici\Pedagog_skola.cs" />
     <Compile Include="Models\Ucenici\RazredniOdjel.cs" />
     <Compile Include="Models\Zadaci.cs" />
@@ -420,6 +421,11 @@
     <Content Include="Views\PlanOs2\ObrisiAktivnost.cshtml" />
     <Content Include="Views\OpciPodaci\RazredniOdjel.cshtml" />
     <Content Include="Views\Planiranje\OdabirSkole.cshtml" />
+    <Content Include="Views\OpciPodaci\Nastavnik.cshtml" />
+    <Content Include="Views\OpciPodaci\NoviNastavnik.cshtml" />
+    <Content Include="Views\OpciPodaci\UrediNastavnik.cshtml" />
+    <Content Include="Views\OpciPodaci\ObrisiNastavnika.cshtml" />
+    <Content Include="Views\OpciPodaci\Info.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

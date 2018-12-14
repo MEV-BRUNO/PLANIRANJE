@@ -25,6 +25,17 @@ CREATE TABLE RazredniOdjel (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE nastavnik (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_skola int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  ime text,
+  prezime text,
+  titula text,
+  kontakt text,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
