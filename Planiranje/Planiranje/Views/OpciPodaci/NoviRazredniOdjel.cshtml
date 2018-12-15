@@ -25,7 +25,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Razred, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.Razred, new { htmlAttributes = new { @class = "form-control", min="1", max="14" } })
+                        @Html.EditorFor(model => model.Razred, new { htmlAttributes = new { @class = "form-control", min="1", max="12" } })
                         @Html.ValidationMessageFor(model => model.Razred, "", new { @class = "text-danger" })
                     </div>
                 </div>

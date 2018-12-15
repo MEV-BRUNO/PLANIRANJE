@@ -429,6 +429,7 @@
     <Content Include="Views\OpciPodaci\SkolskaGodina.cshtml" />
     <Content Include="Views\OpciPodaci\NoviRazredniOdjel.cshtml" />
     <Content Include="Views\OpciPodaci\UrediRazredniOdjel.cshtml" />
+    <Content Include="Views\OpciPodaci\ObrisiRazredniOdjel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

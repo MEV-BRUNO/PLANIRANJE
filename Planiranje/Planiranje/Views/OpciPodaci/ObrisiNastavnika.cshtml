@@ -15,7 +15,7 @@
             @Html.HiddenFor(model => model.Id)
             <div class="modal-body">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <p>Jeste li sigurni da želite obrisati ovog nastavnika?</p>
+                <p><b>Jeste li sigurni da želite obrisati ovog nastavnika?</b></p>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Ime, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
@@ -46,7 +46,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                    <input type="button" class="btn btn-primary" value="Obriši" onclick='reload("@Url.Action("ObrisiNastavnika","OpciPodaci")","#urediNastavnik")' />
+                    <input type="button" class="btn btn-danger" value="Obriši" onclick='reload("@Url.Action("ObrisiNastavnika","OpciPodaci")","#urediNastavnik")' />
                 </div>
             </div>
         }

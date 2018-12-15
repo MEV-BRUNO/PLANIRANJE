@@ -70,7 +70,7 @@ namespace Planiranje.Controllers
             {
                 RedirectToAction("Index", "Planiranje");
             }
-            if (string.IsNullOrWhiteSpace(odjel.Naziv) || odjel.Razred < 1 || odjel.Razred > 14 || odjel.Id_razrednik <= 0)
+            if (string.IsNullOrWhiteSpace(odjel.Naziv) || odjel.Razred < 1 || odjel.Razred > 12 || odjel.Id_razrednik <= 0)
             {
                 List<Nastavnik> razrednici = new List<Nastavnik>();
                 razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
@@ -130,7 +130,7 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
-            if (string.IsNullOrWhiteSpace(odjel.Naziv) || odjel.Razred < 1 || odjel.Razred > 14 || odjel.Razred <= 0)
+            if (string.IsNullOrWhiteSpace(odjel.Naziv) || odjel.Razred < 1 || odjel.Razred > 12 || odjel.Razred <= 0)
             {
                 List<Nastavnik> razrednici = new List<Nastavnik>();
                 razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
@@ -157,6 +157,69 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("RazredniOdjel", new { godina=god});
+        }
+        public ActionResult ObrisiRazredniOdjel(int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                RedirectToAction("Index", "Planiranje");
+            }
+            RazredniOdjel odjel = baza.RazredniOdjel.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (odjel == null)
+            {
+                string tekst = "Traženi odjel nije pronađen!";
+                List<string> lista = new List<string>();
+                lista.Add(tekst);
+                return View("Info", lista);
+            }
+            int idRazrednik = odjel.Id_razrednik;
+            Nastavnik razrednik = baza.Nastavnik.SingleOrDefault(s => s.Id == idRazrednik && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (razrednik == null)
+            {
+                string tekst = "Razrednik traženog odjela nije pronađen!";
+                List<string> lista = new List<string>();
+                lista.Add(tekst);
+                return View("Info", lista);
+            }
+            ViewBag.razrednik = razrednik.ImePrezime;
+            return View(odjel);
+        }
+        [HttpPost]
+        public ActionResult ObrisiRazredniOdjel(RazredniOdjel odjel)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                RedirectToAction("Index", "Planiranje");
+            }
+            int id = odjel.Id;
+            RazredniOdjel raz = baza.RazredniOdjel.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (raz == null)
+            {
+                return HttpNotFound();
+            }
+            int god = raz.Sk_godina;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.RazredniOdjel.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+                    if (result != null)
+                    {
+                        db.RazredniOdjel.Remove(result);
+                        db.SaveChanges();
+                        TempData["poruka"] = "Razredni odjel je obrisan";
+                    }
+                    else
+                    {
+                        TempData["poruka"] = "Razredni odjel nije pronađen";
+                    }
+                }
+                catch
+                {
+                    TempData["poruka"] = "Razredni odjel nije obrisan! Pokušajte ponovno";
+                }
+            }
+            return RedirectToAction("RazredniOdjel", new { godina = god });
         }
         public ActionResult Nastavnik()
         {

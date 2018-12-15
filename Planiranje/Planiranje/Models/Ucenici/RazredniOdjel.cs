@@ -12,11 +12,12 @@ namespace Planiranje.Models.Ucenici
         [Key]
         public int Id { get; set; }
         public int Id_skola { get; set; }
+        [DisplayName("Školska godina")]
         public int Sk_godina { get; set; }
         [Required(ErrorMessage ="Ovo je polje obavezno")]
         public string Naziv { get; set; }
         [Required(ErrorMessage = "Ovo je polje obavezno")]
-        [Range(1,14,ErrorMessage ="Raspon vrijednosti je od 1 do 14")]
+        [Range(1,12,ErrorMessage ="Raspon vrijednosti je od 1 do 12")]
         public int Razred { get; set; }
         [Required(ErrorMessage = "Ovo je polje obavezno")]
         [DisplayName("Razrednik")]
