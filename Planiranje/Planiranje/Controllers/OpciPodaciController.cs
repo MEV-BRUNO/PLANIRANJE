@@ -53,7 +53,7 @@ namespace Planiranje.Controllers
             razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();            
             if (razrednici.Count == 0)
             {
-                string tekst = "Nije pronađen niti jedan nastavnik.<br/>Da biste kreirali razredni odjel, prvo morate dodati nastavika";
+                string tekst = "Nije pronađen niti jedan nastavnik. Za kreiranje razrednog odjela potrebno je prvo dodati nastavnika";
                 List<string> lista = new List<string>();
                 lista.Add(tekst);
                 return View("Info", lista);
@@ -81,6 +81,7 @@ namespace Planiranje.Controllers
             }
             odjel.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
             odjel.Id_skola = PlaniranjeSession.Trenutni.OdabranaSkola;
+            int god = odjel.Sk_godina;
             using(var db=new BazaPodataka())
             {
                 try
@@ -94,7 +95,68 @@ namespace Planiranje.Controllers
                     TempData["poruka"] = "Došlo je do greške! Pokušajte ponovno";
                 }
             }
-            return RedirectToAction("RazredniOdjel");
+            return RedirectToAction("RazredniOdjel", new { godina=god});
+        }
+        public ActionResult UrediRazredniOdjel(int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                RedirectToAction("Index", "Planiranje");
+            }
+            RazredniOdjel odjel = baza.RazredniOdjel.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (odjel == null)
+            {
+                string tekst = "Traženi razredni odjel nije pronađen!";
+                List<string> lista = new List<string>();
+                lista.Add(tekst);
+                return View("Info", lista);
+            }
+            List<Nastavnik> razrednici = new List<Nastavnik>();
+            razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
+            IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "ImePrezime");
+            ViewBag.razrednici = select;
+            return View(odjel);
+        }
+        [HttpPost]
+        public ActionResult UrediRazredniOdjel(RazredniOdjel odjel)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                RedirectToAction("Index", "Planiranje");
+            }
+            int id = odjel.Id;
+            RazredniOdjel raz = baza.RazredniOdjel.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (raz == null)
+            {
+                return HttpNotFound();
+            }
+            if (string.IsNullOrWhiteSpace(odjel.Naziv) || odjel.Razred < 1 || odjel.Razred > 14 || odjel.Razred <= 0)
+            {
+                List<Nastavnik> razrednici = new List<Nastavnik>();
+                razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
+                IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "ImePrezime");
+                ViewBag.razrednici = select;
+                return View(odjel);
+            }
+            odjel.Id_pedagog = raz.Id_pedagog;
+            odjel.Sk_godina = raz.Sk_godina;
+            odjel.Id_skola = PlaniranjeSession.Trenutni.OdabranaSkola;
+            int god = odjel.Sk_godina;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    db.RazredniOdjel.Add(odjel);
+                    db.Entry(odjel).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["poruka"] = "Razredni odjel je promijenjen";
+                }
+                catch
+                {
+                    TempData["poruka"] = "Razredni odjel nije promijenjen! Pokušajte ponovno";
+                }
+            }
+            return RedirectToAction("RazredniOdjel", new { godina=god});
         }
         public ActionResult Nastavnik()
         {
