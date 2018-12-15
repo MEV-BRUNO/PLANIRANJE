@@ -252,6 +252,7 @@
                 type: "POST",
                 success: function (data) {                    
                     showSnackBar("Škola promijenjena");
+                    location.reload();
                 },
                 error: function (request, status, error) {
                     console.log(request.responseText);
