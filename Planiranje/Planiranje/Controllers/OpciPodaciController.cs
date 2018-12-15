@@ -377,5 +377,74 @@ namespace Planiranje.Controllers
             godine = baza.SkolskaGodina.ToList();
             return View(godine);
         }
+        public ActionResult PodaciSkola()
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                RedirectToAction("Index", "Planiranje");
+            }
+            Skola skola = baza.Skola.SingleOrDefault(s => s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (skola == null)
+            {
+                return HttpNotFound();
+            }
+            return View(skola);
+        }
+        [HttpPost]
+        public ActionResult UrediSkola(Skola skola)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                RedirectToAction("Index", "Planiranje");
+            }            
+            int id = skola.Id_skola;
+            string tekst;
+            List<string> lista = new List<string>();
+            if (skola.Id_skola != PlaniranjeSession.Trenutni.OdabranaSkola)
+            {
+                tekst = "Ne možete mijenjati podatke o školi u kojoj ne radite!";                
+                lista.Add(tekst);
+                return View("Info", lista);
+            }
+            if (string.IsNullOrWhiteSpace(skola.Kontakt) || string.IsNullOrWhiteSpace(skola.URL) || string.IsNullOrWhiteSpace(skola.Tel))
+            {
+                Skola skola1 = baza.Skola.SingleOrDefault(s => s.Id_skola == id);
+                if (skola1 != null)
+                {
+                    skola.Naziv = skola1.Naziv;
+                    skola.Grad = skola1.Grad;
+                    skola.Adresa = skola1.Adresa;
+                    skola.Vrsta = skola1.Vrsta;
+                }
+                return View("PodaciSkola", skola);
+            }
+            using (var db=new BazaPodataka())
+            {
+                try
+                {
+                    Skola sk = db.Skola.SingleOrDefault(s => s.Id_skola == id);
+                    if (sk != null)
+                    {
+                        sk.Tel = skola.Tel;
+                        sk.URL = skola.URL;
+                        sk.Kontakt = skola.Kontakt;
+                        db.SaveChanges();
+                        tekst = "Promijenili ste podatke o školi. Promjene su spremljene.";
+                    }
+                    else
+                    {
+                        tekst = "Tražena škola nije pronađena! Obratite se administratoru radi daljnjih koraka";
+                    }
+                }
+                catch
+                {
+                    tekst = "Promjene nisu spremljene jer se u procesu dogodila greška! Pokušajte ponovno ili se obratite administratoru" +
+                        " za pomoć";
+                }
+            }
+            lista.Clear();
+            lista.Add(tekst);
+            return View("Info", lista);
+        }
     }
 }
