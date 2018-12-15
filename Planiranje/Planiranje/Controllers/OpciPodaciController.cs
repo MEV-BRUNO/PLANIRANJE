@@ -43,7 +43,7 @@ namespace Planiranje.Controllers
             ViewBag.godina = baza.SkolskaGodina.ToList();
             return View(odjeli);
         }
-        public ActionResult NoviRazredniOdjel()
+        public ActionResult NoviRazredniOdjel(int godina)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
@@ -58,8 +58,43 @@ namespace Planiranje.Controllers
                 lista.Add(tekst);
                 return View("Info", lista);
             }
-            ViewBag.razrednici = razrednici;
+            IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "Ime");
+            ViewBag.razrednici = select;
+            ViewBag.godina = godina;
             return View();
+        }
+        [HttpPost]
+        public ActionResult NoviRazredniOdjel(RazredniOdjel odjel)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                RedirectToAction("Index", "Planiranje");
+            }
+            if (string.IsNullOrWhiteSpace(odjel.Naziv) || odjel.Razred < 1 || odjel.Razred > 14 || odjel.Id_razrednik <= 0)
+            {
+                List<Nastavnik> razrednici = new List<Nastavnik>();
+                razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
+                IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "Ime");
+                ViewBag.razrednici = select;
+                ViewBag.godina = odjel.Sk_godina;
+                return View();
+            }
+            odjel.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+            odjel.Id_skola = PlaniranjeSession.Trenutni.OdabranaSkola;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    db.RazredniOdjel.Add(odjel);
+                    db.SaveChanges();
+                    TempData["poruka"] = "Novi odjel je spremljen";
+                }
+                catch
+                {
+                    TempData["poruka"] = "Došlo je do greške! Pokušajte ponovno";
+                }
+            }
+            return RedirectToAction("RazredniOdjel");
         }
         public ActionResult Nastavnik()
         {
