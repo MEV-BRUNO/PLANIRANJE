@@ -58,7 +58,7 @@ namespace Planiranje.Controllers
                 lista.Add(tekst);
                 return View("Info", lista);
             }
-            IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "Ime");
+            IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "ImePrezime");
             ViewBag.razrednici = select;
             ViewBag.godina = godina;
             return View();
@@ -74,7 +74,7 @@ namespace Planiranje.Controllers
             {
                 List<Nastavnik> razrednici = new List<Nastavnik>();
                 razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
-                IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "Ime");
+                IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "ImePrezime");
                 ViewBag.razrednici = select;
                 ViewBag.godina = odjel.Sk_godina;
                 return View();

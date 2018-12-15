@@ -19,5 +19,6 @@ namespace Planiranje.Models.Ucenici
         public string Prezime { get; set; }
         public string Titula { get; set; }
         public string Kontakt { get; set; }
+        public string ImePrezime { get { return Ime + " " + Prezime; } }
     }
 }
