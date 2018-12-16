@@ -4,11 +4,7 @@
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";   
 }
 
-<div class="inner">
-    @if (TempData["poruka"] != null)
-    {
-        <div id="poruka" style="display:none">1</div>
-    }
+<div class="inner">    
     <div class="row">
         <div class="col-lg-12">
             <h3>Popis učenika</h3>
@@ -70,13 +66,6 @@
 
 </div>
 <script>
-     $(document).ready(function () {         
-         if ($("#poruka").text() == "1") {
-            showSnackBar('@TempData["poruka"]');
-        }
-    });
-</script>
-<script>
     function promjenaGodine() {
         var val = $("#selectGodina").val();
         if (val != "0") {
@@ -100,4 +89,27 @@
             });
         }
     }
+    function spremi(path, id) {
+        var dt = $(id).serialize();
+        $.ajax({
+            url: path,
+            type: "POST",
+            data: dt,
+            success: function (data) {
+                if ($(data)[0].tagName === "P") {
+                    $("#tablica").html(data);
+                    $("#dataTable").dataTable();
+                    $('#modal').modal('hide');
+                    $('#modalContainer').removeData();
+                    $('.modal-backdrop').remove();
+                }
+                else {
+                    $("#modalContainer").html(data);                    
+                }
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+        });
+    }    
 </script>

@@ -21,13 +21,17 @@ namespace Planiranje.Models.Ucenici
         [Required(ErrorMessage ="Obavezno polje")]
         public string Grad { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
-        public string Adresa { get; set; }
-        [Required(AllowEmptyStrings =true)]
+        public string Adresa { get; set; }        
+        [DisplayName("Bilješka")]
         public string Biljeska { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode =true)]
         [DisplayName("Datum rođenja")]
         public DateTime Datum { get; set; }
+        /// <summary>
+        /// id razreda je ovdje bitan samo kod dodavanja novog učenika, kasnije to nema veze
+        /// </summary>
+        public int Id_razred { get; set; }
     }
 }

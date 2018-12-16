@@ -465,7 +465,50 @@ namespace Planiranje.Controllers
         public ActionResult PopisUcenikaTablica(int razred)
         {
             List<Ucenik> ucenici = new List<Ucenik>();
+            var result = (from ucenik in baza.Ucenik
+                          join raz in baza.RazredniOdjel on ucenik.Id_razred equals raz.Id
+                          where raz.Id == razred && raz.Id_skola==PlaniranjeSession.Trenutni.OdabranaSkola
+                          select ucenik);
+            ucenici = result.ToList();
+            ViewBag.razred = razred;
             return View(ucenici);
+        }
+        public ActionResult NoviUcenik (int razred)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.razred = razred;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult NoviUcenik (Ucenik ucenik)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return HttpNotFound();
+            }
+            if(string.IsNullOrWhiteSpace(ucenik.ImePrezime) || string.IsNullOrWhiteSpace(ucenik.Grad) || 
+                string.IsNullOrWhiteSpace(ucenik.Adresa) || ucenik.Oib.Length<11 || ucenik.Oib.Length>11 ||
+                ucenik.Datum == new DateTime(1, 1, 1))
+            {
+                ViewBag.razred = ucenik.Id_razred;
+                return View(ucenik);
+            }
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.Ucenik.Add(ucenik);
+                    db.SaveChanges();
+                }
+                catch
+                {
+
+                }
+            }
+            return RedirectToAction("PopisUcenikaTablica", new { razred = ucenik.Id_razred });
         }
     }
 }

@@ -3,7 +3,7 @@
     Layout = null;
 }
 <p>
-    <a onclick="showModal('@Url.Action("NoviUcenik","OpciPodaci")')" class="btn btn-primary btn-xs btn-grad"> Dodaj učenika</a>
+    <a onclick="showModal('@Url.Action("NoviUcenik","OpciPodaci",new { razred = ViewBag.razred})')" class="btn btn-primary btn-xs btn-grad"> Dodaj učenika</a>
 </p>
 <table class="table table-striped table-bordered table-hover" id="dataTable">
     <thead>

@@ -14,6 +14,13 @@ CREATE TABLE pedagog_skola (
   PRIMARY KEY (id)   
 );
 
+CREATE TABLE ucenik_razred (
+  id int NOT NULL AUTO_INCREMENT,
+  id_razred int(20) NOT NULL,
+  id_ucenik int(20) NOT NULL,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE RazredniOdjel (
   id int(20) NOT NULL AUTO_INCREMENT,
   id_skola int(20) NOT NULL,
@@ -40,11 +47,12 @@ CREATE TABLE ucenik (
   id_ucenik int(20) NOT NULL AUTO_INCREMENT,
   imeprezime text,
   spol tinyint NOT NULL,
-  oib varchar(8),
+  oib varchar(11),
   grad text,
   adresa text,
   biljeska text,
   datum datetime,
+  id_razred int(20),
   PRIMARY KEY (id_ucenik)
 );
 
