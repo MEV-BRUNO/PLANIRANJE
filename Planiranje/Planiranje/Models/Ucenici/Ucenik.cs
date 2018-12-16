@@ -17,6 +17,7 @@ namespace Planiranje.Models.Ucenici
         [Required(ErrorMessage = "Obavezno polje")]
         public int Spol { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
+        [StringLength(11,MinimumLength =11,ErrorMessage ="OIB nije valjan")]
         public string Oib { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
         public string Grad { get; set; }

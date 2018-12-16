@@ -490,7 +490,7 @@ namespace Planiranje.Controllers
                 return HttpNotFound();
             }
             if(string.IsNullOrWhiteSpace(ucenik.ImePrezime) || string.IsNullOrWhiteSpace(ucenik.Grad) || 
-                string.IsNullOrWhiteSpace(ucenik.Adresa) || ucenik.Oib.Length<11 || ucenik.Oib.Length>11 ||
+                string.IsNullOrWhiteSpace(ucenik.Adresa) || string.IsNullOrWhiteSpace(ucenik.Oib) || ucenik.Oib.Length!=11 ||
                 ucenik.Datum == new DateTime(1, 1, 1))
             {
                 ViewBag.razred = ucenik.Id_razred;
