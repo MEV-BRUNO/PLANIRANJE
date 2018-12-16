@@ -1,0 +1,35 @@
+﻿@model List<Planiranje.Models.Ucenici.Ucenik>
+@{ 
+    Layout = null;
+}
+<p>
+    <a onclick="showModal('@Url.Action("NoviUcenik","OpciPodaci")')" class="btn btn-primary btn-xs btn-grad"> Dodaj učenika</a>
+</p>
+<table class="table table-striped table-bordered table-hover" id="dataTable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Ime i prezime </th>
+            <th>Datum rođenja </th>    
+            <th>Mjesto</th>
+            <th>Aktivnost</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int broj = 0;}
+        @foreach (var item in Model)
+        {
+            broj++;            
+            <tr>
+                <td class="col-md-1">@broj</td>
+                <td class="col-md-3">@item.ImePrezime</td>
+                <td class="col-md-2">@item.Datum.ToShortDateString()</td>
+                <td class="col-md-3">@item.Grad</td>
+                <td class="col-md-2">
+                    <a onclick="" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                    <a onclick="" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

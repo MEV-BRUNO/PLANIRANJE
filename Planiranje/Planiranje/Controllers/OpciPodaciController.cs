@@ -446,5 +446,26 @@ namespace Planiranje.Controllers
             lista.Add(tekst);
             return View("Info", lista);
         }
+        public ActionResult PopisUcenika()
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                RedirectToAction("Index", "Planiranje");
+            }
+            List<Sk_godina> godine = new List<Sk_godina>();
+            godine = baza.SkolskaGodina.ToList();
+            return View(godine);
+        }
+        public ActionResult PopisUcenikaRazredi(int godina)
+        {
+            List<RazredniOdjel> odjeli = new List<RazredniOdjel>();
+            odjeli = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola && w.Sk_godina == godina).ToList();
+            return View(odjeli);
+        }
+        public ActionResult PopisUcenikaTablica(int razred)
+        {
+            List<Ucenik> ucenici = new List<Ucenik>();
+            return View(ucenici);
+        }
     }
 }

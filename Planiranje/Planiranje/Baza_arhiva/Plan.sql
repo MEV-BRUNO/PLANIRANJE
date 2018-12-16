@@ -36,6 +36,18 @@ CREATE TABLE nastavnik (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE ucenik (
+  id_ucenik int(20) NOT NULL AUTO_INCREMENT,
+  imeprezime text,
+  spol tinyint NOT NULL,
+  oib varchar(8),
+  grad text,
+  adresa text,
+  biljeska text,
+  datum datetime,
+  PRIMARY KEY (id_ucenik)
+);
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
