@@ -465,8 +465,8 @@ namespace Planiranje.Controllers
         public ActionResult PopisUcenikaTablica(int razred)
         {
             List<Ucenik> ucenici = new List<Ucenik>();
-            var result = (from ucenik in baza.Ucenik
-                          join raz in baza.RazredniOdjel on ucenik.Id_razred equals raz.Id
+            var result = (from ucenik in baza.Ucenik join ur in baza.UcenikRazred on ucenik.Id_ucenik equals ur.Id_ucenik
+                          join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
                           where raz.Id == razred && raz.Id_skola==PlaniranjeSession.Trenutni.OdabranaSkola
                           select ucenik);
             ucenici = result.ToList();
@@ -489,18 +489,22 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
-            if(string.IsNullOrWhiteSpace(ucenik.ImePrezime) || string.IsNullOrWhiteSpace(ucenik.Grad) || 
-                string.IsNullOrWhiteSpace(ucenik.Adresa) || string.IsNullOrWhiteSpace(ucenik.Oib) || ucenik.Oib.Length!=11 ||
-                ucenik.Datum == new DateTime(1, 1, 1))
+            if(string.IsNullOrWhiteSpace(ucenik.ImePrezime) || ucenik.Spol==0 || ucenik.Datum == new DateTime(1, 1, 1))
             {
                 ViewBag.razred = ucenik.Id_razred;
                 return View(ucenik);
             }
+            Ucenik_razred ur = new Ucenik_razred();
+            ur.Id_razred = ucenik.Id_razred;
             using(var db = new BazaPodataka())
             {
                 try
                 {
                     db.Ucenik.Add(ucenik);
+                    db.SaveChanges();
+                    int id = db.Ucenik.Max(m => m.Id_ucenik);
+                    ur.Id_ucenik = id;
+                    db.UcenikRazred.Add(ur);
                     db.SaveChanges();
                 }
                 catch

@@ -15,13 +15,14 @@ namespace Planiranje.Models.Ucenici
         [DisplayName("Ime i prezime")]
         public string ImePrezime { get; set; }
         [Required(ErrorMessage = "Obavezno polje")]
+        [Range(1,2,ErrorMessage ="Obavezno polje")]
         public int Spol { get; set; }
-        [Required(ErrorMessage ="Obavezno polje")]
-        [StringLength(11,MinimumLength =11,ErrorMessage ="OIB nije valjan")]
+        //[Required(ErrorMessage ="Obavezno polje")]
+        //[StringLength(11,MinimumLength =11,ErrorMessage ="OIB nije valjan")]
         public string Oib { get; set; }
-        [Required(ErrorMessage ="Obavezno polje")]
+        //[Required(ErrorMessage ="Obavezno polje")]
         public string Grad { get; set; }
-        [Required(ErrorMessage ="Obavezno polje")]
+        //[Required(ErrorMessage ="Obavezno polje")]
         public string Adresa { get; set; }        
         [DisplayName("Bilješka")]
         public string Biljeska { get; set; }
