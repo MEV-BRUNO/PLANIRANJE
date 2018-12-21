@@ -76,6 +76,10 @@
                 }
             });
         }
+        else {            
+            $("#razredi").empty();
+        }
+        $("#tablica").empty();
     }
     function promjenaRazreda() {
         var val = $("#selectRazred").val();
@@ -87,6 +91,9 @@
                     $("#dataTable").dataTable();
                 }
             });
+        }
+        else {
+            $("#tablica").empty();
         }
     }
     function spremi(path, id) {
