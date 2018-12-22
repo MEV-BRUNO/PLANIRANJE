@@ -437,6 +437,7 @@
     <Content Include="Views\OpciPodaci\PopisUcenikaRazredi.cshtml" />
     <Content Include="Views\OpciPodaci\PopisUcenikaTablica.cshtml" />
     <Content Include="Views\OpciPodaci\NoviUcenik.cshtml" />
+    <Content Include="Views\OpciPodaci\UrediUcenik.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -5,6 +5,10 @@
 <p>
     <a onclick="showModal('@Url.Action("NoviUcenik","OpciPodaci",new { razred = ViewBag.razred})')" class="btn btn-primary btn-xs btn-grad"> Dodaj učenika</a>
 </p>
+@if (TempData["poruka"] != null)
+{
+    <div id="poruka" style="display:none">@TempData["poruka"]</div>
+}
 <table class="table table-striped table-bordered table-hover" id="dataTable">
     <thead>
         <tr>
@@ -26,8 +30,8 @@
                 <td class="col-md-2">@item.Datum.ToShortDateString()</td>
                 <td class="col-md-3">@item.Grad</td>
                 <td class="col-md-2">
-                    <a onclick="" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                    <a onclick="" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                    <a onclick="showModal('@Url.Action("UrediUcenik","OpciPodaci", new { id=item.Id_ucenik, raz=ViewBag.razred})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                    <a onclick="showModal('@Url.Action("ObrisiUcenik", "OpciPodaci",new { id=item.Id_ucenik, raz=ViewBag.razred})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                 </td>
             </tr>
         }

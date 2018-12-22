@@ -15,7 +15,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             int god;
             List<RazredniOdjel> odjeli = new List<RazredniOdjel>();
@@ -47,7 +47,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             List<Nastavnik> razrednici = new List<Nastavnik>();
             razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();            
@@ -68,7 +68,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             if (string.IsNullOrWhiteSpace(odjel.Naziv) || odjel.Razred < 1 || odjel.Razred > 12 || odjel.Id_razrednik <= 0)
             {
@@ -101,7 +101,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             RazredniOdjel odjel = baza.RazredniOdjel.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
             if (odjel == null)
@@ -122,7 +122,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             int id = odjel.Id;
             RazredniOdjel raz = baza.RazredniOdjel.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
@@ -162,7 +162,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             RazredniOdjel odjel = baza.RazredniOdjel.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
             if (odjel == null)
@@ -189,7 +189,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             int id = odjel.Id;
             RazredniOdjel raz = baza.RazredniOdjel.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
@@ -225,7 +225,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             List<Nastavnik> nastavnici = new List<Nastavnik>();
             nastavnici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).OrderBy(o=>o.Id).ToList();
@@ -235,7 +235,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             return View();
         }
@@ -244,7 +244,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             if(string.IsNullOrWhiteSpace(model.Ime) || string.IsNullOrWhiteSpace(model.Prezime))
             {
@@ -271,7 +271,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             Nastavnik model = baza.Nastavnik.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
             if (model == null)
@@ -285,7 +285,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             if (string.IsNullOrWhiteSpace(model.Ime) || string.IsNullOrWhiteSpace(model.Prezime))
             {
@@ -319,7 +319,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             Nastavnik model = baza.Nastavnik.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
             if (model == null)
@@ -333,7 +333,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             int id = model.Id;
             RazredniOdjel odjel = baza.RazredniOdjel.FirstOrDefault(s => s.Id_razrednik == id && s.Id_skola==PlaniranjeSession.Trenutni.OdabranaSkola);
@@ -371,7 +371,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             List<Sk_godina> godine = new List<Sk_godina>();
             godine = baza.SkolskaGodina.ToList();
@@ -381,7 +381,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             Skola skola = baza.Skola.SingleOrDefault(s => s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
             if (skola == null)
@@ -395,7 +395,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }            
             int id = skola.Id_skola;
             string tekst;
@@ -450,7 +450,7 @@ namespace Planiranje.Controllers
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
-                RedirectToAction("Index", "Planiranje");
+                return RedirectToAction("Index", "Planiranje");
             }
             List<Sk_godina> godine = new List<Sk_godina>();
             godine = baza.SkolskaGodina.ToList();
@@ -489,13 +489,15 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
-            if(string.IsNullOrWhiteSpace(ucenik.ImePrezime) || ucenik.Spol==0 || ucenik.Datum == new DateTime(1, 1, 1))
+            if(string.IsNullOrWhiteSpace(ucenik.ImePrezime) || ucenik.Spol==0 || ucenik.Datum.CompareTo(new DateTime(1, 1, 1))==0)
             {
                 ViewBag.razred = ucenik.Id_razred;
                 return View(ucenik);
             }
             Ucenik_razred ur = new Ucenik_razred();
             ur.Id_razred = ucenik.Id_razred;
+            bool hasError = false;
+            string tekst = "";
             using(var db = new BazaPodataka())
             {
                 try
@@ -506,13 +508,84 @@ namespace Planiranje.Controllers
                     ur.Id_ucenik = id;
                     db.UcenikRazred.Add(ur);
                     db.SaveChanges();
+                    TempData["poruka"] = "Novi učenik je dodan";
                 }
                 catch
                 {
-
+                    tekst = "Pojavila se greška prilikom spremanja podataka! Osvježite stranicu i pokušajte ponovno.";
+                    hasError = true;
                 }
             }
+            if (hasError)
+            {
+                return View("Info", new List<string> { tekst });
+            }
             return RedirectToAction("PopisUcenikaTablica", new { razred = ucenik.Id_razred });
+        }
+        public ActionResult UrediUcenik(int id, int raz)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            var provjera = (from ucenik in baza.Ucenik join ur in baza.UcenikRazred on ucenik.Id_ucenik equals ur.Id_ucenik
+                            join razred in baza.RazredniOdjel on ur.Id_razred equals razred.Id where 
+                            razred.Id_skola==PlaniranjeSession.Trenutni.OdabranaSkola && ucenik.Id_ucenik==id select ucenik).ToList();
+            if (provjera.Count==0)
+            {
+                return HttpNotFound();
+            }
+            Ucenik model = new Ucenik();
+            model = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            model.Id_razred = raz;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UrediUcenik(Ucenik model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }            
+            if(string.IsNullOrWhiteSpace(model.ImePrezime) || model.Spol==0 || model.Datum.CompareTo(new DateTime(1, 1, 1)) == 0)
+            {
+                return View(model);
+            }
+            int id = model.Id_ucenik;
+            var provjera = (from ucenik in baza.Ucenik join ur in baza.UcenikRazred on ucenik.Id_ucenik equals ur.Id_ucenik
+                            join razred in baza.RazredniOdjel on ur.Id_razred equals razred.Id where
+                            razred.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola && ucenik.Id_ucenik == id select ucenik).ToList();
+            if (provjera.Count == 0)
+            {
+                return HttpNotFound();
+            }
+            int id_razred = model.Id_razred;
+            Ucenik ucenik_u_bazi = new Ucenik();
+            ucenik_u_bazi = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            model.Id_razred = ucenik_u_bazi.Id_razred;
+            bool isError = false;
+            string tekst="";
+            using(var db= new BazaPodataka())
+            {
+                try
+                {
+                    db.Ucenik.Add(model);
+                    db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["poruka"] = "Promjene podataka odabranog učenika su spremljene!";
+                }
+                catch
+                {
+                    tekst = "Došlo je do greške kod spremanja promjena! Promjene nisu spremljene! "
+                        + "Osvježite stranicu i pokušajte ponovno.";
+                    isError = true;
+                }
+            }
+            if (isError)
+            {
+                return View("Info", new List<string> { tekst });
+            }
+            return RedirectToAction("PopisUcenikaTablica", new { razred = id_razred });
         }
     }
 }

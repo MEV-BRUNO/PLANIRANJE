@@ -109,6 +109,10 @@
                     $('#modal').modal('hide');
                     $('#modalContainer').removeData();
                     $('.modal-backdrop').remove();
+                    if (true) {
+                        var element = document.getElementById("poruka").textContent;
+                        showSnackBar(element);
+                    }
                 }
                 else {
                     $("#modalContainer").html(data);                    
