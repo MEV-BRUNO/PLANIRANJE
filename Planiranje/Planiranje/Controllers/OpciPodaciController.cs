@@ -587,5 +587,65 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("PopisUcenikaTablica", new { razred = id_razred });
         }
+        public ActionResult ObrisiUcenik (int id, int raz)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            var provjera = (from ucenik in baza.Ucenik join ur in baza.UcenikRazred on ucenik.Id_ucenik equals ur.Id_ucenik
+                            join razred in baza.RazredniOdjel on ur.Id_razred equals razred.Id where
+                            razred.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola && ucenik.Id_ucenik == id select ucenik).ToList();
+            if (provjera.Count == 0)
+            {
+                return HttpNotFound();
+            }
+            Ucenik model = new Ucenik();
+            model = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            model.Id_razred = raz;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ObrisiUcenik(Ucenik model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int id = model.Id_ucenik;
+            var provjera = (from ucenik in baza.Ucenik join ur in baza.UcenikRazred on ucenik.Id_ucenik equals ur.Id_ucenik
+                            join razred in baza.RazredniOdjel on ur.Id_razred equals razred.Id where
+                            razred.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola && ucenik.Id_ucenik == id select ucenik).ToList();
+            if (provjera.Count == 0)
+            {
+                return HttpNotFound();
+            }
+            bool hasError = false;
+            string tekst = "";
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+                    if (result != null)
+                    {
+                        db.Ucenik.Remove(result);
+                        db.SaveChanges();
+                        TempData["poruka"] = "Odabrani učenik je obrisan";
+                    }
+                }
+                catch
+                {
+                    tekst = "Došlo je do greške kod brisanja podataka! Podaci nisu obrisani! "
+                        + "Osvježite stranicu i pokušajte ponovno.";
+                    hasError = true;
+                }
+            }
+            if (hasError)
+            {
+                return View("Info", new List<string> { tekst });
+            }
+            return RedirectToAction("PopisUcenikaTablica", new { razred = model.Id_razred });
+        }
     }
 }

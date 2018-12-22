@@ -114,9 +114,13 @@
                         showSnackBar(element);
                     }
                 }
-                else {
-                    $("#modalContainer").html(data);                    
+                else if ($(data)[0].tagName === "DIV") {
+                    $("#modalContainer").html(data);
                 }
+                else {
+                    location.reload();
+                }
+                
             },
             error: function (request, status, error) {
                 console.log(request.responseText);

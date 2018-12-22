@@ -18,7 +18,8 @@ CREATE TABLE ucenik_razred (
   id int NOT NULL AUTO_INCREMENT,
   id_razred int(20) NOT NULL,
   id_ucenik int(20) NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  CONSTRAINT ucenik_razred_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik) ON DELETE CASCADE
 );
 
 CREATE TABLE RazredniOdjel (
