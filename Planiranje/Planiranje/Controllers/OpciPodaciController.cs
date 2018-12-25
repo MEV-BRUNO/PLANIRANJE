@@ -59,6 +59,19 @@ namespace Planiranje.Controllers
                 return View("Info", lista);
             }
             IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "ImePrezime");
+            List<int> razredi = new List<int>();
+            Skola skola = new Skola();
+            skola = baza.Skola.SingleOrDefault(s => s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (skola.Vrsta == 0)
+            {
+                razredi.AddRange(new List<int> {1,2,3,4,5,6,7,8 });
+            }
+            else
+            {
+                razredi.AddRange(new List<int> { 1, 2, 3, 4 });
+            }
+            IEnumerable<SelectListItem> selectRazred = new SelectList(razredi,1);
+            ViewBag.razred = selectRazred;
             ViewBag.razrednici = select;
             ViewBag.godina = godina;
             return View();
@@ -70,13 +83,26 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (string.IsNullOrWhiteSpace(odjel.Naziv) || odjel.Razred < 1 || odjel.Razred > 12 || odjel.Id_razrednik <= 0)
+            if (string.IsNullOrWhiteSpace(odjel.Naziv) || odjel.Razred < 1 || odjel.Razred > 8 || odjel.Id_razrednik <= 0)
             {
                 List<Nastavnik> razrednici = new List<Nastavnik>();
                 razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
                 IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "ImePrezime");
                 ViewBag.razrednici = select;
                 ViewBag.godina = odjel.Sk_godina;
+                List<int> razredi = new List<int>();
+                Skola skola = new Skola();
+                skola = baza.Skola.SingleOrDefault(s => s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+                if (skola.Vrsta == 0)
+                {
+                    razredi.AddRange(new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 });
+                }
+                else
+                {
+                    razredi.AddRange(new List<int> { 1, 2, 3, 4 });
+                }
+                IEnumerable<SelectListItem> selectRazred = new SelectList(razredi, 1);
+                ViewBag.razred = selectRazred;
                 return View();
             }
             odjel.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
@@ -115,6 +141,19 @@ namespace Planiranje.Controllers
             razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
             IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "ImePrezime");
             ViewBag.razrednici = select;
+            List<int> razredi = new List<int>();
+            Skola skola = new Skola();
+            skola = baza.Skola.SingleOrDefault(s => s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (skola.Vrsta == 0)
+            {
+                razredi.AddRange(new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 });
+            }
+            else
+            {
+                razredi.AddRange(new List<int> { 1, 2, 3, 4 });
+            }
+            IEnumerable<SelectListItem> selectRazred = new SelectList(razredi, 1);
+            ViewBag.razred = selectRazred;
             return View(odjel);
         }
         [HttpPost]
@@ -130,12 +169,25 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
-            if (string.IsNullOrWhiteSpace(odjel.Naziv) || odjel.Razred < 1 || odjel.Razred > 12 || odjel.Razred <= 0)
+            if (string.IsNullOrWhiteSpace(odjel.Naziv) || odjel.Razred < 1 || odjel.Razred > 8 || odjel.Id_razrednik<=0)
             {
                 List<Nastavnik> razrednici = new List<Nastavnik>();
                 razrednici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
                 IEnumerable<SelectListItem> select = new SelectList(razrednici, "Id", "ImePrezime");
                 ViewBag.razrednici = select;
+                List<int> razredi = new List<int>();
+                Skola skola = new Skola();
+                skola = baza.Skola.SingleOrDefault(s => s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+                if (skola.Vrsta == 0)
+                {
+                    razredi.AddRange(new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 });
+                }
+                else
+                {
+                    razredi.AddRange(new List<int> { 1, 2, 3, 4 });
+                }
+                IEnumerable<SelectListItem> selectRazred = new SelectList(razredi, 1);
+                ViewBag.razred = selectRazred;
                 return View(odjel);
             }
             odjel.Id_pedagog = raz.Id_pedagog;

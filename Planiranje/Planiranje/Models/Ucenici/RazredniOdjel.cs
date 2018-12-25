@@ -17,7 +17,7 @@ namespace Planiranje.Models.Ucenici
         [Required(ErrorMessage ="Ovo je polje obavezno")]
         public string Naziv { get; set; }
         [Required(ErrorMessage = "Ovo je polje obavezno")]
-        [Range(1,12,ErrorMessage ="Raspon vrijednosti je od 1 do 12")]
+        [Range(1,8,ErrorMessage ="Raspon vrijednosti je od 1 do 8, ovisno o školi")]
         public int Razred { get; set; }
         [Required(ErrorMessage = "Ovo je polje obavezno")]
         [DisplayName("Razrednik")]
