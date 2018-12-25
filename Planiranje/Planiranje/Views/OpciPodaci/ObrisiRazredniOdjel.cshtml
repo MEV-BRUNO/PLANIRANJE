@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Razred, htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
+                    <div class="col-md-2">
                         @Html.TextBoxFor(model => model.Razred, new { @class = "form-control", disabled="" })
                         @Html.ValidationMessageFor(model => model.Razred, "", new { @class = "text-danger" })
                     </div>

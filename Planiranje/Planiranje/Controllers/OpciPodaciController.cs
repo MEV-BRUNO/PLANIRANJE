@@ -152,8 +152,7 @@ namespace Planiranje.Controllers
             {
                 razredi.AddRange(new List<int> { 1, 2, 3, 4 });
             }
-            IEnumerable<SelectListItem> selectRazred = new SelectList(razredi, 1);
-            ViewBag.razred = selectRazred;
+            ViewBag.razred = razredi;
             return View(odjel);
         }
         [HttpPost]
@@ -186,8 +185,7 @@ namespace Planiranje.Controllers
                 {
                     razredi.AddRange(new List<int> { 1, 2, 3, 4 });
                 }
-                IEnumerable<SelectListItem> selectRazred = new SelectList(razredi, 1);
-                ViewBag.razred = selectRazred;
+                ViewBag.razred = razredi;
                 return View(odjel);
             }
             odjel.Id_pedagog = raz.Id_pedagog;
@@ -698,6 +696,6 @@ namespace Planiranje.Controllers
                 return View("Info", new List<string> { tekst });
             }
             return RedirectToAction("PopisUcenikaTablica", new { razred = model.Id_razred });
-        }
-    }
+        }        
+    }    
 }
