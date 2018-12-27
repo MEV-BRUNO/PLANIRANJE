@@ -46,7 +46,8 @@ CREATE TABLE nastavnik (
 
 CREATE TABLE ucenik (
   id_ucenik int(20) NOT NULL AUTO_INCREMENT,
-  imeprezime text,
+  ime text,
+  prezime text,
   spol tinyint NOT NULL,
   oib varchar(11),
   grad text,

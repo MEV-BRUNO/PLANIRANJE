@@ -12,8 +12,11 @@ namespace Planiranje.Models.Ucenici
         [Key]
         public int Id_ucenik { get; set; }
         [Required(ErrorMessage = "Obavezno polje")]
-        [DisplayName("Ime i prezime")]
-        public string ImePrezime { get; set; }
+        [DisplayName("Ime")]
+        public string Ime { get; set; }
+        [Required(ErrorMessage ="Obavezno polje")]
+        [DisplayName("Prezime")]
+        public string Prezime { get; set; }
         [Required(ErrorMessage = "Obavezno polje")]
         [Range(1,2,ErrorMessage ="Obavezno polje")]
         public int Spol { get; set; }
@@ -35,5 +38,9 @@ namespace Planiranje.Models.Ucenici
         /// id razreda je ovdje bitan samo kod dodavanja novog učenika, kasnije to nema veze
         /// </summary>
         public int Id_razred { get; set; }
+        /// <summary>
+        /// vraća ime i prezime
+        /// </summary>
+        public string ImePrezime { get { return Ime + " " + Prezime; } }
     }
 }

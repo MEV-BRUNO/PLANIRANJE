@@ -13,7 +13,8 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Ime i prezime </th>
+            <th>Ime  </th>
+            <th>Prezime </th>
             <th>Datum rođenja </th>    
             <th>Mjesto</th>
             <th>Aktivnost</th>
@@ -26,9 +27,10 @@
             broj++;            
             <tr>
                 <td class="col-md-1">@broj</td>
-                <td class="col-md-3">@item.ImePrezime</td>
-                <td class="col-md-2">@item.Datum.ToShortDateString()</td>
-                <td class="col-md-3">@item.Grad</td>
+                <td class="col-md-3">@item.Ime</td>
+                <td class="col-md-3">@item.Prezime</td>
+                <td class="col-md-1">@item.Datum.ToShortDateString()</td>
+                <td class="col-md-2">@item.Grad</td>
                 <td class="col-md-2">
                     <a onclick="showModal('@Url.Action("UrediUcenik","OpciPodaci", new { id=item.Id_ucenik, raz=ViewBag.razred})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
                     <a onclick="showModal('@Url.Action("ObrisiUcenik", "OpciPodaci",new { id=item.Id_ucenik, raz=ViewBag.razred})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>

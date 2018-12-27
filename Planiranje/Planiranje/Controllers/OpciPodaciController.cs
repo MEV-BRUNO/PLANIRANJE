@@ -539,7 +539,7 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
-            if(string.IsNullOrWhiteSpace(ucenik.ImePrezime) || ucenik.Spol==0 || ucenik.Datum.CompareTo(new DateTime(1, 1, 1))==0)
+            if(string.IsNullOrWhiteSpace(ucenik.Ime) || string.IsNullOrWhiteSpace(ucenik.Prezime) || ucenik.Spol==0 || ucenik.Datum.CompareTo(new DateTime(1, 1, 1))==0)
             {
                 ViewBag.razred = ucenik.Id_razred;
                 return View(ucenik);
@@ -597,7 +597,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }            
-            if(string.IsNullOrWhiteSpace(model.ImePrezime) || model.Spol==0 || model.Datum.CompareTo(new DateTime(1, 1, 1)) == 0)
+            if(string.IsNullOrWhiteSpace(model.Ime) || string.IsNullOrWhiteSpace(model.Prezime) || model.Spol==0 || model.Datum.CompareTo(new DateTime(1, 1, 1)) == 0)
             {
                 return View(model);
             }
