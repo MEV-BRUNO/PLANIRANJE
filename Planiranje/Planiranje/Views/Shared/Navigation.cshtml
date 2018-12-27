@@ -20,22 +20,10 @@
 				<i class="icon-table"></i> KALENDAR
 			</a>
 		</li>
-		<li class="panel ">
-			<a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav">
-				<i class="icon-tasks"> </i> UČENICI
-
-				<span class="pull-right">
-					<i class="icon-angle-left"></i>
-				</span>
-			</a>
-			<ul class="collapse" id="component-nav">
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Popis učenika </a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Osobni podaci </a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Bilješke o radu s učenikom </a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Lista praćenja</a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Protokol promatranja </a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Procjena suradnje </a></li>
-			</ul>
+		<li class="panel pointer">
+            <a onclick='reloadPage("@Url.Action("Index","PracenjeUcenika")")'>
+                <i class="icon-table"></i> UČENICI
+            </a>
 		</li>
 		<li class="panel ">
 			<a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-rod">

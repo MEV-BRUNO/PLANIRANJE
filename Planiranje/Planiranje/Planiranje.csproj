@@ -205,6 +205,7 @@
     <Compile Include="Controllers\PlanOs2Controller.cs" />
     <Compile Include="Controllers\PlanSsController.cs" />
     <Compile Include="Controllers\PodrucjaDjelovanjaController.cs" />
+    <Compile Include="Controllers\PracenjeUcenikaController.cs" />
     <Compile Include="Controllers\SubjektiController.cs" />
     <Compile Include="Controllers\ZadaciController.cs" />
     <Compile Include="Global.asax.cs">
@@ -260,6 +261,7 @@
     <Compile Include="Models\GodisnjiModel.cs" />
     <Compile Include="Models\Ucenici\Nastavnik.cs" />
     <Compile Include="Models\Ucenici\Pedagog_skola.cs" />
+    <Compile Include="Models\Ucenici\PracenjeUcenikaModel.cs" />
     <Compile Include="Models\Ucenici\RazredniOdjel.cs" />
     <Compile Include="Models\Ucenici\Ucenik.cs" />
     <Compile Include="Models\Ucenici\Ucenik_razred.cs" />
@@ -439,6 +441,9 @@
     <Content Include="Views\OpciPodaci\NoviUcenik.cshtml" />
     <Content Include="Views\OpciPodaci\UrediUcenik.cshtml" />
     <Content Include="Views\OpciPodaci\ObrisiUcenik.cshtml" />
+    <Content Include="Views\PracenjeUcenika\Index.cshtml" />
+    <Content Include="Views\PracenjeUcenika\OdabirRazreda.cshtml" />
+    <Content Include="Views\PracenjeUcenika\OdabirUcenika.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

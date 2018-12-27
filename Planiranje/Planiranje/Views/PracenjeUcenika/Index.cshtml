@@ -1,0 +1,468 @@
+﻿@model Planiranje.Models.Ucenici.PracenjeUcenikaModel
+@{
+    Page.Title = "Lista praćenja učenika";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+<div class="inner">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Odabir aktivnosti:</label>
+                <select class="form-control">
+                    <option>Popis učenika u razrednom odjelu</option>
+                    <option>Bilješke o radu s učenikom</option>
+                    <option selected>Lista praćenja učenika - pedagoška obrada i anamneza</option>
+                    <option>Protokol promatranja</option>
+                    <option>Procjena suradnje</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Školska godina:</label>
+                                <select id="selectGodina" onchange="promjenaGodine()" class="form-control">
+                                    <option value="0">Odaberi školsku godinu</option>
+                                    @foreach(var item in Model.SkGodine)
+                                    {
+                                        int godina = item.Sk_Godina + 1;
+                                        <option value="@item.Sk_Godina">@item.Sk_Godina./@godina.</option>
+                                    }
+                                </select>
+                            </div>
+                        </div><!--END COL 3-->
+                        <div class="col-lg-3" id="razredi">
+                            
+                        </div>
+
+                    </div><!--END ROW -->
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div id="tablica" class="table-responsive">
+                                
+                            </div>
+                        </div><!--END COL 3-->
+                        <div class="col-lg-9">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <form class="form-horizontal">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-12">Odabrani učenik: Anja Horvat</label>
+                                                </div>
+                                            </div>                                            
+                                            <div class="col-lg-4">
+                                            </div>
+                                        </form>
+                                    </div><!--END ROW -->
+                                </div><!--END HEAD -->
+                                <div class="panel-body">
+                                    <ul class="nav nav-pills">
+                                        <li class="active">
+                                            <a href="#osobni" data-toggle="tab">Osnovni podaci</a>
+                                        </li>
+                                        <li>
+                                            <a href="#obitelj" data-toggle="tab">Obitelj</a>
+                                        </li>
+                                        <li>
+                                            <a href="#razlog" data-toggle="tab">Razlog</a>
+                                        </li>
+                                        <li>
+                                            <a href="#procjena" data-toggle="tab">Procjena</a>
+                                        </li>
+                                        <li>
+                                            <a href="#inicijalni" data-toggle="tab">Uvjeti-Učenje-Vještine</a>
+                                        </li>
+                                        <li>
+                                            <a href="#postignuca" data-toggle="tab">Postignuća</a>
+                                        </li>
+                                        <li>
+                                            <a href="#zapazanja" data-toggle="tab">Neposredni rad</a>
+                                        </li>
+                                        <li>
+                                            <a href="#prijedlog" data-toggle="tab">Zaključak</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="osobni">
+                                            <form class="form-horizontal">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4">Razredni odjel:</label>
+                                                            <div class="col-lg-6">
+                                                                <select class="form-control">
+                                                                    <option>5C</option>
+                                                                    <option>6A</option>
+                                                                    <option>6B</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4">Razrednik:</label>
+                                                            <div class="col-lg-6">
+                                                                <select class="form-control">
+                                                                    <option>-</option>
+                                                                    <option>Nikola Horvat</option>
+                                                                    <option>Marija Višnjić</option>
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="text1" class="control-label col-lg-4">Datum rođenja</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" id="text1" placeholder="Datum rođenja" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-group">
+                                                            <label for="text4" class="control-label col-lg-1"></label>
+                                                            <div class="col-lg-6">
+                                                                <button type="submit" class="btn btn-success">Potvrdi</button>
+                                                                <button type="reset" class="btn btn-success">Odustani</button>
+                                                            </div>
+                                                        </div>
+                                                    </div><!--END COL -->
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="limiter" class="control-label col-lg-4">Mjesto i država rođenja</label>
+                                                            <div class="col-lg-6">
+                                                                <textarea id="limiter" rows="2" placeholder="Mjesto i država" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="text1" class="control-label col-lg-4">Adresa stanovanja</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" id="text1" placeholder="Adresa stanovanja" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="text1" class="control-label col-lg-4">Nadnevak početka praćenja</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" id="text1" placeholder="Nadnevak praćenja" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div><!--END COL -->
+                                                </div><!--END ROW -->
+
+                                            </form>
+                                        </div><!--END osobni podaci -->
+                                        <div class="tab-pane fade" id="obitelj">
+                                            <p>
+                                                <a href="#" class="btn btn-primary btn-xs btn-grad"> Novi član obitelji</a>
+                                            </p>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Prezime i ime</th>
+                                                            <th>Svojstvo</th>
+                                                            <th>Adresa</th>
+                                                            <th>Kontakt</th>
+                                                            <th>Zanimanje</th>
+                                                            <th>Aktivnost</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="col-md-1">1.</td>
+                                                            <td class="col-md-2">Ivan Horvat</td>
+                                                            <td class="col-md-1">Otac</td>
+                                                            <td class="col-md-2">Ivana pl. Zajca 89, 40000 Čakovec</td>
+                                                            <td class="col-md-2">098/12354698<br>ivan.horvat@gmail.com</td>
+                                                            <td class="col-md-2">trgovac</td>
+                                                            <td class="col-md-2">
+                                                                <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                                                <a href="#" class="btn btn-info btn-xs btn-grad">Info</a>
+                                                                <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="col-md-1">2.</td>
+                                                            <td class="col-md-2">Nikola Horvat</td>
+                                                            <td class="col-md-1">Brat</td>
+                                                            <td class="col-md-2">Ivana pl. Zajca 89, 40000 Čakovec</td>
+                                                            <td class="col-md-2">098/1111118<br>nikola.horvat@gmail.com</td>
+                                                            <td class="col-md-2">učenik</td>
+                                                            <td class="col-md-2">
+                                                                <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                                                <a href="#" class="btn btn-info btn-xs btn-grad">Info</a>
+                                                                <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div><!--END TAB obitelj -->
+                                        <div class="tab-pane fade" id="razlog">
+                                            <form class="form-horizontal">
+                                                <div class="form-group">
+                                                    <textarea id="limiter" rows="5" placeholder="Razlog pokretanja praćenja" class="form-control"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-success">Potvrdi</button>
+                                                    <button type="reset" class="btn btn-success">Odustani</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane fade" id="procjena">
+                                            <form class="form-horizontal">
+                                                <div class="panel-group" id="accordion">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                                                    Inicijalna procjena - razgovor s učenikom
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse2" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <textarea class="form-control" rows="5"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                                                    Inicijalna procjena - razgovor s roditeljem/skrbnikom
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse3" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <textarea class="form-control" rows="5"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                                                    Inicijalna procjena - razgovor s razrednikom
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse4" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <textarea class="form-control" rows="5"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-success">Potvrdi</button>
+                                                    <button type="reset" class="btn btn-success">Odustani</button>
+                                                </div>
+
+                                            </form>
+                                        </div><!--END TAB obitelj -->
+                                        <div class="tab-pane fade" id="inicijalni">
+                                            <form class="form-horizontal">
+                                                <div class="panel-group" id="accordion2">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse2b">
+                                                                    Socioekononski uvjeti i odgojno-obrazovni utjecaj okružja
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse2b" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <textarea class="form-control" rows="5"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse3b">
+                                                                    Učenje i sazrevanje
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse3b" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <textarea class="form-control" rows="5"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse4b">
+                                                                    Socijalne vještine učenika i odnos prema obavezama
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse4b" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <textarea class="form-control" rows="5"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-success">Potvrdi</button>
+                                                    <button type="reset" class="btn btn-success">Odustani</button>
+                                                </div>
+
+                                            </form>
+                                        </div><!--END TAB inicijalni podaci -->
+                                        <div class="tab-pane fade" id="postignuca">
+                                            <p>
+                                                <a href="#" class="btn btn-primary btn-xs btn-grad"> Novo postignuće</a>
+                                            </p>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Šk.godina</th>
+                                                            <th>Razred</th>
+                                                            <th>Napomena</th>
+                                                            <th>Aktivnost</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="col-md-1">2017./2018.</td>
+                                                            <td class="col-md-2">5C</td>
+                                                            <td class="col-md-7">Napomena ........<br>Napomena.......</td>
+                                                            <td class="col-md-2">
+                                                                <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                                                <a href="#" class="btn btn-info btn-xs btn-grad">Info</a>
+                                                                <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="col-md-1">2016./2017.</td>
+                                                            <td class="col-md-2">4C</td>
+                                                            <td class="col-md-7">Napomena ........<br>Napomena.......</td>
+                                                            <td class="col-md-2">
+                                                                <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                                                <a href="#" class="btn btn-info btn-xs btn-grad">Info</a>
+                                                                <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div> <!--END TAB postignuća -->
+                                        <div class="tab-pane fade" id="zapazanja">
+                                            <p>
+                                                <a href="#" class="btn btn-primary btn-xs btn-grad"> Novi zapis</a>
+                                            </p>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Datum</th>
+                                                            <th>Oblici i način rada s učenikom, učiteljima, roditeljima/starateljima i drugima </th>
+                                                            <th>Aktivnost</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="col-md-1">10.12.2017.</td>
+                                                            <td class="col-md-9">Napomena ........<br>Napomena.......</td>
+                                                            <td class="col-md-2">
+                                                                <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                                                <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="col-md-1">05.09.2017.</td>
+                                                            <td class="col-md-9">Napomena ........<br>Napomena.......</td>
+                                                            <td class="col-md-2">
+                                                                <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                                                <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div> <!--END TAB zapažanja -->
+                                        <div class="tab-pane fade" id="prijedlog">
+                                            <form class="form-horizontal">
+
+                                                <div class="form-group">
+                                                    <label>Završni zaključak praćenja učenika</label>
+                                                    <textarea id="limiter" rows="6" placeholder="Završni zaključak" class="form-control"></textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-success">Potvrdi</button>
+                                                    <button type="reset" class="btn btn-success">Odustani</button>
+                                                </div>
+                                            </form>
+                                        </div> <!--END TAB zapažanja -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--END COL 9 -->
+                    </div> <!--END ROW -->
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function promjenaGodine() {
+        var val = $("#selectGodina").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/PracenjeUcenika/OdabirRazreda?godina=' + val,
+                success: function (data) {
+                    $("#razredi").html(data);
+                }
+            });
+        }
+        else {
+            $("#razredi").empty();
+        }
+        $("#tablica").empty();
+    }
+    function promjenaRazreda() {
+        var val = $("#selectRazred").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/PracenjeUcenika/OdabirUcenika?razred=' + val,
+                success: function (data) {
+                    $("#tablica").html(data);
+                    $("#dataTable").dataTable();
+                }
+            });
+        }
+        else {
+            $("#tablica").empty();
+        }
+    }
+    function pokaziDetalje(id) {
+        
+    }
+</script>
