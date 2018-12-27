@@ -24,12 +24,20 @@ namespace Planiranje.Controllers
         }
         public ActionResult OdabirRazreda (int godina)
         {
+            if (!Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             List<RazredniOdjel> razredi = new List<RazredniOdjel>();
             razredi = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola && w.Sk_godina == godina).ToList();
             return View(razredi);
         }
         public ActionResult OdabirUcenika (int razred)
         {
+            if (!Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             RazredniOdjel razredniOdjel = baza.RazredniOdjel.SingleOrDefault(s => s.Id == razred && s.Id_skola==PlaniranjeSession.Trenutni.OdabranaSkola);
             List<Ucenik> ucenici = new List<Ucenik>();
             if (razredniOdjel == null)
