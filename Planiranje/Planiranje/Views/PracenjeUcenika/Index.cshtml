@@ -100,8 +100,9 @@
         }
     }
     function pokaziDetalje(id) {
+        var val = $("#selectGodina").val();
         $.ajax({
-            url: '/PracenjeUcenika/Detalji?id=' + id,
+            url: '/PracenjeUcenika/Detalji?id=' + id + '&godina=' + val,
             success: function (data) {
                 $("#detalji").html(data);                
             }

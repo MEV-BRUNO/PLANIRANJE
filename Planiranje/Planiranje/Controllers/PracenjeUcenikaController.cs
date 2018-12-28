@@ -50,7 +50,7 @@ namespace Planiranje.Controllers
                        select uc).ToList();
             return View(ucenici);
         }
-        public ActionResult Detalji (int id)
+        public ActionResult Detalji (int id, int godina)
         {
             if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId<=0)
             {
@@ -61,6 +61,19 @@ namespace Planiranje.Controllers
                             raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id where uc.Id_ucenik == id && raz.Id_skola == 
                             PlaniranjeSession.Trenutni.OdabranaSkola select uc).FirstOrDefault();
             if (model.Ucenik == null)
+            {
+                return HttpNotFound();
+            }
+            model.Razred = (from uc in baza.Ucenik join ur in baza.UcenikRazred on uc.Id_ucenik equals ur.Id_ucenik join
+                            raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id where raz.Sk_godina == godina && uc.Id_ucenik==id
+                            select raz).FirstOrDefault();
+            if (model.Razred == null)
+            {
+                return HttpNotFound();
+            }
+            int idRazrednik = model.Razred.Id_razrednik;
+            model.Razrednik = baza.Nastavnik.SingleOrDefault(s => s.Id == idRazrednik);
+            if (model.Razred == null)
             {
                 return HttpNotFound();
             }

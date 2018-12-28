@@ -1,0 +1,57 @@
+﻿@model Planiranje.Models.Ucenici.PracenjeUcenikaModel
+@{
+    Layout = null;
+}
+<div class="form-horizontal">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="control-label col-lg-4">Razredni odjel:</label>
+                <div class="col-lg-6">
+                    @Model.Razred.Naziv
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-4">Razrednik:</label>
+                <div class="col-lg-6">
+                    @Model.Razrednik.ImePrezime
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="text1" class="control-label col-lg-4">Datum rođenja</label>
+                <div class="col-lg-6">
+                    <input type="text" id="text1" placeholder="Datum rođenja" class="form-control" />
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="text4" class="control-label col-lg-1"></label>
+                <div class="col-lg-6">
+                    <button type="submit" class="btn btn-success">Potvrdi</button>
+                    <button type="reset" class="btn btn-success">Odustani</button>
+                </div>
+            </div>
+        </div><!--END COL -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="limiter" class="control-label col-lg-4">Mjesto i država rođenja</label>
+                <div class="col-lg-6">
+                    <textarea id="limiter" rows="2" placeholder="Mjesto i država" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="text1" class="control-label col-lg-4">Adresa stanovanja</label>
+                <div class="col-lg-6">
+                    <input type="text" id="text1" placeholder="Adresa stanovanja" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="text1" class="control-label col-lg-4">Nadnevak početka praćenja</label>
+                <div class="col-lg-6">
+                    <input type="text" id="text1" placeholder="Nadnevak praćenja" class="form-control" />
+                </div>
+            </div>
+        </div><!--END COL -->
+    </div><!--END ROW -->
+</div>
+

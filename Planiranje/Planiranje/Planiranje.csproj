@@ -445,6 +445,7 @@
     <Content Include="Views\PracenjeUcenika\OdabirRazreda.cshtml" />
     <Content Include="Views\PracenjeUcenika\OdabirUcenika.cshtml" />
     <Content Include="Views\PracenjeUcenika\Detalji.cshtml" />
+    <Content Include="Views\PracenjeUcenika\OsnovniPodaci.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
