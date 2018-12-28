@@ -50,5 +50,21 @@ namespace Planiranje.Controllers
                        select uc).ToList();
             return View(ucenici);
         }
+        public ActionResult Detalji (int id)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId<=0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            PracenjeUcenikaModel model = new PracenjeUcenikaModel();            
+            model.Ucenik = (from uc in baza.Ucenik join ur in baza.UcenikRazred on uc.Id_ucenik equals ur.Id_ucenik join
+                            raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id where uc.Id_ucenik == id && raz.Id_skola == 
+                            PlaniranjeSession.Trenutni.OdabranaSkola select uc).FirstOrDefault();
+            if (model.Ucenik == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
+        }
     }
 }
