@@ -54,6 +54,7 @@ CREATE TABLE ucenik (
   adresa text,
   biljeska text,
   datum datetime,
+  pocetakpracenja datetime,
   id_razred int(20),
   PRIMARY KEY (id_ucenik)
 );
