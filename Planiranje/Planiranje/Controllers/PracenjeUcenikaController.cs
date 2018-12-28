@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Planiranje.Models.Ucenici;
 using Planiranje.Models;
+using System.Net;
 
 namespace Planiranje.Controllers
 {
@@ -74,6 +75,45 @@ namespace Planiranje.Controllers
             int idRazrednik = model.Razred.Id_razrednik;
             model.Razrednik = baza.Nastavnik.SingleOrDefault(s => s.Id == idRazrednik);
             if (model.Razred == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult OsnovniPodaci(PracenjeUcenikaModel model)
+        {
+            int id = model.Ucenik.Id_ucenik;
+            try
+            {
+                using(var db = new BazaPodataka())
+                {
+                    var ucenik = db.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+                    if (ucenik != null)
+                    {
+                        ucenik.Datum = model.Ucenik.Datum;
+                        ucenik.PocetakPracenja = model.Ucenik.PocetakPracenja;
+                        ucenik.Adresa = model.Ucenik.Adresa;
+                        ucenik.Grad = model.Ucenik.Grad;
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch { return new HttpStatusCodeResult(HttpStatusCode.NotModified); }
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+        }
+        public ActionResult OsnovniPodaci(int id, int razred)
+        {
+            PracenjeUcenikaModel model = new PracenjeUcenikaModel();
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            model.Razred = baza.RazredniOdjel.SingleOrDefault(s => s.Id == razred);
+            if(model.Ucenik ==null || model.Razred == null)
+            {
+                return HttpNotFound();
+            }
+            int idRazrednik = model.Razred.Id_razrednik;
+            model.Razrednik = baza.Nastavnik.SingleOrDefault(s => s.Id == idRazrednik);
+            if (model.Razrednik == null)
             {
                 return HttpNotFound();
             }

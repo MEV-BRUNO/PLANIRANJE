@@ -29,8 +29,8 @@
             <div class="form-group">
                 <label for="text4" class="control-label col-lg-1"></label>
                 <div class="col-lg-6">
-                    <button onclick="" class="btn btn-success">Potvrdi</button>
-                    <button onclick="" class="btn btn-success">Odustani</button>
+                    <button type="button" onclick="potvrdi('@Url.Action("OsnovniPodaci","PracenjeUcenika")','#osnovniPodaci','Spremljeno')" class="btn btn-success">Potvrdi</button>
+                    <button type="button" onclick="odustani('@Url.Action("OsnovniPodaci","PracenjeUcenika", new { id=Model.Ucenik.Id_ucenik, razred=Model.Razred.Id})','#osobni')" class="btn btn-success">Odustani</button>
                 </div>
             </div>
         </div><!--END COL -->

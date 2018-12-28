@@ -108,4 +108,29 @@
             }
         });
     }
+    function potvrdi(path, id, poruka) {
+        var dt = $(id).serialize();
+        $.ajax({
+            url: path,
+            type: "POST",
+            data: dt,
+            success: function (data) {
+                showSnackBar(poruka);                
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+        });
+    }
+    function odustani(path, id) {
+        $.ajax({
+            url: path,      
+            success: function (data) {
+                $(id).html(data);
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+        });
+    }
 </script>
