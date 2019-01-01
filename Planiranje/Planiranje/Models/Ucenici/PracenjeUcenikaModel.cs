@@ -14,5 +14,8 @@ namespace Planiranje.Models.Ucenici
         public List<RazredniOdjel> RazredniOdjeli { get; set; }
         public RazredniOdjel Razred { get; set; }
         public Nastavnik Razrednik { get; set; }
+        public List<Obitelj> ListaObitelji { get; set; }
+        public Obitelj Obitelj { get; set; }
+        public SelectList Odaberi { get; set; }
     }
 }

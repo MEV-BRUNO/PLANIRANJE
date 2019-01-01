@@ -78,6 +78,8 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
+            model.ListaObitelji = new List<Obitelj>();
+            model.ListaObitelji = baza.Obitelj.Where(w => w.Id_ucenik == id).ToList();
             return View(model);
         }
         [HttpPost]
@@ -118,6 +120,64 @@ namespace Planiranje.Controllers
                 return HttpNotFound();
             }
             return View(model);
+        }
+        public ActionResult Obitelj (int id)
+        {
+            PracenjeUcenikaModel model = new PracenjeUcenikaModel();
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);            
+            if (model.Ucenik == null)
+            {
+                return HttpNotFound();
+            }
+            model.ListaObitelji = baza.Obitelj.Where(w => w.Id_ucenik == id).ToList();
+            return View(model);
+        }
+        public ActionResult DodajObitelj (int id)
+        {
+            PracenjeUcenikaModel model = new PracenjeUcenikaModel();
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            if (model.Ucenik == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.idUcenik = id;
+            List<string> lista = new List<string>()
+            {
+                "Otac", "Majka","Brat","Sestra"
+            };
+            ViewBag.select = lista;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult DodajObitelj (Obitelj model)
+        {
+            List<string> lista = new List<string>()
+            {
+                "Otac", "Majka","Brat","Sestra"
+            };
+            if (string.IsNullOrWhiteSpace(model.Ime) || string.IsNullOrWhiteSpace(model.Prezime) || !lista.Contains(model.Svojstvo))
+            {
+                ViewBag.select = lista;
+                if (lista.Contains(model.Svojstvo))
+                {
+                    ViewBag.selected = model.Svojstvo;
+                }
+                ViewBag.idUcenik = model.Id_ucenik;
+                return View(model);
+            }
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.Obitelj.Add(model);
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Dogodila se greška prilikom spremanja podataka");
+                }
+            }
+            return RedirectToAction("Obitelj", new { id = model.Id_ucenik });
         }
     }
 }

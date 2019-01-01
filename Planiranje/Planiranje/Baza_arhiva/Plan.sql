@@ -14,6 +14,20 @@ CREATE TABLE pedagog_skola (
   PRIMARY KEY (id)   
 );
 
+CREATE TABLE obitelj (
+  id_obitelj int(20) NOT NULL AUTO_INCREMENT,
+  ime text,
+  prezime text,
+  svojstvo varchar(10) NOT NULL,
+  adresa text,
+  zanimanje text,
+  kontakt text,
+  id_ucenik int(20),
+  PRIMARY KEY (id_obitelj),
+  KEY (id_ucenik),
+  CONSTRAINT obitelj_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+);
+
 CREATE TABLE ucenik_razred (
   id int NOT NULL AUTO_INCREMENT,
   id_razred int(20) NOT NULL,

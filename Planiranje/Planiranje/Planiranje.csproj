@@ -260,6 +260,7 @@
     <Compile Include="Models\Subjekt_DBHandle.cs" />
     <Compile Include="Models\GodisnjiModel.cs" />
     <Compile Include="Models\Ucenici\Nastavnik.cs" />
+    <Compile Include="Models\Ucenici\Obitelj.cs" />
     <Compile Include="Models\Ucenici\Pedagog_skola.cs" />
     <Compile Include="Models\Ucenici\PracenjeUcenikaModel.cs" />
     <Compile Include="Models\Ucenici\RazredniOdjel.cs" />
@@ -446,6 +447,8 @@
     <Content Include="Views\PracenjeUcenika\OdabirUcenika.cshtml" />
     <Content Include="Views\PracenjeUcenika\Detalji.cshtml" />
     <Content Include="Views\PracenjeUcenika\OsnovniPodaci.cshtml" />
+    <Content Include="Views\PracenjeUcenika\Obitelj.cshtml" />
+    <Content Include="Views\PracenjeUcenika\DodajObitelj.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

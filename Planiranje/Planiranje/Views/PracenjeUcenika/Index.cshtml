@@ -133,4 +133,27 @@
             }
         });
     }
+    function zatvoriModal(path, id, spremi, poruka) {
+        var dt = $(id).serialize();
+        $.ajax({
+            url: path,            
+            type: "POST",
+            data: dt,
+            success: function (data) {
+                if ($(data)[0].tagName === "P") {
+                    $(spremi).html(data);
+                    $('#modal').modal('hide');
+                    $('#modalContainer').removeData();
+                    $('.modal-backdrop').remove();
+                    showSnackBar(poruka);
+                }
+                else {
+                    $("#modalContainer").html(data);                    
+                }
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+        });
+    }
 </script>

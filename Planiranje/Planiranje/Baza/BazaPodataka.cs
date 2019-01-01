@@ -34,6 +34,7 @@ namespace Planiranje.Controllers
         public DbSet<Nastavnik> Nastavnik { get; set; }
         public DbSet<Ucenik> Ucenik { get; set; }
         public DbSet<Ucenik_razred> UcenikRazred { get; set; }
+        public DbSet<Obitelj> Obitelj { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

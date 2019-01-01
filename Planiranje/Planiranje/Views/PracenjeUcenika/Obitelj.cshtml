@@ -1,0 +1,42 @@
+﻿@model Planiranje.Models.Ucenici.PracenjeUcenikaModel
+@{
+    Layout = null;
+}
+
+<p>
+    <a onclick="showModal('@Url.Action("DodajObitelj","PracenjeUcenika", new { id=Model.Ucenik.Id_ucenik})')" class="btn btn-primary btn-xs btn-grad"> Novi član obitelji</a>
+</p>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Prezime i ime</th>
+                <th>Svojstvo</th>
+                <th>Adresa</th>
+                <th>Kontakt</th>
+                <th>Zanimanje</th>
+                <th>Aktivnost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int brojac = 0;}
+            @foreach (var item in Model.ListaObitelji)
+            {
+                brojac++;
+            <tr>
+                <td class="col-md-1">@brojac.</td>
+                <td class="col-md-2">@item.ImePrezime</td>
+                <td class="col-md-1">@item.Svojstvo</td>
+                <td class="col-md-2">@item.Adresa</td>
+                <td class="col-md-2">@item.Kontakt</td>
+                <td class="col-md-2">@item.Zanimanje</td>
+                <td class="col-md-2">
+                    <a onclick="" class="btn btn-primary btn-xs btn-grad">Uredi</a>                    
+                    <a onclick="" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                </td>
+            </tr>      
+            }
+        </tbody>
+    </table>
+</div>
