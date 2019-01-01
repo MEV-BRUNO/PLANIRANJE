@@ -179,5 +179,46 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Obitelj", new { id = model.Id_ucenik });
         }
+        public ActionResult UrediObitelj(int id)
+        {
+            Obitelj model = baza.Obitelj.SingleOrDefault(s => s.Id_obitelj == id);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+            List<string> lista = new List<string>()
+            {
+                "Otac", "Majka","Brat","Sestra"
+            };
+            ViewBag.select = lista;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UrediObitelj(Obitelj model)
+        {
+            List<string> lista = new List<string>()
+            {
+                "Otac", "Majka","Brat","Sestra"
+            };
+            if (string.IsNullOrWhiteSpace(model.Ime) || string.IsNullOrWhiteSpace(model.Prezime) || !lista.Contains(model.Svojstvo))
+            {
+                ViewBag.select = lista;             
+                return View(model);
+            }
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.Obitelj.Add(model);
+                    db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Greška prilikom zapisivanja podataka u bazu podataka");
+                }
+            }
+            return RedirectToAction("Obitelj", new { id = model.Id_ucenik });
+        }
     }
 }
