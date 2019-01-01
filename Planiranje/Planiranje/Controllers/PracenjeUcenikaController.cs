@@ -220,5 +220,46 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Obitelj", new { id = model.Id_ucenik });
         }
+        public ActionResult ObrisiObitelj (int id)
+        {
+            Obitelj model = baza.Obitelj.SingleOrDefault(s => s.Id_obitelj == id);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+            List<string> lista = new List<string>()
+            {
+                "Otac", "Majka","Brat","Sestra"
+            };
+            ViewBag.select = lista;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ObrisiObitelj (Obitelj model)
+        {
+            int idU = model.Id_ucenik;
+            int idO = model.Id_obitelj;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.Obitelj.SingleOrDefault(s => s.Id_obitelj == idO);
+                    if (result != null)
+                    {
+                        db.Obitelj.Remove(result);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.NotFound, "Nije pronađeno");
+                    }
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Greška prilikom brisanja podataka u bazi podataka");
+                }
+            }
+            return RedirectToAction("Obitelj", new { id = idU });
+        }
     }
 }

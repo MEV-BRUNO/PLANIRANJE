@@ -21,6 +21,7 @@ namespace Planiranje.Models.Ucenici
         public string Adresa { get; set; }
         public string Zanimanje { get; set; }
         public string Kontakt { get; set; }
+        [DisplayName("Ime i prezime")]
         public string ImePrezime { get { return Ime + " " + Prezime; } }
     }
 }

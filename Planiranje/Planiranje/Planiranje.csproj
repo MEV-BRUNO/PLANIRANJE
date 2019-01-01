@@ -450,6 +450,7 @@
     <Content Include="Views\PracenjeUcenika\Obitelj.cshtml" />
     <Content Include="Views\PracenjeUcenika\DodajObitelj.cshtml" />
     <Content Include="Views\PracenjeUcenika\UrediObitelj.cshtml" />
+    <Content Include="Views\PracenjeUcenika\ObrisiObitelj.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -33,7 +33,7 @@
                 <td class="col-md-2">@item.Zanimanje</td>
                 <td class="col-md-2">
                     <a onclick="showModal('@Url.Action("UrediObitelj","PracenjeUcenika", new { id=item.Id_obitelj})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>                    
-                    <a onclick="" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                    <a onclick="showModal('@Url.Action("ObrisiObitelj","PracenjeUcenika", new { id=item.Id_obitelj})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                 </td>
             </tr>      
             }
