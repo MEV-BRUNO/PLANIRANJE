@@ -263,6 +263,7 @@
     <Compile Include="Models\Ucenici\Obitelj.cs" />
     <Compile Include="Models\Ucenici\Pedagog_skola.cs" />
     <Compile Include="Models\Ucenici\PracenjeUcenikaModel.cs" />
+    <Compile Include="Models\Ucenici\Pracenje_ucenika.cs" />
     <Compile Include="Models\Ucenici\RazredniOdjel.cs" />
     <Compile Include="Models\Ucenici\Ucenik.cs" />
     <Compile Include="Models\Ucenici\Ucenik_razred.cs" />
@@ -451,6 +452,7 @@
     <Content Include="Views\PracenjeUcenika\DodajObitelj.cshtml" />
     <Content Include="Views\PracenjeUcenika\UrediObitelj.cshtml" />
     <Content Include="Views\PracenjeUcenika\ObrisiObitelj.cshtml" />
+    <Content Include="Views\PracenjeUcenika\Razlog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -80,6 +80,11 @@ namespace Planiranje.Controllers
             }
             model.ListaObitelji = new List<Obitelj>();
             model.ListaObitelji = baza.Obitelj.Where(w => w.Id_ucenik == id).ToList();
+            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
+            if (model.PracenjeUcenika == null)
+            {
+                model.PracenjeUcenika = new Pracenje_ucenika();
+            }
             return View(model);
         }
         [HttpPost]
@@ -260,6 +265,43 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("Obitelj", new { id = idU });
+        }
+        [HttpPost]
+        public ActionResult Razlog (PracenjeUcenikaModel model)
+        {
+            int id_ucenik = model.PracenjeUcenika.Id_ucenik;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id_ucenik);
+                    if (result != null)
+                    {
+                        result.Razlog = model.PracenjeUcenika.Razlog;
+                    }
+                    else
+                    {
+                        db.PracenjeUcenika.Add(model.PracenjeUcenika);
+                    }
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        public ActionResult Razlog (int id)
+        {
+            PracenjeUcenikaModel model = new PracenjeUcenikaModel();
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
+            if (model.PracenjeUcenika == null)
+            {
+                model.PracenjeUcenika = new Pracenje_ucenika();
+            }
+            return View(model);
         }
     }
 }
