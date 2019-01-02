@@ -2,6 +2,21 @@
 CREATE DATABASE planiranje;
 USE PLANIRANJE;
 
+CREATE TABLE ucenik (
+  id_ucenik int(20) NOT NULL AUTO_INCREMENT,
+  ime text,
+  prezime text,
+  spol tinyint NOT NULL,
+  oib varchar(11),
+  grad text,
+  adresa text,
+  biljeska text,
+  datum datetime,
+  pocetakpracenja datetime,
+  id_razred int(20),
+  PRIMARY KEY (id_ucenik)
+);
+
 CREATE TABLE sk_godina (
   sk_godina int(20) NOT NULL,
   PRIMARY KEY (sk_godina)
@@ -58,19 +73,20 @@ CREATE TABLE nastavnik (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE ucenik (
-  id_ucenik int(20) NOT NULL AUTO_INCREMENT,
-  ime text,
-  prezime text,
-  spol tinyint NOT NULL,
-  oib varchar(11),
-  grad text,
-  adresa text,
-  biljeska text,
-  datum datetime,
-  pocetakpracenja datetime,
-  id_razred int(20),
-  PRIMARY KEY (id_ucenik)
+CREATE TABLE pracenje_ucenika (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik int(20) NOT NULL,
+  razlog text,
+  inic_procjena_ucenik text,
+  inic_procjena_roditelj text,
+  inic_procjena_razrednik text,
+  soc_uvjeti text,
+  ucenje text,
+  soc_vjestine text,
+  zakljucak text,
+  PRIMARY KEY (id),
+  KEY (id_ucenik),
+  CONSTRAINT pracenje_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
 );
 
 CREATE TABLE aktivnost (

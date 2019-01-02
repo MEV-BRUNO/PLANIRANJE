@@ -1,0 +1,59 @@
+﻿@model Planiranje.Models.Ucenici.PracenjeUcenikaModel
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "uvjetiForm", @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model=>model.PracenjeUcenika.Id_ucenik, new { Value=Model.Ucenik.Id_ucenik})
+    <div class="panel-group" id="accordion2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion2" href="#collapse2b">
+                        Socioekononski uvjeti i odgojno-obrazovni utjecaj okružja
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse2b" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @Html.TextAreaFor(model => model.PracenjeUcenika.Soc_uvjeti, new { @class = "form-control", rows = "5" })
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion2" href="#collapse3b">
+                        Učenje i sazrevanje
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse3b" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @Html.TextAreaFor(model => model.PracenjeUcenika.Ucenje, new { @class = "form-control", rows = "5" })
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion2" href="#collapse4b">
+                        Socijalne vještine učenika i odnos prema obavezama
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse4b" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @Html.TextAreaFor(model => model.PracenjeUcenika.Soc_vjestine, new { @class = "form-control", rows = "5" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="form-group">
+        <button type="button" onclick="potvrdi('@Url.Action("Uvjeti","PracenjeUcenika")','#uvjetiForm','Spremljeno')" class="btn btn-success">Potvrdi</button>
+        <button type="button" onclick="odustani('@Url.Action("Uvjeti","PracenjeUcenika", new { id=Model.Ucenik.Id_ucenik})','#uvjeti')" class="btn btn-success">Odustani</button>
+    </div>
+}

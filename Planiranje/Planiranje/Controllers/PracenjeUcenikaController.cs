@@ -342,5 +342,81 @@ namespace Planiranje.Controllers
             }
             return View(model);
         }
+        [HttpPost]
+        public ActionResult Uvjeti (PracenjeUcenikaModel model)
+        {
+            int id_ucenik = model.PracenjeUcenika.Id_ucenik;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id_ucenik);
+                    if (result != null)
+                    {
+                        result.Soc_uvjeti = model.PracenjeUcenika.Soc_uvjeti;
+                        result.Soc_vjestine = model.PracenjeUcenika.Soc_vjestine;
+                        result.Ucenje = model.PracenjeUcenika.Ucenje;
+                    }
+                    else
+                    {
+                        db.PracenjeUcenika.Add(model.PracenjeUcenika);
+                    }
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        public ActionResult Uvjeti (int id)
+        {
+            PracenjeUcenikaModel model = new PracenjeUcenikaModel();
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
+            if (model.PracenjeUcenika == null)
+            {
+                model.PracenjeUcenika = new Pracenje_ucenika();
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Zakljucak (PracenjeUcenikaModel model)
+        {
+            int id_ucenik = model.PracenjeUcenika.Id_ucenik;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id_ucenik);
+                    if (result != null)
+                    {
+                        result.Zakljucak = model.PracenjeUcenika.Zakljucak;
+                    }
+                    else
+                    {
+                        db.PracenjeUcenika.Add(model.PracenjeUcenika);
+                    }
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        public ActionResult Zakljucak (int id)
+        {
+            PracenjeUcenikaModel model = new PracenjeUcenikaModel();
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
+            if (model.PracenjeUcenika == null)
+            {
+                model.PracenjeUcenika = new Pracenje_ucenika();
+            }
+            return View(model);
+        }
     }
 }
