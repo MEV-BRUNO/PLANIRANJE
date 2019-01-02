@@ -453,6 +453,7 @@
     <Content Include="Views\PracenjeUcenika\UrediObitelj.cshtml" />
     <Content Include="Views\PracenjeUcenika\ObrisiObitelj.cshtml" />
     <Content Include="Views\PracenjeUcenika\Razlog.cshtml" />
+    <Content Include="Views\PracenjeUcenika\Procjena.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

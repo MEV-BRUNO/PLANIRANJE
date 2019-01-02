@@ -303,5 +303,44 @@ namespace Planiranje.Controllers
             }
             return View(model);
         }
+        [HttpPost]
+        public ActionResult Procjena (PracenjeUcenikaModel model)
+        {
+            int id_ucenik = model.PracenjeUcenika.Id_ucenik;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id_ucenik);
+                    if (result != null)
+                    {
+                        result.Inic_Procjena_razrednik = model.PracenjeUcenika.Inic_Procjena_razrednik;
+                        result.Inic_Procjena_ucenik = model.PracenjeUcenika.Inic_Procjena_ucenik;
+                        result.Inic_Procjena_roditelj = model.PracenjeUcenika.Inic_Procjena_roditelj;
+                    }
+                    else
+                    {
+                        db.PracenjeUcenika.Add(model.PracenjeUcenika);
+                    }
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        public ActionResult Procjena (int id)
+        {
+            PracenjeUcenikaModel model = new PracenjeUcenikaModel();
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
+            if (model.PracenjeUcenika == null)
+            {
+                model.PracenjeUcenika = new Pracenje_ucenika();
+            }
+            return View(model);
+        }
     }
 }
