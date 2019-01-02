@@ -14,6 +14,7 @@
         {
             @Html.HiddenFor(model => model.Id_ucenik)     
             @Html.HiddenFor(model => model.Id_razred)
+            @Html.HiddenFor(model=> model.PocetakPracenja)
         <div class="modal-body">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
