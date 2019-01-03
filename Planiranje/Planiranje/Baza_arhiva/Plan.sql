@@ -91,15 +91,25 @@ CREATE TABLE pracenje_ucenika (
 
 CREATE TABLE postignuce (
   id_postignuce int(20) NOT NULL AUTO_INCREMENT,
-  id_ucenik int(20),
-  id_razred int(20),
-  godina int(20),
+  id_ucenik int(20) NOT NULL,
+  id_razred int(20) NOT NULL,
+  godina int(20) NOT NULL,
   napomena text,
   PRIMARY KEY (id_postignuce),
   KEY (id_ucenik),
   KEY (id_razred),
   CONSTRAINT postignuce_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
-);  
+); 
+
+CREATE TABLE neposredni_rad (
+  id_rad int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik int(20) NOT NULL,
+  datum datetime,
+  napomena text,
+  PRIMARY KEY (id_rad),
+  KEY (id_ucenik),
+  CONSTRAINT rad_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+); 
 
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,

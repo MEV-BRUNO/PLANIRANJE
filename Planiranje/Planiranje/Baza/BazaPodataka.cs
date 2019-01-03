@@ -37,6 +37,7 @@ namespace Planiranje.Controllers
         public DbSet<Obitelj> Obitelj { get; set; }
         public DbSet<Pracenje_ucenika> PracenjeUcenika { get; set; }
         public DbSet<Postignuce> Postignuce { get; set; }
+        public DbSet<Neposredni_rad> NeposredniRad { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

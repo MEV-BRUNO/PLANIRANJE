@@ -20,5 +20,6 @@ namespace Planiranje.Models.Ucenici
         public Pracenje_ucenika PracenjeUcenika { get; set; }
         public Postignuce Postignuce { get; set; }
         public List<Postignuce> Postignuca { get; set; }
+        public List<Neposredni_rad> NeposredniRadovi { get; set; }
     }
 }

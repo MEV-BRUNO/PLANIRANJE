@@ -91,6 +91,7 @@ namespace Planiranje.Controllers
                                     join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
                                     where uc.Id_ucenik == id
                                     select raz).ToList();
+            model.NeposredniRadovi = baza.NeposredniRad.Where(w => w.Id_ucenik == id).ToList();
             return View(model);
         }
         [HttpPost]
@@ -600,6 +601,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult ObrisiPostignuce (Postignuce model)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int idPos = model.Id_postignuce;
             int idUcenik = model.Id_ucenik;
             int idRazred = model.Id_razred;
@@ -620,6 +625,17 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("Postignuce", new { id = idUcenik, razred = idRazred });
+        }
+        public ActionResult NeposredniRad (int id)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            PracenjeUcenikaModel model = new PracenjeUcenikaModel();
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            model.NeposredniRadovi = baza.NeposredniRad.Where(w => w.Id_ucenik == id).ToList();
+            return View(model);
         }
     }
 }
