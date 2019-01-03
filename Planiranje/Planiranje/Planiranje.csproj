@@ -464,6 +464,8 @@
     <Content Include="Views\PracenjeUcenika\ObrisiPostignuce.cshtml" />
     <Content Include="Views\PracenjeUcenika\NeposredniRad.cshtml" />
     <Content Include="Views\PracenjeUcenika\DodajNeposredniRad.cshtml" />
+    <Content Include="Views\PracenjeUcenika\UrediNeposredniRad.cshtml" />
+    <Content Include="Views\PracenjeUcenika\ObrisiNeposredniRad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

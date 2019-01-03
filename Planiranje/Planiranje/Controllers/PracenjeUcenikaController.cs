@@ -669,5 +669,70 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("NeposredniRad", new { id = model.Id_ucenik });
         }
+        public ActionResult UrediNeposredniRad (int id)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Neposredni_rad model = baza.NeposredniRad.SingleOrDefault(s => s.Id_rad == id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UrediNeposredniRad (Neposredni_rad model)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (string.IsNullOrWhiteSpace(model.Napomena) || model.Datum.CompareTo(new DateTime(1, 1, 1)) == 0)
+            {                
+                return View(model);
+            }            
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.NeposredniRad.Add(model);
+                    db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch { }
+            }
+            return RedirectToAction("NeposredniRad", new { id = model.Id_ucenik });
+        }
+        public ActionResult ObrisiNeposredniRad (int id)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Neposredni_rad model = baza.NeposredniRad.SingleOrDefault(s => s.Id_rad == id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ObrisiNeposredniRad (Neposredni_rad model)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int idRad = model.Id_rad;
+            int idUc = model.Id_ucenik;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.NeposredniRad.SingleOrDefault(s => s.Id_rad == idRad);
+                    if (result != null)
+                    {
+                        db.NeposredniRad.Remove(result);
+                        db.SaveChanges();
+                    }
+                }
+                catch { }
+            }
+            return RedirectToAction("NeposredniRad", new { id = idUc });
+        }
     }
 }
