@@ -549,5 +549,44 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Postignuce", new { id = model.Id_ucenik, razred = model.Id_razred });
         }
+        public ActionResult UrediPostignuce (int id)
+        {
+            if(!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId<=0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Postignuce model = baza.Postignuce.SingleOrDefault(s => s.Id_postignuce == id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UrediPostignuce (Postignuce model)
+        {
+            if(!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (string.IsNullOrWhiteSpace(model.Napomena))
+            {
+                return View(model);
+            }
+            int idPos = model.Id_postignuce;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.Postignuce.SingleOrDefault(s => s.Id_postignuce == idPos);
+                    if (result != null)
+                    {
+                        result.Napomena = model.Napomena;
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            return RedirectToAction("Postignuce", new { id = model.Id_ucenik, razred = model.Id_razred });
+        }
     }
 }

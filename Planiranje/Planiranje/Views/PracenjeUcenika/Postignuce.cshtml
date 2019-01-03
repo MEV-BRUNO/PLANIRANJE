@@ -26,7 +26,7 @@
                 <td class="col-md-2">@Model.RazredniOdjeli.Single(s=>s.Id==item.Id_razred).Naziv</td>
                 <td class="col-md-7">@item.Napomena</td>
                 <td class="col-md-2">
-                    <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>                    
+                    <a onclick="showModal('@Url.Action("UrediPostignuce","PracenjeUcenika", new { id=item.Id_postignuce})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>                    
                     <a href="#" class="btn btn-danger btn-xs btn-grad">Briši</a>
                 </td>
             </tr>   

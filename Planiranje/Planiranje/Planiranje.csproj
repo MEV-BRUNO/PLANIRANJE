@@ -459,6 +459,7 @@
     <Content Include="Views\PracenjeUcenika\Zakljucak.cshtml" />
     <Content Include="Views\PracenjeUcenika\DodajPostignuce.cshtml" />
     <Content Include="Views\PracenjeUcenika\Postignuce.cshtml" />
+    <Content Include="Views\PracenjeUcenika\UrediPostignuce.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
