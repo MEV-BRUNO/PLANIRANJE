@@ -3,7 +3,7 @@
     Layout = null;
 }
 <p>
-    <a href="#" class="btn btn-primary btn-xs btn-grad"> Novi zapis</a>
+    <a onclick="showModal('@Url.Action("DodajNeposredniRad","PracenjeUcenika", new { id=Model.Ucenik.Id_ucenik})')" class="btn btn-primary btn-xs btn-grad"> Novi zapis</a>
 </p>
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover" id="dataTable3">

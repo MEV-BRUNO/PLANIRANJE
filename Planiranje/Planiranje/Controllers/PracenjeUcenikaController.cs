@@ -637,5 +637,37 @@ namespace Planiranje.Controllers
             model.NeposredniRadovi = baza.NeposredniRad.Where(w => w.Id_ucenik == id).ToList();
             return View(model);
         }
+        public ActionResult DodajNeposredniRad (int id)
+        {
+            if(!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            ViewBag.ucenik = id;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult DodajNeposredniRad (Neposredni_rad model)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if(string.IsNullOrWhiteSpace(model.Napomena)||model.Datum.CompareTo(new DateTime(1, 1, 1)) == 0)
+            {
+                ViewBag.ucenik = model.Id_ucenik;
+                return View(model);
+            }
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.NeposredniRad.Add(model);
+                    db.SaveChanges();
+                }
+                catch { }
+            }
+            return RedirectToAction("NeposredniRad", new { id = model.Id_ucenik });
+        }
     }
 }

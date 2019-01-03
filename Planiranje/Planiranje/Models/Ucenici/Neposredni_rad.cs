@@ -12,6 +12,7 @@ namespace Planiranje.Models.Ucenici
         [Key]
         public int Id_rad { get; set; }
         public int Id_ucenik { get; set; }
+        [Required(ErrorMessage ="Obavezno polje")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Datum { get; set; }
