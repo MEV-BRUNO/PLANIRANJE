@@ -18,5 +18,7 @@ namespace Planiranje.Models.Ucenici
         public Obitelj Obitelj { get; set; }
         public SelectList Odaberi { get; set; }
         public Pracenje_ucenika PracenjeUcenika { get; set; }
+        public Postignuce Postignuce { get; set; }
+        public List<Postignuce> Postignuca { get; set; }
     }
 }

@@ -89,6 +89,18 @@ CREATE TABLE pracenje_ucenika (
   CONSTRAINT pracenje_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
 );
 
+CREATE TABLE postignuce (
+  id_postignuce int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik int(20),
+  id_razred int(20),
+  godina int(20),
+  napomena text,
+  PRIMARY KEY (id_postignuce),
+  KEY (id_ucenik),
+  KEY (id_razred),
+  CONSTRAINT postignuce_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+);  
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,

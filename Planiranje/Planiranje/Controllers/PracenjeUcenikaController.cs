@@ -85,11 +85,21 @@ namespace Planiranje.Controllers
             {
                 model.PracenjeUcenika = new Pracenje_ucenika();
             }
+            model.Postignuca = baza.Postignuce.Where(w => w.Id_ucenik == id).ToList();
+            model.RazredniOdjeli = (from uc in baza.Ucenik
+                                    join ur in baza.UcenikRazred on uc.Id_ucenik equals ur.Id_ucenik
+                                    join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                                    where uc.Id_ucenik == id
+                                    select raz).ToList();
             return View(model);
         }
         [HttpPost]
         public ActionResult OsnovniPodaci(PracenjeUcenikaModel model)
         {
+            if(!Request.IsAjaxRequest()|| PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int id = model.Ucenik.Id_ucenik;
             try
             {
@@ -111,6 +121,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult OsnovniPodaci(int id, int razred)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
             model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
             model.Razred = baza.RazredniOdjel.SingleOrDefault(s => s.Id == razred);
@@ -128,6 +142,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult Obitelj (int id)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
             model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);            
             if (model.Ucenik == null)
@@ -139,6 +157,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult DodajObitelj (int id)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
             model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
             if (model.Ucenik == null)
@@ -156,6 +178,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult DodajObitelj (Obitelj model)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             List<string> lista = new List<string>()
             {
                 "Otac", "Majka","Brat","Sestra"
@@ -186,6 +212,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult UrediObitelj(int id)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             Obitelj model = baza.Obitelj.SingleOrDefault(s => s.Id_obitelj == id);
             if (model == null)
             {
@@ -201,6 +231,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult UrediObitelj(Obitelj model)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             List<string> lista = new List<string>()
             {
                 "Otac", "Majka","Brat","Sestra"
@@ -227,6 +261,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult ObrisiObitelj (int id)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             Obitelj model = baza.Obitelj.SingleOrDefault(s => s.Id_obitelj == id);
             if (model == null)
             {
@@ -242,6 +280,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult ObrisiObitelj (Obitelj model)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int idU = model.Id_ucenik;
             int idO = model.Id_obitelj;
             using(var db = new BazaPodataka())
@@ -269,6 +311,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Razlog (PracenjeUcenikaModel model)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int id_ucenik = model.PracenjeUcenika.Id_ucenik;
             using(var db=new BazaPodataka())
             {
@@ -294,6 +340,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult Razlog (int id)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
             model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
             model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
@@ -306,6 +356,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Procjena (PracenjeUcenikaModel model)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int id_ucenik = model.PracenjeUcenika.Id_ucenik;
             using(var db=new BazaPodataka())
             {
@@ -333,6 +387,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult Procjena (int id)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
             model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
             model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
@@ -345,6 +403,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Uvjeti (PracenjeUcenikaModel model)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int id_ucenik = model.PracenjeUcenika.Id_ucenik;
             using(var db = new BazaPodataka())
             {
@@ -372,6 +434,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult Uvjeti (int id)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
             model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
             model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
@@ -384,6 +450,10 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult Zakljucak (PracenjeUcenikaModel model)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             int id_ucenik = model.PracenjeUcenika.Id_ucenik;
             using(var db=new BazaPodataka())
             {
@@ -409,6 +479,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult Zakljucak (int id)
         {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
             model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
             model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
@@ -417,6 +491,63 @@ namespace Planiranje.Controllers
                 model.PracenjeUcenika = new Pracenje_ucenika();
             }
             return View(model);
+        }
+        public ActionResult Postignuce (int id, int razred)
+        {
+            if(!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            PracenjeUcenikaModel model = new PracenjeUcenikaModel();
+            model.Postignuca = baza.Postignuce.Where(w => w.Id_ucenik == id).ToList();
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            model.RazredniOdjeli = (from uc in baza.Ucenik
+                                    join ur in baza.UcenikRazred on uc.Id_ucenik equals ur.Id_ucenik
+                                    join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                                    where uc.Id_ucenik == id
+                                    select raz).ToList();
+            model.Razred = baza.RazredniOdjel.SingleOrDefault(s => s.Id == razred);
+            return View(model);
+        }
+        public ActionResult DodajPostignuce (int razred, int ucenik)
+        {
+            if(!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            ViewBag.razred = razred;
+            ViewBag.ucenik = ucenik;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult DodajPostignuce (Postignuce model)
+        {
+            if(!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (string.IsNullOrWhiteSpace(model.Napomena))
+            {
+                ViewBag.ucenik = model.Id_ucenik;
+                ViewBag.razred = model.Id_razred;
+                return View(model);
+            }
+            int id_razred = model.Id_razred;
+            RazredniOdjel raz = baza.RazredniOdjel.SingleOrDefault(s => s.Id == id_razred);
+            model.Godina = raz.Sk_godina;
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    db.Postignuce.Add(model);
+                    db.SaveChanges();
+                }
+                catch
+                {
+
+                }
+            }
+            return RedirectToAction("Postignuce", new { id = model.Id_ucenik, razred = model.Id_razred });
         }
     }
 }

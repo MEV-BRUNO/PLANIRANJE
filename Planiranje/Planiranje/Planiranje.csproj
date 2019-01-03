@@ -262,6 +262,7 @@
     <Compile Include="Models\Ucenici\Nastavnik.cs" />
     <Compile Include="Models\Ucenici\Obitelj.cs" />
     <Compile Include="Models\Ucenici\Pedagog_skola.cs" />
+    <Compile Include="Models\Ucenici\Postignuce.cs" />
     <Compile Include="Models\Ucenici\PracenjeUcenikaModel.cs" />
     <Compile Include="Models\Ucenici\Pracenje_ucenika.cs" />
     <Compile Include="Models\Ucenici\RazredniOdjel.cs" />
@@ -456,6 +457,8 @@
     <Content Include="Views\PracenjeUcenika\Procjena.cshtml" />
     <Content Include="Views\PracenjeUcenika\Uvjeti.cshtml" />
     <Content Include="Views\PracenjeUcenika\Zakljucak.cshtml" />
+    <Content Include="Views\PracenjeUcenika\DodajPostignuce.cshtml" />
+    <Content Include="Views\PracenjeUcenika\Postignuce.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
