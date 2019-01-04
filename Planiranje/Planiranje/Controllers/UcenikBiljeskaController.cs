@@ -58,6 +58,7 @@ namespace Planiranje.Controllers
                 }
                 model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_ucenik_razred == id_ucenikRazred);
             }
+            model.ListaObitelji = baza.Obitelj.Where(w => w.Id_ucenik == id).ToList();
             return View(model);
         }
         public ActionResult Osobni(int id)
