@@ -12,7 +12,12 @@ namespace Planiranje.Models.Ucenici
         [Key]
         public int Id { get; set; }
         public int Id_ucenik_razred { get; set; }
+        [Required(ErrorMessage ="Obavezno polje")]
+        [DisplayName("Ponavlja razred")]
+        [Range(1,2, ErrorMessage ="Obavezno polje")]
         public int Ponavlja_razred { get; set; }
+        [Required(ErrorMessage ="Obavezno polje")]
+        [Range(1,2,ErrorMessage ="Obavezno polje")]
         public int Putnik { get; set; }
         public string Zaduzenje { get; set; }
     }

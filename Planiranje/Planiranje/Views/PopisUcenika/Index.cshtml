@@ -98,15 +98,18 @@
             type: "POST",
             data: dt,
             success: function (data) {
-                if ($(data)[0].tagName === "DIV") {
+                if ($(data)[0].className === "table-responsive") {
                     $(spremi).html(data);
                     $('#modal').modal('hide');
                     $('#modalContainer').removeData();
                     $('.modal-backdrop').remove();
                     showSnackBar(poruka);
                 }
-                else {
+                else if ($(data)[0].tagName === "DIV") {
                     $("#modalContainer").html(data);
+                }
+                else {
+                    location.reload();
                 }
             },
             error: function (request, status, error) {
