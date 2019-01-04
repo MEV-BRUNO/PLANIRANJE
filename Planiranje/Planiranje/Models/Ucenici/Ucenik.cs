@@ -41,6 +41,7 @@ namespace Planiranje.Models.Ucenici
         /// <summary>
         /// vraća ime i prezime
         /// </summary>
+        [DisplayName("Ime i prezime")]
         public string ImePrezime { get { return Ime + " " + Prezime; } }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

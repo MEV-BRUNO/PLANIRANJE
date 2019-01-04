@@ -478,6 +478,8 @@
     <Content Include="Views\UcenikBiljeska\Index.cshtml" />
     <Content Include="Views\UcenikBiljeska\Detalji.cshtml" />
     <Content Include="Views\UcenikBiljeska\Osobni.cshtml" />
+    <Content Include="Views\UcenikBiljeska\Obitelj.cshtml" />
+    <Content Include="Views\UcenikBiljeska\Inicijalni.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

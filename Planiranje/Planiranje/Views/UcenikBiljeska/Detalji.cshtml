@@ -88,24 +88,7 @@
                         </div>
                     </div><!--END TAB obitelj -->
                     <div class="tab-pane fade" id="inicijalni">
-                        <form class="form-horizontal">
-
-                            <div class="form-group">
-                                <label for="limiter" class="control-label col-lg-2">Inicijalni podaci</label>
-
-                                <div class="col-lg-10">
-                                    <textarea id="limiter" rows="10" placeholder="Inicijalni podaci o učeniku" class="form-control"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="text4" class="control-label col-lg-2"></label>
-                                <div class="col-lg-6">
-                                    <button type="submit" class="btn btn-default">Potvrdi</button>
-                                    <button type="reset" class="btn btn-default">Odustani</button>
-                                </div>
-                            </div>
-                        </form>
+                        @{ Html.RenderPartial("Inicijalni", Model);}
                     </div><!--END TAB inicijalni podaci -->
                     <div class="tab-pane fade" id="biljeska">
                         <p>

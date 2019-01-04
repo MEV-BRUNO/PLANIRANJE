@@ -55,7 +55,7 @@
         <label for="text4" class="control-label col-lg-2"></label>
         <div class="col-lg-6">
             <button type="button" onclick="potvrdi('@Url.Action("PromjenaOsobni","UcenikBiljeska")','#osobniPodaci','Spremljeno')" class="btn btn-success">Potvrdi</button>
-            <button type="button" class="btn btn-default">Odustani</button>
+            <button type="button" onclick="odustani('@Url.Action("Osobni","UcenikBiljeska", new { id = Model.Ucenik.Id_ucenik})','#osobni')" class="btn btn-default">Odustani</button>
         </div>
     </div>
 }

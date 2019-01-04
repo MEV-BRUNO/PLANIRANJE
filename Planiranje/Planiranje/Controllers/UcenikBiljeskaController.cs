@@ -40,7 +40,7 @@ namespace Planiranje.Controllers
                                           select ur).First();
             int id_ucenikRazred = ucenikRazred.Id;
             model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_ucenik_razred == id_ucenikRazred);
-            if (model == null)
+            if (model.UcenikBiljeska == null)
             {
                 model.UcenikBiljeska = new Ucenik_biljeska();
                 model.UcenikBiljeska.Id_ucenik_razred = id_ucenikRazred;
@@ -58,6 +58,18 @@ namespace Planiranje.Controllers
                 }
                 model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_ucenik_razred == id_ucenikRazred);
             }
+            return View(model);
+        }
+        public ActionResult Osobni(int id)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            UcenikBiljeskaModel model = new UcenikBiljeskaModel();
+            model.RazredniOdjeli = (from raz in baza.RazredniOdjel join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred join
+                                    uc in baza.Ucenik on ur.Id_ucenik equals uc.Id_ucenik where uc.Id_ucenik==id select raz).ToList();
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
             return View(model);
         }
         public ActionResult PromjenaOsobni (UcenikBiljeskaModel model)
@@ -78,6 +90,41 @@ namespace Planiranje.Controllers
                         result.Adresa = model.Ucenik.Adresa;
                         result.Grad = model.Ucenik.Grad;
                         result.Oib = model.Ucenik.Oib;
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+        }
+        public ActionResult Inicijalni (int id)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            UcenikBiljeskaModel model = new UcenikBiljeskaModel();
+            model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id);
+            return View(model);
+        }
+        public ActionResult PromjenaInicijalni (UcenikBiljeskaModel model)
+        {
+            if(!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int id = model.UcenikBiljeska.Id_biljeska;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id);
+                    if (result != null)
+                    {
+                        result.Inicijalni_podaci = model.UcenikBiljeska.Inicijalni_podaci;
                         db.SaveChanges();
                     }
                 }
