@@ -14,7 +14,7 @@ namespace Planiranje.Models.Ucenici
         public int Id_ucenik_razred { get; set; }
         [DisplayName("Inicijalni podaci")]
         public string Inicijalni_podaci { get; set; }
-        [DisplayName("Zapažanje")]
+        [DisplayName("Ostala zapažanja")]
         public string Zapazanje { get; set; }
     }
 }

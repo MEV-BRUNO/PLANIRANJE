@@ -135,5 +135,40 @@ namespace Planiranje.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.Accepted);
         }
+        public ActionResult Zapazanja (int id)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            UcenikBiljeskaModel model = new UcenikBiljeskaModel();
+            model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id);
+            return View(model);
+        }
+        public ActionResult PromjenaZapazanja (UcenikBiljeskaModel model)
+        {
+            if(!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int id = model.UcenikBiljeska.Id_biljeska;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id);
+                    if (result != null)
+                    {
+                        result.Zapazanje = model.UcenikBiljeska.Zapazanje;
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+        }
     }
 }
