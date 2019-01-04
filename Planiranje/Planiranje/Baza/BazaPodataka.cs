@@ -39,6 +39,7 @@ namespace Planiranje.Controllers
         public DbSet<Postignuce> Postignuce { get; set; }
         public DbSet<Neposredni_rad> NeposredniRad { get; set; }
         public DbSet<Popis_ucenika> PopisUcenika { get; set; }
+        public DbSet<Ucenik_biljeska> UcenikBiljeska { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

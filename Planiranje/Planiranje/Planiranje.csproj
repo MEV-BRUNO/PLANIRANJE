@@ -208,6 +208,7 @@
     <Compile Include="Controllers\PopisUcenikaController.cs" />
     <Compile Include="Controllers\PracenjeUcenikaController.cs" />
     <Compile Include="Controllers\SubjektiController.cs" />
+    <Compile Include="Controllers\UcenikBiljeskaController.cs" />
     <Compile Include="Controllers\ZadaciController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -271,6 +272,8 @@
     <Compile Include="Models\Ucenici\Pracenje_ucenika.cs" />
     <Compile Include="Models\Ucenici\RazredniOdjel.cs" />
     <Compile Include="Models\Ucenici\Ucenik.cs" />
+    <Compile Include="Models\Ucenici\UcenikBiljeskaModel.cs" />
+    <Compile Include="Models\Ucenici\Ucenik_biljeska.cs" />
     <Compile Include="Models\Ucenici\Ucenik_razred.cs" />
     <Compile Include="Models\Zadaci.cs" />
     <Compile Include="Models\ZadaciModel.cs" />
@@ -472,6 +475,9 @@
     <Content Include="Views\PopisUcenika\Index.cshtml" />
     <Content Include="Views\PopisUcenika\Tablica.cshtml" />
     <Content Include="Views\PopisUcenika\UrediPopis.cshtml" />
+    <Content Include="Views\UcenikBiljeska\Index.cshtml" />
+    <Content Include="Views\UcenikBiljeska\Detalji.cshtml" />
+    <Content Include="Views\UcenikBiljeska\Osobni.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

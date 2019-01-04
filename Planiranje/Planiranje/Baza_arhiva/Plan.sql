@@ -122,6 +122,16 @@ CREATE TABLE popis_ucenika (
   CONSTRAINT popis_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
 );
 
+CREATE TABLE ucenik_biljeska (
+  id_biljeska int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  inicijalni_podaci text,
+  zapazanje text,
+  PRIMARY KEY (id_biljeska),
+  KEY (id_ucenik_razred),
+  CONSTRAINT biljeska_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
+);
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
