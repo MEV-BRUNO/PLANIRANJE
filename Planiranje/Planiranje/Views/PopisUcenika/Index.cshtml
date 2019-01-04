@@ -1,6 +1,6 @@
-﻿@model Planiranje.Models.Ucenici.PracenjeUcenikaModel
+﻿@using Planiranje.Models
 @{
-    Page.Title = "Lista praćenja učenika";
+    Page.Title = "Popis učenika";
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 <div class="inner">
@@ -9,9 +9,9 @@
             <div class="form-group">
                 <label>Odabir aktivnosti:</label>
                 <select id="selectAktivnost" onchange="promjenaAktivnost()" class="form-control">
-                    <option value="/PopisUcenika/Index">Popis učenika u razrednom odjelu</option>
+                    <option selected>Popis učenika u razrednom odjelu</option>
                     <option>Bilješke o radu s učenikom</option>
-                    <option selected>Lista praćenja učenika - pedagoška obrada i anamneza</option>
+                    <option value="/PracenjeUcenika/Index">Lista praćenja učenika - pedagoška obrada i anamneza</option>
                     <option>Protokol promatranja</option>
                     <option>Procjena suradnje</option>
                 </select>
@@ -32,7 +32,7 @@
                                 <label>Školska godina:</label>
                                 <select id="selectGodina" onchange="promjenaGodine()" class="form-control">
                                     <option value="0">Odaberi školsku godinu</option>
-                                    @foreach(var item in Model.SkGodine)
+                                    @foreach (var item in ViewBag.godine as List<Sk_godina>)
                                     {
                                         int godina = item.Sk_Godina + 1;
                                         <option value="@item.Sk_Godina">@item.Sk_Godina./@godina.</option>
@@ -41,21 +41,16 @@
                             </div>
                         </div><!--END COL 3-->
                         <div class="col-lg-3" id="razredi">
-                            
+
                         </div>
 
                     </div><!--END ROW -->
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-3">
-                            <div id="tablica" class="table-responsive">
-                                
-                            </div>
-                        </div><!--END COL 3-->
-                        <div id="detalji" class="col-lg-9">
-                            
-                        </div><!--END COL 9 -->
+                        <div id="tablica" class="col-lg-12">
+
+                        </div>
                     </div> <!--END ROW -->
 
                 </div>
@@ -65,7 +60,6 @@
     </div>
 
 </div>
-
 <script>
     function promjenaGodine() {
         var val = $("#selectGodina").val();
@@ -80,14 +74,13 @@
         else {
             $("#razredi").empty();
         }
-        $("#tablica").empty();
-        $("#detalji").empty();
+        $("#tablica").empty();        
     }
     function promjenaRazreda() {
         var val = $("#selectRazred").val();
         if (val != "0") {
             $.ajax({
-                url: '/PracenjeUcenika/OdabirUcenika?razred=' + val,
+                url: '/PopisUcenika/PrikazUcenika?razred=' + val,
                 success: function (data) {
                     $("#tablica").html(data);
                     $("#dataTable").dataTable();
@@ -95,52 +88,17 @@
             });
         }
         else {
-            $("#tablica").empty();
-            $("#detalji").empty();
+            $("#tablica").empty();            
         }
     }
-    function pokaziDetalje(id) {
-        var val = $("#selectGodina").val();
-        $.ajax({
-            url: '/PracenjeUcenika/Detalji?id=' + id + '&godina=' + val,
-            success: function (data) {
-                $("#detalji").html(data);                
-            }
-        });
-    }
-    function potvrdi(path, id, poruka) {
+    function zatvoriModal(path, id, spremi, poruka) {
         var dt = $(id).serialize();
         $.ajax({
             url: path,
             type: "POST",
             data: dt,
             success: function (data) {
-                showSnackBar(poruka);                
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            }
-        });
-    }
-    function odustani(path, id) {
-        $.ajax({
-            url: path,      
-            success: function (data) {
-                $(id).html(data);
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            }
-        });
-    }
-    function zatvoriModal(path, id, spremi, poruka) {
-        var dt = $(id).serialize();
-        $.ajax({
-            url: path,            
-            type: "POST",
-            data: dt,
-            success: function (data) {
-                if ($(data)[0].tagName === "P") {
+                if ($(data)[0].tagName === "DIV") {
                     $(spremi).html(data);
                     $('#modal').modal('hide');
                     $('#modalContainer').removeData();
@@ -148,7 +106,7 @@
                     showSnackBar(poruka);
                 }
                 else {
-                    $("#modalContainer").html(data);                    
+                    $("#modalContainer").html(data);
                 }
             },
             error: function (request, status, error) {

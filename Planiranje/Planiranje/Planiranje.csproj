@@ -205,6 +205,7 @@
     <Compile Include="Controllers\PlanOs2Controller.cs" />
     <Compile Include="Controllers\PlanSsController.cs" />
     <Compile Include="Controllers\PodrucjaDjelovanjaController.cs" />
+    <Compile Include="Controllers\PopisUcenikaController.cs" />
     <Compile Include="Controllers\PracenjeUcenikaController.cs" />
     <Compile Include="Controllers\SubjektiController.cs" />
     <Compile Include="Controllers\ZadaciController.cs" />
@@ -263,6 +264,8 @@
     <Compile Include="Models\Ucenici\Neposredni_rad.cs" />
     <Compile Include="Models\Ucenici\Obitelj.cs" />
     <Compile Include="Models\Ucenici\Pedagog_skola.cs" />
+    <Compile Include="Models\Ucenici\PopisUcenikaModel.cs" />
+    <Compile Include="Models\Ucenici\Popis_ucenika.cs" />
     <Compile Include="Models\Ucenici\Postignuce.cs" />
     <Compile Include="Models\Ucenici\PracenjeUcenikaModel.cs" />
     <Compile Include="Models\Ucenici\Pracenje_ucenika.cs" />
@@ -466,6 +469,9 @@
     <Content Include="Views\PracenjeUcenika\DodajNeposredniRad.cshtml" />
     <Content Include="Views\PracenjeUcenika\UrediNeposredniRad.cshtml" />
     <Content Include="Views\PracenjeUcenika\ObrisiNeposredniRad.cshtml" />
+    <Content Include="Views\PopisUcenika\Index.cshtml" />
+    <Content Include="Views\PopisUcenika\Tablica.cshtml" />
+    <Content Include="Views\PopisUcenika\UrediPopis.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

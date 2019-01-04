@@ -1,0 +1,86 @@
+﻿@model Planiranje.Models.Ucenici.PopisUcenikaModel
+    @{
+        Layout = null;
+    }
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover" id="dataTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Ime i prezime </th>
+                <th>Roditelji/Skrbnici</th>
+                <th>Adresa</th>
+                <th>Ponavlja razred</th>
+                <th>Putnik</th>
+                <th>Zaduženje</th>
+                <th>Aktivnost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int brojac = 0;}
+            @foreach (var item in Model.Ucenici)
+            { brojac++;
+            <tr>
+                <td class="col-md-1">@brojac</td>
+                <td class="col-md-2">@item.ImePrezime</td>
+                <td class="col-md-2">
+                    @foreach(var roditelj in Model.Obitelji)
+                    {
+                        @roditelj.ImePrezime <br />
+                    }
+                </td>
+                <td class="col-md-2">@item.Adresa</td>
+                <td class="col-md-1">
+                    @{ var popis = Model.PopisUcenika.SingleOrDefault(s => s.Id_ucenik_razred == (Model.Ucenik_razred.Single(w => w.Id_ucenik == item.Id_ucenik
+                                   ).Id));
+                        var ponavlja = "";
+                        if (popis != null)
+                        {
+                            if (popis.Ponavlja_razred == 1)
+                            {
+                                ponavlja = "Da";
+                            }
+                            else
+                            {
+                                ponavlja = "Ne";
+                            }
+                        }
+                     }  
+                    @ponavlja
+                </td>
+                <td class="col-md-1">
+                    @{ 
+                        ponavlja = "";
+                        if (popis != null)
+                        {
+                            if (popis.Putnik == 1)
+                            {
+                                ponavlja = "Da";
+                            }
+                            else
+                            {
+                                ponavlja = "Ne";
+                            }
+                        }
+                     }  
+                    @ponavlja
+                </td>
+                <td class="col-md-2">
+                    @{ 
+                        ponavlja = "";
+                        if (popis != null)
+                        {
+                            ponavlja = popis.Zaduzenje;
+                        }
+                     }  
+                    @ponavlja
+                </td>
+                <td class="col-md-1">
+                    <a onclick="showModal('@Url.Action("UrediPopis","PopisUcenika", new { id=item.Id_ucenik, razred = Model.Razred.Id})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>                    
+                </td>
+            </tr>          
+            }
+        </tbody>
+    </table>
+</div>

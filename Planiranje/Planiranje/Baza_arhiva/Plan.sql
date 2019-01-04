@@ -111,6 +111,17 @@ CREATE TABLE neposredni_rad (
   CONSTRAINT rad_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
 ); 
 
+CREATE TABLE popis_ucenika (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  ponavlja_razred tinyint,
+  putnik tinyint,
+  zaduzenje text,
+  PRIMARY KEY (id),
+  KEY (id_ucenik_razred),
+  CONSTRAINT popis_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
+);
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
