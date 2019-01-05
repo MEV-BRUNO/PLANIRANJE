@@ -158,7 +158,7 @@ CREATE TABLE promatranje_ucenika (
   opis text,
   zakljucak text,
   PRIMARY KEY (id),
-  KEY (id_ucenik),
+  KEY (id_ucenik_razred),
   CONSTRAINT promatranje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)  
 );
 
