@@ -59,6 +59,8 @@ namespace Planiranje.Controllers
                 model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_ucenik_razred == id_ucenikRazred);
             }
             model.ListaObitelji = baza.Obitelj.Where(w => w.Id_ucenik == id).ToList();
+            int id_ucenik_biljeska = model.UcenikBiljeska.Id_biljeska;
+            model.MjesecneBiljeske = baza.MjesecnaBiljeska.Where(w => w.Id_ucenik_biljeska == id_ucenik_biljeska).ToList();
             return View(model);
         }
         public ActionResult Osobni(int id)
@@ -170,6 +172,138 @@ namespace Planiranje.Controllers
                 }
             }
             return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+        }
+        public ActionResult Biljeska (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            UcenikBiljeskaModel model = new UcenikBiljeskaModel();
+            model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id);
+            model.MjesecneBiljeske = baza.MjesecnaBiljeska.Where(w => w.Id_ucenik_biljeska == id).ToList();
+            return View(model);
+        }
+        public ActionResult NovaBiljeska (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            ViewBag.id = id;
+            List<string> mjeseci = new List<string> { "Rujan","Listopad","Studeni","Prosinac","Siječanj","Veljača","Ožujak","Travanj","Svibanj","LIpanj"};
+            ViewBag.mjeseci = mjeseci;
+            return View();
+        }        
+        [HttpPost]
+        public ActionResult NovaBiljeska (Mjesecna_biljeska model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            List<string> mjeseci = new List<string> { "Rujan", "Listopad", "Studeni", "Prosinac", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "LIpanj" };
+            if (string.IsNullOrWhiteSpace(model.Biljeska) || !mjeseci.Contains(model.Mjesec))
+            {
+                ViewBag.id = model.Id_ucenik_biljeska;                
+                ViewBag.mjeseci = mjeseci;
+                ViewBag.selected = model.Mjesec;
+                return View(model);
+            }
+            int id_biljeska = model.Id_ucenik_biljeska;
+            model.Sk_godina = (from bilj in baza.UcenikBiljeska
+                               join ur in baza.UcenikRazred on bilj.Id_ucenik_razred equals ur.Id
+                               join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                               where bilj.Id_biljeska == id_biljeska
+                               select raz.Sk_godina).First();
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.MjesecnaBiljeska.Add(model);
+                    db.SaveChanges();
+                }
+                catch
+                {
+
+                }
+            }
+            return RedirectToAction("Biljeska", new { id = model.Id_ucenik_biljeska });
+        }
+        public ActionResult UrediBiljeska (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Mjesecna_biljeska model = baza.MjesecnaBiljeska.SingleOrDefault(s => s.Id == id);
+            ViewBag.selected = model.Mjesec;
+            List<string> mjeseci = new List<string> { "Rujan", "Listopad", "Studeni", "Prosinac", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "LIpanj" };
+            ViewBag.mjeseci = mjeseci;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UrediBiljeska (Mjesecna_biljeska model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            List<string> mjeseci = new List<string> { "Rujan", "Listopad", "Studeni", "Prosinac", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "LIpanj" };
+            if (string.IsNullOrWhiteSpace(model.Biljeska) || !mjeseci.Contains(model.Mjesec))
+            {
+                ViewBag.id = model.Id_ucenik_biljeska;
+                ViewBag.mjeseci = mjeseci;
+                ViewBag.selected = model.Mjesec;
+                return View(model);
+            }
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.MjesecnaBiljeska.Add(model);
+                    db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch { }
+            }
+            return RedirectToAction("Biljeska", new { id = model.Id_ucenik_biljeska });
+        }
+        public ActionResult ObrisiBiljeska (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            List<string> mjeseci = new List<string> { "Rujan", "Listopad", "Studeni", "Prosinac", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "LIpanj" };
+            ViewBag.mjeseci = mjeseci;
+            Mjesecna_biljeska model = baza.MjesecnaBiljeska.SingleOrDefault(s => s.Id == id);
+            ViewBag.selected = model.Mjesec;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ObrisiBiljeska (Mjesecna_biljeska model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int id_biljeska = model.Id_ucenik_biljeska;
+            int idB = model.Id;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.MjesecnaBiljeska.SingleOrDefault(s => s.Id == idB);
+                    if (result != null)
+                    {
+                        db.MjesecnaBiljeska.Remove(result);
+                        db.SaveChanges();
+                    }
+                }
+                catch { }
+            }
+            return RedirectToAction("Biljeska", new { id = id_biljeska });
         }
     }
 }

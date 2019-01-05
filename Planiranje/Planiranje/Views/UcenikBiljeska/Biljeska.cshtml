@@ -1,0 +1,35 @@
+﻿@model Planiranje.Models.Ucenici.UcenikBiljeskaModel
+@{
+    Layout = null;
+}
+
+<p>
+    <a onclick="showModal('@Url.Action("NovaBiljeska","UcenikBiljeska", new { id=Model.UcenikBiljeska.Id_biljeska})')" class="btn btn-primary btn-xs btn-grad"> Nova bilješka</a>
+</p>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover" id="dataTables3">
+        <thead>
+            <tr>
+                <th>Mjesec</th>
+                <th>Šk.godina</th>
+                <th>Bilješka</th>
+                <th>Aktivnost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MjesecneBiljeske)
+            {
+                int godina = item.Sk_godina + 1;
+            <tr>
+                <td class="col-md-1">@item.Mjesec</td>
+                <td class="col-md-2">@item.Sk_godina./@godina.</td>
+                <td class="col-md-7">@item.Biljeska</td>
+                <td class="col-md-2">
+                    <a onclick="showModal('@Url.Action("UrediBiljeska","UcenikBiljeska", new { id=item.Id})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>                    
+                    <a onclick="showModal('@Url.Action("ObrisiBiljeska","UcenikBiljeska", new { id=item.Id})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                </td>
+            </tr>   
+            }
+        </tbody>
+    </table>
+</div>

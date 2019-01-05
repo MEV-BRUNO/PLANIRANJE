@@ -147,8 +147,11 @@
                     $('.modal-backdrop').remove();
                     showSnackBar(poruka);
                 }
-                else {
+                else if ($(data)[0].tagName === "DIV") {
                     $("#modalContainer").html(data);
+                }
+                else {
+                    location.reload();
                 }
             },
             error: function (request, status, error) {

@@ -14,5 +14,7 @@ namespace Planiranje.Models.Ucenici
         /// popis razrednih odjela u kojima je odabrani učenik upisani
         /// </summary>
         public List<RazredniOdjel> RazredniOdjeli { get; set; }
+        public List<Mjesecna_biljeska> MjesecneBiljeske { get; set; }
+        public Mjesecna_biljeska MjesecnaBiljeska { get; set; }
     }
 }

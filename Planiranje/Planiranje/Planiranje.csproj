@@ -261,6 +261,7 @@
     <Compile Include="Models\SubjektiModel.cs" />
     <Compile Include="Models\Subjekt_DBHandle.cs" />
     <Compile Include="Models\GodisnjiModel.cs" />
+    <Compile Include="Models\Ucenici\Mjesecna_biljeska.cs" />
     <Compile Include="Models\Ucenici\Nastavnik.cs" />
     <Compile Include="Models\Ucenici\Neposredni_rad.cs" />
     <Compile Include="Models\Ucenici\Obitelj.cs" />
@@ -481,6 +482,10 @@
     <Content Include="Views\UcenikBiljeska\Obitelj.cshtml" />
     <Content Include="Views\UcenikBiljeska\Inicijalni.cshtml" />
     <Content Include="Views\UcenikBiljeska\Zapazanja.cshtml" />
+    <Content Include="Views\UcenikBiljeska\Biljeska.cshtml" />
+    <Content Include="Views\UcenikBiljeska\NovaBiljeska.cshtml" />
+    <Content Include="Views\UcenikBiljeska\UrediBiljeska.cshtml" />
+    <Content Include="Views\UcenikBiljeska\ObrisiBiljeska.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
