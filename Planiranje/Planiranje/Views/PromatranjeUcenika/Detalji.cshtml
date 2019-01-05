@@ -1,0 +1,40 @@
+﻿@model Planiranje.Models.Ucenici.PromatranjeUcenikaModel
+@{
+    Layout = null;
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <form class="form-horizontal">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label col-lg-12">Odabrani učenik: @Model.Ucenik.ImePrezime</label>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                </div>
+            </form>
+        </div><!--END ROW -->
+        <div class="panel-body">
+            <ul class="nav nav-pills">
+                <li class="active">
+                    <a href="#osobni" data-toggle="tab">Osobni podaci</a>
+                </li>
+                <li>
+                    <a href="#promatranje" data-toggle="tab">Promatranje</a>
+                </li>              
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="osobni">
+                    @{ Html.RenderPartial("Osobni", Model);}
+                </div><!--END osobni podaci -->
+                <div class="tab-pane fade" id="promatranje">
+                    @{ Html.RenderPartial("Promatranje", Model);}
+                </div><!--END TAB promatranje -->           
+                
+            </div>
+        </div>
+    </div>
+</div><!--END COL 9 -->

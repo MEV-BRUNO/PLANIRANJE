@@ -207,6 +207,7 @@
     <Compile Include="Controllers\PodrucjaDjelovanjaController.cs" />
     <Compile Include="Controllers\PopisUcenikaController.cs" />
     <Compile Include="Controllers\PracenjeUcenikaController.cs" />
+    <Compile Include="Controllers\PromatranjeUcenikaController.cs" />
     <Compile Include="Controllers\SubjektiController.cs" />
     <Compile Include="Controllers\UcenikBiljeskaController.cs" />
     <Compile Include="Controllers\ZadaciController.cs" />
@@ -271,6 +272,8 @@
     <Compile Include="Models\Ucenici\Postignuce.cs" />
     <Compile Include="Models\Ucenici\PracenjeUcenikaModel.cs" />
     <Compile Include="Models\Ucenici\Pracenje_ucenika.cs" />
+    <Compile Include="Models\Ucenici\Promatranje_ucenika.cs" />
+    <Compile Include="Models\Ucenici\PromatranjeUcenikaModel.cs" />
     <Compile Include="Models\Ucenici\RazredniOdjel.cs" />
     <Compile Include="Models\Ucenici\Ucenik.cs" />
     <Compile Include="Models\Ucenici\UcenikBiljeskaModel.cs" />
@@ -486,6 +489,11 @@
     <Content Include="Views\UcenikBiljeska\NovaBiljeska.cshtml" />
     <Content Include="Views\UcenikBiljeska\UrediBiljeska.cshtml" />
     <Content Include="Views\UcenikBiljeska\ObrisiBiljeska.cshtml" />
+    <Content Include="Views\PromatranjeUcenika\Index.cshtml" />
+    <Content Include="Views\PromatranjeUcenika\Detalji.cshtml" />
+    <Content Include="Views\PromatranjeUcenika\Promatranje.cshtml" />
+    <Content Include="Views\PromatranjeUcenika\Osobni.cshtml" />
+    <Content Include="Views\PromatranjeUcenika\NovoPromatranje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

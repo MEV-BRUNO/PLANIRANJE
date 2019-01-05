@@ -1,0 +1,63 @@
+﻿@model Planiranje.Models.Ucenici.PromatranjeUcenikaModel
+@{
+    Layout = null;
+}
+
+<h4>Osobni podaci</h4>
+@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "osobniPodaci", @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.Ucenik.Id_ucenik)
+    <div class="form-group">
+        @Html.LabelFor(model => model.Ucenik.ImePrezime, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-lg-6">
+            @Html.TextBoxFor(model => model.Ucenik.ImePrezime, new { @class = "form-control", disabled = "" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-lg-2">Razredni odjeli</label>
+        <div class="col-lg-6">
+            <select class="form-control">
+                @foreach (var item in Model.RazredniOdjeli)
+                {
+                    <option>@item.Naziv</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        @*<label for="text1" class="control-label col-lg-2">Datum rođenja</label>*@
+        @Html.LabelFor(model => model.Ucenik.Datum, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-lg-6">
+            @*<input type="text" id="text1" placeholder="Datum rođenja" class="form-control" />*@
+            @Html.EditorFor(model => model.Ucenik.Datum, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Ucenik.Oib, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-lg-6">
+            @Html.EditorFor(model => model.Ucenik.Oib, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Ucenik.Adresa, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-lg-6">
+            @*<textarea id="limiter" rows="2" placeholder="Adresa" class="form-control"></textarea>*@
+            @Html.EditorFor(model => model.Ucenik.Adresa, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Ucenik.Grad, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-lg-6">
+            @Html.EditorFor(model => model.Ucenik.Grad, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="text4" class="control-label col-lg-2"></label>
+        <div class="col-lg-6">
+            <button type="button" onclick="potvrdi('@Url.Action("PromjenaOsobni","PromatranjeUcenika")','#osobniPodaci','Spremljeno')" class="btn btn-success">Potvrdi</button>
+            <button type="button" onclick="odustani('@Url.Action("Osobni","PromatranjeUcenika", new { id = Model.Ucenik.Id_ucenik})','#osobni')" class="btn btn-default">Odustani</button>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,28 @@
+﻿@model Planiranje.Models.Ucenici.PromatranjeUcenikaModel
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Novo promatranje</h4>
+        </div>
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "novaBiljeska", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.HiddenFor(model => model.PromatranjeUcenika.Id, new { Value = 0 })
+            @Html.HiddenFor(model => model.PromatranjeUcenika.Id_ucenik_razred, new { Value = ViewBag.id })
+            <div class="modal-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+               
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                    <input type="button" class="btn btn-primary" value="Spremi" onclick='zatvoriModal("@Url.Action("NovaBiljeska","UcenikBiljeska")","#novaBiljeska","#biljeska","Nova bilješka je spremljena")' />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

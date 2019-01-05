@@ -1,6 +1,6 @@
-﻿@model Planiranje.Models.Ucenici.PracenjeUcenikaModel
+﻿@using Planiranje.Models
 @{
-    Page.Title = "Lista praćenja učenika";
+    Page.Title = "Protokol promatranja učenika";
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 <div class="inner">
@@ -11,8 +11,8 @@
                 <select id="selectAktivnost" onchange="promjenaAktivnost()" class="form-control">
                     <option value="/PopisUcenika/Index">Popis učenika u razrednom odjelu</option>
                     <option value="/UcenikBiljeska/Index">Bilješke o radu s učenikom</option>
-                    <option selected>Lista praćenja učenika - pedagoška obrada i anamneza</option>
-                    <option value="/PromatranjeUcenika/Index">Protokol promatranja</option>
+                    <option value="/PracenjeUcenika/Index">Lista praćenja učenika - pedagoška obrada i anamneza</option>
+                    <option selected>Protokol promatranja</option>
                     <option>Procjena suradnje</option>
                 </select>
             </div>
@@ -32,7 +32,7 @@
                                 <label>Školska godina:</label>
                                 <select id="selectGodina" onchange="promjenaGodine()" class="form-control">
                                     <option value="0">Odaberi školsku godinu</option>
-                                    @foreach(var item in Model.SkGodine)
+                                    @foreach (var item in ViewBag.godine as List<Sk_godina>)
                                     {
                                         int godina = item.Sk_Godina + 1;
                                         <option value="@item.Sk_Godina">@item.Sk_Godina./@godina.</option>
@@ -41,7 +41,7 @@
                             </div>
                         </div><!--END COL 3-->
                         <div class="col-lg-3" id="razredi">
-                            
+
                         </div>
 
                     </div><!--END ROW -->
@@ -50,11 +50,11 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div id="tablica" class="table-responsive">
-                                
+
                             </div>
                         </div><!--END COL 3-->
                         <div id="detalji" class="col-lg-9">
-                            
+
                         </div><!--END COL 9 -->
                     </div> <!--END ROW -->
 
@@ -102,9 +102,9 @@
     function pokaziDetalje(id) {
         var val = $("#selectGodina").val();
         $.ajax({
-            url: '/PracenjeUcenika/Detalji?id=' + id + '&godina=' + val,
+            url: '/PromatranjeUcenika/Detalji?id=' + id,
             success: function (data) {
-                $("#detalji").html(data);                
+                $("#detalji").html(data);
             }
         });
     }
@@ -115,7 +115,7 @@
             type: "POST",
             data: dt,
             success: function (data) {
-                showSnackBar(poruka);                
+                showSnackBar(poruka);
             },
             error: function (request, status, error) {
                 console.log(request.responseText);
@@ -124,7 +124,7 @@
     }
     function odustani(path, id) {
         $.ajax({
-            url: path,      
+            url: path,
             success: function (data) {
                 $(id).html(data);
             },
@@ -136,7 +136,7 @@
     function zatvoriModal(path, id, spremi, poruka) {
         var dt = $(id).serialize();
         $.ajax({
-            url: path,            
+            url: path,
             type: "POST",
             data: dt,
             success: function (data) {
@@ -147,8 +147,11 @@
                     $('.modal-backdrop').remove();
                     showSnackBar(poruka);
                 }
+                else if ($(data)[0].tagName === "DIV") {
+                    $("#modalContainer").html(data);
+                }
                 else {
-                    $("#modalContainer").html(data);                    
+                    location.reload();
                 }
             },
             error: function (request, status, error) {

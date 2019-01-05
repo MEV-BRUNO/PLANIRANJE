@@ -143,6 +143,25 @@ CREATE TABLE mjesecna_biljeska (
   CONSTRAINT mj_biljeska_to_biljeska FOREIGN KEY (id_ucenik_biljeska) REFERENCES ucenik_biljeska (id_biljeska)
 );
 
+CREATE TABLE promatranje_ucenika (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,  
+  id_pedagog int(20) NOT NULL,
+  nadnevak datetime,
+  vrijeme datetime,
+  socstatusucenika text,
+  cilj text,
+  spremnost text,
+  prilagodljivost text,
+  odnos text,
+  doprinos text,
+  opis text,
+  zakljucak text,
+  PRIMARY KEY (id),
+  KEY (id_ucenik),
+  CONSTRAINT promatranje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)  
+);
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
