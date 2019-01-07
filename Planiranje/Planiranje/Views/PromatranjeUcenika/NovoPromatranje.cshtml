@@ -9,7 +9,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Novo promatranje</h4>
         </div>
-        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "novaBiljeska", @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "novoPromatranje", @class = "form-horizontal", role = "form" }))
         {
             @Html.HiddenFor(model => model.PromatranjeUcenika.Id, new { Value = 0 })
             @Html.HiddenFor(model => model.PromatranjeUcenika.Id_ucenik_razred, new { Value = ViewBag.id })
@@ -22,12 +22,14 @@
                             @Html.LabelFor(model => model.PromatranjeUcenika.Cilj, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-lg-8">
                                 @Html.EditorFor(model => model.PromatranjeUcenika.Cilj, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PromatranjeUcenika.Cilj, "", new { @class = "text-danger" })
                             </div>
                         </div>                        
                         <div class="form-group">
                             @Html.LabelFor(model => model.PromatranjeUcenika.SocStatusUcenika, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-lg-8">
                                 @Html.EditorFor(model => model.PromatranjeUcenika.SocStatusUcenika, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PromatranjeUcenika.SocStatusUcenika, "", new { @class = "text-danger" })
                             </div>
                         </div>                        
                     </div>
@@ -36,12 +38,14 @@
                             @Html.LabelFor(model => model.PromatranjeUcenika.Nadnevak, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-lg-8">
                                 @Html.EditorFor(model => model.PromatranjeUcenika.Nadnevak, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PromatranjeUcenika.Nadnevak, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.PromatranjeUcenika.Vrijeme, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-lg-8">
                                 @Html.EditorFor(model => model.PromatranjeUcenika.Vrijeme, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PromatranjeUcenika.Vrijeme, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -141,7 +145,7 @@
                 <!--kraj osnovnog dijela-->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                    <input type="button" class="btn btn-primary" value="Spremi" onclick='zatvoriModal("@Url.Action("NovaBiljeska","UcenikBiljeska")","#novaBiljeska","#biljeska","Nova bilješka je spremljena")' />
+                    <input type="button" class="btn btn-primary" value="Spremi" onclick='zatvoriModal("@Url.Action("NovoPromatranje","PromatranjeUcenika")","#novoPromatranje","#promatranje","Novo promatranje je spremljeno")' />
                 </div>
             </div>
         }

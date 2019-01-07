@@ -26,17 +26,17 @@ namespace Planiranje.Models.Ucenici
         [Required(ErrorMessage ="Obavezno polje")]
         [DisplayName("Cilj promatranja")]
         public string Cilj { get; set; }
-        [Required(ErrorMessage ="Obavezno polje")]
+        //[Required(ErrorMessage ="Obavezno polje")]
         public string Spremnost { get; set; }
-        [Required(ErrorMessage = "Obavezno polje")]
+        //[Required(ErrorMessage = "Obavezno polje")]
         public string Prilagodljivost { get; set; }
-        [Required(ErrorMessage = "Obavezno polje")]
+        //[Required(ErrorMessage = "Obavezno polje")]
         public string Odnos { get; set; }
-        [Required(ErrorMessage = "Obavezno polje")]
+        //[Required(ErrorMessage = "Obavezno polje")]
         public string Doprinos { get; set; }
-        [Required(ErrorMessage = "Obavezno polje")]
+        //[Required(ErrorMessage = "Obavezno polje")]
         public string Opis { get; set; }
-        [Required(ErrorMessage = "Obavezno polje")]
+        //[Required(ErrorMessage = "Obavezno polje")]
         public string Zakljucak { get; set; }
     }
 }

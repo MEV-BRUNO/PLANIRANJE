@@ -101,8 +101,9 @@
     }
     function pokaziDetalje(id) {
         var val = $("#selectGodina").val();
+        var raz = $("#selectRazred").val();
         $.ajax({
-            url: '/PromatranjeUcenika/Detalji?id=' + id,
+            url: '/PromatranjeUcenika/Detalji?id=' + id + '&idRazred=' + raz,
             success: function (data) {
                 $("#detalji").html(data);
             }
