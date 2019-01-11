@@ -1,0 +1,62 @@
+﻿@model Planiranje.Models.Ucenici.RazredniOdjel
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Uređivanje postojećeg razrednog odjela</h4>
+        </div>
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "urediOdjel", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Sk_godina)
+            <div class="modal-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Razred, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @*@Html.DropDownListFor(model => model.Razred, ViewBag.razred as SelectList, new { @class = "form-control" })*@
+                        <select class="form-control" data-val="true" data-val-number="The field Razred must be a number." 
+                                data-val-range="Raspon vrijednosti je od 1 do 8, ovisno o školi" data-val-range-max="8" 
+                                data-val-range-min="1" data-val-required="Ovo je polje obavezno" id="Razred" name="Razred">
+                            @foreach(var item in ViewBag.razred as List<int>)
+                            {
+                                if (item == Model.Razred)
+                                {
+                                    <option selected value="@item">@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                            @Html.ValidationMessageFor(model => model.Razred, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Id_razrednik, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.Id_razrednik, ViewBag.razrednici as SelectList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Id_razrednik, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                    <input type="button" class="btn btn-primary" value="Promijeni" onclick='reload("@Url.Action("UrediRazredniOdjel","OpciPodaci")","#urediOdjel")' />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

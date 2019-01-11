@@ -1,0 +1,40 @@
+﻿@model Planiranje.Models.Ucenici.PromatranjeUcenikaModel
+@{
+    Layout = null;
+}
+
+<p>
+    <a onclick="showModal('@Url.Action("NovoPromatranje","PromatranjeUcenika", new { id = Model.UcenikRazred.Id})')" class="btn btn-primary btn-xs btn-grad"> Novo promatranje</a>
+</p>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nadnevak</th>
+                <th>Vrijeme</th>
+                <th>Cilj</th>
+                <th>Soc. status učenika</th>                
+                <th>Aktivnost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int brojac = 0;}
+            @foreach (var item in Model.PromatranjaUcenika)
+            {
+                brojac++;
+                <tr>
+                    <td class="col-md-1">@brojac.</td>
+                    <td class="col-md-1">@item.Nadnevak.ToShortDateString()</td>
+                    <td class="col-md-1">@item.Vrijeme.ToShortTimeString()</td>
+                    <td class="col-md-4">@item.Cilj</td>
+                    <td class="col-md-3">@item.SocStatusUcenika</td>                    
+                    <td class="col-md-2">
+                        <a onclick="showModal('')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                        <a onclick="showModal('')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

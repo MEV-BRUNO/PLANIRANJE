@@ -1,0 +1,47 @@
+﻿@model Planiranje.Models.Ucenici.RazredniOdjel
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Brisanje razrednog odjela</h4>
+        </div>
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiOdjel", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Sk_godina)
+            <div class="modal-body">
+                <p><b>Jeste li sigurni da želite obrisati ovaj razredni odjel?</b></p>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(model => model.Naziv, new { @class = "form-control", disabled="" } )
+                        @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Razred, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(model => model.Razred, new { @class = "form-control", disabled="" })
+                        @Html.ValidationMessageFor(model => model.Razred, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Id_razrednik, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBox("razrednik", ViewBag.razrednik as string, new { @class = "form-control", disabled="" })
+                        @Html.ValidationMessageFor(model => model.Id_razrednik, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                    <input type="button" class="btn btn-danger" value="Obriši" onclick='reload("@Url.Action("ObrisiRazredniOdjel","OpciPodaci")","#obrisiOdjel")' />
+                </div>
+            </div>
+        }
+    </div>
+</div>

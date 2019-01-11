@@ -8,6 +8,7 @@ namespace Planiranje.Controllers
 	public class PlaniranjeSession
 	{
 		public int PedagogId { get; set; }
+        public int OdabranaSkola { get; set; }
 		public static PlaniranjeSession Trenutni
 		{
 			get

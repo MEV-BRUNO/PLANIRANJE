@@ -3,11 +3,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Planiranje.Models;
+using Planiranje.Models.Ucenici;
 using System.Web.Security;
 using System.Runtime.Remoting.Messaging;
 using System.Net.Mail;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Planiranje.Controllers
 {
@@ -134,15 +136,20 @@ namespace Planiranje.Controllers
 					Value = i.Id_skola.ToString()
 				}));
 				return View("Registracija", model);
-            }
-			
-            model.Pedagog.Id_skola = model.SelectedSchool;
+            }	
+            
+            Pedagog_skola ps = new Pedagog_skola();
+            string email = model.Pedagog.Email;
+            ps.Id_skola = model.SelectedSchool;
 			model.Pedagog.Licenca = DateTime.Now.AddYears(2);
 			model.Pedagog.Aktivan = '1';
 
             try
             {
-                baza.Pedagog.Add(model.Pedagog);
+                baza.Pedagog.Add(model.Pedagog);               
+                baza.SaveChanges();
+                ps.Id_pedagog = baza.Pedagog.SingleOrDefault(s => s.Email == email).Id_Pedagog;
+                baza.PedagogSkola.Add(ps);
                 baza.SaveChanges();
             }
             catch
@@ -156,12 +163,39 @@ namespace Planiranje.Controllers
 				return View("Registracija", model);
             }
             ViewBag.Message = "Registracija je uspješna. Možete se prijaviti";
+            model.Pedagog = new Pedagog();
+            ViewBag.uspjesno = true;
 			model.PopisSkola = new List<SelectListItem>(planovi.ReadSkole().Select(i => new SelectListItem()
 			{
 				Text = i.Naziv,
 				Value = i.Id_skola.ToString()
 			}));
 			return View("Registracija", model);
+        }
+        public ActionResult OdabirSkole()
+        {
+            List<Skola> skole = new List<Skola>();
+            int idPed = PlaniranjeSession.Trenutni.PedagogId;
+            var result = (from sk in baza.Skola join ps in baza.PedagogSkola on sk.Id_skola equals ps.Id_skola join p in baza.Pedagog
+                          on ps.Id_pedagog equals p.Id_Pedagog where p.Id_Pedagog == idPed select sk);
+            skole = result.ToList();
+            if (PlaniranjeSession.Trenutni.OdabranaSkola != 0)
+            {
+                TempData["odabrana"] = PlaniranjeSession.Trenutni.OdabranaSkola;
+            }
+            else
+            {
+                if (skole.FirstOrDefault() != null)
+                {
+                    PlaniranjeSession.Trenutni.OdabranaSkola = skole.FirstOrDefault().Id_skola;
+                }
+            }
+            return View(skole);
+        }
+        public ActionResult PromjenaSkole(int id)
+        {
+            PlaniranjeSession.Trenutni.OdabranaSkola = id;
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

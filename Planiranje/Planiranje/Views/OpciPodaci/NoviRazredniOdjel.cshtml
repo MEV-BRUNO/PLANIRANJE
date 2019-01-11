@@ -1,0 +1,46 @@
+﻿@model Planiranje.Models.Ucenici.RazredniOdjel
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Novi razredni odjel</h4>
+        </div>
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviOdjel", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.HiddenFor(model => model.Id, new { Value = 0 })
+            @Html.HiddenFor(model => model.Sk_godina, new { Value = ViewBag.godina })
+            <div class="modal-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Razred, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @Html.DropDownListFor(model => model.Razred,ViewBag.razred as SelectList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Razred, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Id_razrednik, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.Id_razrednik,ViewBag.razrednici as SelectList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Id_razrednik, "", new { @class = "text-danger" })
+                    </div>
+                </div>                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                    <input type="button" class="btn btn-primary" value="Spremi" onclick='reload("@Url.Action("NoviRazredniOdjel","OpciPodaci")","#noviOdjel")' />
+                </div>
+            </div>
+        }
+    </div>
+</div>

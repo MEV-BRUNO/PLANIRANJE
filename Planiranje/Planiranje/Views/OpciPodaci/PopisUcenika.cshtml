@@ -1,0 +1,130 @@
+﻿@model List<Planiranje.Models.Sk_godina>
+@{
+    Page.Title = "Popis učenika";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";   
+}
+
+<div class="inner">    
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Popis učenika</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Školska godina:</label>
+                                <select id="selectGodina" onchange="promjenaGodine()" class="form-control">
+                                    <option selected value="0">Odaberi školsku godinu</option>
+                                    @foreach (var item in Model)
+                                    {
+                                        int god = item.Sk_Godina + 1;
+                                        <option value="@item.Sk_Godina">@item.Sk_Godina./@god.</option>                                        
+                                    }
+                                </select>
+                            </div>
+                            
+                        </div><!--END COL 2-->
+                        <div class="col-lg-3">
+                            <div id="razredi" class="form-group">
+                                <!--OVDJE IDE DRUGI DROPDOWN-->
+                            </div>
+                        </div>
+                        @*<div class="col-lg-9">
+
+                        </div>*@
+
+                    </div><!--END ROW -->
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="tablica" class="table-responsive">                                
+
+                            </div>
+                        </div><!--END COL 3-->
+                        <div class="col-lg-1">
+
+                        </div><!--END COL 9 -->
+                    </div> <!--END ROW -->
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                        </div>
+                        <div class="col-lg-6">
+                        </div>
+                    </div> <!--END ROW -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script>
+    function promjenaGodine() {
+        var val = $("#selectGodina").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/OpciPodaci/PopisUcenikaRazredi?godina=' + val,
+                success: function (data) {
+                    $("#razredi").html(data);
+                }
+            });
+        }
+        else {            
+            $("#razredi").empty();
+        }
+        $("#tablica").empty();
+    }
+    function promjenaRazreda() {
+        var val = $("#selectRazred").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/OpciPodaci/PopisUcenikaTablica?razred=' + val,
+                success: function (data) {
+                    $("#tablica").html(data);
+                    $("#dataTable").dataTable();
+                }
+            });
+        }
+        else {
+            $("#tablica").empty();
+        }
+    }
+    function spremi(path, id) {
+        var dt = $(id).serialize();
+        $.ajax({
+            url: path,
+            type: "POST",
+            data: dt,
+            success: function (data) {
+                if ($(data)[0].tagName === "P") {
+                    $("#tablica").html(data);
+                    $("#dataTable").dataTable();
+                    $('#modal').modal('hide');
+                    $('#modalContainer').removeData();
+                    $('.modal-backdrop').remove();
+                    if (true) {
+                        var element = document.getElementById("poruka").textContent;
+                        showSnackBar(element);
+                    }
+                }
+                else if ($(data)[0].tagName === "DIV") {
+                    $("#modalContainer").html(data);
+                }
+                else {
+                    location.reload();
+                }
+                
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+        });
+    }    
+</script>

@@ -1,0 +1,65 @@
+﻿@model Planiranje.Models.Ucenici.Ucenik
+
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Brisanje učenika</h4>
+        </div>
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiUcenik", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.HiddenFor(model => model.Id_ucenik)
+            @Html.HiddenFor(model => model.Id_razred)
+        <div class="modal-body">
+            <p><b>Jeste li sigurni da želite obrisati ovog učenika?</b></p>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.ImePrezime, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.ImePrezime, new { @class = "form-control", disabled = "" })
+                    @Html.ValidationMessageFor(model => model.ImePrezime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Spol, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    Muški
+                    @Html.RadioButtonFor(model => model.Spol, 1, new { @class = "form-check-input", disabled = "" })
+                    Ženski
+                    @Html.RadioButtonFor(model => model.Spol, 2, new { @class = "form-check-input", disabled = "" })
+                    @Html.ValidationMessageFor(model => model.Spol, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Datum, new { @class = "form-control", disabled = "" })
+                    @Html.ValidationMessageFor(model => model.Datum, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Oib, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Oib, new { @class = "form-control", disabled = "" })
+                    @Html.ValidationMessageFor(model => model.Oib, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Biljeska, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Biljeska, new { @class = "form-control", disabled = "" })
+                    @Html.ValidationMessageFor(model => model.Biljeska, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                <input type="button" class="btn btn-danger" value="Obriši" onclick='spremi("@Url.Action("ObrisiUcenik","OpciPodaci")","#obrisiUcenik")' />
+            </div>
+        </div>
+        }
+    </div>
+</div>

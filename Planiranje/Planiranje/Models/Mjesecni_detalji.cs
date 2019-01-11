@@ -29,7 +29,8 @@ namespace Planiranje.Models
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
 		public DateTime Vrijeme { get; set; }
         [Required(ErrorMessage = "Vrijeme je obavezno")]
-        [DisplayName("Vrijeme rada")]		
+        [DisplayName("Vrijeme rada")]
+        [Range(0,Int32.MaxValue,ErrorMessage ="Vrijednost mora biti veća ili jednaka 0")]
 		public int Br_sati { get; set; }		
 		[DisplayName("Bilješke")]
         [Required(ErrorMessage = "Bilješka je obavezna")]

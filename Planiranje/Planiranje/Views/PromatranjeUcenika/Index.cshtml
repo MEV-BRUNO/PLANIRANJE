@@ -1,0 +1,167 @@
+﻿@using Planiranje.Models
+@{
+    Page.Title = "Protokol promatranja učenika";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+<div class="inner">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Odabir aktivnosti:</label>
+                <select id="selectAktivnost" onchange="promjenaAktivnost()" class="form-control">
+                    <option value="/PopisUcenika/Index">Popis učenika u razrednom odjelu</option>
+                    <option value="/UcenikBiljeska/Index">Bilješke o radu s učenikom</option>
+                    <option value="/PracenjeUcenika/Index">Lista praćenja učenika - pedagoška obrada i anamneza</option>
+                    <option selected>Protokol promatranja</option>
+                    <option>Procjena suradnje</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Školska godina:</label>
+                                <select id="selectGodina" onchange="promjenaGodine()" class="form-control">
+                                    <option value="0">Odaberi školsku godinu</option>
+                                    @foreach (var item in ViewBag.godine as List<Sk_godina>)
+                                    {
+                                        int godina = item.Sk_Godina + 1;
+                                        <option value="@item.Sk_Godina">@item.Sk_Godina./@godina.</option>
+                                    }
+                                </select>
+                            </div>
+                        </div><!--END COL 3-->
+                        <div class="col-lg-3" id="razredi">
+
+                        </div>
+
+                    </div><!--END ROW -->
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div id="tablica" class="table-responsive">
+
+                            </div>
+                        </div><!--END COL 3-->
+                        <div id="detalji" class="col-lg-9">
+
+                        </div><!--END COL 9 -->
+                    </div> <!--END ROW -->
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function promjenaGodine() {
+        var val = $("#selectGodina").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/PracenjeUcenika/OdabirRazreda?godina=' + val,
+                success: function (data) {
+                    $("#razredi").html(data);
+                }
+            });
+        }
+        else {
+            $("#razredi").empty();
+        }
+        $("#tablica").empty();
+        $("#detalji").empty();
+    }
+    function promjenaRazreda() {
+        var val = $("#selectRazred").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/PracenjeUcenika/OdabirUcenika?razred=' + val,
+                success: function (data) {
+                    $("#tablica").html(data);
+                    $("#dataTable").dataTable();
+                }
+            });
+        }
+        else {
+            $("#tablica").empty();
+            $("#detalji").empty();
+        }
+    }
+    function pokaziDetalje(id) {
+        var val = $("#selectGodina").val();
+        var raz = $("#selectRazred").val();
+        $.ajax({
+            url: '/PromatranjeUcenika/Detalji?id=' + id + '&idRazred=' + raz,
+            success: function (data) {
+                $("#detalji").html(data);
+            }
+        });
+    }
+    function potvrdi(path, id, poruka) {
+        var dt = $(id).serialize();
+        $.ajax({
+            url: path,
+            type: "POST",
+            data: dt,
+            success: function (data) {
+                showSnackBar(poruka);
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+        });
+    }
+    function odustani(path, id) {
+        $.ajax({
+            url: path,
+            success: function (data) {
+                $(id).html(data);
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+        });
+    }
+    function zatvoriModal(path, id, spremi, poruka) {
+        var dt = $(id).serialize();
+        $.ajax({
+            url: path,
+            type: "POST",
+            data: dt,
+            success: function (data) {
+                if ($(data)[0].tagName === "P") {
+                    $(spremi).html(data);
+                    $('#modal').modal('hide');
+                    $('#modalContainer').removeData();
+                    $('.modal-backdrop').remove();
+                    showSnackBar(poruka);
+                }
+                else if ($(data)[0].tagName === "DIV") {
+                    $("#modalContainer").html(data);
+                }
+                else {
+                    location.reload();
+                }
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+        });
+    }
+    function promjenaAktivnost() {
+        var val = $("#selectAktivnost").val();
+        reloadPage(val);
+    }
+</script>

@@ -1,0 +1,76 @@
+﻿@model Planiranje.Models.Ucenici.PracenjeUcenikaModel
+@{
+    Layout = null;
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <form class="form-horizontal">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label col-lg-12">Odabrani učenik: @Model.Ucenik.ImePrezime</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                </div>
+            </form>
+        </div><!--END ROW -->
+    </div><!--END HEAD -->
+    <div class="panel-body">
+        <ul class="nav nav-pills">
+            <li class="active">
+                <a href="#osobni" data-toggle="tab">Osnovni podaci</a>
+            </li>
+            <li>
+                <a href="#obitelj" data-toggle="tab">Obitelj</a>
+            </li>
+            <li>
+                <a href="#razlog" data-toggle="tab">Razlog</a>
+            </li>
+            <li>
+                <a href="#procjena" data-toggle="tab">Procjena</a>
+            </li>
+            <li>
+                <a href="#uvjeti" data-toggle="tab">Uvjeti-Učenje-Vještine</a>
+            </li>
+            <li>
+                <a href="#postignuca" data-toggle="tab">Postignuća</a>
+            </li>
+            <li>
+                <a href="#zapazanja" data-toggle="tab">Neposredni rad</a>
+            </li>
+            <li>
+                <a href="#zakljucak" data-toggle="tab">Zaključak</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="osobni">
+                @*@Html.Partial("OsnovniPodaci", Model)*@
+                @{Html.RenderPartial("OsnovniPodaci", Model);}
+            </div><!--END osobni podaci -->
+            <div class="tab-pane fade" id="obitelj">
+                @{Html.RenderPartial("Obitelj", Model);}
+            </div><!--END TAB obitelj -->
+            <div class="tab-pane fade" id="razlog">
+                @{ Html.RenderPartial("Razlog", Model);}
+            </div>
+            <div class="tab-pane fade" id="procjena">
+                @{ Html.RenderPartial("Procjena", Model);}
+            </div><!--END TAB procjena -->
+            <div class="tab-pane fade" id="uvjeti">
+                @{ Html.RenderPartial("Uvjeti", Model);}
+            </div><!--END TAB uvjeti -->
+            <div class="tab-pane fade" id="postignuca">
+                @{ Html.RenderPartial("Postignuce", Model);}
+            </div> <!--END TAB postignuća -->
+            <div class="tab-pane fade" id="zapazanja">
+                @{ Html.RenderPartial("NeposredniRad", Model);}
+            </div> <!--END TAB zapažanja -->
+            <div class="tab-pane fade" id="zakljucak">
+                @{ Html.RenderPartial("Zakljucak", Model);}
+            </div> <!--END TAB zakljucak -->
+        </div>
+    </div>
+</div>

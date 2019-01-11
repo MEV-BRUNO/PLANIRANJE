@@ -2,9 +2,164 @@
 CREATE DATABASE planiranje;
 USE PLANIRANJE;
 
+CREATE TABLE ucenik (
+  id_ucenik int(20) NOT NULL AUTO_INCREMENT,
+  ime text,
+  prezime text,
+  spol tinyint NOT NULL,
+  oib varchar(11),
+  grad text,
+  adresa text,
+  biljeska text,
+  datum datetime,
+  pocetakpracenja datetime,
+  id_razred int(20),
+  PRIMARY KEY (id_ucenik)
+);
+
 CREATE TABLE sk_godina (
   sk_godina int(20) NOT NULL,
   PRIMARY KEY (sk_godina)
+);
+
+CREATE TABLE pedagog_skola (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_pedagog int(20) NOT NULL,
+  id_skola int(20) NOT NULL,
+  PRIMARY KEY (id)   
+);
+
+CREATE TABLE obitelj (
+  id_obitelj int(20) NOT NULL AUTO_INCREMENT,
+  ime text,
+  prezime text,
+  svojstvo varchar(10) NOT NULL,
+  adresa text,
+  zanimanje text,
+  kontakt text,
+  id_ucenik int(20),
+  PRIMARY KEY (id_obitelj),
+  KEY (id_ucenik),
+  CONSTRAINT obitelj_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+);
+
+CREATE TABLE ucenik_razred (
+  id int NOT NULL AUTO_INCREMENT,
+  id_razred int(20) NOT NULL,
+  id_ucenik int(20) NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT ucenik_razred_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik) ON DELETE CASCADE
+);
+
+CREATE TABLE RazredniOdjel (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_skola int(20) NOT NULL,
+  sk_godina int(20) NOT NULL,
+  naziv text,
+  razred tinyint,
+  id_razrednik int(20),
+  id_pedagog int(20),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE nastavnik (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_skola int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  ime text,
+  prezime text,
+  titula text,
+  kontakt text,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE pracenje_ucenika (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik int(20) NOT NULL,
+  razlog text,
+  inic_procjena_ucenik text,
+  inic_procjena_roditelj text,
+  inic_procjena_razrednik text,
+  soc_uvjeti text,
+  ucenje text,
+  soc_vjestine text,
+  zakljucak text,
+  PRIMARY KEY (id),
+  KEY (id_ucenik),
+  CONSTRAINT pracenje_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+);
+
+CREATE TABLE postignuce (
+  id_postignuce int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik int(20) NOT NULL,
+  id_razred int(20) NOT NULL,
+  godina int(20) NOT NULL,
+  napomena text,
+  PRIMARY KEY (id_postignuce),
+  KEY (id_ucenik),
+  KEY (id_razred),
+  CONSTRAINT postignuce_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+); 
+
+CREATE TABLE neposredni_rad (
+  id_rad int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik int(20) NOT NULL,
+  datum datetime,
+  napomena text,
+  PRIMARY KEY (id_rad),
+  KEY (id_ucenik),
+  CONSTRAINT rad_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+); 
+
+CREATE TABLE popis_ucenika (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  ponavlja_razred tinyint,
+  putnik tinyint,
+  zaduzenje text,
+  PRIMARY KEY (id),
+  KEY (id_ucenik_razred),
+  CONSTRAINT popis_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
+);
+
+CREATE TABLE ucenik_biljeska (
+  id_biljeska int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  inicijalni_podaci text,
+  zapazanje text,
+  PRIMARY KEY (id_biljeska),
+  KEY (id_ucenik_razred),
+  CONSTRAINT biljeska_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
+);
+
+CREATE TABLE mjesecna_biljeska (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_biljeska int(20) NOT NULL,
+  mjesec varchar(25) NOT NULL,
+  biljeska text,
+  sk_godina int(20) NOT NULL,
+  PRIMARY KEY (id),
+  KEY (id_ucenik_biljeska),
+  CONSTRAINT mj_biljeska_to_biljeska FOREIGN KEY (id_ucenik_biljeska) REFERENCES ucenik_biljeska (id_biljeska)
+);
+
+CREATE TABLE promatranje_ucenika (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,  
+  id_pedagog int(20) NOT NULL,
+  nadnevak datetime,
+  vrijeme datetime,
+  socstatusucenika text,
+  cilj text,
+  spremnost text,
+  prilagodljivost text,
+  odnos text,
+  doprinos text,
+  opis text,
+  zakljucak text,
+  PRIMARY KEY (id),
+  KEY (id_ucenik_razred),
+  CONSTRAINT promatranje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)  
 );
 
 CREATE TABLE aktivnost (
@@ -43,6 +198,7 @@ CREATE TABLE skola (
   tel varchar(20) DEFAULT NULL,
   url varchar(50) DEFAULT NULL,
   kontakt varchar(20) DEFAULT NULL,
+  vrsta tinyint NOT NULL,
   PRIMARY KEY (id_skola)
 );
 
@@ -66,14 +222,11 @@ CREATE TABLE pedagog (
   prezime varchar(50) NOT NULL,
   email varchar(50) NOT NULL,
   lozinka varchar(40) NOT NULL,
-  licenca datetime NOT NULL,
-  id_skola int(20) NOT NULL,
+  licenca datetime NOT NULL,  
   aktivan char(1) NOT NULL,
   titula varchar(50) NOT NULL,
   PRIMARY KEY (id_pedagog),
-  UNIQUE KEY email (email),
-  KEY id_skola (id_skola),
-  CONSTRAINT pedagog_ibfk_1 FOREIGN KEY (id_skola) REFERENCES skola (id_skola)
+  UNIQUE KEY email (email)  
 );
 
 CREATE TABLE os_plan_1 (
@@ -329,16 +482,17 @@ CREATE TABLE ss_plan_podrucje (
   mjesto text,
   vrijeme text,
   ishodi text,
-  sati int(11) NOT NULL,
+  sati int(20) NOT NULL,
+  red_br int(20) NOT NULL,
   PRIMARY KEY (id)
 );
 
 INSERT INTO skola VALUES (
-  1, "Međimursko veleučiliste", "Bana Josipa Jelačića", "Čakovec", "", "", ""
+  1, "Međimursko veleučiliste", "Bana Josipa Jelačića", "Čakovec", "", "", "",1
 );
 
 INSERT INTO skola VALUES (
-  2, "Sveučiliste Sjever", "", "Varaždin", "", "", ""
+  2, "Sveučiliste Sjever", "", "Varaždin", "", "", "",1
 );
 
 INSERT INTO aktivnost (vrsta, naziv) VALUES (0, "Utvrđivanje obrazovnih potreba učenika, škole i okruženja");

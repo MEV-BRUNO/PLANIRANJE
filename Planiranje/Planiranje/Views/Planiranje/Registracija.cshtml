@@ -25,15 +25,21 @@
 						<div style="margin-bottom:10px" class="text-center">
 							<img src="../assets/img/logo.png" id="logoimg" alt=" Logo" />
 						</div>
-						@if (ViewBag.Message != null)
+						@if (ViewBag.Message != null && ViewBag.uspjesno==null)
 						{
 							<div class="alert alert-danger text-center" role="alert">@ViewBag.Message</div>
-						}
-						else
-						{
-							<div class="alert alert-info text-center" role="alert">Unesite podatke za registraciju</div>
-						}
-						@Html.EditorFor(model => model.Pedagog.Ime, new { htmlAttributes = new { @class = "form-control", placeholder = "Ime", style = "max-width:100%; margin:10px auto;" } })
+                        }
+                        else if(ViewBag.Message !=null && ViewBag.uspjesno != null)
+                        {
+                            <div class="alert alert-success text-center" role="alert">@ViewBag.Message</div>
+                        }
+                        else
+                        {
+
+                            <div class="alert alert-info text-center" role="alert">Unesite podatke za registraciju</div>
+
+                        }
+                        @Html.EditorFor(model => model.Pedagog.Ime, new { htmlAttributes = new { @class = "form-control", placeholder = "Ime", style = "max-width:100%; margin:10px auto;" } })
 						@Html.ValidationMessageFor(model => model.Pedagog.Ime, "", new { @class = "text-danger" })
 
 						@Html.EditorFor(model => model.Pedagog.Prezime, new { htmlAttributes = new { @class = "form-control", placeholder = "Prezime", style = "max-width:100%; margin:10px auto;" } })

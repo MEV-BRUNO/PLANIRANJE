@@ -20,22 +20,10 @@
 				<i class="icon-table"></i> KALENDAR
 			</a>
 		</li>
-		<li class="panel ">
-			<a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav">
-				<i class="icon-tasks"> </i> UČENICI
-
-				<span class="pull-right">
-					<i class="icon-angle-left"></i>
-				</span>
-			</a>
-			<ul class="collapse" id="component-nav">
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Popis učenika </a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Osobni podaci </a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Bilješke o radu s učenikom </a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Lista praćenja</a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Protokol promatranja </a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Procjena suradnje </a></li>
-			</ul>
+		<li class="panel pointer">
+            <a onclick='reloadPage("@Url.Action("Index","PopisUcenika")")'>
+                <i class="icon-table"></i> UČENICI
+            </a>
 		</li>
 		<li class="panel ">
 			<a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-rod">
@@ -152,11 +140,11 @@
 				</span>
 			</a>
 			<ul class="collapse" id="component-nav1">
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Razredni odjeli </a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Popis učenika </a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Popis nastavnika </a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Školska godina</a></li>
-				<li class=""><a href="#"><i class="icon-angle-right"></i> Podaci o školi </a></li>
+				<li class=""><a onclick="reloadPage('@Url.Action("RazredniOdjel","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Razredni odjeli </a></li>
+				<li class=""><a onclick="reloadPage('@Url.Action("PopisUcenika","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Popis učenika </a></li>
+				<li class=""><a onclick="reloadPage('@Url.Action("Nastavnik","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Popis nastavnika </a></li>
+				<li class=""><a onclick="reloadPage('@Url.Action("SkolskaGodina","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Školska godina</a></li>
+				<li class=""><a onclick="reloadPage('@Url.Action("PodaciSkola","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Podaci o školi </a></li>
 			</ul>
 		</li>
 		<li class="panel">

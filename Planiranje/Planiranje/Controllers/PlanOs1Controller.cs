@@ -507,7 +507,10 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (plan.Os_Plan_1_Aktivnost.Potrebno_sati == null || plan.Os_Plan_1_Aktivnost.Opis_aktivnost==0)
+            if (plan.Os_Plan_1_Aktivnost.Potrebno_sati == null || plan.Os_Plan_1_Aktivnost.Opis_aktivnost == 0 || plan.Os_Plan_1_Aktivnost.Mj_1 < 0 ||
+                plan.Os_Plan_1_Aktivnost.Mj_10 < 0 || plan.Os_Plan_1_Aktivnost.Mj_11 < 0 || plan.Os_Plan_1_Aktivnost.Mj_12 < 0 || plan.Os_Plan_1_Aktivnost.Mj_2 < 0 ||
+                plan.Os_Plan_1_Aktivnost.Mj_3 < 0 || plan.Os_Plan_1_Aktivnost.Mj_4 < 0 || plan.Os_Plan_1_Aktivnost.Mj_5 < 0 || plan.Os_Plan_1_Aktivnost.Mj_6 < 0 ||
+                plan.Os_Plan_1_Aktivnost.Mj_7 < 0 || plan.Os_Plan_1_Aktivnost.Mj_8 < 0 || plan.Os_Plan_1_Aktivnost.Mj_9 < 0)
             {
                 plan.Aktivnosti = aktivnost_db.ReadAktivnost();
                 return View(plan);
@@ -751,7 +754,10 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (plan.Os_Plan_1_Aktivnost.Potrebno_sati == null)
+            if (plan.Os_Plan_1_Aktivnost.Potrebno_sati == null || plan.Os_Plan_1_Aktivnost.Opis_aktivnost==0 || plan.Os_Plan_1_Aktivnost.Mj_1<0||
+                plan.Os_Plan_1_Aktivnost.Mj_10<0 || plan.Os_Plan_1_Aktivnost.Mj_11<0 || plan.Os_Plan_1_Aktivnost.Mj_12<0 || plan.Os_Plan_1_Aktivnost.Mj_2<0 ||
+                plan.Os_Plan_1_Aktivnost.Mj_3<0 || plan.Os_Plan_1_Aktivnost.Mj_4<0 || plan.Os_Plan_1_Aktivnost.Mj_5<0 || plan.Os_Plan_1_Aktivnost.Mj_6<0 ||
+                plan.Os_Plan_1_Aktivnost.Mj_7<0 || plan.Os_Plan_1_Aktivnost.Mj_8<0 || plan.Os_Plan_1_Aktivnost.Mj_9<0)
             {
                 plan.Aktivnosti = aktivnost_db.ReadAktivnost();
                 return View(plan);

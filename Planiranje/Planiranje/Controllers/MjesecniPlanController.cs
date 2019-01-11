@@ -87,11 +87,15 @@ namespace Planiranje.Controllers
         }
         public ActionResult ObrisiPlan(int id)
         {
-            Mjesecni_plan plan = new Mjesecni_plan();
-            plan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == id && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || plan==null)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
+            }
+            Mjesecni_plan plan = new Mjesecni_plan();
+            plan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == id && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (plan==null)
+            {
+                return HttpNotFound();
             }
             return View("Obrisi", plan);
         }
@@ -126,6 +130,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult UrediPlan(int id)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             MjesecniModel model = new MjesecniModel();
             model.SkolskaGodina = new List<Sk_godina>();
             model.SkolskaGodina = baza.SkolskaGodina.ToList();
@@ -133,16 +141,20 @@ namespace Planiranje.Controllers
             model.MjesecniPlan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == id && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
             if(model.MjesecniPlan==null || model.SkolskaGodina == null)
             {
-                return RedirectToAction("Index", "Planiranje");
+                return HttpNotFound();
             }
             return View("UrediNoviPlan", model);
         }
         [HttpPost]
         public ActionResult UrediPlan(MjesecniModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.MjesecniPlan.ID_pedagog!=PlaniranjeSession.Trenutni.PedagogId)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
+            }
+            if (model.MjesecniPlan.ID_pedagog!=PlaniranjeSession.Trenutni.PedagogId)
+            {
+                return HttpNotFound();
             }
             if (model.MjesecniPlan.Naziv == null || model.MjesecniPlan.Ak_godina==0)
             {
@@ -168,26 +180,34 @@ namespace Planiranje.Controllers
         }
         public ActionResult Detalji (int id)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             MjesecniModel model = new MjesecniModel();
             model.MjesecniPlan = new Mjesecni_plan();
             model.MjesecniPlan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == id && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.MjesecniPlan==null)
+            if (model.MjesecniPlan==null)
             {
-                return RedirectToAction("Index", "Planiranje");
+                return HttpNotFound();
             }
             model.MjesecniDetalji = new List<Mjesecni_detalji>();
             model.MjesecniDetalji = baza.MjesecniDetalji.Where(w => w.ID_plan == id).ToList();
             return View(model);
         }
         public ActionResult NoviDetalji (int idPlan)
-        {            
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             MjesecniModel model = new MjesecniModel();
             model.ID_PLAN = idPlan;
             model.MjesecniPlan = new Mjesecni_plan();
             model.MjesecniPlan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == idPlan && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.MjesecniPlan==null)
+            if (model.MjesecniPlan==null)
             {
-                return RedirectToAction("Index", "Planiranje");
+                return HttpNotFound();
             }
             model.Aktivnosti = new List<Aktivnost>();
             model.Subjekti = new List<Subjekti>();
@@ -200,13 +220,17 @@ namespace Planiranje.Controllers
         [HttpPost]
         public ActionResult NoviDetalji (MjesecniModel model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.mjesecniDetalj == null)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if (model.mjesecniDetalj == null)
+            {
+                return HttpNotFound();
+            }
             DateTime date = new DateTime(1, 1, 1, 0, 0, 0);
             if (model.mjesecniDetalj.Aktivnost == null||model.mjesecniDetalj.Subjekti==null||model.mjesecniDetalj.Suradnici==null
-                || model.mjesecniDetalj.Podrucje==null||model.mjesecniDetalj.Vrijeme.CompareTo(date)==0||model.mjesecniDetalj.Br_sati==0
+                || model.mjesecniDetalj.Podrucje==null||model.mjesecniDetalj.Vrijeme.CompareTo(date)==0||model.mjesecniDetalj.Br_sati<0
                 || model.mjesecniDetalj.Biljeska==null)
             {
                 model.Aktivnosti = aktivnosti.ReadAktivnost();
@@ -232,19 +256,23 @@ namespace Planiranje.Controllers
         }
         public ActionResult UrediDetalje(int id)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             MjesecniModel model = new MjesecniModel();
             model.mjesecniDetalj = new Mjesecni_detalji();
             model.mjesecniDetalj = baza.MjesecniDetalji.SingleOrDefault(w => w.ID == id);
             if (model.mjesecniDetalj == null)
             {
-                return RedirectToAction("Index", "Planiranje");
+                return HttpNotFound();
             }
             int idPlan = model.mjesecniDetalj.ID_plan;
             model.MjesecniPlan = new Mjesecni_plan();
             model.MjesecniPlan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == idPlan && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.MjesecniPlan == null)
+            if (model.MjesecniPlan == null)
             {
-                return RedirectToAction("Index", "Planiranje");
+                return HttpNotFound();
             }
             model.PodrucjaRada = podrucja_rada.ReadPodrucjeRada();
             model.Subjekti = subjekti.ReadSubjekti();
@@ -259,7 +287,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             if (model.mjesecniDetalj.Aktivnost == null || model.mjesecniDetalj.Subjekti == null || model.mjesecniDetalj.Suradnici == null
-                || model.mjesecniDetalj.Podrucje == null || model.mjesecniDetalj.Vrijeme == null || model.mjesecniDetalj.Br_sati == 0
+                || model.mjesecniDetalj.Podrucje == null || model.mjesecniDetalj.Vrijeme == null || model.mjesecniDetalj.Br_sati < 0
                 || model.mjesecniDetalj.Biljeska == null)
             {
                 model.Aktivnosti = aktivnosti.ReadAktivnost();
@@ -285,17 +313,21 @@ namespace Planiranje.Controllers
         }
         public ActionResult ObrisiDetalj(int id)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
             MjesecniModel model = new MjesecniModel();            
             model.mjesecniDetalj = baza.MjesecniDetalji.SingleOrDefault(s => s.ID == id);            
             if (model.mjesecniDetalj == null)
             {
-                return RedirectToAction("Index", "Planiranje");
+                return HttpNotFound();
             }
             int idPlan = model.mjesecniDetalj.ID_plan;
             model.MjesecniPlan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == idPlan && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || model.MjesecniPlan==null)
+            if (model.MjesecniPlan==null)
             {
-                return RedirectToAction("Index", "Planiranje");
+                return HttpNotFound();
             }
             return View(model);
         }
