@@ -139,5 +139,34 @@ namespace Planiranje.Controllers
             model.PromatranjeUcenika = baza.PromatranjeUcenika.SingleOrDefault(s => s.Id == id);
             return View(model);
         }
+        [HttpPost]
+        public ActionResult UrediPromatranje (PromatranjeUcenikaModel model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (string.IsNullOrWhiteSpace(model.PromatranjeUcenika.Cilj) || string.IsNullOrWhiteSpace(model.PromatranjeUcenika.SocStatusUcenika))                
+            {               
+                return View(model);
+            }
+            model.PromatranjeUcenika.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.PromatranjeUcenika.Add(model.PromatranjeUcenika);
+                    db.Entry(model.PromatranjeUcenika).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch
+                {
+
+                }
+            }
+            int idUR = model.PromatranjeUcenika.Id_ucenik_razred;
+            Ucenik_razred ur = baza.UcenikRazred.SingleOrDefault(s => s.Id == idUR);
+            return RedirectToAction("Promatranje", new { id=ur.Id_ucenik, idUcenikRazred=idUR});
+        }            
     }
 }
