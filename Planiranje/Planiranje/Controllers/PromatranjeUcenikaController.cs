@@ -31,7 +31,8 @@ namespace Planiranje.Controllers
             PromatranjeUcenikaModel model = new PromatranjeUcenikaModel();
             model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
             model.PromatranjaUcenika = (from ur in baza.UcenikRazred join prom in baza.PromatranjeUcenika on 
-                                        ur.Id equals prom.Id_ucenik_razred where ur.Id_ucenik==id select prom).ToList();
+                                        ur.Id equals prom.Id_ucenik_razred where ur.Id_ucenik==id && 
+                                        prom.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId select prom).ToList();
             model.RazredniOdjeli = (from ur in baza.UcenikRazred
                                     join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
                                     where ur.Id_ucenik == id
@@ -44,7 +45,8 @@ namespace Planiranje.Controllers
             // ulazni parametar id je zapravo id ucenika
             PromatranjeUcenikaModel model = new PromatranjeUcenikaModel();
             model.PromatranjaUcenika = (from ur in baza.UcenikRazred join prom in baza.PromatranjeUcenika on 
-                                        ur.Id equals prom.Id_ucenik_razred where ur.Id_ucenik==id select prom).ToList();
+                                        ur.Id equals prom.Id_ucenik_razred where ur.Id_ucenik==id &&
+                                        prom.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId select prom).ToList();
             model.UcenikRazred = baza.UcenikRazred.SingleOrDefault(s => s.Id==idUcenikRazred);
             return View(model);
         }
