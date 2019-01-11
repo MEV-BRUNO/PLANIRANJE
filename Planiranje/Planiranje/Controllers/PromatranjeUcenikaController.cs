@@ -68,7 +68,8 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             if(string.IsNullOrWhiteSpace(model.PromatranjeUcenika.Cilj) || string.IsNullOrWhiteSpace(model.PromatranjeUcenika.SocStatusUcenika)
-                || model.PromatranjeUcenika.Nadnevak.CompareTo(new DateTime(1, 1, 1)) == 0)
+                || model.PromatranjeUcenika.Nadnevak.CompareTo(new DateTime(1, 1, 1)) == 0
+                || model.PromatranjeUcenika.Vrijeme.Hour==0)
             {
                 ViewBag.id = model.PromatranjeUcenika.Id_ucenik_razred;
                 return View(model);
