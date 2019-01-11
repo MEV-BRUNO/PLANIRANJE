@@ -53,6 +53,8 @@ namespace Planiranje.Controllers
         }
         public ActionResult Detalji (int id, int godina)
         {
+            //ulazni parametar id je id učenika
+            //ulazni parametar godina je školska godina
             if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId<=0)
             {
                 return RedirectToAction("Index", "Planiranje");
@@ -80,17 +82,26 @@ namespace Planiranje.Controllers
             }
             model.ListaObitelji = new List<Obitelj>();
             model.ListaObitelji = baza.Obitelj.Where(w => w.Id_ucenik == id).ToList();
-            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
+            //model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik_razred == id);
+            model.PracenjeUcenika = (from pracenje in baza.PracenjeUcenika join ur in baza.UcenikRazred on pracenje.Id_ucenik_razred equals ur.Id
+                                     join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                                     where ur.Id_ucenik == id && pracenje.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId &&
+                                     raz.Sk_godina == godina
+                                     select pracenje).FirstOrDefault();
             if (model.PracenjeUcenika == null)
             {
                 model.PracenjeUcenika = new Pracenje_ucenika();
+                model.PracenjeUcenika.Pocetak_pracenja = new DateTime();
+                model.PracenjeUcenika.Pocetak_pracenja = DateTime.Now;
             }
+            //postignuća su vezana za id učenika
             model.Postignuca = baza.Postignuce.Where(w => w.Id_ucenik == id).ToList();
             model.RazredniOdjeli = (from uc in baza.Ucenik
                                     join ur in baza.UcenikRazred on uc.Id_ucenik equals ur.Id_ucenik
                                     join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
                                     where uc.Id_ucenik == id
                                     select raz).ToList();
+            //neposredni radovi su vezani za id učenika
             model.NeposredniRadovi = baza.NeposredniRad.Where(w => w.Id_ucenik == id).ToList();
             return View(model);
         }
@@ -102,19 +113,34 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             int id = model.Ucenik.Id_ucenik;
+            int idRazred = model.Razred.Id;
+            Ucenik_razred ur = baza.UcenikRazred.SingleOrDefault(s => s.Id_razred == idRazred && s.Id_ucenik == id);
+            int idUR = ur.Id;
             try
             {
                 using(var db = new BazaPodataka())
                 {
                     var ucenik = db.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+                    var result1 = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik_razred == idUR && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
+                    if (result1 == null)
+                    {
+                        result1 = new Pracenje_ucenika();
+                        result1.Pocetak_pracenja = model.PracenjeUcenika.Pocetak_pracenja;
+                        result1.Id_ucenik_razred = idUR;
+                        result1.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                        db.PracenjeUcenika.Add(result1);
+                    }
+                    else
+                    {
+                        result1.Pocetak_pracenja = model.PracenjeUcenika.Pocetak_pracenja;                        
+                    }
                     if (ucenik != null)
                     {
-                        ucenik.Datum = model.Ucenik.Datum;
-                        ucenik.PocetakPracenja = model.Ucenik.PocetakPracenja;
+                        ucenik.Datum = model.Ucenik.Datum;                        
                         ucenik.Adresa = model.Ucenik.Adresa;
-                        ucenik.Grad = model.Ucenik.Grad;
-                        db.SaveChanges();
+                        ucenik.Grad = model.Ucenik.Grad;                        
                     }
+                    db.SaveChanges();
                 }
             }
             catch { return new HttpStatusCodeResult(HttpStatusCode.NotModified); }
@@ -122,6 +148,7 @@ namespace Planiranje.Controllers
         }
         public ActionResult OsnovniPodaci(int id, int razred)
         {
+            //ulazni parametar id je id učenika a razred je id razrednog odjela
             if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
@@ -139,6 +166,9 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
+            model.PracenjeUcenika = (from pracenje in baza.PracenjeUcenika join ur in baza.UcenikRazred on pracenje.Id_ucenik_razred
+                                     equals ur.Id where ur.Id_ucenik==id && ur.Id_razred==razred 
+                                     && pracenje.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId select pracenje).FirstOrDefault();
             return View(model);
         }
         public ActionResult Obitelj (int id)
@@ -316,18 +346,26 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            int id_ucenik = model.PracenjeUcenika.Id_ucenik;
+            int id_ucenik = model.Ucenik.Id_ucenik;
+            int id_razred = model.Razred.Id;
+            Ucenik_razred ur = new Ucenik_razred();
+            ur = baza.UcenikRazred.Single(s => s.Id_razred==id_razred && s.Id_ucenik==id_ucenik);
+            int idUR = ur.Id;
             using(var db=new BazaPodataka())
             {
                 try
                 {
-                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id_ucenik);
+                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik_razred == idUR && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
                     if (result != null)
                     {
                         result.Razlog = model.PracenjeUcenika.Razlog;
                     }
                     else
                     {
+                        model.PracenjeUcenika.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                        model.PracenjeUcenika.Id_ucenik_razred = idUR;
+                        model.PracenjeUcenika.Pocetak_pracenja = new DateTime();
+                        model.PracenjeUcenika.Pocetak_pracenja = DateTime.Now;
                         db.PracenjeUcenika.Add(model.PracenjeUcenika);
                     }
                     db.SaveChanges();
@@ -339,15 +377,24 @@ namespace Planiranje.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
-        public ActionResult Razlog (int id)
+        public ActionResult Razlog (int idU, int idR)
         {
+            //ulazni parametar id je id učenika -- PAST
+            //idU - id učenika
+            //idR - id razrednog odjela
             if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
-            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
-            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == idU);
+            Ucenik_razred ur = new Ucenik_razred();
+            ur = baza.UcenikRazred.Single(s => s.Id_ucenik == idU && s.Id_razred == idR);
+            int idUR = ur.Id;
+            model.Razred = new RazredniOdjel();
+            model.Razred = baza.RazredniOdjel.Single(s => s.Id == idR);
+            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik_razred == idUR && 
+                                                                         s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
             if (model.PracenjeUcenika == null)
             {
                 model.PracenjeUcenika = new Pracenje_ucenika();
@@ -361,20 +408,28 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            int id_ucenik = model.PracenjeUcenika.Id_ucenik;
+            int id_ucenik = model.Ucenik.Id_ucenik;
+            int id_razred = model.Razred.Id;
+            Ucenik_razred ur = new Ucenik_razred();
+            ur = baza.UcenikRazred.Single(s => s.Id_razred == id_razred && s.Id_ucenik == id_ucenik);
+            int idUR = ur.Id;
             using(var db=new BazaPodataka())
             {
                 try
                 {
-                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id_ucenik);
+                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik_razred == idUR && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
                     if (result != null)
                     {
                         result.Inic_Procjena_razrednik = model.PracenjeUcenika.Inic_Procjena_razrednik;
                         result.Inic_Procjena_ucenik = model.PracenjeUcenika.Inic_Procjena_ucenik;
-                        result.Inic_Procjena_roditelj = model.PracenjeUcenika.Inic_Procjena_roditelj;
+                        result.Inic_Procjena_roditelj = model.PracenjeUcenika.Inic_Procjena_roditelj;                        
                     }
                     else
                     {
+                        model.PracenjeUcenika.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                        model.PracenjeUcenika.Id_ucenik_razred = idUR;
+                        model.PracenjeUcenika.Pocetak_pracenja = new DateTime();
+                        model.PracenjeUcenika.Pocetak_pracenja = DateTime.Now;
                         db.PracenjeUcenika.Add(model.PracenjeUcenika);
                     }
                     db.SaveChanges();
@@ -386,19 +441,26 @@ namespace Planiranje.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
-        public ActionResult Procjena (int id)
+        public ActionResult Procjena (int idU, int idR)
         {
+            //idU - id učenika
+            //idR - id razrednog odjela
             if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            Ucenik_razred ur = new Ucenik_razred();
+            ur = baza.UcenikRazred.Single(s => s.Id_razred == idR && s.Id_ucenik == idU);
+            int idUR = ur.Id;
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
-            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
-            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == idU);
+            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik_razred == idUR && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
             if (model.PracenjeUcenika == null)
             {
                 model.PracenjeUcenika = new Pracenje_ucenika();
             }
+            model.Razred = new RazredniOdjel();
+            model.Razred = baza.RazredniOdjel.Single(s => s.Id == idR);
             return View(model);
         }
         [HttpPost]
@@ -408,12 +470,16 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            int id_ucenik = model.PracenjeUcenika.Id_ucenik;
+            int id_ucenik = model.Ucenik.Id_ucenik;
+            int id_razred = model.Razred.Id;
+            Ucenik_razred ur = new Ucenik_razred();
+            ur = baza.UcenikRazred.Single(s => s.Id_razred == id_razred && s.Id_ucenik == id_ucenik);
+            int idUR = ur.Id;
             using(var db = new BazaPodataka())
             {
                 try
                 {
-                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id_ucenik);
+                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik_razred == idUR && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
                     if (result != null)
                     {
                         result.Soc_uvjeti = model.PracenjeUcenika.Soc_uvjeti;
@@ -422,6 +488,10 @@ namespace Planiranje.Controllers
                     }
                     else
                     {
+                        model.PracenjeUcenika.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                        model.PracenjeUcenika.Id_ucenik_razred = idUR;
+                        model.PracenjeUcenika.Pocetak_pracenja = new DateTime();
+                        model.PracenjeUcenika.Pocetak_pracenja = DateTime.Now;
                         db.PracenjeUcenika.Add(model.PracenjeUcenika);
                     }
                     db.SaveChanges();
@@ -433,19 +503,26 @@ namespace Planiranje.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
-        public ActionResult Uvjeti (int id)
+        public ActionResult Uvjeti (int idU, int idR)
         {
+            //idU - id učenika
+            //idR - id razreda
             if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            Ucenik_razred ur = new Ucenik_razred();
+            ur = baza.UcenikRazred.Single(s => s.Id_razred == idR && s.Id_ucenik == idU);
+            int idUR = ur.Id;
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
-            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
-            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == idU);
+            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik_razred == idUR && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
             if (model.PracenjeUcenika == null)
             {
                 model.PracenjeUcenika = new Pracenje_ucenika();
             }
+            model.Razred = new RazredniOdjel();
+            model.Razred = baza.RazredniOdjel.Single(s => s.Id == idR);
             return View(model);
         }
         [HttpPost]
@@ -455,18 +532,26 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            int id_ucenik = model.PracenjeUcenika.Id_ucenik;
+            int id_ucenik = model.Ucenik.Id_ucenik;
+            int id_razred = model.Razred.Id;
+            Ucenik_razred ur = new Ucenik_razred();
+            ur = baza.UcenikRazred.Single(s => s.Id_razred == id_razred && s.Id_ucenik == id_ucenik);
+            int idUR = ur.Id;
             using(var db=new BazaPodataka())
             {
                 try
                 {
-                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id_ucenik);
+                    var result = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik_razred == idUR && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
                     if (result != null)
                     {
                         result.Zakljucak = model.PracenjeUcenika.Zakljucak;
                     }
                     else
                     {
+                        model.PracenjeUcenika.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                        model.PracenjeUcenika.Id_ucenik_razred = idUR;
+                        model.PracenjeUcenika.Pocetak_pracenja = new DateTime();
+                        model.PracenjeUcenika.Pocetak_pracenja = DateTime.Now;
                         db.PracenjeUcenika.Add(model.PracenjeUcenika);
                     }
                     db.SaveChanges();
@@ -478,19 +563,26 @@ namespace Planiranje.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
-        public ActionResult Zakljucak (int id)
+        public ActionResult Zakljucak (int idU, int idR)
         {
+            //idU - id učenika
+            //idR - id razrednog odjela
             if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            Ucenik_razred ur = new Ucenik_razred();
+            ur = baza.UcenikRazred.Single(s => s.Id_ucenik == idU && s.Id_razred == idR);
+            int idUR = ur.Id;
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
-            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
-            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik == id);
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == idU);
+            model.PracenjeUcenika = baza.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik_razred == idUR && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
             if (model.PracenjeUcenika == null)
             {
                 model.PracenjeUcenika = new Pracenje_ucenika();
             }
+            model.Razred = new RazredniOdjel();
+            model.Razred = baza.RazredniOdjel.Single(s => s.Id == idR);
             return View(model);
         }
         public ActionResult Postignuce (int id, int razred)

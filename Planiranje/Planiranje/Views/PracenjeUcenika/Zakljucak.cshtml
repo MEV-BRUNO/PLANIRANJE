@@ -5,7 +5,8 @@
 
 @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "zakljucakForm", @class = "form-horizontal", role = "form" }))
 {
-    @Html.HiddenFor(model=>model.PracenjeUcenika.Id_ucenik, new { Value=Model.Ucenik.Id_ucenik})
+    @Html.HiddenFor(model=>model.Ucenik.Id_ucenik)
+    @Html.HiddenFor(model => model.Razred.Id)
     <div class="form-group">
         <label>Završni zaključak praćenja učenika</label>
         @Html.TextAreaFor(model=>model.PracenjeUcenika.Zakljucak, new { @class = "form-control", rows="6" })
@@ -13,6 +14,6 @@
 
     <div class="form-group">
         <button type="button" onclick="potvrdi('@Url.Action("Zakljucak","PracenjeUcenika")','#zakljucakForm','Spremljeno')" class="btn btn-success">Potvrdi</button>
-        <button type="button" onclick="odustani('@Url.Action("Zakljucak","PracenjeUcenika", new { id=Model.Ucenik.Id_ucenik})','#zakljucak')" class="btn btn-success">Odustani</button>
+        <button type="button" onclick="odustani('@Url.Action("Zakljucak","PracenjeUcenika", new { idU=Model.Ucenik.Id_ucenik, idR=Model.Razred.Id})','#zakljucak')" class="btn btn-success">Odustani</button>
     </div>
 }

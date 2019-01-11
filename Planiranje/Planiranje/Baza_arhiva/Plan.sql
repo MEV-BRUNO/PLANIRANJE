@@ -11,8 +11,7 @@ CREATE TABLE ucenik (
   grad text,
   adresa text,
   biljeska text,
-  datum datetime,
-  pocetakpracenja datetime,
+  datum datetime,  
   id_razred int(20),
   PRIMARY KEY (id_ucenik)
 );
@@ -74,8 +73,10 @@ CREATE TABLE nastavnik (
 );
 
 CREATE TABLE pracenje_ucenika (
-  id int(20) NOT NULL AUTO_INCREMENT,
-  id_ucenik int(20) NOT NULL,
+  id int(20) NOT NULL AUTO_INCREMENT,  
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  pocetak_pracenja datetime,
   razlog text,
   inic_procjena_ucenik text,
   inic_procjena_roditelj text,
@@ -85,8 +86,8 @@ CREATE TABLE pracenje_ucenika (
   soc_vjestine text,
   zakljucak text,
   PRIMARY KEY (id),
-  KEY (id_ucenik),
-  CONSTRAINT pracenje_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+  KEY (id_ucenik_razred),
+  CONSTRAINT pracenje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
 );
 
 CREATE TABLE postignuce (
