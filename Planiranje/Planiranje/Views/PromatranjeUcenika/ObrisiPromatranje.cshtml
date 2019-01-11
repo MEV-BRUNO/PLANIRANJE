@@ -1,0 +1,155 @@
+﻿@model Planiranje.Models.Ucenici.PromatranjeUcenikaModel
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Brisanje promatranja</h4>
+        </div>
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiPromatranje", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.HiddenFor(model => model.PromatranjeUcenika.Id)
+            @Html.HiddenFor(model => model.PromatranjeUcenika.Id_ucenik_razred)
+            <div class="modal-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <!--zaglavlje-->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PromatranjeUcenika.Cilj, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-lg-8">
+                                @Html.TextBoxFor(model => model.PromatranjeUcenika.Cilj, new { @class = "form-control", disabled="" })
+                                @Html.ValidationMessageFor(model => model.PromatranjeUcenika.Cilj, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PromatranjeUcenika.SocStatusUcenika, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-lg-8">
+                                @Html.TextBoxFor(model => model.PromatranjeUcenika.SocStatusUcenika, new { @class = "form-control", disabled="" })
+                                @Html.ValidationMessageFor(model => model.PromatranjeUcenika.SocStatusUcenika, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PromatranjeUcenika.Nadnevak, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-lg-8">
+                                @Html.TextBox(" ", Model.PromatranjeUcenika.Nadnevak.ToShortDateString(), new { @class = "form-control", disabled = "" })
+                                @Html.ValidationMessageFor(model => model.PromatranjeUcenika.Nadnevak, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PromatranjeUcenika.Vrijeme, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-lg-8">
+                                @Html.TextBox(" ", Model.PromatranjeUcenika.Vrijeme.ToShortTimeString(), new { @class = "form-control", disabled = "" })
+                                @Html.ValidationMessageFor(model => model.PromatranjeUcenika.Vrijeme, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--kraj zaglavlja-->
+                <!--početak osnovnog dijela-->
+                <div class="row">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                        Spremnost za kontaktiranje
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse2" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    @Html.TextAreaFor(model => model.PromatranjeUcenika.Spremnost, new { @class = "edit-opis", disabled = "", rows = "5" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                        Prilagodljivost
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse3" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    @Html.TextAreaFor(model => model.PromatranjeUcenika.Prilagodljivost, new { @class = "edit-opis", disabled = "", rows = "5" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                        Odnos prema drugima
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse4" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    @Html.TextAreaFor(model => model.PromatranjeUcenika.Odnos, new { @class = "edit-opis", disabled = "", rows = "5" })
+                                </div>
+                            </div>
+                        </div>
+                        <!--nastavak-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                                        Doprinos životu grupe
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse5" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    @Html.TextAreaFor(model => model.PromatranjeUcenika.Doprinos, new { @class = "edit-opis", disabled = "", rows = "5" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                                        Opis promatrane situacije
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse6" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    @Html.TextAreaFor(model => model.PromatranjeUcenika.Opis, new { @class = "edit-opis", disabled = "", rows = "5" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+                                        Zaključak
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse7" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    @Html.TextAreaFor(model => model.PromatranjeUcenika.Zakljucak, new { @class = "edit-opis", disabled = "", rows = "5" })
+                                </div>
+                            </div>
+                        </div>
+                        <!--kraj nastavka-->
+                    </div>
+                </div>
+                <!--kraj osnovnog dijela-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                    <input type="button" class="btn btn-danger" value="Obriši" onclick='zatvoriModal("@Url.Action("ObrisiPromatranje","PromatranjeUcenika")","#obrisiPromatranje","#promatranje","Promatranje je obrisano")' />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

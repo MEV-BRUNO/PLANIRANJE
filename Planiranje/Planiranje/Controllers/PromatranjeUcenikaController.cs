@@ -167,6 +167,44 @@ namespace Planiranje.Controllers
             int idUR = model.PromatranjeUcenika.Id_ucenik_razred;
             Ucenik_razred ur = baza.UcenikRazred.SingleOrDefault(s => s.Id == idUR);
             return RedirectToAction("Promatranje", new { id=ur.Id_ucenik, idUcenikRazred=idUR});
-        }            
+        }
+        public ActionResult ObrisiPromatranje (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            PromatranjeUcenikaModel model = new PromatranjeUcenikaModel();
+            model.PromatranjeUcenika = baza.PromatranjeUcenika.SingleOrDefault(s => s.Id == id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ObrisiPromatranje (PromatranjeUcenikaModel model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int idPromatranje = model.PromatranjeUcenika.Id;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.PromatranjeUcenika.SingleOrDefault(s => s.Id == idPromatranje && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (result != null)
+                    {
+                        db.PromatranjeUcenika.Remove(result);
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            int idUR = model.PromatranjeUcenika.Id_ucenik_razred;
+            Ucenik_razred UR = baza.UcenikRazred.SingleOrDefault(s => s.Id == idUR);
+            return RedirectToAction("Promatranje", new { id = UR.Id_ucenik, idUcenikRazred = idUR });
+        }
     }
 }
