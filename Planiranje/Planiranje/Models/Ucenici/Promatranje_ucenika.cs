@@ -18,6 +18,7 @@ namespace Planiranje.Models.Ucenici
         [Required(ErrorMessage ="Obavezno polje")]
         public DateTime Nadnevak { get; set; }
         [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
         [Required(ErrorMessage ="Obavezno polje")]
         public DateTime Vrijeme { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]

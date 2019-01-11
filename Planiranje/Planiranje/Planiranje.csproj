@@ -494,6 +494,7 @@
     <Content Include="Views\PromatranjeUcenika\Promatranje.cshtml" />
     <Content Include="Views\PromatranjeUcenika\Osobni.cshtml" />
     <Content Include="Views\PromatranjeUcenika\NovoPromatranje.cshtml" />
+    <Content Include="Views\PromatranjeUcenika\UrediPromatranje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

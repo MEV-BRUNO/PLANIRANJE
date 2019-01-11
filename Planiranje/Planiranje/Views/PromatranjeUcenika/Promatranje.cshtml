@@ -30,7 +30,7 @@
                     <td class="col-md-4">@item.Cilj</td>
                     <td class="col-md-3">@item.SocStatusUcenika</td>                    
                     <td class="col-md-2">
-                        <a onclick="showModal('')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                        <a onclick="showModal('@Url.Action("UrediPromatranje","PromatranjeUcenika", new { id=item.Id})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
                         <a onclick="showModal('')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                     </td>
                 </tr>

@@ -129,5 +129,15 @@ namespace Planiranje.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.Accepted);
         }
+        public ActionResult UrediPromatranje (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            PromatranjeUcenikaModel model = new PromatranjeUcenikaModel();
+            model.PromatranjeUcenika = baza.PromatranjeUcenika.SingleOrDefault(s => s.Id == id);
+            return View(model);
+        }
     }
 }
