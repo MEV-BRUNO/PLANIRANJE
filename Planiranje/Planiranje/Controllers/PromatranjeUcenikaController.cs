@@ -22,22 +22,28 @@ namespace Planiranje.Controllers
             ViewBag.godine = baza.SkolskaGodina.ToList();
             return View();
         }
-        public ActionResult Detalji(int id, int idRazred)
+        public ActionResult Detalji(int id, int godina)
         {
+            //id - id učenika
+            //godina - id godine
             if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
             PromatranjeUcenikaModel model = new PromatranjeUcenikaModel();
             model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
-            model.PromatranjaUcenika = (from ur in baza.UcenikRazred join prom in baza.PromatranjeUcenika on 
-                                        ur.Id equals prom.Id_ucenik_razred where ur.Id_ucenik==id && 
+            model.PromatranjaUcenika = (from raz in baza.RazredniOdjel join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred
+                                        join prom in baza.PromatranjeUcenika on ur.Id equals prom.Id_ucenik_razred
+                                        where ur.Id_ucenik==id && raz.Sk_godina==godina &&
                                         prom.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId select prom).ToList();
             model.RazredniOdjeli = (from ur in baza.UcenikRazred
                                     join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
                                     where ur.Id_ucenik == id
                                     select raz).ToList();
-            model.UcenikRazred = baza.UcenikRazred.SingleOrDefault(s => s.Id_razred == idRazred && s.Id_ucenik == id);
+            model.UcenikRazred = (from ur in baza.UcenikRazred
+                                  join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                                  where ur.Id_ucenik == id && raz.Sk_godina == godina
+                                  select ur).First();
             return View(model);
         }
         public ActionResult Promatranje (int id, int idUcenikRazred)
@@ -46,6 +52,7 @@ namespace Planiranje.Controllers
             PromatranjeUcenikaModel model = new PromatranjeUcenikaModel();
             model.PromatranjaUcenika = (from ur in baza.UcenikRazred join prom in baza.PromatranjeUcenika on 
                                         ur.Id equals prom.Id_ucenik_razred where ur.Id_ucenik==id &&
+                                        prom.Id_ucenik_razred == idUcenikRazred &&
                                         prom.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId select prom).ToList();
             model.UcenikRazred = baza.UcenikRazred.SingleOrDefault(s => s.Id==idUcenikRazred);
             return View(model);
@@ -84,7 +91,7 @@ namespace Planiranje.Controllers
                 }
                 catch
                 {
-                    return HttpNotFound();
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }
             }
             int idUR = model.PromatranjeUcenika.Id_ucenik_razred;
@@ -126,7 +133,10 @@ namespace Planiranje.Controllers
                         db.SaveChanges();
                     }
                 }
-                catch { }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
             }
             return new HttpStatusCodeResult(HttpStatusCode.Accepted);
         }
@@ -162,7 +172,7 @@ namespace Planiranje.Controllers
                 }
                 catch
                 {
-
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }
             }
             int idUR = model.PromatranjeUcenika.Id_ucenik_razred;
@@ -197,10 +207,14 @@ namespace Planiranje.Controllers
                         db.PromatranjeUcenika.Remove(result);
                         db.SaveChanges();
                     }
+                    else
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                    }
                 }
                 catch
                 {
-
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }
             }
             int idUR = model.PromatranjeUcenika.Id_ucenik_razred;
