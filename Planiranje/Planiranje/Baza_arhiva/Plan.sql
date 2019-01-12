@@ -92,14 +92,14 @@ CREATE TABLE pracenje_ucenika (
 
 CREATE TABLE postignuce (
   id_postignuce int(20) NOT NULL AUTO_INCREMENT,
-  id_ucenik int(20) NOT NULL,
-  id_razred int(20) NOT NULL,
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  razred int(20) NOT NULL,
   godina int(20) NOT NULL,
   napomena text,
-  PRIMARY KEY (id_postignuce),
-  KEY (id_ucenik),
-  KEY (id_razred),
-  CONSTRAINT postignuce_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+  PRIMARY KEY (id_postignuce),  
+  KEY (id_pedagog),
+  CONSTRAINT postignuce_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
 ); 
 
 CREATE TABLE neposredni_rad (

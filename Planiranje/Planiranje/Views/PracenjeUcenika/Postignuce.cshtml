@@ -19,11 +19,11 @@
         </thead>
         <tbody>
             @foreach (var item in Model.Postignuca)
-            { 
+            {
+                int godina = item.Godina + 1;
             <tr>
-                <td class="col-md-1">@Model.RazredniOdjeli.Single(s=>s.Id==item.Id_razred).Sk_godina./
-                @(Model.RazredniOdjeli.Single(s=>s.Id==item.Id_razred).Sk_godina+1).</td>
-                <td class="col-md-2">@Model.RazredniOdjeli.Single(s=>s.Id==item.Id_razred).Naziv</td>
+                <td class="col-md-1">@item.Godina./@godina.</td>
+                <td class="col-md-2">@item.Razred</td>
                 <td class="col-md-7">@item.Napomena</td>
                 <td class="col-md-2">
                     <a onclick="showModal('@Url.Action("UrediPostignuce","PracenjeUcenika", new { id=item.Id_postignuce})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>                    

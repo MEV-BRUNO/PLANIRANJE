@@ -10,8 +10,9 @@ namespace Planiranje.Models.Ucenici
     {
         [Key]
         public int Id_postignuce { get; set; }
-        public int Id_ucenik { get; set; }        
-        public int Id_razred { get; set; }
+        public int Id_ucenik_razred { get; set; }  
+        public int Id_pedagog { get; set; }
+        public int Razred { get; set; }
         public int Godina { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
         public string Napomena { get; set; }
