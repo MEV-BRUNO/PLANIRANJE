@@ -10,8 +10,8 @@
         </div>
         @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviRad", @class = "form-horizontal", role = "form" }))
         {
-            @Html.HiddenFor(model => model.Id_rad, new { Value=0})
-            @Html.HiddenFor(model => model.Id_ucenik, new { Value=ViewBag.ucenik})         
+            @Html.HiddenFor(model => model.Id, new { Value=0})
+            @Html.HiddenFor(model => model.Id_ucenik_razred, new { Value=ViewBag.id_ucenik_razred})         
             
             <div class="modal-body">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })

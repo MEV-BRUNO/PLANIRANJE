@@ -100,13 +100,12 @@ namespace Planiranje.Controllers
                                 join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
                                 where raz.Sk_godina == godina && ur.Id_ucenik == id && pos.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId
                                 select pos).ToList();
-            //model.RazredniOdjeli = (from uc in baza.Ucenik
-            //                        join ur in baza.UcenikRazred on uc.Id_ucenik equals ur.Id_ucenik
-            //                        join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
-            //                        where uc.Id_ucenik == id
-            //                        select raz).ToList();
-            //neposredni radovi su vezani za id učenika
-            model.NeposredniRadovi = baza.NeposredniRad.Where(w => w.Id_ucenik == id).ToList();
+            
+            //neposredni radovi su vezani za id učenika u određenom razredu i id pedagoga
+            model.NeposredniRadovi = (from rad in baza.NeposredniRad join ur in baza.UcenikRazred on rad.Id_ucenik_razred equals
+                                      ur.Id join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                                      where raz.Sk_godina == godina && ur.Id_ucenik==id && rad.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId
+                                      select rad).ToList();
             return View(model);
         }
         [HttpPost]
@@ -746,24 +745,34 @@ namespace Planiranje.Controllers
             ur = baza.UcenikRazred.Single(s => s.Id == idUR);
             return RedirectToAction("Postignuce", new { id = ur.Id_ucenik, razred = ur.Id_razred });
         }
-        public ActionResult NeposredniRad (int id)
+        public ActionResult NeposredniRad (int idUR)
         {
+            //idUR - id učenika u određenom razredu; id_ucenik_razred> tablica ucenik_razred (id)          
             if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            Ucenik_razred ur = new Ucenik_razred();
+            ur = baza.UcenikRazred.Single(s => s.Id == idUR);
+            int idU = ur.Id_ucenik;
+            int idR = ur.Id_razred;
             PracenjeUcenikaModel model = new PracenjeUcenikaModel();
-            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
-            model.NeposredniRadovi = baza.NeposredniRad.Where(w => w.Id_ucenik == id).ToList();
+            model.Ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == idU);
+            model.NeposredniRadovi = baza.NeposredniRad.Where(w => w.Id_ucenik_razred == idUR && w.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId).ToList();
+            model.Razred = baza.RazredniOdjel.SingleOrDefault(s => s.Id == idR);
             return View(model);
         }
-        public ActionResult DodajNeposredniRad (int id)
+        public ActionResult DodajNeposredniRad (int ucenik, int razred)
         {
+            //ucenik - id učenika
+            //razred - id razrednog odjela
             if(!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            ViewBag.ucenik = id;
+            Ucenik_razred ur = new Ucenik_razred();
+            ur = baza.UcenikRazred.Single(s => s.Id_razred == razred && s.Id_ucenik == ucenik);
+            ViewBag.id_ucenik_razred = ur.Id;
             return View();
         }
         [HttpPost]
@@ -775,9 +784,10 @@ namespace Planiranje.Controllers
             }
             if(string.IsNullOrWhiteSpace(model.Napomena)||model.Datum.CompareTo(new DateTime(1, 1, 1)) == 0)
             {
-                ViewBag.ucenik = model.Id_ucenik;
+                ViewBag.id_ucenik_razred = model.Id_ucenik_razred;
                 return View(model);
             }
+            model.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
             using(var db = new BazaPodataka())
             {
                 try
@@ -785,9 +795,12 @@ namespace Planiranje.Controllers
                     db.NeposredniRad.Add(model);
                     db.SaveChanges();
                 }
-                catch { }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
             }
-            return RedirectToAction("NeposredniRad", new { id = model.Id_ucenik });
+            return RedirectToAction("NeposredniRad", new { idUR = model.Id_ucenik_razred });
         }
         public ActionResult UrediNeposredniRad (int id)
         {
@@ -795,7 +808,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Neposredni_rad model = baza.NeposredniRad.SingleOrDefault(s => s.Id_rad == id);
+            Neposredni_rad model = baza.NeposredniRad.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
             return View(model);
         }
         [HttpPost]
@@ -808,18 +821,32 @@ namespace Planiranje.Controllers
             if (string.IsNullOrWhiteSpace(model.Napomena) || model.Datum.CompareTo(new DateTime(1, 1, 1)) == 0)
             {                
                 return View(model);
-            }            
+            }
+            int id = model.Id;
+            int IdUR;
             using(var db = new BazaPodataka())
             {
                 try
                 {
-                    db.NeposredniRad.Add(model);
-                    db.Entry(model).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
+                    var result = db.NeposredniRad.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (result != null)
+                    {
+                        result.Datum = model.Datum;
+                        result.Napomena = model.Napomena;
+                        IdUR = result.Id_ucenik_razred;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                    }
                 }
-                catch { }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
             }
-            return RedirectToAction("NeposredniRad", new { id = model.Id_ucenik });
+            return RedirectToAction("NeposredniRad", new { idUR = IdUR });
         }
         public ActionResult ObrisiNeposredniRad (int id)
         {
@@ -827,7 +854,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Neposredni_rad model = baza.NeposredniRad.SingleOrDefault(s => s.Id_rad == id);
+            Neposredni_rad model = baza.NeposredniRad.SingleOrDefault(s => s.Id == id && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
             return View(model);
         }
         [HttpPost]
@@ -837,22 +864,30 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            int idRad = model.Id_rad;
-            int idUc = model.Id_ucenik;
+            int id = model.Id;
+            int IdUR;
             using(var db=new BazaPodataka())
             {
                 try
                 {
-                    var result = db.NeposredniRad.SingleOrDefault(s => s.Id_rad == idRad);
+                    var result = db.NeposredniRad.SingleOrDefault(s => s.Id == id && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
                     if (result != null)
                     {
+                        IdUR = result.Id_ucenik_razred;
                         db.NeposredniRad.Remove(result);
                         db.SaveChanges();
                     }
+                    else
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                    }
                 }
-                catch { }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
             }
-            return RedirectToAction("NeposredniRad", new { id = idUc });
+            return RedirectToAction("NeposredniRad", new { idUR = IdUR });
         }
     }
 }
