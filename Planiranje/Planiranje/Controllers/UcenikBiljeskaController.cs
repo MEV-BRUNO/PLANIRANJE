@@ -39,11 +39,12 @@ namespace Planiranje.Controllers
                                           where raz.Sk_godina == godina && uc.Id_ucenik==id
                                           select ur).First();
             int id_ucenikRazred = ucenikRazred.Id;
-            model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_ucenik_razred == id_ucenikRazred);
+            model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_ucenik_razred == id_ucenikRazred && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
             if (model.UcenikBiljeska == null)
             {
                 model.UcenikBiljeska = new Ucenik_biljeska();
                 model.UcenikBiljeska.Id_ucenik_razred = id_ucenikRazred;
+                model.UcenikBiljeska.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
                 using(var db = new BazaPodataka())
                 {
                     try
@@ -53,10 +54,10 @@ namespace Planiranje.Controllers
                     }
                     catch
                     {
-
+                        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                     }
                 }
-                model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_ucenik_razred == id_ucenikRazred);
+                model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_ucenik_razred == id_ucenikRazred && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
             }
             model.ListaObitelji = baza.Obitelj.Where(w => w.Id_ucenik == id).ToList();
             int id_ucenik_biljeska = model.UcenikBiljeska.Id_biljeska;

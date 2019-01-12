@@ -127,6 +127,7 @@ CREATE TABLE popis_ucenika (
 CREATE TABLE ucenik_biljeska (
   id_biljeska int(20) NOT NULL AUTO_INCREMENT,
   id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
   inicijalni_podaci text,
   zapazanje text,
   PRIMARY KEY (id_biljeska),
