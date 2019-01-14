@@ -111,7 +111,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             UcenikBiljeskaModel model = new UcenikBiljeskaModel();
-            model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id);
+            model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
             return View(model);
         }
         public ActionResult PromjenaInicijalni (UcenikBiljeskaModel model)
@@ -125,7 +125,7 @@ namespace Planiranje.Controllers
             {
                 try
                 {
-                    var result = db.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id);
+                    var result = db.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
                     if (result != null)
                     {
                         result.Inicijalni_podaci = model.UcenikBiljeska.Inicijalni_podaci;
@@ -146,7 +146,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             UcenikBiljeskaModel model = new UcenikBiljeskaModel();
-            model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id);
+            model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
             return View(model);
         }
         public ActionResult PromjenaZapazanja (UcenikBiljeskaModel model)
@@ -160,7 +160,7 @@ namespace Planiranje.Controllers
             {
                 try
                 {
-                    var result = db.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id);
+                    var result = db.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
                     if (result != null)
                     {
                         result.Zapazanje = model.UcenikBiljeska.Zapazanje;
@@ -181,7 +181,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             UcenikBiljeskaModel model = new UcenikBiljeskaModel();
-            model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id);
+            model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
             model.MjesecneBiljeske = baza.MjesecnaBiljeska.Where(w => w.Id_ucenik_biljeska == id).ToList();
             return View(model);
         }
@@ -215,7 +215,7 @@ namespace Planiranje.Controllers
             model.Sk_godina = (from bilj in baza.UcenikBiljeska
                                join ur in baza.UcenikRazred on bilj.Id_ucenik_razred equals ur.Id
                                join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
-                               where bilj.Id_biljeska == id_biljeska
+                               where bilj.Id_biljeska == id_biljeska && bilj.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId
                                select raz.Sk_godina).First();
             using (var db = new BazaPodataka())
             {
