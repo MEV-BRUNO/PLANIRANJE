@@ -68,6 +68,8 @@
                 url: '/PracenjeUcenika/OdabirRazreda?godina=' + val,
                 success: function (data) {
                     $("#razredi").html(data);
+                    var x = document.getElementById("selectRazred");
+                    x.remove(1);
                 }
             });
         }

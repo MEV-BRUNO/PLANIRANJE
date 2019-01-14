@@ -85,9 +85,10 @@
     }
     function promjenaRazreda() {
         var val = $("#selectRazred").val();
+        var god = $("#selectGodina").val();
         if (val != "0") {
             $.ajax({
-                url: '/PracenjeUcenika/OdabirUcenika?razred=' + val,
+                url: '/PracenjeUcenika/OdabirUcenika?razred=' + val + '&godina=' + god,
                 success: function (data) {
                     $("#tablica").html(data);
                     $("#dataTable").dataTable();
