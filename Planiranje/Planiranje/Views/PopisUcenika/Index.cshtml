@@ -120,15 +120,12 @@
         });
     }
     function promjenaAktivnost() {
-        
-    }
-    $(document).ready(function () {
-        $("#selectAktivnost").change(function () {
-            var val = $("#selectAktivnost").val();
+        var val = $("#selectAktivnost").val();
         window.sessionStorage.setItem("UC_select", val);
         val = val + "/Index";
         reloadPage(val);
-        });
+    }
+    $(document).ready(function () {        
 
         if (window.sessionStorage.getItem("UC_select") != null) {
             var saved = window.sessionStorage.getItem("UC_select");
