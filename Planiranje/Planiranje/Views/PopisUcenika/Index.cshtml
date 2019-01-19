@@ -61,17 +61,38 @@
 
 </div>
 <script>
+    $(document).ready(function () {
+        if (window.sessionStorage.getItem("UC_select") != null) {
+            var saved = window.sessionStorage.getItem("UC_select");
+            if ($("#selectAktivnost").val() != saved) {
+                reloadPage(saved + "/Index");
+            }
+        }
+        if (window.sessionStorage.getItem("UC_popis_godina") != null) {
+            var saved = window.sessionStorage.getItem("UC_popis_godina");
+            $("#selectGodina").val(saved);
+            promjenaGodine();
+        }
+    });
+
     function promjenaGodine() {
         var val = $("#selectGodina").val();
         if (val != "0") {
+            window.sessionStorage.setItem("UC_popis_godina", val);
             $.ajax({
                 url: '/PracenjeUcenika/OdabirRazreda?godina=' + val,
                 success: function (data) {
                     $("#razredi").html(data);
                     var x = document.getElementById("selectRazred");
                     x.remove(1);
+                    var saved = window.sessionStorage.getItem("UC_popis_razred");
+                    if (saved != null) {
+                        $("#selectRazred").val(saved);
+                        promjenaRazreda();
+                    }
                 }
             });
+            
         }
         else {
             $("#razredi").empty();
@@ -81,6 +102,7 @@
     function promjenaRazreda() {
         var val = $("#selectRazred").val();
         if (val != "0") {
+            window.sessionStorage.setItem("UC_popis_razred", val);
             $.ajax({
                 url: '/PopisUcenika/PrikazUcenika?razred=' + val,
                 success: function (data) {
@@ -125,13 +147,5 @@
         val = val + "/Index";
         reloadPage(val);
     }
-    $(document).ready(function () {        
-
-        if (window.sessionStorage.getItem("UC_select") != null) {
-            var saved = window.sessionStorage.getItem("UC_select");
-            if ($("#selectAktivnost").val() != saved) {
-                reloadPage(saved + "/Index");
-            }
-        }
-        });
+    
 </script>
