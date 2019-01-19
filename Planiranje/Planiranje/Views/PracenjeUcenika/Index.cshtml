@@ -9,10 +9,10 @@
             <div class="form-group">
                 <label>Odabir aktivnosti:</label>
                 <select id="selectAktivnost" onchange="promjenaAktivnost()" class="form-control">
-                    <option value="/PopisUcenika/Index">Popis učenika u razrednom odjelu</option>
-                    <option value="/UcenikBiljeska/Index">Bilješke o radu s učenikom</option>
-                    <option selected>Lista praćenja učenika - pedagoška obrada i anamneza</option>
-                    <option value="/PromatranjeUcenika/Index">Protokol promatranja</option>
+                    <option value="/PopisUcenika">Popis učenika u razrednom odjelu</option>
+                    <option value="/UcenikBiljeska">Bilješke o radu s učenikom</option>
+                    <option value="/PracenjeUcenika" selected>Lista praćenja učenika - pedagoška obrada i anamneza</option>
+                    <option value="/PromatranjeUcenika">Protokol promatranja</option>
                     <option>Procjena suradnje</option>
                 </select>
             </div>
@@ -159,6 +159,16 @@
     }
     function promjenaAktivnost() {
         var val = $("#selectAktivnost").val();
+        window.sessionStorage.setItem("UC_select", val);
+        val = val + "/Index";
         reloadPage(val);
     }
+    $(document).ready(function () {
+        if (window.sessionStorage.getItem("UC_select") != null) {
+            var saved = window.sessionStorage.getItem("UC_select");
+            if ($("#selectAktivnost").val() != saved) {
+                reloadPage(saved + "/Index");
+            }
+        }
+    });
 </script>
