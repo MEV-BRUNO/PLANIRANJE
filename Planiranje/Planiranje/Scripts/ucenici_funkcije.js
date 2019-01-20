@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     var akt = $("#selectAktivnost").val();
-    if (window.sessionStorage.getItem(akt + "_god") != null) {
-        var saved = window.sessionStorage.getItem(akt + "_god");
+    if (window.sessionStorage.getItem("UC_godina") != null) {
+        var saved = window.sessionStorage.getItem("UC_godina");
         $("#selectGodina").val(saved);
         promjenaGodine();
     }
@@ -14,9 +14,9 @@ function promjenaGodine() {
             success: function (data) {
                 $("#razredi").html(data);
                 var akt = $("#selectAktivnost").val();
-                var saved = window.sessionStorage.getItem(akt + "_god");
+                var saved = window.sessionStorage.getItem("UC_godina");
                 if (saved != null && saved == $("#selectGodina").val()) {
-                    var saved1 = window.sessionStorage.getItem(akt + "_raz");
+                    var saved1 = window.sessionStorage.getItem("UC_razred");
                     if (saved1 != null) {
                         $("#selectRazred").val(saved1);
                         promjenaRazreda();
@@ -45,9 +45,9 @@ function promjenaRazreda() {
             success: function (data) {
                 $("#tablica").html(data);
                 $("#dataTable").dataTable();
-                var saved = window.sessionStorage.getItem(akt + "_god");
-                var saved1 = window.sessionStorage.getItem(akt + "_raz");
-                var id = window.sessionStorage.getItem(akt + "_id");
+                var saved = window.sessionStorage.getItem("UC_godina");
+                var saved1 = window.sessionStorage.getItem("UC_razred");
+                var id = window.sessionStorage.getItem("UC_idUcenik");
                 if (saved != null && saved1 != null) {
                     if (saved == god && saved1 == val && id != null) {
                         pokaziDetalje(id);
@@ -57,9 +57,7 @@ function promjenaRazreda() {
             error: function (request, status, error) {
                 showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
             }
-        });
-        window.sessionStorage.setItem(akt + "_god", god);
-        window.sessionStorage.setItem(akt + "_raz", val);
+        });        
     }
 
     else {
@@ -70,8 +68,8 @@ function promjenaRazreda() {
 function pokaziDetalje(id) {
     var val = $("#selectGodina").val();
     var akt = $("#selectAktivnost").val();
-    window.sessionStorage.setItem("UC_idUcenik", id);
-    window.sessionStorage.setItem(akt + "_id", id);
+    var raz = $("#selectRazred").val();
+    window.sessionStorage.setItem("UC_idUcenik", id);    
     $.ajax({
         url: akt+'/Detalji?id=' + id + '&godina=' + val,
         success: function (data) {
@@ -81,6 +79,8 @@ function pokaziDetalje(id) {
             showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
         }
     });
+    window.sessionStorage.setItem("UC_godina", val);
+    window.sessionStorage.setItem("UC_razred", raz);
 }
 function potvrdi(path, id, poruka) {
     var dt = $(id).serialize();
