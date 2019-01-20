@@ -1,6 +1,10 @@
 ﻿$(document).ready(function () {
     var akt = $("#selectAktivnost").val();
-    if (window.sessionStorage.getItem("UC_godina") != null) {
+    var saved1 = window.sessionStorage.getItem("UC_select");
+    if (saved1 != null && saved1 != akt) {
+        reloadPage(saved1 + "/Index");
+    }
+    else if (window.sessionStorage.getItem("UC_godina") != null) {
         var saved = window.sessionStorage.getItem("UC_godina");
         $("#selectGodina").val(saved);
         promjenaGodine();
@@ -141,6 +145,7 @@ function promjenaAktivnost() {
     }
     else if (/*$("#selectRazred").length==0 &&*/ $("#selectRazred").val() != "0") {        
         var id = window.sessionStorage.getItem("UC_idUcenik");
+        window.sessionStorage.setItem("UC_select", val);
         pokaziDetalje(id);
     }
     else {
