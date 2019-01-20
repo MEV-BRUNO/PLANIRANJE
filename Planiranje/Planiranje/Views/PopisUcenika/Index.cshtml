@@ -17,6 +17,9 @@
                 </select>
             </div>
         </div>
+        <div class="col-lg-3 pull-right">
+            <a onclick="ispis('@Url.Action("Ispis","PopisUcenika")')" class="btn btn-info btn-sm">Ispis</a>
+        </div>
     </div>
 
     <hr />
@@ -75,10 +78,30 @@
         }
     });
 
+    function ispis(path) {
+        var val = $("#selectRazred");
+        if (val.length) {
+            val = $("#selectRazred").val();
+            if (val != "0" && val != "-1") {
+                path += "?id=" + val;
+                window.open(path);
+                //$.get(path, function (data, status) {
+
+                //});
+            }
+            else {
+                showSnackBar("Morate odabrati razred");
+            }
+        }
+        else {
+            showSnackBar("Morate odabrati razred");
+        }
+        
+    }
+
     function promjenaGodine() {
         var val = $("#selectGodina").val();
-        if (val != "0") {
-            window.sessionStorage.setItem("UC_popis_godina", val);
+        if (val != "0") {            
             $.ajax({
                 url: '/PracenjeUcenika/OdabirRazreda?godina=' + val,
                 success: function (data) {
@@ -86,7 +109,8 @@
                     var x = document.getElementById("selectRazred");
                     x.remove(1);
                     var saved = window.sessionStorage.getItem("UC_popis_razred");
-                    if (saved != null) {
+                    var god = window.sessionStorage.getItem("UC_popis_godina");
+                    if (saved != null && god == val) {
                         $("#selectRazred").val(saved);
                         promjenaRazreda();
                     }
@@ -101,7 +125,10 @@
     }
     function promjenaRazreda() {
         var val = $("#selectRazred").val();
+        var god = $("#selectGodina").val();
+        window.sessionStorage.setItem("UC_popis_godina", god);        
         if (val != "0") {
+            window.sessionStorage.setItem("UC_popis_godina", god); 
             window.sessionStorage.setItem("UC_popis_razred", val);
             $.ajax({
                 url: '/PopisUcenika/PrikazUcenika?razred=' + val,

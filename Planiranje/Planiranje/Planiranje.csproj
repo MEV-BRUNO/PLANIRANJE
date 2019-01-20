@@ -291,6 +291,7 @@
     <Compile Include="Reports\PlanOs2Report.cs" />
     <Compile Include="Reports\PlanSsPodrucjaReport.cs" />
     <Compile Include="Reports\PlanSsReport.cs" />
+    <Compile Include="Reports\PopisUcenikaReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Baza_arhiva\Plan\dnevnik_rada_42_A.JPG" />
