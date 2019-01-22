@@ -25,7 +25,7 @@
                 <td class="col-md-1">@brojac</td>
                 <td class="col-md-2">@item.ImePrezime</td>
                 <td class="col-md-2">
-                    @foreach(var roditelj in Model.Obitelji)
+                    @foreach(var roditelj in Model.Obitelji.Where(w=>w.Id_ucenik==item.Id_ucenik))
                     {
                         @roditelj.ImePrezime <br />
                     }
