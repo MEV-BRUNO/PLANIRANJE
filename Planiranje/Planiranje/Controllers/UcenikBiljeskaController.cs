@@ -6,7 +6,8 @@ using System.Web.Mvc;
 using Planiranje.Models.Ucenici;
 using Planiranje.Models;
 using System.Net;
-
+using Planiranje.Reports;
+using System.IO;
 
 namespace Planiranje.Controllers
 {
@@ -366,6 +367,37 @@ namespace Planiranje.Controllers
                 catch { }
             }
             return RedirectToAction("Biljeska", new { id = id_biljeska });
+        }
+        public FileStreamResult Ispis (int godina, int id)
+        {
+            //ulazni parametar id je id učenika
+            Ucenik_razred UR = new Ucenik_razred();
+            UR = (from ur in baza.UcenikRazred
+                  join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                  where raz.Sk_godina == godina && raz.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola && ur.Id_ucenik == id
+                  select ur).Single();
+            int idUR = UR.Id;
+            int razred = UR.Id_razred;
+
+            UcenikBiljeskaModel model = new UcenikBiljeskaModel();
+            Skola skola = new Skola();
+            skola = baza.Skola.Single(s => s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            model.Ucenik = new Ucenik();
+            model.Ucenik = baza.Ucenik.Single(s => s.Id_ucenik == id);
+            RazredniOdjel odjel = new RazredniOdjel();
+            odjel = baza.RazredniOdjel.Single(s => s.Id == razred && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            model.ListaObitelji = new List<Obitelj>();
+            model.ListaObitelji = baza.Obitelj.Where(w => w.Id_ucenik == id).ToList();
+            model.UcenikBiljeska = new Ucenik_biljeska();            
+            model.UcenikBiljeska = baza.UcenikBiljeska.Single(s => s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId && s.Id_ucenik_razred==idUR);
+            Pedagog pedagog = new Pedagog();
+            pedagog = baza.Pedagog.Single(s => s.Id_Pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            int idUB = model.UcenikBiljeska.Id_biljeska;
+            model.MjesecneBiljeske = new List<Mjesecna_biljeska>();
+            model.MjesecneBiljeske = baza.MjesecnaBiljeska.Where(w => w.Id_ucenik_biljeska == idUB).ToList();
+
+            UcenikBiljeskaReport report = new UcenikBiljeskaReport(model, skola, odjel, pedagog);
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
         }
     }
 }

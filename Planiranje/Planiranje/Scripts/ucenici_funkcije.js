@@ -10,6 +10,22 @@
         promjenaGodine();
     }
 });
+function ispis() {
+    var akt = $("#selectAktivnost").val();
+    var god = $("#selectGodina").val();
+    if (god > 0) {
+        var id = window.sessionStorage.getItem("UC_idUcenik");
+        if (id != null) {
+            window.open(akt + "/Ispis?godina=" + god + "&id=" + id);
+        }
+        else {
+            showSnackBar("Odaberite učenika");
+        }
+    }
+    else {
+        showSnackBar("Odaberite godinu");
+    }
+}
 function promjenaGodine() {
     var val = $("#selectGodina").val();
     if (val != "0") {
