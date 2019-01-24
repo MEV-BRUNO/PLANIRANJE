@@ -7,7 +7,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Nova bilješka</h4>
+            <h4 class="modal-title">Uređivanje bilješke</h4>
         </div>
         @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "novaBiljeska", @class = "form-horizontal", role = "form" }))
         {
@@ -20,7 +20,7 @@
                     @Html.LabelFor(model => model.Mjesec, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
                         @*@Html.EditorFor(model => model.Napomena, new { htmlAttributes = new { @class = "form-control" } })*@
-                        <select class="form-control" data-val="true" data-val-number="The field Mjesec must be a number." data-val-required="Obavezno polje" id="Mjesec" name="Mjesec">
+                        @*<select class="form-control" data-val="true" data-val-number="The field Mjesec must be a number." data-val-required="Obavezno polje" id="Mjesec" name="Mjesec">
                             @foreach (var item in ViewBag.mjeseci as List<string>)
                             {
                                 if (ViewBag.selected != null && (ViewBag.selected as string).CompareTo(item) == 0)
@@ -32,7 +32,8 @@
                                     <option value="@item">@item</option>
                                 }
                             }
-                        </select>
+                        </select>*@
+                        @Html.DropDownListFor(model => model.Mjesec, ViewBag.mjeseci as List<SelectListItem>, "Odaberite mjesec", new { @class="form-control"})
                         @Html.ValidationMessageFor(model => model.Mjesec, "", new { @class = "text-danger" })
                     </div>
                 </div>

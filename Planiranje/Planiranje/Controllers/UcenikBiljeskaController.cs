@@ -62,6 +62,8 @@ namespace Planiranje.Controllers
             model.ListaObitelji = baza.Obitelj.Where(w => w.Id_ucenik == id).ToList();
             int id_ucenik_biljeska = model.UcenikBiljeska.Id_biljeska;
             model.MjesecneBiljeske = baza.MjesecnaBiljeska.Where(w => w.Id_ucenik_biljeska == id_ucenik_biljeska).ToList();
+            List<string> mjeseci = new List<string>() { "", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj", "Srpanj", "Kolovoz", "Rujan", "Listopad", "Studeni", "Prosinac" };
+            ViewBag.mjeseci = mjeseci;
             return View(model);
         }
         public ActionResult Osobni(int id)
@@ -183,6 +185,8 @@ namespace Planiranje.Controllers
             UcenikBiljeskaModel model = new UcenikBiljeskaModel();
             model.UcenikBiljeska = baza.UcenikBiljeska.SingleOrDefault(s => s.Id_biljeska == id && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
             model.MjesecneBiljeske = baza.MjesecnaBiljeska.Where(w => w.Id_ucenik_biljeska == id).ToList();
+            List<string> mjeseci = new List<string>() { "", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj", "Srpanj", "Kolovoz", "Rujan", "Listopad", "Studeni", "Prosinac" };
+            ViewBag.mjeseci = mjeseci;
             return View(model);
         }
         public ActionResult NovaBiljeska (int id)
@@ -191,9 +195,21 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            ViewBag.id = id;
-            List<string> mjeseci = new List<string> { "Rujan","Listopad","Studeni","Prosinac","Siječanj","Veljača","Ožujak","Travanj","Svibanj","LIpanj"};
-            ViewBag.mjeseci = mjeseci;
+            ViewBag.id = id;            
+            List<SelectListItem> select = new List<SelectListItem>()
+            {
+                new SelectListItem{Value="9",Text="Rujan"},
+                new SelectListItem{Value="10",Text="Listopad"},
+                new SelectListItem{Value="11",Text="Studeni"},
+                new SelectListItem{Value="12",Text="Prosinac"},
+                new SelectListItem{Value="1",Text="Siječanj"},
+                new SelectListItem{Value="2",Text="Veljača"},
+                new SelectListItem{Value="3",Text="Ožujak"},
+                new SelectListItem{Value="4",Text="Travanj"},
+                new SelectListItem{Value="5",Text="Svibanj"},
+                new SelectListItem{Value="6",Text="Lipanj"}
+            };
+            ViewBag.mjeseci = select;
             return View();
         }        
         [HttpPost]
@@ -202,13 +218,24 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
-            }
-            List<string> mjeseci = new List<string> { "Rujan", "Listopad", "Studeni", "Prosinac", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "LIpanj" };
-            if (string.IsNullOrWhiteSpace(model.Biljeska) || !mjeseci.Contains(model.Mjesec))
+            }            
+            if (string.IsNullOrWhiteSpace(model.Biljeska) || model.Mjesec<=0 || model.Mjesec>12)
             {
-                ViewBag.id = model.Id_ucenik_biljeska;                
-                ViewBag.mjeseci = mjeseci;
-                ViewBag.selected = model.Mjesec;
+                ViewBag.id = model.Id_ucenik_biljeska;
+                List<SelectListItem> select = new List<SelectListItem>()
+            {
+                new SelectListItem{Value="9",Text="Rujan"},
+                new SelectListItem{Value="10",Text="Listopad"},
+                new SelectListItem{Value="11",Text="Studeni"},
+                new SelectListItem{Value="12",Text="Prosinac"},
+                new SelectListItem{Value="1",Text="Siječanj"},
+                new SelectListItem{Value="2",Text="Veljača"},
+                new SelectListItem{Value="3",Text="Ožujak"},
+                new SelectListItem{Value="4",Text="Travanj"},
+                new SelectListItem{Value="5",Text="Svibanj"},
+                new SelectListItem{Value="6",Text="Lipanj"}
+            };
+                ViewBag.mjeseci = select;                
                 return View(model);
             }
             int id_biljeska = model.Id_ucenik_biljeska;
@@ -237,10 +264,22 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            Mjesecna_biljeska model = baza.MjesecnaBiljeska.SingleOrDefault(s => s.Id == id);
-            ViewBag.selected = model.Mjesec;
-            List<string> mjeseci = new List<string> { "Rujan", "Listopad", "Studeni", "Prosinac", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "LIpanj" };
-            ViewBag.mjeseci = mjeseci;
+            Mjesecna_biljeska model = baza.MjesecnaBiljeska.SingleOrDefault(s => s.Id == id);            
+            
+            List<SelectListItem> select = new List<SelectListItem>()
+            {
+                new SelectListItem{Value="9",Text="Rujan"},
+                new SelectListItem{Value="10",Text="Listopad"},
+                new SelectListItem{Value="11",Text="Studeni"},
+                new SelectListItem{Value="12",Text="Prosinac"},
+                new SelectListItem{Value="1",Text="Siječanj"},
+                new SelectListItem{Value="2",Text="Veljača"},
+                new SelectListItem{Value="3",Text="Ožujak"},
+                new SelectListItem{Value="4",Text="Travanj"},
+                new SelectListItem{Value="5",Text="Svibanj"},
+                new SelectListItem{Value="6",Text="Lipanj"}
+            };
+            ViewBag.mjeseci = select;
             return View(model);
         }
         [HttpPost]
@@ -249,13 +288,24 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
-            }
-            List<string> mjeseci = new List<string> { "Rujan", "Listopad", "Studeni", "Prosinac", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "LIpanj" };
-            if (string.IsNullOrWhiteSpace(model.Biljeska) || !mjeseci.Contains(model.Mjesec))
+            }           
+            if (string.IsNullOrWhiteSpace(model.Biljeska) || model.Mjesec<=0 || model.Mjesec>12)
             {
                 ViewBag.id = model.Id_ucenik_biljeska;
-                ViewBag.mjeseci = mjeseci;
-                ViewBag.selected = model.Mjesec;
+                List<SelectListItem> select = new List<SelectListItem>()
+            {
+                new SelectListItem{Value="9",Text="Rujan"},
+                new SelectListItem{Value="10",Text="Listopad"},
+                new SelectListItem{Value="11",Text="Studeni"},
+                new SelectListItem{Value="12",Text="Prosinac"},
+                new SelectListItem{Value="1",Text="Siječanj"},
+                new SelectListItem{Value="2",Text="Veljača"},
+                new SelectListItem{Value="3",Text="Ožujak"},
+                new SelectListItem{Value="4",Text="Travanj"},
+                new SelectListItem{Value="5",Text="Svibanj"},
+                new SelectListItem{Value="6",Text="Lipanj"}
+            };
+                ViewBag.mjeseci = select;                
                 return View(model);
             }
             using (var db = new BazaPodataka())
@@ -276,10 +326,21 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            List<string> mjeseci = new List<string> { "Rujan", "Listopad", "Studeni", "Prosinac", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "LIpanj" };
-            ViewBag.mjeseci = mjeseci;
-            Mjesecna_biljeska model = baza.MjesecnaBiljeska.SingleOrDefault(s => s.Id == id);
-            ViewBag.selected = model.Mjesec;
+            List<SelectListItem> select = new List<SelectListItem>()
+            {
+                new SelectListItem{Value="9",Text="Rujan"},
+                new SelectListItem{Value="10",Text="Listopad"},
+                new SelectListItem{Value="11",Text="Studeni"},
+                new SelectListItem{Value="12",Text="Prosinac"},
+                new SelectListItem{Value="1",Text="Siječanj"},
+                new SelectListItem{Value="2",Text="Veljača"},
+                new SelectListItem{Value="3",Text="Ožujak"},
+                new SelectListItem{Value="4",Text="Travanj"},
+                new SelectListItem{Value="5",Text="Svibanj"},
+                new SelectListItem{Value="6",Text="Lipanj"}
+            };
+            ViewBag.mjeseci = select;
+            Mjesecna_biljeska model = baza.MjesecnaBiljeska.SingleOrDefault(s => s.Id == id);            
             return View(model);
         }
         [HttpPost]

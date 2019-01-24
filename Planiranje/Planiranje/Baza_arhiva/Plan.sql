@@ -138,7 +138,7 @@ CREATE TABLE ucenik_biljeska (
 CREATE TABLE mjesecna_biljeska (
   id int(20) NOT NULL AUTO_INCREMENT,
   id_ucenik_biljeska int(20) NOT NULL,
-  mjesec varchar(25) NOT NULL,
+  mjesec tinyint NOT NULL,
   biljeska text,
   sk_godina int(20) NOT NULL,
   PRIMARY KEY (id),

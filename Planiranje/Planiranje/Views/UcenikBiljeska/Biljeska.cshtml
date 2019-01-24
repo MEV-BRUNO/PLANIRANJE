@@ -21,7 +21,7 @@
             {
                 int godina = item.Sk_godina + 1;
             <tr>
-                <td class="col-md-1">@item.Mjesec</td>
+                <td class="col-md-1">@{string mj = (ViewBag.mjeseci as List<string>).ElementAt(item.Mjesec);}@mj</td>
                 <td class="col-md-2">@item.Sk_godina./@godina.</td>
                 <td class="col-md-7">@item.Biljeska</td>
                 <td class="col-md-2">
