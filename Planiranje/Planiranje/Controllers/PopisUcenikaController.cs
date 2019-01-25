@@ -39,7 +39,7 @@ namespace Planiranje.Controllers
                              select uc).ToList();
             model.Obitelji = (from ob in baza.Obitelj join uc in baza.Ucenik on ob.Id_ucenik equals uc.Id_ucenik join
                               ur in baza.UcenikRazred on uc.Id_ucenik equals ur.Id_ucenik join raz in baza.RazredniOdjel
-                              on ur.Id_razred equals raz.Id where raz.Id==razred && (ob.Svojstvo=="Otac" || ob.Svojstvo=="Majka") select ob).ToList();
+                              on ur.Id_razred equals raz.Id where raz.Id==razred && (ob.Svojstvo==1 || ob.Svojstvo==2) select ob).ToList();
             model.PopisUcenika = (from popis in baza.PopisUcenika
                                   join ur in baza.UcenikRazred on popis.Id_ucenik_razred equals ur.Id
                                   join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
@@ -114,7 +114,7 @@ namespace Planiranje.Controllers
                              where raz.Id == id select uc).ToList();
             obitelji = (from ob in baza.Obitelj join uc in baza.Ucenik on ob.Id_ucenik equals uc.Id_ucenik join
                               ur in baza.UcenikRazred on uc.Id_ucenik equals ur.Id_ucenik join raz in baza.RazredniOdjel
-                              on ur.Id_razred equals raz.Id where raz.Id==id && (ob.Svojstvo=="Otac" || ob.Svojstvo=="Majka") select ob).ToList();
+                              on ur.Id_razred equals raz.Id where raz.Id==id && (ob.Svojstvo==1 || ob.Svojstvo==2) select ob).ToList();
             Nastavnik razrednik = new Nastavnik();
             int idRazrednik = razred.Id_razrednik;
             int idSkola = razred.Id_skola;

@@ -115,6 +115,11 @@ namespace Planiranje.Controllers
                                       ur.Id join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
                                       where raz.Sk_godina == godina && ur.Id_ucenik==id && rad.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId
                                       select rad).ToList();
+            List<string> lista = new List<string>
+            {
+                "","Otac","Majka","Skrbnik","Brat","Sestra"
+            };
+            ViewBag.tekst = lista;
             return View(model);
         }
         [HttpPost]
@@ -196,6 +201,11 @@ namespace Planiranje.Controllers
                 return HttpNotFound();
             }
             model.ListaObitelji = baza.Obitelj.Where(w => w.Id_ucenik == id).ToList();
+            List<string> lista = new List<string>
+            {
+                "","Otac","Majka","Skrbnik","Brat","Sestra"
+            };
+            ViewBag.tekst = lista;
             return View(model);
         }
         public ActionResult DodajObitelj (int id)
@@ -211,11 +221,15 @@ namespace Planiranje.Controllers
                 return HttpNotFound();
             }
             ViewBag.idUcenik = id;
-            List<string> lista = new List<string>()
+            List<SelectListItem> select = new List<SelectListItem>()
             {
-                "Otac", "Majka","Brat","Sestra"
+                new SelectListItem{Value="1", Text="Otac"},
+                new SelectListItem{Value="2", Text="Majka"},
+                new SelectListItem{Value="3", Text="Skrbnik"},
+                new SelectListItem{Value="4", Text="Brat"},
+                new SelectListItem{Value="5", Text="Sestra"}
             };
-            ViewBag.select = lista;
+            ViewBag.select = select;
             return View();
         }
         [HttpPost]
@@ -224,18 +238,18 @@ namespace Planiranje.Controllers
             if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
-            }
-            List<string> lista = new List<string>()
+            }            
+            if (string.IsNullOrWhiteSpace(model.Ime) || string.IsNullOrWhiteSpace(model.Prezime) || model.Svojstvo<=0 || model.Svojstvo>5)
             {
-                "Otac", "Majka","Brat","Sestra"
-            };
-            if (string.IsNullOrWhiteSpace(model.Ime) || string.IsNullOrWhiteSpace(model.Prezime) || !lista.Contains(model.Svojstvo))
-            {
-                ViewBag.select = lista;
-                if (lista.Contains(model.Svojstvo))
+                List<SelectListItem> select = new List<SelectListItem>()
                 {
-                    ViewBag.selected = model.Svojstvo;
-                }
+                new SelectListItem{Value="1", Text="Otac"},
+                new SelectListItem{Value="2", Text="Majka"},
+                new SelectListItem{Value="3", Text="Skrbnik"},
+                new SelectListItem{Value="4", Text="Brat"},
+                new SelectListItem{Value="5", Text="Sestra"}
+                };
+                ViewBag.select = select;
                 ViewBag.idUcenik = model.Id_ucenik;
                 return View(model);
             }
@@ -264,11 +278,15 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
-            List<string> lista = new List<string>()
+            List<SelectListItem> select = new List<SelectListItem>()
             {
-                "Otac", "Majka","Brat","Sestra"
+                new SelectListItem{Value="1", Text="Otac"},
+                new SelectListItem{Value="2", Text="Majka"},
+                new SelectListItem{Value="3", Text="Skrbnik"},
+                new SelectListItem{Value="4", Text="Brat"},
+                new SelectListItem{Value="5", Text="Sestra"}
             };
-            ViewBag.select = lista;
+            ViewBag.select = select;
             return View(model);
         }
         [HttpPost]
@@ -278,13 +296,18 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            List<string> lista = new List<string>()
+            
+            if (string.IsNullOrWhiteSpace(model.Ime) || string.IsNullOrWhiteSpace(model.Prezime) || model.Svojstvo<=0 || model.Svojstvo>5)
             {
-                "Otac", "Majka","Brat","Sestra"
-            };
-            if (string.IsNullOrWhiteSpace(model.Ime) || string.IsNullOrWhiteSpace(model.Prezime) || !lista.Contains(model.Svojstvo))
-            {
-                ViewBag.select = lista;             
+                List<SelectListItem> select = new List<SelectListItem>()
+                {
+                new SelectListItem{Value="1", Text="Otac"},
+                new SelectListItem{Value="2", Text="Majka"},
+                new SelectListItem{Value="3", Text="Skrbnik"},
+                new SelectListItem{Value="4", Text="Brat"},
+                new SelectListItem{Value="5", Text="Sestra"}
+                };
+                ViewBag.select = select;
                 return View(model);
             }
             using(var db = new BazaPodataka())
@@ -313,11 +336,15 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
-            List<string> lista = new List<string>()
-            {
-                "Otac", "Majka","Brat","Sestra"
-            };
-            ViewBag.select = lista;
+            List<SelectListItem> select = new List<SelectListItem>()
+                {
+                new SelectListItem{Value="1", Text="Otac"},
+                new SelectListItem{Value="2", Text="Majka"},
+                new SelectListItem{Value="3", Text="Skrbnik"},
+                new SelectListItem{Value="4", Text="Brat"},
+                new SelectListItem{Value="5", Text="Sestra"}
+                };
+            ViewBag.select = select;
             return View(model);
         }
         [HttpPost]

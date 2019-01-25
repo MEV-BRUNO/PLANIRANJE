@@ -65,6 +65,8 @@ namespace Planiranje.Controllers
             model.MjesecneBiljeske = baza.MjesecnaBiljeska.Where(w => w.Id_ucenik_biljeska == id_ucenik_biljeska).ToList();
             List<string> mjeseci = new List<string>() { "", "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj", "Srpanj", "Kolovoz", "Rujan", "Listopad", "Studeni", "Prosinac" };
             ViewBag.mjeseci = mjeseci;
+            List<string> tekst = new List<string>() { "", "Otac", "Majka", "Skrbnik", "Brat", "Sestra" };
+            ViewBag.tekst = tekst;
             return View(model);
         }
         public ActionResult Osobni(int id)

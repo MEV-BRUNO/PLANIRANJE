@@ -32,7 +32,7 @@ CREATE TABLE obitelj (
   id_obitelj int(20) NOT NULL AUTO_INCREMENT,
   ime text,
   prezime text,
-  svojstvo varchar(10) NOT NULL,
+  svojstvo tinyint NOT NULL,
   adresa text,
   zanimanje text,
   kontakt text,

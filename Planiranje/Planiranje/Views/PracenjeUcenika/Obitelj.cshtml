@@ -20,14 +20,17 @@
             </tr>
         </thead>
         <tbody>
-            @{ int brojac = 0;}
+            @{ int brojac = 0;
+                List<string> lista = new List<string>();
+                lista = ViewBag.tekst;
+                }
             @foreach (var item in Model.ListaObitelji)
             {
                 brojac++;
             <tr>
                 <td class="col-md-1">@brojac.</td>
                 <td class="col-md-2">@item.ImePrezime</td>
-                <td class="col-md-1">@item.Svojstvo</td>
+                <td class="col-md-1">@lista.ElementAt(item.Svojstvo)</td>
                 <td class="col-md-2">@item.Adresa</td>
                 <td class="col-md-2">@item.Kontakt</td>
                 <td class="col-md-2">@item.Zanimanje</td>

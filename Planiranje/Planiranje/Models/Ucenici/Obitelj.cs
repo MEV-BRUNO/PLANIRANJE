@@ -17,7 +17,8 @@ namespace Planiranje.Models.Ucenici
         [Required(ErrorMessage ="Obavezno polje")]
         public string Prezime { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
-        public string Svojstvo { get; set; }
+        [Range(1,5,ErrorMessage ="Obavezno polje")]
+        public int Svojstvo { get; set; }
         public string Adresa { get; set; }
         public string Zanimanje { get; set; }
         public string Kontakt { get; set; }
