@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Planiranje.Models.Ucenici;
 using Planiranje.Models;
 using System.Net;
+using Planiranje.Reports;
+using System.IO;
 
 namespace Planiranje.Controllers
 {
@@ -924,6 +926,40 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("NeposredniRad", new { idUR = IdUR });
+        }
+        public FileStreamResult Ispis (int godina, int id)
+        {
+            //ulazni parametar id je id učenika
+            PracenjeUcenikaModel model = new PracenjeUcenikaModel();
+            Skola skola = new Skola();
+            skola = baza.Skola.Single(s => s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            model.Razred = new RazredniOdjel();
+            Ucenik_razred UR = new Ucenik_razred();
+            UR = (from ur in baza.UcenikRazred
+                  join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                  where ur.Id_ucenik == id && raz.Sk_godina == godina && raz.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola
+                  select ur).Single();
+            int idUR = UR.Id;
+            int idRazred = UR.Id_razred;
+            model.Razred = baza.RazredniOdjel.Single(s => s.Id == idRazred);
+            model.Ucenik = new Ucenik();
+            model.Ucenik = baza.Ucenik.Single(s => s.Id_ucenik == id);
+            model.ListaObitelji = new List<Obitelj>();
+            model.ListaObitelji = baza.Obitelj.Where(w => w.Id_ucenik == id).ToList();
+            model.PracenjeUcenika = new Pracenje_ucenika();
+            model.PracenjeUcenika = baza.PracenjeUcenika.Single(s => s.Id_ucenik_razred == idUR && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            model.Postignuca = new List<Postignuce>();
+            model.Postignuca = baza.Postignuce.Where(w => w.Id_ucenik_razred == idUR && w.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId).ToList();
+            model.NeposredniRadovi = new List<Neposredni_rad>();
+            model.NeposredniRadovi = baza.NeposredniRad.Where(w => w.Id_ucenik_razred == idUR && w.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId).ToList();
+            model.Razrednik = new Nastavnik();
+            int idRazrednik = model.Razred.Id_razrednik;
+            model.Razrednik = baza.Nastavnik.Single(s => s.Id == idRazrednik);
+            Pedagog pedagog = new Pedagog();
+            pedagog = baza.Pedagog.Single(s => s.Id_Pedagog == PlaniranjeSession.Trenutni.PedagogId);
+
+            PracenjeUcenikaReport report = new PracenjeUcenikaReport(model, skola, pedagog);
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
         }
     }
 }
