@@ -46,6 +46,9 @@ namespace Planiranje.Reports
             p = new Paragraph("RAZREDNI ODJEL: " + model.Razred.Naziv, tekst);
             p.Alignment = Element.ALIGN_LEFT;
             pdfDokument.Add(p);
+            p = new Paragraph("RAZREDNIK: " + model.Razrednik.ImePrezime, tekst);
+            p.Alignment = Element.ALIGN_LEFT;
+            pdfDokument.Add(p);
             p = new Paragraph("ŠKOLSKA GODINA: " + model.Razred.Sk_godina + "./" + (model.Razred.Sk_godina + 1).ToString() + ".", tekst);
             p.Alignment = Element.ALIGN_LEFT;
             pdfDokument.Add(p);
