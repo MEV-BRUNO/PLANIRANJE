@@ -104,6 +104,31 @@ namespace Planiranje.Controllers
                 model.PracenjeUcenika = new Pracenje_ucenika();
                 model.PracenjeUcenika.Pocetak_pracenja = new DateTime();
                 model.PracenjeUcenika.Pocetak_pracenja = DateTime.Now;
+                //dodano iz razloga da se u bazu zapiše čim korisnik prvi put dođe na tu stranicu zbog ispisa u PDF
+                model.PracenjeUcenika.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                model.PracenjeUcenika.Id_ucenik_razred = (from ur in baza.UcenikRazred join raz in baza.RazredniOdjel
+                                                          on ur.Id_razred equals raz.Id
+                                                          where ur.Id_ucenik==id && raz.Id_skola==PlaniranjeSession.Trenutni.OdabranaSkola
+                                                          && raz.Sk_godina==godina select ur.Id).First();
+                using(var db=new BazaPodataka())
+                {
+                    try
+                    {
+                        db.PracenjeUcenika.Add(model.PracenjeUcenika);
+                        db.SaveChanges();
+
+                        int idUR = model.PracenjeUcenika.Id_ucenik_razred;
+                        model.PracenjeUcenika = db.PracenjeUcenika.SingleOrDefault(s => s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId && s.Id_ucenik_razred == idUR);
+                        if (model.PracenjeUcenika == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                        }
+                    }
+                    catch
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                    }
+                }
             }
             //postignuća su vezana za id učenika u određenom razredu (id->table ucenik_razred) i id pedagoga 
             model.Postignuca = (from pos in baza.Postignuce
@@ -141,15 +166,8 @@ namespace Planiranje.Controllers
                 {
                     var ucenik = db.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
                     var result1 = db.PracenjeUcenika.SingleOrDefault(s => s.Id_ucenik_razred == idUR && s.Id_pedagog==PlaniranjeSession.Trenutni.PedagogId);
-                    if (result1 == null)
-                    {
-                        result1 = new Pracenje_ucenika();
-                        result1.Pocetak_pracenja = model.PracenjeUcenika.Pocetak_pracenja;
-                        result1.Id_ucenik_razred = idUR;
-                        result1.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-                        db.PracenjeUcenika.Add(result1);
-                    }
-                    else
+                   
+                    if(result1 != null)
                     {
                         result1.Pocetak_pracenja = model.PracenjeUcenika.Pocetak_pracenja;                        
                     }
@@ -400,16 +418,9 @@ namespace Planiranje.Controllers
                     if (result != null)
                     {
                         result.Razlog = model.PracenjeUcenika.Razlog;
-                    }
-                    else
-                    {
-                        model.PracenjeUcenika.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-                        model.PracenjeUcenika.Id_ucenik_razred = idUR;
-                        model.PracenjeUcenika.Pocetak_pracenja = new DateTime();
-                        model.PracenjeUcenika.Pocetak_pracenja = DateTime.Now;
-                        db.PracenjeUcenika.Add(model.PracenjeUcenika);
-                    }
-                    db.SaveChanges();
+                        db.SaveChanges();
+                    }               
+                    
                 }
                 catch
                 {
@@ -463,17 +474,9 @@ namespace Planiranje.Controllers
                     {
                         result.Inic_Procjena_razrednik = model.PracenjeUcenika.Inic_Procjena_razrednik;
                         result.Inic_Procjena_ucenik = model.PracenjeUcenika.Inic_Procjena_ucenik;
-                        result.Inic_Procjena_roditelj = model.PracenjeUcenika.Inic_Procjena_roditelj;                        
-                    }
-                    else
-                    {
-                        model.PracenjeUcenika.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-                        model.PracenjeUcenika.Id_ucenik_razred = idUR;
-                        model.PracenjeUcenika.Pocetak_pracenja = new DateTime();
-                        model.PracenjeUcenika.Pocetak_pracenja = DateTime.Now;
-                        db.PracenjeUcenika.Add(model.PracenjeUcenika);
-                    }
-                    db.SaveChanges();
+                        result.Inic_Procjena_roditelj = model.PracenjeUcenika.Inic_Procjena_roditelj;
+                        db.SaveChanges();
+                    }                    
                 }
                 catch
                 {
@@ -526,16 +529,8 @@ namespace Planiranje.Controllers
                         result.Soc_uvjeti = model.PracenjeUcenika.Soc_uvjeti;
                         result.Soc_vjestine = model.PracenjeUcenika.Soc_vjestine;
                         result.Ucenje = model.PracenjeUcenika.Ucenje;
-                    }
-                    else
-                    {
-                        model.PracenjeUcenika.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-                        model.PracenjeUcenika.Id_ucenik_razred = idUR;
-                        model.PracenjeUcenika.Pocetak_pracenja = new DateTime();
-                        model.PracenjeUcenika.Pocetak_pracenja = DateTime.Now;
-                        db.PracenjeUcenika.Add(model.PracenjeUcenika);
-                    }
-                    db.SaveChanges();
+                        db.SaveChanges();
+                    }                    
                 }
                 catch
                 {
@@ -586,16 +581,8 @@ namespace Planiranje.Controllers
                     if (result != null)
                     {
                         result.Zakljucak = model.PracenjeUcenika.Zakljucak;
-                    }
-                    else
-                    {
-                        model.PracenjeUcenika.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-                        model.PracenjeUcenika.Id_ucenik_razred = idUR;
-                        model.PracenjeUcenika.Pocetak_pracenja = new DateTime();
-                        model.PracenjeUcenika.Pocetak_pracenja = DateTime.Now;
-                        db.PracenjeUcenika.Add(model.PracenjeUcenika);
-                    }
-                    db.SaveChanges();
+                        db.SaveChanges();
+                    }              
                 }
                 catch
                 {

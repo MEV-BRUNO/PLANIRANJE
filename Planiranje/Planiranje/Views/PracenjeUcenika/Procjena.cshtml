@@ -55,6 +55,6 @@
 
     <div class="form-group">
         <button type="button" onclick="potvrdi('@Url.Action("Procjena","PracenjeUcenika")','#procjenaForm','Spremljeno')" class="btn btn-success">Potvrdi</button>
-        <button type="button" onclick="odustani('@Url.Action("Procjena","PracenjeUcenika", new { idU = Model.Ucenik.Id_ucenik, idR = Model.Razred.Id})','#procjena')" class="btn btn-success">Odustani</button>
+        <button type="button" onclick="odustani('@Url.Action("Procjena","PracenjeUcenika", new { idU = Model.Ucenik.Id_ucenik, idR = Model.Razred.Id})','#procjena')" class="btn btn-default">Odustani</button>
     </div>
 }
