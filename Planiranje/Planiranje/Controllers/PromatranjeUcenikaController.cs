@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Planiranje.Models.Ucenici;
 using Planiranje.Models;
 using System.Net;
+using Planiranje.Reports;
+using System.IO;
 
 namespace Planiranje.Controllers
 {
@@ -220,6 +222,32 @@ namespace Planiranje.Controllers
             int idUR = model.PromatranjeUcenika.Id_ucenik_razred;
             Ucenik_razred UR = baza.UcenikRazred.SingleOrDefault(s => s.Id == idUR);
             return RedirectToAction("Promatranje", new { id = UR.Id_ucenik, idUcenikRazred = idUR });
+        }
+        public FileStreamResult Ispis (int id)
+        {
+            //ulazni parametar id je id promatranja učenika
+            PromatranjeUcenikaModel model = new PromatranjeUcenikaModel();
+            model.Ucenik = new Ucenik();
+            model.PromatranjeUcenika = new Promatranje_ucenika();
+            model.PromatranjeUcenika = baza.PromatranjeUcenika.Single(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            int idUR = model.PromatranjeUcenika.Id_ucenik_razred;
+            Ucenik_razred UR = new Ucenik_razred();
+            UR = baza.UcenikRazred.Single(s => s.Id == idUR);
+            int idUcenik = UR.Id_ucenik;
+            int idRazred = UR.Id_razred;
+            model.Ucenik = baza.Ucenik.Single(s => s.Id_ucenik == idUcenik);
+            model.Razred = new RazredniOdjel();
+            model.Razred = baza.RazredniOdjel.Single(s => s.Id == idRazred && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            int idRazrednik = model.Razred.Id_razrednik;
+            Nastavnik razrednik = new Nastavnik();
+            razrednik = baza.Nastavnik.Single(s => s.Id == idRazrednik && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            Pedagog pedagog = new Pedagog();
+            pedagog = baza.Pedagog.Single(s => s.Id_Pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            Skola skola = new Skola();
+            skola = baza.Skola.Single(s => s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+
+            PromatranjeUcenikaReport report = new PromatranjeUcenikaReport(model, razrednik, pedagog, skola);
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
         }
     }
 }
