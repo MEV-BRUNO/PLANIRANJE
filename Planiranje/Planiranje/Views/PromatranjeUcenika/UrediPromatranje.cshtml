@@ -144,6 +144,7 @@
                 </div>
                 <!--kraj osnovnog dijela-->
                 <div class="modal-footer">
+                    <a class="btn btn-info" href="@Url.Action("Ispis","PromatranjeUcenika",new { id=Model.PromatranjeUcenika.Id})" target="_blank">Ispis</a>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
                     <input type="button" class="btn btn-primary" value="Promijeni" onclick='zatvoriModal("@Url.Action("UrediPromatranje","PromatranjeUcenika")","#urediPromatranje","#promatranje","Promatranje je promijenjeno")' />
                 </div>
