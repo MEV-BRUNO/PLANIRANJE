@@ -175,5 +175,12 @@
         val = val + "/Index";
         reloadPage(val);
     }
-    
+    function provjeriEnter(event, path, form, target, poruka) {
+        if (event.type === "keydown") {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                zatvoriModal(path, form, target, poruka);
+            }
+        }
+    }
 </script>

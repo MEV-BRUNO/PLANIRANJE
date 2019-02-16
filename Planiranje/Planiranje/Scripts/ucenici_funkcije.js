@@ -10,6 +10,14 @@
         promjenaGodine();
     }
 });
+function provjeriEnter(event, path, form, target, poruka) {
+    if (event.type === "keydown") {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            zatvoriModal(path, form, target, poruka);
+        }
+    }
+}
 function ispis() {
     var akt = $("#selectAktivnost").val();
     var god = $("#selectGodina").val();
