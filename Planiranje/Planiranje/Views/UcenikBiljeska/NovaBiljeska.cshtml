@@ -39,7 +39,9 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Biljeska, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.Biljeska, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Biljeska, new { htmlAttributes = new { @class = "form-control",
+                       onkeydown = "provjeriEnter(event,\"/UcenikBiljeska/NovaBiljeska\",\"#novaBiljeska\",\"#biljeska\",\"Nova bilješka je spremljena\")"
+                   } })
                         @Html.ValidationMessageFor(model => model.Biljeska, "", new { @class = "text-danger" })
                     </div>
                 </div>
