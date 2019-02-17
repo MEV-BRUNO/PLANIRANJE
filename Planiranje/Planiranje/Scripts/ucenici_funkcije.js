@@ -1,11 +1,12 @@
-﻿$(document).ready(function () {
+﻿var tip = $("#tip").text();
+$(document).ready(function () {
     var akt = $("#selectAktivnost").val();
-    var saved1 = window.sessionStorage.getItem("UC_select");
+    var saved1 = window.sessionStorage.getItem(tip+"_select");
     if (saved1 != null && saved1 != akt) {
         reloadPage(saved1 + "/Index");
     }
-    else if (window.sessionStorage.getItem("UC_godina") != null) {
-        var saved = window.sessionStorage.getItem("UC_godina");
+    else if (window.sessionStorage.getItem(tip+"_godina") != null) {
+        var saved = window.sessionStorage.getItem(tip+"_godina");
         $("#selectGodina").val(saved);
         promjenaGodine();
     }
@@ -22,7 +23,7 @@ function ispis() {
     var akt = $("#selectAktivnost").val();
     var god = $("#selectGodina").val();
     if (god > 0) {
-        var id = window.sessionStorage.getItem("UC_idUcenik");
+        var id = window.sessionStorage.getItem(tip+"_idUcenik");
         if (id != null) {
             window.open(akt + "/Ispis?godina=" + god + "&id=" + id);
         }
@@ -42,9 +43,9 @@ function promjenaGodine() {
             success: function (data) {
                 $("#razredi").html(data);
                 var akt = $("#selectAktivnost").val();
-                var saved = window.sessionStorage.getItem("UC_godina");
+                var saved = window.sessionStorage.getItem(tip+"_godina");
                 if (saved != null && saved == $("#selectGodina").val()) {
-                    var saved1 = window.sessionStorage.getItem("UC_razred");
+                    var saved1 = window.sessionStorage.getItem(tip+"_razred");
                     if (saved1 != null) {
                         $("#selectRazred").val(saved1);
                         promjenaRazreda();
@@ -73,9 +74,9 @@ function promjenaRazreda() {
             success: function (data) {
                 $("#tablica").html(data);
                 $("#dataTable").dataTable();
-                var saved = window.sessionStorage.getItem("UC_godina");
-                var saved1 = window.sessionStorage.getItem("UC_razred");
-                var id = window.sessionStorage.getItem("UC_idUcenik");
+                var saved = window.sessionStorage.getItem(tip+"_godina");
+                var saved1 = window.sessionStorage.getItem(tip+"_razred");
+                var id = window.sessionStorage.getItem(tip+"_idUcenik");
                 if (saved != null && saved1 != null) {
                     if (saved == god && saved1 == val && id != null) {
                         pokaziDetalje(id);
@@ -97,7 +98,7 @@ function pokaziDetalje(id) {
     var val = $("#selectGodina").val();
     var akt = $("#selectAktivnost").val();
     var raz = $("#selectRazred").val();
-    window.sessionStorage.setItem("UC_idUcenik", id);    
+    window.sessionStorage.setItem(tip+"_idUcenik", id);    
     $.ajax({
         url: akt+'/Detalji?id=' + id + '&godina=' + val,
         success: function (data) {
@@ -107,8 +108,8 @@ function pokaziDetalje(id) {
             showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
         }
     });
-    window.sessionStorage.setItem("UC_godina", val);
-    window.sessionStorage.setItem("UC_razred", raz);
+    window.sessionStorage.setItem(tip+"_godina", val);
+    window.sessionStorage.setItem(tip+"_razred", raz);
 }
 function potvrdi(path, id, poruka) {
     var dt = $(id).serialize();
@@ -164,16 +165,16 @@ function zatvoriModal(path, id, spremi, poruka) {
 function promjenaAktivnost() {
     var val = $("#selectAktivnost").val();
     if (val == "/PopisUcenika" || $("#selectGodina").val() == "0" || !$("#selectRazred").length || $("#selectRazred").val()=="0") {
-        window.sessionStorage.setItem("UC_select", val);
+        window.sessionStorage.setItem(tip+"_select", val);
         reloadPage(val + "/Index");
     }
     else if (/*$("#selectRazred").length==0 &&*/ $("#selectRazred").val() != "0") {        
-        var id = window.sessionStorage.getItem("UC_idUcenik");
-        window.sessionStorage.setItem("UC_select", val);
+        var id = window.sessionStorage.getItem(tip+"_idUcenik");
+        window.sessionStorage.setItem(tip+"_select", val);
         pokaziDetalje(id);
     }
     else {
-        window.sessionStorage.setItem("UC_select", val);
+        window.sessionStorage.setItem(tip+"_select", val);
         val = val + "/Index";       
         reloadPage(val);
     }    
