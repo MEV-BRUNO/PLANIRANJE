@@ -38,8 +38,14 @@ namespace Planiranje.Controllers
                                                select bilj).ToList();
             List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == id && (w.Svojstvo == 1 || w.Svojstvo == 2 || w.Svojstvo == 3)).ToList();
             List<string> svojstvo = new List<string>() { "","Otac","Majka","Skrbnik" };
+            Ucenik ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            if (ucenik == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
             ViewBag.svojstvo = svojstvo;
             ViewBag.roditelji = roditelji;
+            ViewBag.ucenik = ucenik;
             return View(biljeske);
         }
         public ActionResult NovaBiljeska(int idUcenik, int godina, int id)
