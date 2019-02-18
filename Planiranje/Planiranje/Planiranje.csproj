@@ -276,6 +276,7 @@
     <Compile Include="Models\Ucenici\Promatranje_ucenika.cs" />
     <Compile Include="Models\Ucenici\PromatranjeUcenikaModel.cs" />
     <Compile Include="Models\Ucenici\RazredniOdjel.cs" />
+    <Compile Include="Models\Ucenici\Roditelj_biljeska.cs" />
     <Compile Include="Models\Ucenici\Ucenik.cs" />
     <Compile Include="Models\Ucenici\UcenikBiljeskaModel.cs" />
     <Compile Include="Models\Ucenici\Ucenik_biljeska.cs" />
@@ -504,6 +505,7 @@
     <Content Include="Views\PromatranjeUcenika\ObrisiPromatranje.cshtml" />
     <Content Include="Views\RoditeljBiljeska\Index.cshtml" />
     <Content Include="Views\RoditeljBiljeska\Detalji.cshtml" />
+    <Content Include="Views\RoditeljBiljeska\NovaBiljeska.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

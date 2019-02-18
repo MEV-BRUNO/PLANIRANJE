@@ -1,8 +1,8 @@
-﻿
+﻿@model List<Planiranje.Models.Ucenici.Roditelj_biljeska>
+@using Planiranje.Models.Ucenici
 @{
     Layout = null;
 }
-
 <div class="panel-body">
     <div class="row">
         <div class="col-lg-12">            
@@ -20,15 +20,27 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{ int brojac = 0;
+                            List<Obitelj> roditelji = ViewBag.roditelji as List<Obitelj>;
+                            List<string> svojstvo = ViewBag.svojstvo as List<string>;
+                            }
+                        @foreach (var item in Model)
+                        { brojac++;
+                            var roditelj = roditelji.SingleOrDefault(s => s.Id_obitelj == item.Id_roditelj);
+                            if (roditelj == null)
+                            {
+                                continue;
+                            }
                         <tr>
-                            <td class="col-md-1">1.</td>
-                            <td class="col-md-3">Ana Novak (majka)</td>
-                            <td class="col-md-6">Razgovor s majkom</td>
+                            <td class="col-md-1">@brojac</td>
+                            <td class="col-md-3">@roditelj.ImePrezime (@svojstvo.ElementAt(roditelj.Svojstvo))</td>
+                            <td class="col-md-6">@item.Naslov</td>
                             <td class="col-md-2">
                                 <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
                                 <a href="#" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                             </td>
                         </tr>
+                        }
                     </tbody>
                 </table>
 

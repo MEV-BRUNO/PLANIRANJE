@@ -165,6 +165,29 @@ CREATE TABLE promatranje_ucenika (
   CONSTRAINT promatranje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)  
 );
 
+CREATE TABLE roditelj_biljeska (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  id_roditelj int(20) NOT NULL,
+  naslov varchar(100) NOT NULL,
+  rujan text,
+  listopad text,
+  studeni text,
+  prosinac text,
+  sijecanj text,
+  veljaca text,
+  ozujak text,
+  travanj text,
+  svibanj text,
+  lipanj text,
+  zakljucak1 text,
+  zakljucak2 text,
+  zapazanje text,
+  PRIMARY KEY (id),
+  CONSTRAINT roditelj_biljeska_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
+);  
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
