@@ -42,14 +42,36 @@ namespace Planiranje.Controllers
             ViewBag.roditelji = roditelji;
             return View(biljeske);
         }
-        public ActionResult NovaBiljeska(int id, int godina)
+        public ActionResult NovaBiljeska(int idUcenik, int godina, int id)
         {
-            //ulazni parametar id je id učenika
+            //ulazni parametar id je id bilješke
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            return View();
+            if(id==0 && godina > 0 && idUcenik>0)
+            {
+                Ucenik_razred UR = (from ur in baza.UcenikRazred
+                                    join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                                    where ur.Id_ucenik == idUcenik && raz.Sk_godina == godina
+                                    select ur).FirstOrDefault();
+                if (UR == null)
+                {                   
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }                
+                List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik).ToList();
+                ViewBag.ur = UR;
+                ViewBag.roditelji = roditelji;
+                return View();
+            }
+            else if (id > 0 && idUcenik>0)
+            {
+                return View();
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
+            }            
         }
     }
 }

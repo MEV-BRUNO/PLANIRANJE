@@ -179,3 +179,18 @@ function promjenaAktivnost() {
         reloadPage(val);
     }    
 }
+function pokaziPoddetalje(naziv,target,id) {
+    var val = $("#selectGodina").val();
+    var akt = $("#selectAktivnost").val();
+    //var raz = $("#selectRazred").val();
+    var id_ucenik = window.sessionStorage.getItem(tip + "_idUcenik");
+    $.ajax({
+        url: akt + '/' + naziv + '?idUcenik=' + id_ucenik + '&godina=' + val + '&id=' + id,
+        success: function (data) {
+            $(target).html(data);
+        },
+        error: function (request, status, error) {
+            showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+        }
+    });    
+}
