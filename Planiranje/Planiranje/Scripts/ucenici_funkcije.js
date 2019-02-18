@@ -194,3 +194,22 @@ function pokaziPoddetalje(naziv,target,id) {
         }
     });    
 }
+function potvrdiA(path, id, poruka, target) {
+    var dt = $(id).serialize();
+    $.ajax({
+        url: path,
+        type: "POST",
+        data: dt,
+        success: function (data) {
+            if (data=="") {
+                showSnackBar(poruka);
+            }
+            else {
+                $(target).html(data);                
+            }            
+        },
+        error: function (request, status, error) {
+            showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+        }
+    });
+}

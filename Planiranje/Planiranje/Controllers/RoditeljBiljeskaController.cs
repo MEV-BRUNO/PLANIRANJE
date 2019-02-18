@@ -67,7 +67,7 @@ namespace Planiranje.Controllers
                 }                
                 List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik).ToList();
                 IEnumerable<SelectListItem> select = new SelectList(roditelji, "Id_obitelj", "ImePrezime");
-                ViewBag.ur = UR;
+                ViewBag.ur = UR.Id;
                 ViewBag.roditelji = select;
                 return View();
             }
@@ -79,6 +79,56 @@ namespace Planiranje.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
             }            
+        }
+        [HttpPost]
+        public ActionResult NovaBiljeska (Roditelj_biljeska model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if(string.IsNullOrWhiteSpace(model.Naslov) || model.Id_roditelj == 0)
+            {
+                int idUR = model.Id_ucenik_razred;
+                Ucenik_razred UR = baza.UcenikRazred.SingleOrDefault(s => s.Id == idUR);
+                if (UR == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                int idUcenik = UR.Id_ucenik;
+                List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik).ToList();
+                IEnumerable<SelectListItem> select = new SelectList(roditelji, "Id_obitelj", "ImePrezime");
+                ViewBag.ur = UR.Id;
+                ViewBag.roditelji = select;
+                return View(model);
+            }
+            try
+            {
+                if (model.Id == 0)
+                {
+                    using (var db = new BazaPodataka())
+                    {
+                        model.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                        db.RoditeljBiljeska.Add(model);
+                        db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    using (var db = new BazaPodataka())
+                    {
+                        model.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                        db.RoditeljBiljeska.Add(model);
+                        db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.OK,"uspjesno");
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+            }
         }
     }
 }
