@@ -3,125 +3,153 @@
 @{
     Layout = null;
 }
-<div class="panel-body">
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label for="text1" class="control-label">Naziv dokumenta</label>
-                <input type="text" id="text1" placeholder="Naziv dokumenta" class="form-control" />
-            </div>
-        </div><!--END COL 6-->
-        <div class="col-lg-6">
-            <div class="form-group left">
-                <label for="text1" class="control-label">Ime i prezime roditelja/skrbnika</label>
-                <input type="text" id="text1" placeholder="Ime i prezime" class="form-control" />
-            </div>
-        </div>
-    </div><!--END ROW -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="form-group left">
-                <label for="text1" class="control-label">MJESEČNA BILJEŠKA / ZAKLJUČAK </label>
-            </div>
-            <div class="panel-body">
-                <ul class="nav nav-tabs small">
-                    <li class="active">
-                        <a href="#biljeska1" data-toggle="tab">RUJAN - SIJEČANJ</a>
-                    </li>
-                    <li>
-                        <a href="#biljeska2" data-toggle="tab">VELJAČA - LIPANJ</a>
-                    </li>
-                    <li>
-                        <a href="#ostalo" data-toggle="tab">Ostala zapažanja</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane fade in active" id="biljeska1">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Rujan</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Listopad</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Studeni</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                            </div><!--END COL -->
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Prosinac</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Siječanj</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Zaključci</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                            </div><!--END COL -->
-                        </div><!--END ROW -->
-                    </div>
-                    <div class="tab-pane fade" id="biljeska2">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Veljača</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Ožujak</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Travanj</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                            </div><!--END COL -->
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Svibanj</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Lipanj</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Zaključci</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div><!--END form-group -->
-                            </div><!--END COL -->
-                        </div><!--END ROW -->
-                    </div>
-                    <div class="tab-pane fade" id="ostalo">
-                        <div class="row">
-                            <div class="col-lg-10">
-                                <div class="form-group">
-                                    <label for="text1" class="control-label col-lg-3">Ostala zapažanja</label>
-                                    <textarea class="form-control" rows="8"></textarea>
-                                </div><!--END form-group -->
-                            </div><!--END COL -->
-                            <div class="col-lg-2">
-                            </div><!--END COL -->
-                        </div><!--END ROW -->
-                    </div><!--END TAB-->
-                </div>
-            </div><!--END PANEL-->
-            <div class="form-group">
-                <label for="text4" class="control-label col-lg-1"></label>
-                <div class="col-lg-6">
-                    <button type="button" class="btn btn-success">Potvrdi</button>
-                    <button type="button" onclick="location.reload()" class="btn btn-default">Odustani</button>
-                </div>
-            </div>
-        </div><!--END COL 12-->
-    </div><!--END ROW -->
-</div>
 
+<div class="panel-body">
+    @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "novaBiljeska" }))
+    {
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Naslov, htmlAttributes: new { @class = "control-label" })
+                    @*<input type="text" id="text1" placeholder="Naziv dokumenta" class="form-control" />*@
+                    @Html.EditorFor(model => model.Naslov, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Naslov, "", new { @class = "text-danger" })
+                </div>
+                @*<div class="form-group">
+                    @Html.LabelFor(model => model.Naslov, htmlAttributes: new { @class = "control-label" })
+                      <div class="col-lg-8">
+                        @Html.EditorFor(model => model.Naslov, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Naslov, "", new { @class = "text-danger" })
+                      </div>
+                    </div>*@
+            </div><!--END COL 6-->
+            <div class="col-lg-6">
+                <div class="form-group left">
+                    @Html.LabelFor(model => model.Id_roditelj, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.Id_roditelj, ViewBag.roditelji as IEnumerable<SelectListItem>, "Odaberite roditelja/skrbnika", new { @class = "form-control" })
+                </div>
+                @*<div class="form-group">
+                    @Html.LabelFor(model => model.Id_roditelj, htmlAttributes: new { @class = "control-label" })
+                      <div class="col-lg-8">
+                        @Html.DropDownListFor(model => model.Id_roditelj, ViewBag.roditelji as IEnumerable<SelectListItem>, "Odaberite roditelja/skrbnika", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Id_roditelj, "", new { @class = "text-danger" })
+                      </div>
+                    </div>*@
+            </div>
+        </div><!--END ROW -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group left">
+                    <label class="control-label">MJESEČNA BILJEŠKA / ZAKLJUČAK </label>
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs small">
+                        <li class="active">
+                            <a href="#biljeska1" data-toggle="tab">RUJAN - SIJEČANJ</a>
+                        </li>
+                        <li>
+                            <a href="#biljeska2" data-toggle="tab">VELJAČA - LIPANJ</a>
+                        </li>
+                        <li>
+                            <a href="#ostalo" data-toggle="tab">Ostala zapažanja</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="biljeska1">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                            @*<label for="text1" class="control-label col-lg-3">Rujan</label>*@
+                                            @Html.LabelFor(model => model.Rujan, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                            @*<textarea class="form-control" rows="3"></textarea>*@
+                                            @Html.TextAreaFor(model => model.Rujan, new { @class = "edit-opis", rows = "3" })
+                                        </div><!--END form-group -->
+                                    @*<div class="form-group">
+                                        @Html.LabelFor(model => model.Rujan, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        <div class="col-lg-8">
+                                            @Html.TextAreaFor(model => model.Rujan, new { @class = "form-control", rows = "3" })
+                                            @Html.ValidationMessageFor(model => model.Rujan, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>*@
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Listopad, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Listopad, new { @class = "edit-opis", rows = "3" })
+                                    </div><!--END form-group -->
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Studeni, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Studeni, new { @class = "edit-opis", rows = "3" })
+                                    </div><!--END form-group -->
+                                </div><!--END COL -->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Prosinac, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Prosinac, new { @class = "edit-opis", rows = "3" })
+                                    </div><!--END form-group -->
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Sijecanj, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Sijecanj, new { @class = "edit-opis", rows = "3" })
+                                    </div><!--END form-group -->
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Zakljucak1, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Zakljucak1, new { @class = "edit-opis", rows = "3" })
+                                    </div><!--END form-group -->
+                                </div><!--END COL -->
+                            </div><!--END ROW -->
+                        </div>
+                        <div class="tab-pane fade" id="biljeska2">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Veljaca, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Veljaca, new { @class = "edit-opis", rows = "3" })
+                                    </div><!--END form-group -->
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Ozujak, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Ozujak, new { @class = "edit-opis", rows = "3" })
+                                    </div><!--END form-group -->
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Travanj, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Travanj, new { @class = "edit-opis", rows = "3" })
+                                    </div><!--END form-group -->
+                                </div><!--END COL -->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Svibanj, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Svibanj, new { @class = "edit-opis", rows = "3" })
+                                    </div><!--END form-group -->
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Lipanj, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Lipanj, new { @class = "edit-opis", rows = "3" })
+                                    </div><!--END form-group -->
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Zakljucak2, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Zakljucak2, new { @class = "edit-opis", rows = "3" })
+                                    </div><!--END form-group -->
+                                </div><!--END COL -->
+                            </div><!--END ROW -->
+                        </div>
+                        <div class="tab-pane fade" id="ostalo">
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Zapazanje, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                        @Html.TextAreaFor(model => model.Zapazanje, new { @class = "edit-opis", rows = "8" })
+                                    </div><!--END form-group -->
+                                </div><!--END COL -->
+                                <div class="col-lg-2">
+                                </div><!--END COL -->
+                            </div><!--END ROW -->
+                        </div><!--END TAB-->
+                    </div>
+                </div><!--END PANEL-->
+                <div class="form-group">
+                    <label for="text4" class="control-label col-lg-1"></label>
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-success">Potvrdi</button>
+                        <button type="button" onclick="location.reload()" class="btn btn-default">Odustani</button>
+                    </div>
+                </div>
+            </div><!--END COL 12-->
+        </div><!--END ROW -->
+    }
+</div>

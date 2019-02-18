@@ -66,8 +66,9 @@ namespace Planiranje.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
                 }                
                 List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik).ToList();
+                IEnumerable<SelectListItem> select = new SelectList(roditelji, "Id_obitelj", "ImePrezime");
                 ViewBag.ur = UR;
-                ViewBag.roditelji = roditelji;
+                ViewBag.roditelji = select;
                 return View();
             }
             else if (id > 0 && idUcenik>0)
