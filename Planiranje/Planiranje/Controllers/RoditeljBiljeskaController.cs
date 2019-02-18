@@ -73,7 +73,16 @@ namespace Planiranje.Controllers
             }
             else if (id > 0 && idUcenik>0)
             {
-                return View();
+                Roditelj_biljeska model = baza.RoditeljBiljeska.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                if (model == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik).ToList();
+                IEnumerable<SelectListItem> select = new SelectList(roditelji, "Id_obitelj", "ImePrezime");
+                ViewBag.ur = null;
+                ViewBag.roditelji = select;
+                return View(model);
             }
             else
             {

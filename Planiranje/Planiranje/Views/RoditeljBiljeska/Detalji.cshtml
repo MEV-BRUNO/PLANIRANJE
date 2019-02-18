@@ -42,7 +42,7 @@
                             <td class="col-md-3">@roditelj.ImePrezime (@svojstvo.ElementAt(roditelj.Svojstvo))</td>
                             <td class="col-md-6">@item.Naslov</td>
                             <td class="col-md-2">
-                                <a href="#" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                <a onclick="pokaziPoddetalje('NovaBiljeska','#body','@item.Id')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
                                 <a href="#" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                             </td>
                         </tr>

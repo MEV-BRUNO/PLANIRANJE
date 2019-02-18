@@ -6,15 +6,14 @@
 <div class="panel-body">
     @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "novaBiljeska" }))
     {
+        @Html.HiddenFor(model => model.Id)
         if (ViewBag.ur == null)
         {
-            @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(model => model.Id_ucenik_razred)
         }
         else
         {
-            @Html.HiddenFor(model => model.Id, new { Value = 0 })
-            @Html.HiddenFor(model => model.Id_ucenik_razred, new { Value=ViewBag.ur})
+            @Html.HiddenFor(model => model.Id_ucenik_razred, new { Value = ViewBag.ur })
         }
 
         <div class="row">
