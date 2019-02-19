@@ -3,6 +3,7 @@
 @{
     Layout = null;
 }
+<p></p>
 <div class="panel-body">
     <div class="row">
         <div class="col-lg-12">            
@@ -43,7 +44,7 @@
                             <td class="col-md-6">@item.Naslov</td>
                             <td class="col-md-2">
                                 <a onclick="pokaziPoddetalje('NovaBiljeska','#body','@item.Id')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                <a href="#" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                <a onclick="showModal('@Url.Action("ObrisiBiljeska","RoditeljBiljeska", new { id=item.Id})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                             </td>
                         </tr>
                         }

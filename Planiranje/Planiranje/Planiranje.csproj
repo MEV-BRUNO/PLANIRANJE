@@ -506,6 +506,7 @@
     <Content Include="Views\RoditeljBiljeska\Index.cshtml" />
     <Content Include="Views\RoditeljBiljeska\Detalji.cshtml" />
     <Content Include="Views\RoditeljBiljeska\NovaBiljeska.cshtml" />
+    <Content Include="Views\RoditeljBiljeska\ObrisiBiljeska.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
