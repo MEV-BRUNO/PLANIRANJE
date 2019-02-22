@@ -15,9 +15,9 @@ namespace Planiranje.Controllers
     {
         private Aktivnost_DBHandle aktivnosti = new Aktivnost_DBHandle();
 		
-        public ActionResult Index(string Sort, string Search, string Filter, int? Page_No)
+        public ActionResult Index()
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }

@@ -17,7 +17,7 @@ namespace Planiranje.Controllers
 
         public ActionResult Index()
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
             }
