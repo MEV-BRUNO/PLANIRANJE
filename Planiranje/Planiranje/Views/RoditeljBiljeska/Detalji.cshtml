@@ -11,10 +11,11 @@
                 <div class="col-lg-10">
                     <div class="col-lg-2">
                         <p>
-                            <a onclick="pokaziPoddetalje('NovaBiljeska','#body',0)" class="btn btn-primary btn-xs btn-grad"> Dodaj bilješku</a>
+                            @{ Ucenik ucenik = ViewBag.ucenik as Ucenik;}
+                            <a onclick="showModal('@Url.Action("NovaBiljeska","RoditeljBiljeska",new { idUcenik=ucenik.Id_ucenik, godina=ViewBag.godina, id=0})')" class="btn btn-primary btn-xs btn-grad"> Dodaj bilješku</a>
                         </p>
                     </div>
-                    <b>Odabrani učenik:</b> @{ Ucenik ucenik = ViewBag.ucenik as Ucenik;}@ucenik.ImePrezime
+                    <b>Odabrani učenik:</b> @ucenik.ImePrezime
                 </div>          
                 
                 <table class="table table-striped table-bordered table-hover" id="dataTable">
@@ -43,7 +44,7 @@
                             <td class="col-md-3">@roditelj.ImePrezime (@svojstvo.ElementAt(roditelj.Svojstvo))</td>
                             <td class="col-md-6">@item.Naslov</td>
                             <td class="col-md-2">
-                                <a onclick="pokaziPoddetalje('NovaBiljeska','#body','@item.Id')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                <a onclick="showModal('@Url.Action("NovaBiljeska","RoditeljBiljeska",new { idUcenik=ucenik.Id_ucenik, godina=ViewBag.godina, id=item.Id})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
                                 <a onclick="showModal('@Url.Action("ObrisiBiljeska","RoditeljBiljeska", new { id=item.Id})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                             </td>
                         </tr>

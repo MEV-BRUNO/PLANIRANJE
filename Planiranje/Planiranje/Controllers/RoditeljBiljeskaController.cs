@@ -46,6 +46,7 @@ namespace Planiranje.Controllers
             ViewBag.svojstvo = svojstvo;
             ViewBag.roditelji = roditelji;
             ViewBag.ucenik = ucenik;
+            ViewBag.godina = godina;
             return View(biljeske);
         }
         public ActionResult NovaBiljeska(int idUcenik, int godina, int id)
@@ -65,7 +66,7 @@ namespace Planiranje.Controllers
                 {                   
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
                 }                
-                List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik).ToList();
+                List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik && (w.Svojstvo == 1 || w.Svojstvo == 2 || w.Svojstvo == 3)).ToList();
                 IEnumerable<SelectListItem> select = new SelectList(roditelji, "Id_obitelj", "ImePrezime");
                 ViewBag.ur = UR.Id;
                 ViewBag.roditelji = select;
@@ -78,7 +79,7 @@ namespace Planiranje.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
                 }
-                List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik).ToList();
+                List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik && (w.Svojstvo == 1 || w.Svojstvo == 2 || w.Svojstvo == 3)).ToList();
                 IEnumerable<SelectListItem> select = new SelectList(roditelji, "Id_obitelj", "ImePrezime");
                 ViewBag.ur = null;
                 ViewBag.roditelji = select;
@@ -113,6 +114,12 @@ namespace Planiranje.Controllers
             }
             try
             {
+                int idUR = model.Id_ucenik_razred;
+                int idUcenik = (from ur in baza.UcenikRazred where ur.Id == idUR select ur.Id_ucenik).First();
+                int g = (from ur in baza.UcenikRazred
+                         join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                         where ur.Id == idUR
+                         select raz.Sk_godina).First();
                 if (model.Id == 0)
                 {
                     using (var db = new BazaPodataka())
@@ -132,7 +139,7 @@ namespace Planiranje.Controllers
                         db.SaveChanges();
                     }
                 }
-                return new HttpStatusCodeResult(HttpStatusCode.OK,"uspjesno");
+                return RedirectToAction("Detalji", new { id = idUcenik, godina = g });
             }
             catch
             {
