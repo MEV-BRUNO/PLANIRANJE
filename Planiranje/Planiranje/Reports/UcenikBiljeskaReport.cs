@@ -79,6 +79,12 @@ namespace Planiranje.Reports
                 t.AddCell(VratiCeliju(item.Zanimanje, tekst, false, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(item.Kontakt, tekst, false, BaseColor.WHITE));
             }
+            if (model.ListaObitelji.Count == 0)
+            {
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+            }
 
             pdfDokument.Add(t);
 
@@ -91,7 +97,14 @@ namespace Planiranje.Reports
             t = new PdfPTable(1);
             t.WidthPercentage = 100;
             t.SetWidths(new int[] { 1 });
-            t.AddCell(VratiCeliju(model.UcenikBiljeska.Inicijalni_podaci, tekst, false, BaseColor.WHITE));
+            if (string.IsNullOrEmpty(model.UcenikBiljeska.Inicijalni_podaci))
+            {
+                t.AddCell(VratiCeliju("\n\n\n", tekst, false, BaseColor.WHITE));
+            }
+            else
+            {
+                t.AddCell(VratiCeliju(model.UcenikBiljeska.Inicijalni_podaci, tekst, false, BaseColor.WHITE));
+            }            
             t.SpacingAfter = 15;
             pdfDokument.Add(t);
 
@@ -117,6 +130,11 @@ namespace Planiranje.Reports
                 t.AddCell(VratiCeliju(mjeseci.ElementAt(item.Mjesec).ToString(), tekst, false, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(item.Biljeska, tekst, false, BaseColor.WHITE));
             }
+            if (biljeske.Count == 0)
+            {
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+            }
 
             pdfDokument.Add(t);
 
@@ -128,7 +146,15 @@ namespace Planiranje.Reports
             t = new PdfPTable(1);
             t.WidthPercentage = 100;
             t.SetWidths(new int[] { 1 });
-            t.AddCell(VratiCeliju(model.UcenikBiljeska.Zapazanje, tekst, false, BaseColor.WHITE));            
+            if (string.IsNullOrEmpty(model.UcenikBiljeska.Zapazanje))
+            {
+                t.AddCell(VratiCeliju("\n\n\n", tekst, false, BaseColor.WHITE));
+            }
+            else
+            {
+                t.AddCell(VratiCeliju(model.UcenikBiljeska.Zapazanje, tekst, false, BaseColor.WHITE));
+            }
+                    
             pdfDokument.Add(t);
 
             p = new Paragraph("Stručni suradnik: "+pedagog.Ime+" "+pedagog.Prezime+", "+pedagog.Titula, tekst);
