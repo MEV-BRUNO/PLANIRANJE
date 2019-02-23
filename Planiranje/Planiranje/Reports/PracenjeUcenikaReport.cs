@@ -90,6 +90,13 @@ namespace Planiranje.Reports
                 t.AddCell(VratiCeliju(item.Zanimanje, tekst, false, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(item.Kontakt, tekst, false, BaseColor.WHITE));
             }
+            if (model.ListaObitelji.Count == 0)
+            {
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+            }
 
             pdfDokument.Add(t);
 
@@ -102,7 +109,15 @@ namespace Planiranje.Reports
             t = new PdfPTable(1);
             t.WidthPercentage = 100;
             t.SetWidths(new int[] { 1 });
-            t.AddCell(VratiCeliju(model.PracenjeUcenika.Razlog, tekst, false, BaseColor.WHITE));
+            if (string.IsNullOrEmpty(model.PracenjeUcenika.Razlog))
+            {
+                t.AddCell(VratiCeliju("\n\n\n", tekst, false, BaseColor.WHITE));
+            }
+            else
+            {
+                t.AddCell(VratiCeliju(model.PracenjeUcenika.Razlog, tekst, false, BaseColor.WHITE));
+            }
+            
             t.SpacingAfter = 15;
             pdfDokument.Add(t);
 
@@ -115,12 +130,12 @@ namespace Planiranje.Reports
             t = new PdfPTable(1);
             t.WidthPercentage = 100;
             t.SetWidths(new int[] { 1 });
-            t.AddCell(VratiCeliju("INICIJALNA PROCJENA - razgovor s učenikom", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju(model.PracenjeUcenika.Inic_Procjena_ucenik, tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju("INICIJALNA PROCJENA - razgovor s roditeljem/skrbnikom", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju(model.PracenjeUcenika.Inic_Procjena_roditelj, tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju("INICIJALNA PROCJENA - razgovor s razrednikom", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju(model.PracenjeUcenika.Inic_Procjena_razrednik, tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju("INICIJALNA PROCJENA - razgovor s učenikom\n\n"+model.PracenjeUcenika.Inic_Procjena_ucenik, tekst, false, BaseColor.WHITE));
+            //t.AddCell(VratiCeliju(model.PracenjeUcenika.Inic_Procjena_ucenik, tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju("INICIJALNA PROCJENA - razgovor s roditeljem/skrbnikom\n\n"+model.PracenjeUcenika.Inic_Procjena_roditelj, tekst, false, BaseColor.WHITE));
+            //t.AddCell(VratiCeliju(model.PracenjeUcenika.Inic_Procjena_roditelj, tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju("INICIJALNA PROCJENA - razgovor s razrednikom\n\n"+model.PracenjeUcenika.Inic_Procjena_razrednik, tekst, false, BaseColor.WHITE));
+            //t.AddCell(VratiCeliju(model.PracenjeUcenika.Inic_Procjena_razrednik, tekst, false, BaseColor.WHITE));
             t.SpacingAfter = 15;
             pdfDokument.Add(t);
 
@@ -132,7 +147,15 @@ namespace Planiranje.Reports
             t = new PdfPTable(1);
             t.WidthPercentage = 100;
             t.SetWidths(new int[] { 1 });
-            t.AddCell(VratiCeliju(model.PracenjeUcenika.Soc_uvjeti, tekst, false, BaseColor.WHITE));
+            if (string.IsNullOrEmpty(model.PracenjeUcenika.Soc_uvjeti))
+            {
+                t.AddCell(VratiCeliju("\n\n\n", tekst, false, BaseColor.WHITE));
+            }
+            else
+            {
+                t.AddCell(VratiCeliju(model.PracenjeUcenika.Soc_uvjeti, tekst, false, BaseColor.WHITE));
+            }
+            
             t.SpacingAfter = 15;
             pdfDokument.Add(t);
 
@@ -144,7 +167,15 @@ namespace Planiranje.Reports
             t = new PdfPTable(1);
             t.WidthPercentage = 100;
             t.SetWidths(new int[] { 1 });
-            t.AddCell(VratiCeliju(model.PracenjeUcenika.Ucenje, tekst, false, BaseColor.WHITE));
+            if (string.IsNullOrEmpty(model.PracenjeUcenika.Ucenje))
+            {
+                t.AddCell(VratiCeliju("\n\n\n", tekst, false, BaseColor.WHITE));
+            }
+            else
+            {
+                t.AddCell(VratiCeliju(model.PracenjeUcenika.Ucenje, tekst, false, BaseColor.WHITE));
+            }
+            
             t.SpacingAfter = 15;
             pdfDokument.Add(t);
 
@@ -156,7 +187,15 @@ namespace Planiranje.Reports
             t = new PdfPTable(1);
             t.WidthPercentage = 100;
             t.SetWidths(new int[] { 1 });
-            t.AddCell(VratiCeliju(model.PracenjeUcenika.Soc_vjestine, tekst, false, BaseColor.WHITE));
+            if (string.IsNullOrEmpty(model.PracenjeUcenika.Soc_vjestine))
+            {
+                t.AddCell(VratiCeliju("\n\n\n", tekst, false, BaseColor.WHITE));
+            }
+            else
+            {
+                t.AddCell(VratiCeliju(model.PracenjeUcenika.Soc_vjestine, tekst, false, BaseColor.WHITE));
+            }
+            
             t.SpacingAfter = 14;
             pdfDokument.Add(t);
 
@@ -179,7 +218,13 @@ namespace Planiranje.Reports
                 t.AddCell(VratiCeliju(item.Godina+"./"+(item.Godina+1).ToString()+".", tekst, false, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(model.Razred.Naziv, tekst, false, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(item.Napomena, tekst, false, BaseColor.WHITE));
-            }           
+            }
+            if (model.Postignuca.Count == 0)
+            {
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+            }
 
             pdfDokument.Add(t);
 
@@ -201,6 +246,11 @@ namespace Planiranje.Reports
                 t.AddCell(VratiCeliju(item.Datum.ToShortDateString(), tekst, false, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(item.Napomena, tekst, false, BaseColor.WHITE));
             }
+            if (model.NeposredniRadovi.Count == 0)
+            {
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
+            }
             t.SpacingAfter = 14;
             pdfDokument.Add(t);
 
@@ -212,7 +262,15 @@ namespace Planiranje.Reports
             t = new PdfPTable(1);
             t.WidthPercentage = 100;
             t.SetWidths(new int[] { 1 });
-            t.AddCell(VratiCeliju(model.PracenjeUcenika.Zakljucak, tekst, false, BaseColor.WHITE));            
+            if (string.IsNullOrEmpty(model.PracenjeUcenika.Zakljucak))
+            {
+                t.AddCell(VratiCeliju("\n\n\n", tekst, false, BaseColor.WHITE));
+            }
+            else
+            {
+                t.AddCell(VratiCeliju(model.PracenjeUcenika.Zakljucak, tekst, false, BaseColor.WHITE));
+            }
+                     
             pdfDokument.Add(t);            
 
             p = new Paragraph("Stručni suradnik: " + pedagog.Ime + " " + pedagog.Prezime + ", " + pedagog.Titula, tekst);
