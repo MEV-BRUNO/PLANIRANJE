@@ -209,6 +209,7 @@
     <Compile Include="Controllers\PracenjeUcenikaController.cs" />
     <Compile Include="Controllers\PromatranjeUcenikaController.cs" />
     <Compile Include="Controllers\RoditeljBiljeskaController.cs" />
+    <Compile Include="Controllers\RoditeljProcjenaController.cs" />
     <Compile Include="Controllers\SubjektiController.cs" />
     <Compile Include="Controllers\UcenikBiljeskaController.cs" />
     <Compile Include="Controllers\ZadaciController.cs" />
@@ -507,6 +508,7 @@
     <Content Include="Views\RoditeljBiljeska\Detalji.cshtml" />
     <Content Include="Views\RoditeljBiljeska\NovaBiljeska.cshtml" />
     <Content Include="Views\RoditeljBiljeska\ObrisiBiljeska.cshtml" />
+    <Content Include="Views\RoditeljProcjena\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
