@@ -9,77 +9,97 @@
             <h4 class="modal-title">@{string s = ViewBag.ur == null ? "Uređivanje procjene roditelja" : "Nova procjena"; }@s</h4>
         </div>
         <div class="panel-body">
-            @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @class = "form-horizontal", @id = "novaProcjena" }))
+            @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "novaProcjena" }))
             {
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label for="text1" class="control-label col-lg-3">Naziv dokumenta</label>
+                            @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label" })                           
+                            @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
+                        </div>                        
+                    </div><!--END COL 6-->
+                    <div class="col-lg-6">
+                        <div class="form-group left">
+                            @Html.LabelFor(model => model.Id_roditelj, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Id_roditelj, ViewBag.roditelji as IEnumerable<SelectListItem>, "Odaberite roditelja/skrbnika", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Id_roditelj, "", new { @class = "text-danger" })
+                        </div>                       
+                    </div>
+                </div><!--END ROW -->
+                <div class="row">
+                    <div class="col-lg-6">                        
+                        <div class="form-group">
+                            @*<label for="text1" class="control-label col-lg-3">Opišite svoje djete kako ga Vi vidite.</label>*@
+                            @Html.LabelFor(model => model.Opis, htmlAttributes: new { @class = "control-label col-lg-4" })
                             <div class="col-lg-8">
-                                <input type="text" id="text1" placeholder="Naziv dokumenta" class="form-control" />
+                                @Html.TextAreaFor(model => model.Opis, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Opis, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="text1" class="control-label col-lg-3">Opišite svoje djete kako ga Vi vidite.</label>
+                            @Html.LabelFor(model => model.Interes, htmlAttributes: new { @class = "control-label col-lg-4" })
                             <div class="col-lg-8">
-                                <textarea class="form-control" placeholder="Opišite svoje djete kako ga Vi vidite" rows="3"></textarea>
+                                @Html.TextAreaFor(model => model.Interes, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="text1" class="control-label col-lg-3">Kakav interes Vaše djete pokazuje za pojedine školske predmete?</label>
+                            @Html.LabelFor(model => model.Predmet, htmlAttributes: new { @class = "control-label col-lg-4" })
                             <div class="col-lg-8">
-                                <textarea class="form-control" placeholder="Kakav interes Vaše djete pokazuje za pojedine školske predmete" rows="3"></textarea>
+                                @Html.TextAreaFor(model => model.Predmet, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Predmet, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="text1" class="control-label col-lg-3">U kojem predmetu je Vaše djete najaktivnije?</label>
+                            @Html.LabelFor(model => model.Gradivo, htmlAttributes: new { @class = "control-label col-lg-4" })
                             <div class="col-lg-8">
-                                <textarea class="form-control" placeholder="U kojem predmetu je Vaše djete najaktivnije" rows="3"></textarea>
+                                @Html.TextAreaFor(model => model.Gradivo, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Gradivo, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="text1" class="control-label col-lg-3">Ima li Vaše djete poteškoća u savladavanju gradiva pojedinih predmeta?</label>
+                            @Html.LabelFor(model => model.Boravak, htmlAttributes: new { @class = "control-label col-lg-4" })
                             <div class="col-lg-8">
-                                <textarea class="form-control" placeholder="Ima li Vaše djete poteškoća u savladavanju gradiva pojedinih predmeta" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="text1" class="control-label col-lg-3">Ima li vaše djete neke poteškoće vezane za boravak u školi?</label>
-                            <div class="col-lg-8">
-                                <textarea class="form-control" placeholder="Ima li Vaše djete neke poteškoće vezane za boravak u školi" rows="3"></textarea>
+                                @Html.TextAreaFor(model => model.Boravak, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Boravak, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         
                     </div><!--END COL 6-->
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label for="text1" class="control-label col-lg-3">Kakve odnose ima s članovima obitelji i prijateljima?</label>
+                            @Html.LabelFor(model => model.Odnos, htmlAttributes: new { @class = "control-label col-lg-4" })
                             <div class="col-lg-8">
-                                <textarea class="form-control" placeholder="Kakve odnose ima s članovima obitelji i prijateljima" rows="3"></textarea>
+                                @Html.TextAreaFor(model => model.Odnos, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Odnos, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="text1" class="control-label col-lg-3">Koje školske aktivnosti zanimaju Vaše dijete?</label>
+                            @Html.LabelFor(model => model.Aktivnosti, htmlAttributes: new { @class = "control-label col-lg-4" })
                             <div class="col-lg-8">
-                                <textarea class="form-control" placeholder="Kakve odnose ima s članovima obitelji i prijateljima" rows="3"></textarea>
+                                @Html.TextAreaFor(model => model.Aktivnosti, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Aktivnosti, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="text1" class="control-label col-lg-3">Koje ima hobije i interes?</label>
+                            @Html.LabelFor(model => model.Hobiji, htmlAttributes: new { @class = "control-label col-lg-4" })
                             <div class="col-lg-8">
-                                <textarea class="form-control" placeholder="Koje ima hobije i interes" rows="3"></textarea>
+                                @Html.TextAreaFor(model => model.Hobiji, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Hobiji, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="text1" class="control-label col-lg-3">Koja su Vaša očekivanja, što biste željeli da postigne u ovoj školskoj godini?</label>
+                            @Html.LabelFor(model => model.Ocekivanja, htmlAttributes: new { @class = "control-label col-lg-4" })
                             <div class="col-lg-8">
-                                <textarea class="form-control" placeholder="Koja su Vaša očekivanja" rows="3"></textarea>
+                                @Html.TextAreaFor(model => model.Ocekivanja, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Ocekivanja, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="text1" class="control-label col-lg-3">Želite li dodati podatke koji su važni za Vaše dijete?</label>
+                            @Html.LabelFor(model => model.Dodatni_podaci, htmlAttributes: new { @class = "control-label col-lg-4" })
                             <div class="col-lg-8">
-                                <textarea class="form-control" placeholder="Želite li dodati podatke koji su važni za Vaše dijete" rows="3"></textarea>
+                                @Html.TextAreaFor(model => model.Dodatni_podaci, new { @class = "edit-opis", rows = "3" })
                             </div>
                         </div>
 
