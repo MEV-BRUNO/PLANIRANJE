@@ -12,7 +12,7 @@
                     <div class="col-lg-2">
                         <p>
                             @{ Ucenik ucenik = ViewBag.ucenik as Ucenik;}
-                            <a onclick="showModal('@Url.Action("NovaProcjena","RoditeljProcjena",new { idUcenik=ucenik.Id_ucenik, godina=ViewBag.godina, id=0})')" class="btn btn-primary btn-xs btn-grad"> Dodaj bilješku</a>
+                            <a onclick="showModal('@Url.Action("NovaProcjena","RoditeljProcjena",new { idUcenik=ucenik.Id_ucenik, godina=ViewBag.godina, id=0})')" class="btn btn-primary btn-xs btn-grad"> Dodaj procjenu</a>
                         </p>
                     </div>
                     <b>Odabrani učenik:</b> @ucenik.ImePrezime

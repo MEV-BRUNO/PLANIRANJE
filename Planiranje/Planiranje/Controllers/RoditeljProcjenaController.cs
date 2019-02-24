@@ -91,5 +91,65 @@ namespace Planiranje.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
+        [HttpPost]
+        public ActionResult NovaProcjena (Roditelj_procjena model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (string.IsNullOrWhiteSpace(model.Naziv) || model.Id_roditelj == 0 || string.IsNullOrWhiteSpace(model.Aktivnosti) ||
+                string.IsNullOrWhiteSpace(model.Boravak) || string.IsNullOrWhiteSpace(model.Gradivo) || string.IsNullOrWhiteSpace(model.Hobiji) ||
+                string.IsNullOrWhiteSpace(model.Interes) || string.IsNullOrWhiteSpace(model.Ocekivanja) || string.IsNullOrWhiteSpace(model.Odnos) ||
+                string.IsNullOrWhiteSpace(model.Opis) || string.IsNullOrWhiteSpace(model.Predmet))
+            {
+                int idUR = model.Id_ucenik_razred;
+                Ucenik_razred UR = baza.UcenikRazred.SingleOrDefault(s => s.Id == idUR);
+                if (UR == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                int idUcenik = UR.Id_ucenik;
+                List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik).ToList();
+                IEnumerable<SelectListItem> select = new SelectList(roditelji, "Id_obitelj", "ImePrezime");
+                ViewBag.ur = UR.Id;
+                ViewBag.roditelji = select;
+                return View(model);
+            }
+
+            try
+            {
+                int idUR = model.Id_ucenik_razred;
+                int idUcenik = (from ur in baza.UcenikRazred where ur.Id == idUR select ur.Id_ucenik).First();
+                int g = (from ur in baza.UcenikRazred
+                         join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                         where ur.Id == idUR
+                         select raz.Sk_godina).First();
+                if (model.Id == 0)
+                {
+                    using (var db = new BazaPodataka())
+                    {
+                        model.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                        db.RoditeljProcjena.Add(model);
+                        db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    using (var db = new BazaPodataka())
+                    {
+                        model.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                        db.RoditeljProcjena.Add(model);
+                        db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                return RedirectToAction("Detalji", new { id = idUcenik, godina = g });
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+            }
+        }
     }
 }
