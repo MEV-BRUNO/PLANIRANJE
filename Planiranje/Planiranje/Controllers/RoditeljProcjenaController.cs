@@ -75,7 +75,16 @@ namespace Planiranje.Controllers
             }
             else if(idUcenik>0 && id > 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Roditelj_procjena model = baza.RoditeljProcjena.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                if (model == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik && (w.Svojstvo == 1 || w.Svojstvo == 2 || w.Svojstvo == 3)).ToList();
+                IEnumerable<SelectListItem> select = new SelectList(roditelji, "Id_obitelj", "ImePrezime");
+                ViewBag.ur = null;
+                ViewBag.roditelji = select;
+                return View(model);
             }
             else
             {
