@@ -1,0 +1,98 @@
+﻿@model Planiranje.Models.Ucenici.Roditelj_procjena
+@{
+    Layout = null;
+}
+<div class="modal-dialog" style="width:1200px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">@{string s = ViewBag.ur == null ? "Uređivanje procjene roditelja" : "Nova procjena"; }@s</h4>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @class = "form-horizontal", @id = "novaProcjena" }))
+            {
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">Naziv dokumenta</label>
+                            <div class="col-lg-8">
+                                <input type="text" id="text1" placeholder="Naziv dokumenta" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">Opišite svoje djete kako ga Vi vidite.</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" placeholder="Opišite svoje djete kako ga Vi vidite" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">Kakav interes Vaše djete pokazuje za pojedine školske predmete?</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" placeholder="Kakav interes Vaše djete pokazuje za pojedine školske predmete" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">U kojem predmetu je Vaše djete najaktivnije?</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" placeholder="U kojem predmetu je Vaše djete najaktivnije" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">Ima li Vaše djete poteškoća u savladavanju gradiva pojedinih predmeta?</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" placeholder="Ima li Vaše djete poteškoća u savladavanju gradiva pojedinih predmeta" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">Ima li vaše djete neke poteškoće vezane za boravak u školi?</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" placeholder="Ima li Vaše djete neke poteškoće vezane za boravak u školi" rows="3"></textarea>
+                            </div>
+                        </div>
+                        
+                    </div><!--END COL 6-->
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">Kakve odnose ima s članovima obitelji i prijateljima?</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" placeholder="Kakve odnose ima s članovima obitelji i prijateljima" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">Koje školske aktivnosti zanimaju Vaše dijete?</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" placeholder="Kakve odnose ima s članovima obitelji i prijateljima" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">Koje ima hobije i interes?</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" placeholder="Koje ima hobije i interes" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">Koja su Vaša očekivanja, što biste željeli da postigne u ovoj školskoj godini?</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" placeholder="Koja su Vaša očekivanja" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">Želite li dodati podatke koji su važni za Vaše dijete?</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" placeholder="Želite li dodati podatke koji su važni za Vaše dijete" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> <!--END ROW-->
+                <div class="modal-footer">
+                    @{ string naziv = ViewBag.ur == null ? "Promijeni" : "Spremi";
+                       string naziv1 = ViewBag.ur == null ? "Procjena je promijenjena" : "Nova procjena je spremljena";}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                    <input type="button" class="btn btn-primary" value="@naziv" onclick='zatvoriModal("@Url.Action("NovaProcjena","RoditeljPocjena")","#novaProcjena","#detalji","@naziv1")' />
+                </div>
+            }
+        </div><!--END PANEL-->        
+    </div>
+</div>
+
