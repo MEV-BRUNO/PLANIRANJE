@@ -512,6 +512,7 @@
     <Content Include="Views\RoditeljProcjena\Index.cshtml" />
     <Content Include="Views\RoditeljProcjena\Detalji.cshtml" />
     <Content Include="Views\RoditeljProcjena\NovaProcjena.cshtml" />
+    <Content Include="Views\RoditeljProcjena\ObrisiProcjena.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
