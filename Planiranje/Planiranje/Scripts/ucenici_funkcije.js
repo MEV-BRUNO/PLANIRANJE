@@ -73,7 +73,7 @@ function promjenaRazreda() {
             url: '/PracenjeUcenika/OdabirUcenika?razred=' + val + '&godina=' + god,
             success: function (data) {
                 $("#tablica").html(data);
-                $("#dataTable").dataTable();
+                $("#dataTableUcenici").dataTable({ stateSave: true });
                 var saved = window.sessionStorage.getItem(tip+"_godina");
                 var saved1 = window.sessionStorage.getItem(tip+"_razred");
                 var id = window.sessionStorage.getItem(tip+"_idUcenik");
