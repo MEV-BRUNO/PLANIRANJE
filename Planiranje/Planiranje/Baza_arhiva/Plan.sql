@@ -208,6 +208,26 @@ CREATE TABLE roditelj_procjena (
   CONSTRAINT roditelj_procjena_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
 );
 
+CREATE TABLE roditelj_razgovor (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  id_roditelj int(20) NOT NULL,
+  datum datetime,
+  vrijeme datetime,
+  trazi text,
+  razlog text,
+  dolazak text,
+  biljeska text,
+  prijedlog_roditelja text,
+  prijedlog_skole text,
+  dogovor text,
+  izvjestiti text,
+  datum_slijedeci datetime,
+  PRIMARY KEY(id),
+  CONSTRAINT roditelj_razgovor_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
+);
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
