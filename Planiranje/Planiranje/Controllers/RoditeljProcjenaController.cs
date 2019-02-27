@@ -52,7 +52,7 @@ namespace Planiranje.Controllers
         }
         public ActionResult NovaProcjena (int idUcenik, int godina, int id)
         {
-            //učazni parametar id je id procjene, ukoliko je on 0, radi se o novoj procjeni
+            //ulazni parametar id je id procjene, ukoliko je on 0, radi se o novoj procjeni
             if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
