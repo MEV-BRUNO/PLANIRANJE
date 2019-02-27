@@ -108,7 +108,14 @@ namespace Planiranje.Controllers
                 int idUcenik = UR.Id_ucenik;
                 List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik).ToList();
                 IEnumerable<SelectListItem> select = new SelectList(roditelji, "Id_obitelj", "ImePrezime");
-                ViewBag.ur = UR.Id;
+                if (model.Id > 0)
+                {
+                    ViewBag.ur = null;
+                }
+                else
+                {
+                    ViewBag.ur = UR.Id;
+                }
                 ViewBag.roditelji = select;
                 return View(model);
             }
