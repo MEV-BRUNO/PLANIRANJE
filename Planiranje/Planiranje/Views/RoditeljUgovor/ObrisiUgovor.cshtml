@@ -1,0 +1,41 @@
+﻿@model Planiranje.Models.Ucenici.Roditelj_ugovor
+
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Brisanje ugovora s roditeljem</h4>
+        </div>
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiUgovor", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.HiddenFor(model => model.Id)
+            <div class="modal-body">
+                <p><b>Jeste li sigurni da želite obrisati ovaj ugovor?</b></p>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(model => model.Datum, new { @class = "form-control", disabled = "" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Id_roditelj, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @*@Html.DropDownListFor(model => model.Mjesec, ViewBag.mjeseci as List<SelectListItem>, "Odaberite mjesec", new { @class = "form-control", disabled = "" })*@
+                        @Html.TextBox(" ", ViewBag.ime as string, new { @class = "form-control", disabled = "" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                    <input type="button" class="btn btn-danger" value="Obriši" onclick='zatvoriModal("@Url.Action("ObrisiUgovor","RoditeljUgovor")","#obrisiUgovor","#detalji","Ugovor je obrisan")' />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

@@ -524,6 +524,7 @@
     <Content Include="Views\RoditeljUgovor\Index.cshtml" />
     <Content Include="Views\RoditeljUgovor\Detalji.cshtml" />
     <Content Include="Views\RoditeljUgovor\NoviUgovor.cshtml" />
+    <Content Include="Views\RoditeljUgovor\ObrisiUgovor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
