@@ -158,5 +158,59 @@ namespace Planiranje.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Conflict);
             }
         }
+        public ActionResult ObrisiRazgovor (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Roditelj_razgovor model = baza.RoditeljRazgovor.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            int idRoditelj = model.Id_roditelj;
+            Obitelj o = baza.Obitelj.SingleOrDefault(s => s.Id_obitelj == idRoditelj);
+            if (o == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            ViewBag.ime = o.ImePrezime;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ObrisiRazgovor (Roditelj_razgovor model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int idUcenik = 0, g = 0;
+            try
+            {
+                using (var db = new BazaPodataka())
+                {
+                    int id = model.Id;
+                    var result = db.RoditeljRazgovor.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (result != null)
+                    {
+                        int idUR = result.Id_ucenik_razred;
+                        Ucenik_razred ur = db.UcenikRazred.SingleOrDefault(s => s.Id == idUR);
+                        idUcenik = ur.Id_ucenik;
+                        g = (from urr in db.UcenikRazred
+                             join raz in db.RazredniOdjel on urr.Id_razred equals raz.Id
+                             where urr.Id == idUR
+                             select raz.Sk_godina).FirstOrDefault();
+                        db.RoditeljRazgovor.Remove(result);
+                        db.SaveChanges();
+                    }
+                }
+                return RedirectToAction("Detalji", new { id = idUcenik, godina = g });
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+            }
+        }
     }
 }
