@@ -1,0 +1,140 @@
+﻿@model Planiranje.Models.Ucenici.Roditelj_ugovor
+@{
+    Layout = null;
+}
+<div class="modal-dialog" style="width:1200px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">@{string s = ViewBag.ur == null ? "Uređivanje ugovora" : "Novi ugovor"; }@s</h4>
+        </div>
+        <div class="modal-body">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel-body">
+                            <ul class="nav nav-tabs small">
+                                <li class="active">
+                                    <a href="#osnovni" data-toggle="tab">Ciljevi / Akteri</a>
+                                </li>
+                                <li>
+                                    <a href="#biljeska" data-toggle="tab">Mjesečne bilješke</a>
+                                </li>
+                                <li>
+                                    <a href="#ostalo" data-toggle="tab">Izviješće/Zapažanja</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="osnovni">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group col-lg-10">
+                                                <label for="text1" class="control-label ">Ime i prezime roditelja/skrbnika</label>
+                                                <input type="text" id="text1" placeholder="Ime i prezime" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-lg-4">
+                                                <label for="text1" class="control-label">Ugovor sklopljen dana</label>
+                                                <input type="text" id="text1" placeholder="dd.mm.gggg." class="form-control" />
+                                            </div>
+                                            <div class="form-group col-lg-10">
+                                                <label for="text1" class="control-label">S obzirom na moje buduće ponašanje slažem se da ću</label>
+                                            </div>
+                                            <div class="form-group col-lg-10">
+                                                <label for="text1" class="control-label">PRVI CILJ</label>
+                                                <textarea class="form-control" placeholder="Cilj" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group col-lg-10">
+                                                <label for="text1" class="control-label">DRUGI CILJ</label>
+                                                <textarea class="form-control" placeholder="Cilj" rows="3"></textarea>
+                                            </div>
+                                        </div><!--END COL -->
+                                        <div class="col-lg-6">
+                                            <div class="form-group col-lg-12">
+                                                <label for="text1" class="control-label">Kako bih pomagala/pomagao popravljanju ponašanja, ja ću poduzeti sljedeće</label>
+                                                <textarea class="form-control" rows="2"></textarea>
+                                            </div>
+                                            <div class="form-group col-lg-12">
+                                                <label for="text1" class="control-label ">Učenica / učenik</label>
+                                                <input type="text" id="text1" placeholder="Ime i prezime" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-lg-12">
+                                                <label for="text1" class="control-label ">Predstavnik škole</label>
+                                                <input type="text" id="text1" placeholder="Predstavnik" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-lg-12">
+                                                <label for="text1" class="control-label ">Roditelj / skrbnik</label>
+                                                <input type="text" id="text1" placeholder="Roditelj/skrbnik" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-lg-12">
+                                                <label for="text1" class="control-label ">Sljedeći susret</label>
+                                                <input type="text" id="text1" placeholder="Sljedeći susret" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-lg-12">
+                                                <label for="text1" class="control-label">Ostala zapažanja</label>
+                                                <textarea class="form-control" rows="3"></textarea>
+                                            </div>
+                                        </div><!--END COL -->
+                                    </div><!--END ROW -->
+                                </div>
+                                <div class="tab-pane fade" id="biljeska">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-3">Bilješka - 1</label>
+                                                <textarea class="form-control" rows="3"></textarea>
+                                            </div><!--END form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-3">Bilješka - 2</label>
+                                                <textarea class="form-control" rows="3"></textarea>
+                                            </div><!--END form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-3">Bilješka - 3</label>
+                                                <textarea class="form-control" rows="3"></textarea>
+                                            </div><!--END form-group -->
+                                        </div><!--END COL -->
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-3">Bilješka - 4</label>
+                                                <textarea class="form-control" rows="3"></textarea>
+                                            </div><!--END form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-3">Bilješka - 5</label>
+                                                <textarea class="form-control" rows="3"></textarea>
+                                            </div><!--END form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-3">Bilješka - 6</label>
+                                                <textarea class="form-control" rows="3"></textarea>
+                                            </div><!--END form-group -->
+                                        </div><!--END COL -->
+                                    </div><!--END ROW -->
+                                </div>
+                                <div class="tab-pane fade" id="ostalo">
+                                    <div class="row">
+                                        <div class="col-lg-11">
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label ">Izviješće na kraju ugovora</label>
+                                                <textarea class="form-control" rows="4"></textarea>
+                                            </div><!--END form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label ">Ostala zapažanja</label>
+                                                <textarea class="form-control" rows="4"></textarea>
+                                            </div><!--END form-group -->
+                                        </div><!--END COL -->
+                                        <div class="col-lg-1">
+                                        </div><!--END COL -->
+                                    </div><!--END ROW -->
+                                </div><!--END TAB-->
+                            </div>
+                        </div><!--END PANEL-->                        
+                    </div><!--END COL 12-->
+                </div><!--END ROW -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            @{ string naziv = ViewBag.ur == null ? "Promijeni" : "Spremi";
+            string naziv1 = ViewBag.ur == null ? "Ugovor je promijenjen" : "Nova ugovor je spremljen";}
+            <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+            <input type="button" class="btn btn-primary" value="@naziv" onclick='zatvoriModal("@Url.Action("NoviUgovor","RoditeljUgovor")","#noviUgovor","#detalji","@naziv1")' />
+        </div>
+    </div>
+</div>

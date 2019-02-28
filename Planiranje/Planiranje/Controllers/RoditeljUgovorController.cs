@@ -50,5 +50,46 @@ namespace Planiranje.Controllers
             ViewBag.godina = godina;
             return View(model);
         }
+        public ActionResult NoviUgovor(int idUcenik, int godina, int id)
+        {
+            //ulazni parametar id je id procjene, ukoliko je on 0, radi se o novoj procjeni
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (id == 0 && idUcenik > 0 && godina > 0)
+            {
+                Ucenik_razred UR = (from ur in baza.UcenikRazred
+                                    join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                                    where ur.Id_ucenik == idUcenik && raz.Sk_godina == godina
+                                    select ur).FirstOrDefault();
+                if (UR == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik && (w.Svojstvo == 1 || w.Svojstvo == 2 || w.Svojstvo == 3)).ToList();
+                IEnumerable<SelectListItem> select = new SelectList(roditelji, "Id_obitelj", "ImePrezime");
+                ViewBag.ur = UR.Id;
+                ViewBag.roditelji = select;
+                return View();
+            }
+            else if (idUcenik > 0 && id > 0)
+            {
+                Roditelj_ugovor model = baza.RoditeljUgovor.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                if (model == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik && (w.Svojstvo == 1 || w.Svojstvo == 2 || w.Svojstvo == 3)).ToList();
+                IEnumerable<SelectListItem> select = new SelectList(roditelji, "Id_obitelj", "ImePrezime");
+                ViewBag.ur = null;
+                ViewBag.roditelji = select;
+                return View(model);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
     }
 }

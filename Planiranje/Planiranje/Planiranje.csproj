@@ -523,6 +523,7 @@
     <Content Include="Views\RoditeljRazgovor\ObrisiRazgovor.cshtml" />
     <Content Include="Views\RoditeljUgovor\Index.cshtml" />
     <Content Include="Views\RoditeljUgovor\Detalji.cshtml" />
+    <Content Include="Views\RoditeljUgovor\NoviUgovor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
