@@ -211,6 +211,7 @@
     <Compile Include="Controllers\RoditeljBiljeskaController.cs" />
     <Compile Include="Controllers\RoditeljProcjenaController.cs" />
     <Compile Include="Controllers\RoditeljRazgovorController.cs" />
+    <Compile Include="Controllers\RoditeljUgovorController.cs" />
     <Compile Include="Controllers\SubjektiController.cs" />
     <Compile Include="Controllers\UcenikBiljeskaController.cs" />
     <Compile Include="Controllers\ZadaciController.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Models\Ucenici\Roditelj_procjena.cs" />
     <Compile Include="Models\Ucenici\Roditelj_biljeska.cs" />
     <Compile Include="Models\Ucenici\Roditelj_razgovor.cs" />
+    <Compile Include="Models\Ucenici\Roditelj_ugovor.cs" />
     <Compile Include="Models\Ucenici\Ucenik.cs" />
     <Compile Include="Models\Ucenici\UcenikBiljeskaModel.cs" />
     <Compile Include="Models\Ucenici\Ucenik_biljeska.cs" />
@@ -519,6 +521,8 @@
     <Content Include="Views\RoditeljRazgovor\Detalji.cshtml" />
     <Content Include="Views\RoditeljRazgovor\NoviRazgovor.cshtml" />
     <Content Include="Views\RoditeljRazgovor\ObrisiRazgovor.cshtml" />
+    <Content Include="Views\RoditeljUgovor\Index.cshtml" />
+    <Content Include="Views\RoditeljUgovor\Detalji.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,6 @@
 ﻿@using Planiranje.Models
 @{
-    Page.Title = "Razgovor s roditeljem";
+    Page.Title = "Ugovor o ponašanju";
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 <div id="tip" style="display:none">ROD</div>
@@ -11,9 +11,9 @@
                 <label>Odabir aktivnosti:</label>
                 <select id="selectAktivnost" onchange="promjenaAktivnost()" class="form-control">
                     <option value="/RoditeljProcjena">Procjena roditelja/skrbnika o djetetu</option>
-                    <option value="/RoditeljRazgovor" selected>Razgovor s roditeljima/skrbnicima</option>
+                    <option value="/RoditeljRazgovor">Razgovor s roditeljima/skrbnicima</option>
                     <option value="/RoditeljBiljeska">Bilješka o radu s roditeljem/skrbnikom</option>
-                    <option value="/RoditeljUgovor">Ugovor o ponašanju</option>
+                    <option value="/RoditeljUgovor" selected>Ugovor o ponašanju</option>
                 </select>
             </div>
         </div>
