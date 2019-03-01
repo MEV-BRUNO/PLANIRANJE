@@ -43,8 +43,9 @@
                             <tr>
                                 <td class="col-md-1">@brojac</td>
                                 <td class="col-md-3">@roditelj.ImePrezime (@svojstvo.ElementAt(roditelj.Svojstvo))</td>
-                                <td class="col-md-6">@item.Naziv</td>
-                                <td class="col-md-2">
+                                <td class="col-md-5">@item.Naziv</td>
+                                <td class="col-md-3">
+                                    <a target="_blank" href="@Url.Action("Ispis","RoditeljProcjena",new { id=item.Id})" class="btn btn-info btn-xs btn-grad">Ispis</a>
                                     <a onclick="showModal('@Url.Action("NovaProcjena","RoditeljProcjena",new { idUcenik=ucenik.Id_ucenik, godina=ViewBag.godina, id=item.Id})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
                                     <a onclick="showModal('@Url.Action("ObrisiProcjena","RoditeljProcjena", new { id=item.Id})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                 </td>
