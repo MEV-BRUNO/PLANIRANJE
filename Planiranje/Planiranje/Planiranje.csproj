@@ -303,6 +303,7 @@
     <Compile Include="Reports\PracenjeUcenikaReport.cs" />
     <Compile Include="Reports\PromatranjeUcenikaReport.cs" />
     <Compile Include="Reports\RoditeljProcjenaReport.cs" />
+    <Compile Include="Reports\RoditeljRazgovorReport.cs" />
     <Compile Include="Reports\UcenikBiljeskaReport.cs" />
   </ItemGroup>
   <ItemGroup>

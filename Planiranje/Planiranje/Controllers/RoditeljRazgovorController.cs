@@ -212,5 +212,58 @@ namespace Planiranje.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Conflict);
             }
         }
+        public ActionResult Ispis (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Roditelj_razgovor model = baza.RoditeljRazgovor.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            Skola skola = (from sk in baza.Skola
+                           join raz in baza.RazredniOdjel on sk.Id_skola equals raz.Id_skola
+                           join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred
+                           join razg in baza.RoditeljRazgovor on ur.Id equals razg.Id_ucenik_razred
+                           where razg.Id == id && razg.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId
+                           select sk).SingleOrDefault();
+            if (skola == null)
+            {
+                skola = new Skola();
+            }
+            RazredniOdjel odjel = (from raz in baza.RazredniOdjel
+                                   join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred
+                                   join razg in baza.RoditeljRazgovor on ur.Id equals razg.Id_ucenik_razred
+                                   where razg.Id == id && razg.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId
+                                   select raz).SingleOrDefault();
+            if (odjel == null)
+            {
+                odjel = new RazredniOdjel();
+            }
+            Ucenik ucenik = (from uc in baza.Ucenik join ur in baza.UcenikRazred on uc.Id_ucenik equals ur.Id_ucenik
+                             join razg in baza.RoditeljRazgovor on ur.Id equals razg.Id_ucenik_razred
+                             where razg.Id == id && razg.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId
+                             select uc).SingleOrDefault();
+            if (ucenik == null)
+            {
+                ucenik = new Ucenik();
+            }
+            Obitelj roditelj = (from ob in baza.Obitelj
+                                join razg in baza.RoditeljRazgovor on ob.Id_obitelj equals razg.Id_roditelj
+                                where razg.Id == id && razg.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId
+                                select ob).SingleOrDefault();
+            if (roditelj == null)
+            {
+                roditelj = new Obitelj();
+            }
+            Pedagog pedagog = (from ped in baza.Pedagog
+                               join razg in baza.RoditeljRazgovor on ped.Id_Pedagog equals razg.Id_pedagog
+                               where razg.Id == id && razg.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId
+                               select ped).SingleOrDefault();
+            RoditeljRazgovorReport report = new RoditeljRazgovorReport(model, ucenik, skola, odjel, pedagog, roditelj);
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+        }
     }
 }
