@@ -13,7 +13,7 @@ namespace Planiranje.Models.Ucenici
         public int Id { get; set; }
         public int Id_ucenik_biljeska { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
-        public string Mjesec { get; set; }
+        public int Mjesec { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
         [DisplayName("Bilješka")]
         public string Biljeska { get; set; }

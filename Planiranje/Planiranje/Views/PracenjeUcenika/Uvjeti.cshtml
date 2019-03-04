@@ -5,7 +5,8 @@
 
 @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "uvjetiForm", @class = "form-horizontal", role = "form" }))
 {
-    @Html.HiddenFor(model=>model.PracenjeUcenika.Id_ucenik, new { Value=Model.Ucenik.Id_ucenik})
+    @Html.HiddenFor(model=>model.Ucenik.Id_ucenik)
+    @Html.HiddenFor(model => model.Razred.Id)
     <div class="panel-group" id="accordion2">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -54,6 +55,6 @@
 
     <div class="form-group">
         <button type="button" onclick="potvrdi('@Url.Action("Uvjeti","PracenjeUcenika")','#uvjetiForm','Spremljeno')" class="btn btn-success">Potvrdi</button>
-        <button type="button" onclick="odustani('@Url.Action("Uvjeti","PracenjeUcenika", new { id=Model.Ucenik.Id_ucenik})','#uvjeti')" class="btn btn-success">Odustani</button>
+        <button type="button" onclick="odustani('@Url.Action("Uvjeti","PracenjeUcenika", new { idU = Model.Ucenik.Id_ucenik, idR=Model.Razred.Id})','#uvjeti')" class="btn btn-default">Odustani</button>
     </div>
 }

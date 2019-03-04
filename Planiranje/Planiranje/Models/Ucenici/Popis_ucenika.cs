@@ -19,6 +19,7 @@ namespace Planiranje.Models.Ucenici
         [Required(ErrorMessage ="Obavezno polje")]
         [Range(1,2,ErrorMessage ="Obavezno polje")]
         public int Putnik { get; set; }
+        [DisplayName("Zaduženje")]
         public string Zaduzenje { get; set; }
     }
 }

@@ -11,8 +11,7 @@ CREATE TABLE ucenik (
   grad text,
   adresa text,
   biljeska text,
-  datum datetime,
-  pocetakpracenja datetime,
+  datum datetime,  
   id_razred int(20),
   PRIMARY KEY (id_ucenik)
 );
@@ -33,7 +32,7 @@ CREATE TABLE obitelj (
   id_obitelj int(20) NOT NULL AUTO_INCREMENT,
   ime text,
   prezime text,
-  svojstvo varchar(10) NOT NULL,
+  svojstvo tinyint NOT NULL,
   adresa text,
   zanimanje text,
   kontakt text,
@@ -74,8 +73,10 @@ CREATE TABLE nastavnik (
 );
 
 CREATE TABLE pracenje_ucenika (
-  id int(20) NOT NULL AUTO_INCREMENT,
-  id_ucenik int(20) NOT NULL,
+  id int(20) NOT NULL AUTO_INCREMENT,  
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  pocetak_pracenja datetime,
   razlog text,
   inic_procjena_ucenik text,
   inic_procjena_roditelj text,
@@ -85,30 +86,31 @@ CREATE TABLE pracenje_ucenika (
   soc_vjestine text,
   zakljucak text,
   PRIMARY KEY (id),
-  KEY (id_ucenik),
-  CONSTRAINT pracenje_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+  KEY (id_ucenik_razred),
+  CONSTRAINT pracenje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
 );
 
 CREATE TABLE postignuce (
   id_postignuce int(20) NOT NULL AUTO_INCREMENT,
-  id_ucenik int(20) NOT NULL,
-  id_razred int(20) NOT NULL,
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  razred int(20) NOT NULL,
   godina int(20) NOT NULL,
   napomena text,
-  PRIMARY KEY (id_postignuce),
-  KEY (id_ucenik),
-  KEY (id_razred),
-  CONSTRAINT postignuce_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+  PRIMARY KEY (id_postignuce),  
+  KEY (id_pedagog),
+  CONSTRAINT postignuce_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
 ); 
 
 CREATE TABLE neposredni_rad (
-  id_rad int(20) NOT NULL AUTO_INCREMENT,
-  id_ucenik int(20) NOT NULL,
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
   datum datetime,
   napomena text,
-  PRIMARY KEY (id_rad),
-  KEY (id_ucenik),
-  CONSTRAINT rad_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik)
+  PRIMARY KEY (id),
+  KEY (id_pedagog),
+  CONSTRAINT rad_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
 ); 
 
 CREATE TABLE popis_ucenika (
@@ -125,6 +127,7 @@ CREATE TABLE popis_ucenika (
 CREATE TABLE ucenik_biljeska (
   id_biljeska int(20) NOT NULL AUTO_INCREMENT,
   id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
   inicijalni_podaci text,
   zapazanje text,
   PRIMARY KEY (id_biljeska),
@@ -135,7 +138,7 @@ CREATE TABLE ucenik_biljeska (
 CREATE TABLE mjesecna_biljeska (
   id int(20) NOT NULL AUTO_INCREMENT,
   id_ucenik_biljeska int(20) NOT NULL,
-  mjesec varchar(25) NOT NULL,
+  mjesec tinyint NOT NULL,
   biljeska text,
   sk_godina int(20) NOT NULL,
   PRIMARY KEY (id),
@@ -160,6 +163,93 @@ CREATE TABLE promatranje_ucenika (
   PRIMARY KEY (id),
   KEY (id_ucenik_razred),
   CONSTRAINT promatranje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)  
+);
+
+CREATE TABLE roditelj_biljeska (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  id_roditelj int(20) NOT NULL,
+  naslov varchar(100) NOT NULL,
+  rujan text,
+  listopad text,
+  studeni text,
+  prosinac text,
+  sijecanj text,
+  veljaca text,
+  ozujak text,
+  travanj text,
+  svibanj text,
+  lipanj text,
+  zakljucak1 text,
+  zakljucak2 text,
+  zapazanje text,
+  PRIMARY KEY (id),
+  CONSTRAINT roditelj_biljeska_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
+);  
+
+CREATE TABLE roditelj_procjena (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  id_roditelj int(20) NOT NULL,
+  naziv text,
+  opis text,
+  interes text,
+  predmet text,
+  gradivo text,
+  boravak text,
+  odnos text,
+  aktivnosti text,
+  hobiji text,
+  ocekivanja text,
+  dodatni_podaci text,
+  PRIMARY KEY(id),
+  CONSTRAINT roditelj_procjena_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
+);
+
+CREATE TABLE roditelj_razgovor (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  id_roditelj int(20) NOT NULL,
+  datum datetime,
+  vrijeme datetime,
+  trazi text,
+  razlog text,
+  dolazak text,
+  biljeska text,
+  prijedlog_roditelja text,
+  prijedlog_skole text,
+  dogovor text,
+  izvjestiti text,
+  datum_slijedeci datetime,
+  PRIMARY KEY(id),
+  CONSTRAINT roditelj_razgovor_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
+);
+
+CREATE TABLE roditelj_ugovor (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  id_roditelj int(20) NOT NULL,
+  datum datetime,
+  cilj1 text,
+  cilj2 text,
+  poduzeto text,
+  predstavnik_skole text,
+  slijedeci_susret datetime,
+  zapazanje text,
+  biljeska1 text,
+  biljeska2 text,
+  biljeska3 text,
+  biljeska4 text,
+  biljeska5 text,
+  biljeska6 text,
+  izvjesce text,
+  ostala_zapazanja text,
+  PRIMARY KEY(id),
+  CONSTRAINT roditelj_ugovor_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
 );
 
 CREATE TABLE aktivnost (

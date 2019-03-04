@@ -3,19 +3,24 @@
     Page.Title = "Bilješke o radu s učenikom";
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
+<div id="tip" style="display:none">UC</div>
 <div class="inner">
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
                 <label>Odabir aktivnosti:</label>
                 <select id="selectAktivnost" onchange="promjenaAktivnost()" class="form-control">
-                    <option value="/PopisUcenika/Index">Popis učenika u razrednom odjelu</option>
-                    <option selected>Bilješke o radu s učenikom</option>
-                    <option value="/PracenjeUcenika/Index">Lista praćenja učenika - pedagoška obrada i anamneza</option>
-                    <option>Protokol promatranja</option>
+                    <option value="/PopisUcenika">Popis učenika u razrednom odjelu</option>
+                    <option value="/UcenikBiljeska" selected>Bilješke o radu s učenikom</option>
+                    <option value="/PracenjeUcenika">Lista praćenja učenika - pedagoška obrada i anamneza</option>
+                    <option value="/PromatranjeUcenika">Protokol promatranja</option>
                     <option>Procjena suradnje</option>
                 </select>
             </div>
+        </div>
+        <br />
+        <div class="col-lg-3 pull-right">
+            <a id="ispisButton" onclick="ispis()" class="btn btn-info btn-sm">Ispis</a>
         </div>
     </div>
 
@@ -66,101 +71,4 @@
 
 </div>
 
-<script>
-    function promjenaGodine() {
-        var val = $("#selectGodina").val();
-        if (val != "0") {
-            $.ajax({
-                url: '/PracenjeUcenika/OdabirRazreda?godina=' + val,
-                success: function (data) {
-                    $("#razredi").html(data);
-                }
-            });
-        }
-        else {
-            $("#razredi").empty();
-        }
-        $("#tablica").empty();
-        $("#detalji").empty();
-    }
-    function promjenaRazreda() {
-        var val = $("#selectRazred").val();
-        if (val != "0") {
-            $.ajax({
-                url: '/PracenjeUcenika/OdabirUcenika?razred=' + val,
-                success: function (data) {
-                    $("#tablica").html(data);
-                    $("#dataTable").dataTable();
-                }
-            });
-        }
-        else {
-            $("#tablica").empty();
-            $("#detalji").empty();
-        }
-    }
-    function pokaziDetalje(id) {
-        var val = $("#selectGodina").val();
-        $.ajax({
-            url: '/UcenikBiljeska/Detalji?id=' + id + '&godina=' + val,
-            success: function (data) {
-                $("#detalji").html(data);
-            }
-        });
-    }
-    function potvrdi(path, id, poruka) {
-        var dt = $(id).serialize();
-        $.ajax({
-            url: path,
-            type: "POST",
-            data: dt,
-            success: function (data) {
-                showSnackBar(poruka);
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            }
-        });
-    }
-    function odustani(path, id) {
-        $.ajax({
-            url: path,
-            success: function (data) {
-                $(id).html(data);
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            }
-        });
-    }
-    function zatvoriModal(path, id, spremi, poruka) {
-        var dt = $(id).serialize();
-        $.ajax({
-            url: path,
-            type: "POST",
-            data: dt,
-            success: function (data) {
-                if ($(data)[0].tagName === "P") {
-                    $(spremi).html(data);
-                    $('#modal').modal('hide');
-                    $('#modalContainer').removeData();
-                    $('.modal-backdrop').remove();
-                    showSnackBar(poruka);
-                }
-                else if ($(data)[0].tagName === "DIV") {
-                    $("#modalContainer").html(data);
-                }
-                else {
-                    location.reload();
-                }
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            }
-        });
-    }
-    function promjenaAktivnost() {
-        var val = $("#selectAktivnost").val();
-        reloadPage(val);
-    }
-</script>
+<script src="~/Scripts/ucenici_funkcije.js"></script>

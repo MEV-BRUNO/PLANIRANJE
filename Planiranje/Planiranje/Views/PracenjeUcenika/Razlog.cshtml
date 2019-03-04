@@ -4,12 +4,13 @@
 }
 @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "razlogForm", @class = "form-horizontal", role = "form" }))
 {
-    @Html.HiddenFor(model=>model.PracenjeUcenika.Id_ucenik, new { Value=Model.Ucenik.Id_ucenik})
+    @Html.HiddenFor(model=>model.Ucenik.Id_ucenik)
+    @Html.HiddenFor(model => model.Razred.Id)
     <div class="form-group">
         @Html.TextAreaFor(model=>model.PracenjeUcenika.Razlog, new { @class = "form-control", rows="5" })
     </div>
     <div class="form-group">
         <button type="button" onclick="potvrdi('@Url.Action("Razlog","PracenjeUcenika")','#razlogForm','Spremljeno')" class="btn btn-success">Potvrdi</button>
-        <button type="button" onclick="odustani('@Url.Action("Razlog","PracenjeUcenika", new { id=Model.Ucenik.Id_ucenik})','#razlog')" class="btn btn-success">Odustani</button>
+        <button type="button" onclick="odustani('@Url.Action("Razlog","PracenjeUcenika", new { idU = Model.Ucenik.Id_ucenik, idR=Model.Razred.Id})','#razlog')" class="btn btn-default">Odustani</button>
     </div>
 }

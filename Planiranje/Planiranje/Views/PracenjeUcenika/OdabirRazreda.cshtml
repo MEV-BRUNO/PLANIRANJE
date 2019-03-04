@@ -3,9 +3,10 @@
     Layout = null;
 }
 <div class="form-group">
-    <label>Razred:</label>
+    <label>Razredni odjel:</label>
     <select id="selectRazred" onchange="promjenaRazreda()" class="form-control">
         <option value="0">Odaberi razred</option>
+        <option value="-1">--Svi--</option>
        @foreach(var item in Model)
        {
            <option value="@item.Id">@item.Naziv</option>

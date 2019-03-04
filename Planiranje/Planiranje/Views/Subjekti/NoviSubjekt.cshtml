@@ -19,14 +19,14 @@
                     @Html.LabelFor(model => model.subjekt.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
                         @Html.EditorFor(model => model.subjekt.Naziv, new { htmlAttributes = new { @class = "form-control", @id = "newName",
-					   onkeydown = "hideModalA(event, \"/Subjekti/NoviSubjekt\", \"#noviSubjektView\", \"Nova subjekt je uspješno spremljen!\")"
+					   onkeydown = "hideModalA(event, \"/Subjekti/NoviSubjekt\", \"#noviSubjektView\", \"Novi subjekt je uspješno spremljen!\")"
 				   } })
                         @Html.ValidationMessageFor(model => model.subjekt.Naziv, "", new { @class = "text-danger" })
                     </div>
                 </div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-					<input type="button" class="btn btn-primary" value="Spremi" onclick='hideModal("/Subjekti/NoviSubjekt", "#noviSubjektView", "Nova subjekt je uspješno spremljen!")' />
+					<input type="button" class="btn btn-primary" value="Spremi" onclick='hideModal("/Subjekti/NoviSubjekt", "#noviSubjektView", "Novi subjekt je uspješno spremljen!")' />
 				</div>
             </div>
         }

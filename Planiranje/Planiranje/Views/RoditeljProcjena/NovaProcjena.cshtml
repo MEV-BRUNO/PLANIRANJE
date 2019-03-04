@@ -1,0 +1,131 @@
+﻿@model Planiranje.Models.Ucenici.Roditelj_procjena
+@{
+    Layout = null;
+}
+<div class="modal-dialog" style="width:1200px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">@{string s = ViewBag.ur == null ? "Uređivanje procjene roditelja" : "Nova procjena"; }@s</h4>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "novaProcjena" }))
+            {
+                @Html.HiddenFor(model => model.Id)
+                if (ViewBag.ur == null)
+                {
+                    @Html.HiddenFor(model => model.Id_ucenik_razred)
+                }
+                else
+                {
+                    @Html.HiddenFor(model => model.Id_ucenik_razred, new { Value = ViewBag.ur })
+                }
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label" })                           
+                            @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
+                        </div>                        
+                    </div><!--END COL 6-->
+                    <div class="col-lg-6">
+                        <div class="form-group left">
+                            @Html.LabelFor(model => model.Id_roditelj, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Id_roditelj, ViewBag.roditelji as IEnumerable<SelectListItem>, "Odaberite roditelja/skrbnika", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Id_roditelj, "", new { @class = "text-danger" })
+                        </div>                       
+                    </div>
+                </div><!--END ROW -->
+                <div class="row">
+                    <div class="col-lg-6">                        
+                        <div class="form-group">
+                            @*<label for="text1" class="control-label col-lg-3">Opišite svoje djete kako ga Vi vidite.</label>*@
+                            @Html.LabelFor(model => model.Opis, htmlAttributes: new { @class = "control-label col-lg-4" })
+                            <div class="col-lg-8">
+                                @Html.TextAreaFor(model => model.Opis, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Opis, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Interes, htmlAttributes: new { @class = "control-label col-lg-4" })
+                            <div class="col-lg-8">
+                                @Html.TextAreaFor(model => model.Interes, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Predmet, htmlAttributes: new { @class = "control-label col-lg-4" })
+                            <div class="col-lg-8">
+                                @Html.TextAreaFor(model => model.Predmet, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Predmet, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Gradivo, htmlAttributes: new { @class = "control-label col-lg-4" })
+                            <div class="col-lg-8">
+                                @Html.TextAreaFor(model => model.Gradivo, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Gradivo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Boravak, htmlAttributes: new { @class = "control-label col-lg-4" })
+                            <div class="col-lg-8">
+                                @Html.TextAreaFor(model => model.Boravak, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Boravak, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        
+                    </div><!--END COL 6-->
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Odnos, htmlAttributes: new { @class = "control-label col-lg-4" })
+                            <div class="col-lg-8">
+                                @Html.TextAreaFor(model => model.Odnos, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Odnos, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Aktivnosti, htmlAttributes: new { @class = "control-label col-lg-4" })
+                            <div class="col-lg-8">
+                                @Html.TextAreaFor(model => model.Aktivnosti, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Aktivnosti, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Hobiji, htmlAttributes: new { @class = "control-label col-lg-4" })
+                            <div class="col-lg-8">
+                                @Html.TextAreaFor(model => model.Hobiji, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Hobiji, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Ocekivanja, htmlAttributes: new { @class = "control-label col-lg-4" })
+                            <div class="col-lg-8">
+                                @Html.TextAreaFor(model => model.Ocekivanja, new { @class = "edit-opis", rows = "3" })
+                                @Html.ValidationMessageFor(model => model.Ocekivanja, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Dodatni_podaci, htmlAttributes: new { @class = "control-label col-lg-4" })
+                            <div class="col-lg-8">
+                                @Html.TextAreaFor(model => model.Dodatni_podaci, new { @class = "edit-opis", rows = "3" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div> <!--END ROW-->
+                <div class="modal-footer">
+                    @{ string naziv = ViewBag.ur == null ? "Promijeni" : "Spremi";
+                       string naziv1 = ViewBag.ur == null ? "Procjena je promijenjena" : "Nova procjena je spremljena";}
+                    @if (ViewBag.ur == null)
+                    {
+                        <a target="_blank" href="@Url.Action("Ispis","RoditeljProcjena",new { id=Model.Id})" class="btn btn-info">Ispis</a>
+                    }
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                    <input type="button" class="btn btn-primary" value="@naziv" onclick='zatvoriModal("@Url.Action("NovaProcjena","RoditeljProcjena")","#novaProcjena","#detalji","@naziv1")' />
+                </div>
+            }
+        </div><!--END PANEL-->        
+    </div>
+</div>
+

@@ -42,6 +42,10 @@ namespace Planiranje.Controllers
         public DbSet<Ucenik_biljeska> UcenikBiljeska { get; set; }
         public DbSet<Mjesecna_biljeska> MjesecnaBiljeska { get; set; }
         public DbSet<Promatranje_ucenika> PromatranjeUcenika { get; set; }
+        public DbSet<Roditelj_biljeska> RoditeljBiljeska { get; set; }
+        public DbSet<Roditelj_procjena> RoditeljProcjena { get; set; }
+        public DbSet<Roditelj_razgovor> RoditeljRazgovor { get; set; }
+        public DbSet<Roditelj_ugovor> RoditeljUgovor { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

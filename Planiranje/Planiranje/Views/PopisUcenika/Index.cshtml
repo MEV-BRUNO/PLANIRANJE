@@ -9,13 +9,17 @@
             <div class="form-group">
                 <label>Odabir aktivnosti:</label>
                 <select id="selectAktivnost" onchange="promjenaAktivnost()" class="form-control">
-                    <option selected>Popis učenika u razrednom odjelu</option>
-                    <option value="/UcenikBiljeska/Index">Bilješke o radu s učenikom</option>
-                    <option value="/PracenjeUcenika/Index">Lista praćenja učenika - pedagoška obrada i anamneza</option>
-                    <option value="/PromatranjeUcenika/Index">Protokol promatranja</option>
+                    <option value="/PopisUcenika" selected>Popis učenika u razrednom odjelu</option>
+                    <option value="/UcenikBiljeska">Bilješke o radu s učenikom</option>
+                    <option value="/PracenjeUcenika">Lista praćenja učenika - pedagoška obrada i anamneza</option>
+                    <option value="/PromatranjeUcenika">Protokol promatranja</option>
                     <option>Procjena suradnje</option>
                 </select>
             </div>
+        </div>
+        <br />
+        <div class="col-lg-3 pull-right">
+            <a onclick="ispis('@Url.Action("Ispis","PopisUcenika")')" class="btn btn-info btn-sm">Ispis</a>
         </div>
     </div>
 
@@ -61,15 +65,59 @@
 
 </div>
 <script>
+    $(document).ready(function () {
+        if (window.sessionStorage.getItem("UC_select") != null) {
+            var saved = window.sessionStorage.getItem("UC_select");
+            if ($("#selectAktivnost").val() != saved) {
+                reloadPage(saved + "/Index");
+            }
+        }
+        if (window.sessionStorage.getItem("UC_popis_godina") != null) {
+            var saved = window.sessionStorage.getItem("UC_popis_godina");
+            $("#selectGodina").val(saved);
+            promjenaGodine();
+        }
+    });
+
+    function ispis(path) {
+        var val = $("#selectRazred");
+        if (val.length) {
+            val = $("#selectRazred").val();
+            if (val != "0" && val != "-1") {
+                path += "?id=" + val;
+                window.open(path);
+                //$.get(path, function (data, status) {
+
+                //});
+            }
+            else {
+                showSnackBar("Morate odabrati razred");
+            }
+        }
+        else {
+            showSnackBar("Morate odabrati razred");
+        }
+        
+    }
+
     function promjenaGodine() {
         var val = $("#selectGodina").val();
-        if (val != "0") {
+        if (val != "0") {            
             $.ajax({
                 url: '/PracenjeUcenika/OdabirRazreda?godina=' + val,
                 success: function (data) {
                     $("#razredi").html(data);
+                    var x = document.getElementById("selectRazred");
+                    x.remove(1);
+                    var saved = window.sessionStorage.getItem("UC_popis_razred");
+                    var god = window.sessionStorage.getItem("UC_popis_godina");
+                    if (saved != null && god == val) {
+                        $("#selectRazred").val(saved);
+                        promjenaRazreda();
+                    }
                 }
             });
+            
         }
         else {
             $("#razredi").empty();
@@ -78,7 +126,11 @@
     }
     function promjenaRazreda() {
         var val = $("#selectRazred").val();
+        var god = $("#selectGodina").val();
+        window.sessionStorage.setItem("UC_popis_godina", god);        
         if (val != "0") {
+            window.sessionStorage.setItem("UC_popis_godina", god); 
+            window.sessionStorage.setItem("UC_popis_razred", val);
             $.ajax({
                 url: '/PopisUcenika/PrikazUcenika?razred=' + val,
                 success: function (data) {
@@ -119,6 +171,16 @@
     }
     function promjenaAktivnost() {
         var val = $("#selectAktivnost").val();
+        window.sessionStorage.setItem("UC_select", val);
+        val = val + "/Index";
         reloadPage(val);
+    }
+    function provjeriEnter(event, path, form, target, poruka) {
+        if (event.type === "keydown") {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                zatvoriModal(path, form, target, poruka);
+            }
+        }
     }
 </script>

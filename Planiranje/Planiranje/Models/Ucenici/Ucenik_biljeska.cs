@@ -12,6 +12,7 @@ namespace Planiranje.Models.Ucenici
         [Key]
         public int Id_biljeska { get; set; }
         public int Id_ucenik_razred { get; set; }
+        public int Id_pedagog { get; set; }
         [DisplayName("Inicijalni podaci")]
         public string Inicijalni_podaci { get; set; }
         [DisplayName("Ostala zapažanja")]
