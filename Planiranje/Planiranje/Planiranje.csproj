@@ -302,6 +302,7 @@
     <Compile Include="Reports\PopisUcenikaReport.cs" />
     <Compile Include="Reports\PracenjeUcenikaReport.cs" />
     <Compile Include="Reports\PromatranjeUcenikaReport.cs" />
+    <Compile Include="Reports\RoditeljBiljeskaReport.cs" />
     <Compile Include="Reports\RoditeljProcjenaReport.cs" />
     <Compile Include="Reports\RoditeljRazgovorReport.cs" />
     <Compile Include="Reports\UcenikBiljeskaReport.cs" />
