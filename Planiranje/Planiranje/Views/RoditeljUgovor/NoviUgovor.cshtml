@@ -147,6 +147,10 @@
         <div class="modal-footer">
             @{ string naziv = ViewBag.ur == null ? "Promijeni" : "Spremi";
             string naziv1 = ViewBag.ur == null ? "Ugovor je promijenjen" : "Novi ugovor je spremljen";}
+            @if (ViewBag.ur == null)
+            {
+                <a href="@Url.Action("Ispis","RoditeljUgovor",new { id=Model.Id})" target="_blank" class="btn btn-info">Ispis</a>
+            }
             <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
             <input type="button" class="btn btn-primary" value="@naziv" onclick='zatvoriModal("@Url.Action("NoviUgovor","RoditeljUgovor")","#noviUgovor","#detalji","@naziv1")' />
         </div>

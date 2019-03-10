@@ -305,6 +305,7 @@
     <Compile Include="Reports\RoditeljBiljeskaReport.cs" />
     <Compile Include="Reports\RoditeljProcjenaReport.cs" />
     <Compile Include="Reports\RoditeljRazgovorReport.cs" />
+    <Compile Include="Reports\RoditeljUgovorReport.cs" />
     <Compile Include="Reports\UcenikBiljeskaReport.cs" />
   </ItemGroup>
   <ItemGroup>
