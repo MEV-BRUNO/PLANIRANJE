@@ -118,7 +118,7 @@
 						<img src="~/assets/img/logo.png" alt="" />
 					</a>
 				</header>
-                <div class="col-lg-3" id="odabirSkole"></div>
+                <div class="col-lg-3" id="odabirSkole">@{Html.RenderAction("OdabirSkole", "Planiranje");}</div>
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -230,21 +230,7 @@
                 element.hide();
                 smoothscroll();
             });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: '@Url.Action("OdabirSkole","Planiranje")',
-                type: "GET",
-                success: function (data) {
-                    $("#odabirSkole").html(data);
-                },
-                error: function (request, status, error) {
-                    console.log(request.responseText);
-                }
-            });
-        });
-    </script>
+    </script>    
     <script>
         function promjenaSkole() {
             $.ajax({
@@ -255,7 +241,7 @@
                     location.reload();
                 },
                 error: function (request, status, error) {
-                    console.log(request.responseText);
+                    showSnackBar("Greška s promjenom škole");
                 }
             });
         }
