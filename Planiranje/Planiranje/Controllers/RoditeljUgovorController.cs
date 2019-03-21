@@ -121,7 +121,15 @@ namespace Planiranje.Controllers
                     ViewBag.ur = UR.Id;
                 }
                 ViewBag.roditelji = select;
-                return View(model);
+                //provjera ako je potrebno promijeniti početnu karticu
+                if (!string.IsNullOrWhiteSpace(model.Cilj1) && model.Id_roditelj != 0 && !string.IsNullOrWhiteSpace(model.Cilj2) &&
+                    (string.IsNullOrWhiteSpace(model.Izvjesce) || string.IsNullOrWhiteSpace(model.Ostala_zapazanja)) && !string.IsNullOrWhiteSpace(model.Poduzeto) &&
+                    !string.IsNullOrWhiteSpace(model.Predstavnik_skole) && !string.IsNullOrWhiteSpace(model.Zapazanje) &&
+                    model.Datum.CompareTo(new DateTime(1, 1, 1)) != 0 && model.Slijedeci_susret.CompareTo(new DateTime(1, 1, 1)) != 0)
+                {
+                    ViewBag.promijeni = "true";
+                }
+                    return View(model);
             }
 
             try
