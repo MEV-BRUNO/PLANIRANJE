@@ -535,6 +535,7 @@
     <Content Include="Views\NastavnikAnaliza\Index.cshtml" />
     <Content Include="Views\NastavnikAnaliza\OdabirNastavnika.cshtml" />
     <Content Include="Views\NastavnikAnaliza\Detalji.cshtml" />
+    <Content Include="Views\NastavnikAnaliza\NovaAnaliza.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

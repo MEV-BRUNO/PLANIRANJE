@@ -4,6 +4,7 @@
 @{
     Layout = null;
 }
+@{ Nastavnik nas = ViewBag.nastavnik as Nastavnik; }
 <p></p>
 <div class="panel-body">
     <div class="row">
@@ -12,10 +13,10 @@
                 <div class="col-lg-10">
                     <div class="col-lg-2">
                         <p>                            
-                            <a onclick="showModal('@Url.Action("NovaAnaliza","NastavnikAnaliza",new { })')" class="btn btn-primary btn-xs btn-grad">Nova analiza</a>
+                            <a onclick="showModal('@Url.Action("NovaAnaliza","NastavnikAnaliza",new { idNastavnik=nas.Id, godina=ViewBag.godina, id=0})')" class="btn btn-primary btn-xs btn-grad">Nova analiza</a>
                         </p>
                     </div>
-                    <b>Odabrani nastavnik:</b> @{ Nastavnik nas = ViewBag.nastavnik as Nastavnik;}@nas.ImePrezime
+                    <b>Odabrani nastavnik:</b> @nas.ImePrezime
                 </div>
 
                 <table class="table table-striped table-bordered table-hover" id="dataTable">

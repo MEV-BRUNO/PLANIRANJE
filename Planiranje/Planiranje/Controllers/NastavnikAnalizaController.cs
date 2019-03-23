@@ -45,7 +45,35 @@ namespace Planiranje.Controllers
             w.Sk_godina == godina && w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
             Nastavnik nastavnik = baza.Nastavnik.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
             ViewBag.nastavnik = nastavnik;
+            ViewBag.godina = godina;
             return View(model);
+        }
+        public ActionResult NovaAnaliza(int idNastavnik, int godina, int id)
+        {
+            //ulazni parametar id je id analize, ukoliko je on 0, radi se o novoj analizi
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if(id == 0 && godina > 0 && idNastavnik > 0)
+            {
+                Nastavnik nastavnik = baza.Nastavnik.SingleOrDefault(s => s.Id == idNastavnik);
+                if (nastavnik == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                ViewBag.godina = godina;
+                ViewBag.idNastavnik = idNastavnik;
+                return View();
+            }
+            else if (id > 0)
+            {
+                return View();
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
+            }
         }
     }
 }
