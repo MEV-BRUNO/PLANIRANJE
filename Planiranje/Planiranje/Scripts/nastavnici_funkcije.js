@@ -51,7 +51,10 @@ function promjenaGodine() {
                 var akt = $("#selectAktivnost").val();
                 var saved = window.sessionStorage.getItem(skola + tip + "_godina");
                 if (saved != null && saved == $("#selectGodina").val()) {
-                    
+                    var saved1 = window.sessionStorage.getItem(skola + tip + "_idNastavnik");
+                    if (saved1 != null) {
+                        pokaziDetalje(saved1);
+                    }
                 }
             },
             error: function (request, status, error) {
