@@ -41,8 +41,8 @@
                                 <td class="col-md-6">@item.Datum.ToShortDateString()</td>
                                 <td class="col-md-2">
                                     <a target="_blank" href="@Url.Action("Ispis","NastavnikAnaliza",new { id=item.Id})" class="btn btn-info btn-xs btn-grad">Ispis</a>
-                                    <a onclick="showModal('@Url.Action("NoviUgovor","NastavnikAnaliza",new { id=item.Id})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                    <a onclick="showModal('@Url.Action("ObrisiUgovor","NastavnikAnaliza", new { id=item.Id})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                    <a onclick="showModal('@Url.Action("NovaAnaliza","NastavnikAnaliza",new { idNastavnik=0, godina=0, id=item.Id})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                    <a onclick="showModal('@Url.Action("ObrisiAnaliza","NastavnikAnaliza", new { id=item.Id})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                 </td>
                             </tr>
                         }

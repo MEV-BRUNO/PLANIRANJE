@@ -68,7 +68,12 @@ namespace Planiranje.Controllers
             }
             else if (id > 0)
             {
-                return View();
+                Nastavnik_analiza model = baza.NastavnikAnaliza.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                if (model == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                return View(model);
             }
             else
             {
