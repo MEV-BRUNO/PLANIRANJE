@@ -255,6 +255,7 @@ CREATE TABLE roditelj_ugovor (
 CREATE TABLE nastavnik_analiza (
   id int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
+  id_nastavnik int(20) NOT NULL,
   id_skola int(20) NOT NULL,
   sk_godina int(20) NOT NULL,
   odjel text,

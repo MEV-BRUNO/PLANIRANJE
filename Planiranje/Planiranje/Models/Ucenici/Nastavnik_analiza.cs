@@ -11,6 +11,7 @@ namespace Planiranje.Models.Ucenici
     {
         public int Id { get; set; }
         public int Id_pedagog { get; set; }
+        public int Id_nastavnik { get; set; }
         public int Id_skola { get; set; }
         public int Sk_godina { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
