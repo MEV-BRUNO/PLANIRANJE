@@ -197,6 +197,7 @@
     <Compile Include="Controllers\CiljeviController.cs" />
     <Compile Include="Controllers\GodisnjiPlanController.cs" />
     <Compile Include="Controllers\MjesecniPlanController.cs" />
+    <Compile Include="Controllers\NastavnikAnalizaController.cs" />
     <Compile Include="Controllers\ObliciMetodeController.cs" />
     <Compile Include="Controllers\OpciPodaciController.cs" />
     <Compile Include="Controllers\PlaniranjeController.cs" />
@@ -344,6 +345,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\nastavnici_funkcije.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\ucenici_funkcije.js" />
@@ -529,6 +531,8 @@
     <Content Include="Views\RoditeljUgovor\Detalji.cshtml" />
     <Content Include="Views\RoditeljUgovor\NoviUgovor.cshtml" />
     <Content Include="Views\RoditeljUgovor\ObrisiUgovor.cshtml" />
+    <Content Include="Views\NastavnikAnaliza\Index.cshtml" />
+    <Content Include="Views\NastavnikAnaliza\OdabirNastavnika.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

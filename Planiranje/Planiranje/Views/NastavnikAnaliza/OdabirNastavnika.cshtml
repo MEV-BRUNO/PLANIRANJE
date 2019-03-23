@@ -1,0 +1,23 @@
+﻿@model List<Planiranje.Models.Ucenici.Nastavnik>
+@{
+    Layout = null;
+}
+<table class="table table-striped table-bordered table-hover" id="dataTableNastavnici">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Ime i prezime</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int brojac = 0;}
+        @foreach (var item in Model)
+        {
+            brojac++;
+            <tr>
+                <td class="col-md-2">@brojac.</td>
+                <td onclick="pokaziDetalje('@item.Id')" class="col-md-10 pointer">@item.ImePrezime</td>
+            </tr>
+        }
+    </tbody>
+</table>

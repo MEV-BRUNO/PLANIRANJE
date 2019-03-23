@@ -9,138 +9,98 @@
 		</div>
 		<br />
 	</div>
-	<ul id="menu" class="collapse">
-		<li class="panel">
-			<a onclick="location.href='@Url.Action("Index", "Planiranje")'" class="pointer">
-				<i class="icon-table"></i> Početna stranica
-			</a>
-		</li>
-		<li class="panel">
-			<a href="#">
-				<i class="icon-table"></i> KALENDAR
-			</a>
-		</li>
-		<li class="panel pointer">
+    <ul id="menu" class="collapse">
+        <li class="panel">
+            <a onclick="location.href='@Url.Action("Index", "Planiranje")'" class="pointer">
+                <i class="icon-table"></i> Početna stranica
+            </a>
+        </li>
+        <li class="panel">
+            <a href="#">
+                <i class="icon-table"></i> KALENDAR
+            </a>
+        </li>
+        <li class="panel pointer">
             <a onclick='reloadPage("@Url.Action("Index","PopisUcenika")")'>
                 <i class="icon-table"></i> UČENICI
             </a>
-		</li>
+        </li>
         <li class="panel pointer">
             <a onclick='reloadPage("@Url.Action("Index","RoditeljProcjena")")'>
                 <i class="icon-table"></i> RODITELJI
             </a>
         </li>
-		<li class="panel">
-			<a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#DDL-nav">
-				<i class=" icon-sitemap"></i>&nbsp; NASTAVNICI
-
-				<span class="pull-right">
-					<i class="icon-angle-left"></i>
-				</span>
-			</a>
-			<ul class="collapse" id="DDL-nav">
-				<li>
-					<a href="#" data-parent="#DDL-nav" data-toggle="collapse" class="accordion-toggle" data-target="#DDL1-nav">
-						<i class="icon-sitemap"></i>&nbsp; Neposredni rad
-						<span class="pull-right" style="margin-right: 20px;">
-							<i class="icon-angle-left"></i>
-						</span>
-					</a>
-					<ul class="collapse" id="DDL1-nav">
-						<li>
-							<a href="#"><i class="icon-angle-right"></i> Analiza nastavnog sata </a>
-						</li>
-						<li>
-							<a href="#"><i class="icon-angle-right"></i> Protokol praćenja </a>
-						</li>
-						<li>
-							<a href="#"><i class="icon-angle-right"></i> Uvid u neposredni rad </a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#" data-parent="#DDL-nav" data-toggle="collapse" class="accordion-toggle" data-target="#DDL2-nav">
-						<i class="icon-sitemap"></i>&nbsp; Razrednici
-
-						<span class="pull-right" style="margin-right: 20px;">
-							<i class="icon-angle-left"></i>
-						</span>
-					</a>
-					<ul class="collapse" id="DDL2-nav">
-						<li class=""><a href="#"><i class="icon-angle-right"></i> Profil razrednog odjela </a></li>
-						<li class=""><a href="#"><i class="icon-angle-right"></i> Analiza odgojne situacije razreda</a></li>
-						<li class=""><a href="#"><i class="icon-angle-right"></i> Procjena uspjeha učenika </a></li>
-					</ul>
-				</li>
-				<li><a href="#"><i class="icon-angle-right"></i> Stručno usavršavanje </a></li>
-			</ul>
-		</li>
-		<li class="panel pointer">
-			<a data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#DDLP-nav">
-				<i class=" icon-sitemap"></i>&nbsp; PLANIRANJE
-				<span class="pull-right">
-					<i class="icon-angle-left"></i>
-				</span>
-			</a>
-			<ul class="collapse" id="DDLP-nav">
-				<li><a onclick='reloadPage("@Url.Action("Index", "GodisnjiPlan")")' class="pointer"><i class="icon-angle-right"></i> Godišnji plan </a></li>
-				<li><a onclick='reloadPage("@Url.Action("Index", "MjesecniPlan")")' class="pointer"><i class="icon-angle-right"></i> Mjesečni plan </a></li>
-				<li>
-					<a data-parent="#DDLP-nav" data-toggle="collapse" class="accordion-toggle pointer" data-target="#DDL3-nav">
-						<i class="icon-sitemap"></i>&nbsp; Planovi i program
-						<span class="pull-right" style="margin-right: 20px;">
-							<i class="icon-angle-left"></i>
-						</span>
-					</a>
-					<ul class="collapse" id="DDL3-nav">
-						<li><a onclick='reloadPage("@Url.Action("Index", "PlanOs1")")' class="pointer"><i class="icon-angle-right"></i> Plan osnovna škola - 1 </a></li>
-						<li><a onclick='reloadPage("@Url.Action("Index", "PlanOs2")")' class="pointer"><i class="icon-angle-right"></i> Plan osnovna škola - 2 </a></li>
-						<li><a onclick='reloadPage("@Url.Action("Index", "PlanSs")")' class="pointer"><i class="icon-angle-right"></i> Srednja škola </a></li>
-					</ul>
-				</li>
-				<li>
-					<a data-parent="#DDLP-nav" data-toggle="collapse" class="accordion-toggle pointer" data-target="#DDL4-nav">
-						<i class="icon-sitemap"></i>&nbsp; Sadržaji
-						<span class="pull-right" style="margin-right: 20px;">
-							<i class="icon-angle-left"></i>
-						</span>
-					</a>
-					<ul class="collapse" id="DDL4-nav">
-						<li><a onclick='reloadPage("@Url.Action("Index", "PodrucjaDjelovanja")")' class="pointer"><i class="icon-angle-right"></i> Područja djelovanja </a></li>
-						<li><a onclick='reloadPage("@Url.Action("Index", "Aktivnosti")")' class="pointer"><i class="icon-angle-right"></i> Aktivnosti</a></li>
-						<li><a onclick='reloadPage("@Url.Action("Index", "Akcije")")' class="pointer"><i class="icon-angle-right"></i> Akcije </a></li>
-						<li><a onclick='reloadPage("@Url.Action("Index", "ObliciMetode")")' class="pointer"><i class="icon-angle-right"></i> Oblici i metode </a></li>
-						<li><a onclick='reloadPage("@Url.Action("Index", "Subjekti")")' class="pointer"><i class="icon-angle-right"></i> Subjekti </a></li>
-						<li><a onclick='reloadPage("@Url.Action("Index", "Zadaci")")' class="pointer"><i class="icon-angle-right"></i> Zadaci </a></li>
-						<li><a onclick='reloadPage("@Url.Action("Index", "Ciljevi")")' class="pointer"><i class="icon-angle-right"></i> Ciljevi </a></li>
-					</ul>
-				</li>
-			</ul>
-		</li>
-		<li class="panel">
-			<a href="#">
-				<i class="icon-table"></i> ADRESAR
-			</a>
-		</li>
-		<li class="panel ">
-			<a href="#" data-parent="#menu1" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav1">
-				<i class="icon-tasks"> </i> OPĆI PODACI
-				<span class="pull-right">
-					<i class="icon-angle-left"></i>
-				</span>
-			</a>
-			<ul class="collapse" id="component-nav1">
-				<li class=""><a onclick="reloadPage('@Url.Action("RazredniOdjel","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Razredni odjeli </a></li>
-				<li class=""><a onclick="reloadPage('@Url.Action("PopisUcenika","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Popis učenika </a></li>
-				<li class=""><a onclick="reloadPage('@Url.Action("Nastavnik","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Popis nastavnika </a></li>
-				<li class=""><a onclick="reloadPage('@Url.Action("SkolskaGodina","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Školska godina</a></li>
-				<li class=""><a onclick="reloadPage('@Url.Action("PodaciSkola","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Podaci o školi </a></li>
-			</ul>
-		</li>
-		<li class="panel">
-			<a href="#">
-				<i class="icon-table"></i> DOKUMENTI
-			</a>
-		</li>
-	</ul>
+        <li class="panel pointer">
+            <a onclick='reloadPage("@Url.Action("Index","NastavnikAnaliza")")'>
+                <i class="icon-table"></i> NASTAVNICI
+            </a>
+        </li>        
+        <li class="panel pointer">
+            <a data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#DDLP-nav">
+                <i class=" icon-sitemap"></i>&nbsp; PLANIRANJE
+                <span class="pull-right">
+                    <i class="icon-angle-left"></i>
+                </span>
+            </a>
+            <ul class="collapse" id="DDLP-nav">
+                <li><a onclick='reloadPage("@Url.Action("Index", "GodisnjiPlan")")' class="pointer"><i class="icon-angle-right"></i> Godišnji plan </a></li>
+                <li><a onclick='reloadPage("@Url.Action("Index", "MjesecniPlan")")' class="pointer"><i class="icon-angle-right"></i> Mjesečni plan </a></li>
+                <li>
+                    <a data-parent="#DDLP-nav" data-toggle="collapse" class="accordion-toggle pointer" data-target="#DDL3-nav">
+                        <i class="icon-sitemap"></i>&nbsp; Planovi i program
+                        <span class="pull-right" style="margin-right: 20px;">
+                            <i class="icon-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="collapse" id="DDL3-nav">
+                        <li><a onclick='reloadPage("@Url.Action("Index", "PlanOs1")")' class="pointer"><i class="icon-angle-right"></i> Plan osnovna škola - 1 </a></li>
+                        <li><a onclick='reloadPage("@Url.Action("Index", "PlanOs2")")' class="pointer"><i class="icon-angle-right"></i> Plan osnovna škola - 2 </a></li>
+                        <li><a onclick='reloadPage("@Url.Action("Index", "PlanSs")")' class="pointer"><i class="icon-angle-right"></i> Srednja škola </a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a data-parent="#DDLP-nav" data-toggle="collapse" class="accordion-toggle pointer" data-target="#DDL4-nav">
+                        <i class="icon-sitemap"></i>&nbsp; Sadržaji
+                        <span class="pull-right" style="margin-right: 20px;">
+                            <i class="icon-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="collapse" id="DDL4-nav">
+                        <li><a onclick='reloadPage("@Url.Action("Index", "PodrucjaDjelovanja")")' class="pointer"><i class="icon-angle-right"></i> Područja djelovanja </a></li>
+                        <li><a onclick='reloadPage("@Url.Action("Index", "Aktivnosti")")' class="pointer"><i class="icon-angle-right"></i> Aktivnosti</a></li>
+                        <li><a onclick='reloadPage("@Url.Action("Index", "Akcije")")' class="pointer"><i class="icon-angle-right"></i> Akcije </a></li>
+                        <li><a onclick='reloadPage("@Url.Action("Index", "ObliciMetode")")' class="pointer"><i class="icon-angle-right"></i> Oblici i metode </a></li>
+                        <li><a onclick='reloadPage("@Url.Action("Index", "Subjekti")")' class="pointer"><i class="icon-angle-right"></i> Subjekti </a></li>
+                        <li><a onclick='reloadPage("@Url.Action("Index", "Zadaci")")' class="pointer"><i class="icon-angle-right"></i> Zadaci </a></li>
+                        <li><a onclick='reloadPage("@Url.Action("Index", "Ciljevi")")' class="pointer"><i class="icon-angle-right"></i> Ciljevi </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="panel">
+            <a href="#">
+                <i class="icon-table"></i> ADRESAR
+            </a>
+        </li>
+        <li class="panel ">
+            <a href="#" data-parent="#menu1" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav1">
+                <i class="icon-tasks"> </i> OPĆI PODACI
+                <span class="pull-right">
+                    <i class="icon-angle-left"></i>
+                </span>
+            </a>
+            <ul class="collapse" id="component-nav1">
+                <li class=""><a onclick="reloadPage('@Url.Action("RazredniOdjel","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Razredni odjeli </a></li>
+                <li class=""><a onclick="reloadPage('@Url.Action("PopisUcenika","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Popis učenika </a></li>
+                <li class=""><a onclick="reloadPage('@Url.Action("Nastavnik","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Popis nastavnika </a></li>
+                <li class=""><a onclick="reloadPage('@Url.Action("SkolskaGodina","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Školska godina</a></li>
+                <li class=""><a onclick="reloadPage('@Url.Action("PodaciSkola","OpciPodaci")')" class="pointer"><i class="icon-angle-right"></i> Podaci o školi </a></li>
+            </ul>
+        </li>
+        <li class="panel">
+            <a href="#">
+                <i class="icon-table"></i> DOKUMENTI
+            </a>
+        </li>
+    </ul>
 </div>
