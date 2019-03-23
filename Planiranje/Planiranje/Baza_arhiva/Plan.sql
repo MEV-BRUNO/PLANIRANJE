@@ -252,6 +252,30 @@ CREATE TABLE roditelj_ugovor (
   CONSTRAINT roditelj_ugovor_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
 );
 
+CREATE TABLE nastavnik_analiza (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_pedagog int(20) NOT NULL,
+  id_skola int(20) NOT NULL,
+  sk_godina int(20) NOT NULL,
+  odjel text,
+  datum datetime,
+  nastavni_sat text,
+  cilj_posjete text,
+  predmet text,
+  nastavna_jedinica text,
+  vrsta_nastavnog_sata text,
+  planiranje_priprema text,
+  izvedba_nastavnog_sata text,
+  vodjenje_nastavnog_sata text,
+  razredni_ugodjaj text,
+  disciplina text,
+  ocjenjivanje_ucenika text,
+  osvrt text,
+  prijedlozi text,
+  uvid text,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,

@@ -269,6 +269,7 @@
     <Compile Include="Models\GodisnjiModel.cs" />
     <Compile Include="Models\Ucenici\Mjesecna_biljeska.cs" />
     <Compile Include="Models\Ucenici\Nastavnik.cs" />
+    <Compile Include="Models\Ucenici\Nastavnik_analiza.cs" />
     <Compile Include="Models\Ucenici\Neposredni_rad.cs" />
     <Compile Include="Models\Ucenici\Obitelj.cs" />
     <Compile Include="Models\Ucenici\Pedagog_skola.cs" />
@@ -533,6 +534,7 @@
     <Content Include="Views\RoditeljUgovor\ObrisiUgovor.cshtml" />
     <Content Include="Views\NastavnikAnaliza\Index.cshtml" />
     <Content Include="Views\NastavnikAnaliza\OdabirNastavnika.cshtml" />
+    <Content Include="Views\NastavnikAnaliza\Detalji.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

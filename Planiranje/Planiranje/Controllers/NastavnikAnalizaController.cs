@@ -41,8 +41,11 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-
-            return View();
+            List<Nastavnik_analiza> model = baza.NastavnikAnaliza.Where(w => w.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId &&
+            w.Sk_godina == godina && w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
+            Nastavnik nastavnik = baza.Nastavnik.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            ViewBag.nastavnik = nastavnik;
+            return View(model);
         }
     }
 }
