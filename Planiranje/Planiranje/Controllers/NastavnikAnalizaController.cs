@@ -87,10 +87,37 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (false)
+            if (string.IsNullOrWhiteSpace(model.Cilj_posjete) || string.IsNullOrWhiteSpace(model.Planiranje_priprema) || 
+                string.IsNullOrWhiteSpace(model.Vrsta_nastavnog_sata) || string.IsNullOrWhiteSpace(model.Nastavna_jedinica) || 
+                string.IsNullOrWhiteSpace(model.Nastavni_sat) || string.IsNullOrWhiteSpace(model.Predmet) || 
+                string.IsNullOrWhiteSpace(model.Odjel) || model.Datum.CompareTo(new DateTime(1,1,1))==0)
             {
-                ViewBag.godina = model.Sk_godina;
-                ViewBag.idNastavnik = model.Id_nastavnik;
+                if (model.Id > 0)
+                {
+                    ViewBag.godina = null;
+                }
+                else
+                {
+                    ViewBag.godina = model.Sk_godina;
+                    ViewBag.idNastavnik = model.Id_nastavnik;
+                }                
+                return View(model);
+            }
+            else if (string.IsNullOrWhiteSpace(model.Izvedba_nastavnog_sata) || string.IsNullOrWhiteSpace(model.Vodjenje_nastavnog_sata) ||
+                string.IsNullOrWhiteSpace(model.Disciplina) || string.IsNullOrWhiteSpace(model.Razredni_ugodjaj) ||
+                string.IsNullOrWhiteSpace(model.Ocjenjivanje_ucenika) || string.IsNullOrWhiteSpace(model.Osvrt) ||
+                string.IsNullOrWhiteSpace(model.Prijedlozi) || string.IsNullOrWhiteSpace(model.Uvid))
+            {
+                if (model.Id > 0)
+                {
+                    ViewBag.godina = null;
+                }
+                else
+                {
+                    ViewBag.godina = model.Sk_godina;
+                    ViewBag.idNastavnik = model.Id_nastavnik;
+                }
+                ViewBag.promijeni = true;
                 return View(model);
             }
             model.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
