@@ -152,7 +152,7 @@
         </div>
         <div class="modal-footer">
             @{ string naziv = ViewBag.godina == null ? "Promijeni" : "Spremi";
-                string naziv1 = ViewBag.godina == null ? "Analiza je promijenjena" : "Nova analiza je spremljena";}
+                string naziv1 = ViewBag.godina == null ? "Analiza nastavnog sata je promijenjena" : "Nova analiza nastavnog sata je spremljena";}
             @if (ViewBag.godina == null)
             {
                 <a href="@Url.Action("Ispis","NastavnikAnaliza",new { id=Model.Id})" target="_blank" class="btn btn-info">Ispis</a>

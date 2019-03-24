@@ -157,5 +157,52 @@ namespace Planiranje.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
+        public ActionResult ObrisiAnaliza(int id)
+        {
+            if(!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Nastavnik_analiza model = baza.NastavnikAnaliza.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ObrisiAnaliza(Nastavnik_analiza model)
+        {
+            if(!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            try
+            {
+                int id = model.Id;
+                int idNastavnik = 0;
+                int god = 0;
+                using(var db=new BazaPodataka())
+                {
+                    var result = db.NastavnikAnaliza.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (result != null)
+                    {
+                        idNastavnik = result.Id_nastavnik;
+                        god = result.Sk_godina;
+                        db.NastavnikAnaliza.Remove(result);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                    }
+                }
+                return RedirectToAction("Detalji", new { id = idNastavnik, godina = god });
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
     }
 }
