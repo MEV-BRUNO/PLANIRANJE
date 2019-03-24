@@ -24,14 +24,18 @@ namespace Planiranje.Controllers
             List<Sk_godina> godine = baza.SkolskaGodina.ToList();
             ViewBag.godine = godine;
             return View();
-        }
+        }        
         public ActionResult OdabirNastavnika()
         {
-            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId<=0)
+            List<Nastavnik> nastavnici;
+            if (PlaniranjeSession.Trenutni.PedagogId<=0)
             {
-                return RedirectToAction("Index", "Planiranje");
+                nastavnici = new List<Nastavnik>();
             }
-            List<Nastavnik> nastavnici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).OrderBy(o => o.Id).ToList();
+            else
+            {
+                nastavnici = baza.Nastavnik.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).OrderBy(o => o.Id).ToList();
+            }            
             return View(nastavnici);
         }
         public ActionResult Detalji(int id, int godina)

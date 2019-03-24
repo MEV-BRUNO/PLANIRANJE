@@ -8,9 +8,11 @@
     }
     else if (window.sessionStorage.getItem(skola + tip + "_godina") != null) {
         var saved = window.sessionStorage.getItem(skola + tip + "_godina");
+        saved1 = window.sessionStorage.getItem(skola + tip + "_idNastavnik");
         $("#selectGodina").val(saved);
-        promjenaGodine();
+        pokaziDetalje(saved1);
     }
+    $("#dataTableNastavnici").dataTable({ stateSave: true });
 });
 function provjeriEnter(event, path, form, target, poruka) {
     if (event.type === "keydown") {
@@ -43,36 +45,29 @@ function promjenaGodine() {
     var skola = $("#selectSkola").val();
     var val = $("#selectGodina").val();
     if (val != "0") {
-        $.ajax({
-            url: '/NastavnikAnaliza/OdabirNastavnika',
-            success: function (data) {
-                $("#tablica").html(data);
-                $("#dataTableNastavnici").dataTable({ stateSave: true });
-                var akt = $("#selectAktivnost").val();
-                var saved = window.sessionStorage.getItem(skola + tip + "_godina");
-                if (saved != null && saved == $("#selectGodina").val()) {
-                    var saved1 = window.sessionStorage.getItem(skola + tip + "_idNastavnik");
-                    if (saved1 != null) {
-                        pokaziDetalje(saved1);
-                    }
-                }
-            },
-            error: function (request, status, error) {
-                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+        var spremljenaGodina = window.sessionStorage.getItem(skola + tip + "_godina");
+        if (spremljenaGodina != null) {
+            var spremljenId = window.sessionStorage.getItem(skola + tip + "_idNastavnik");
+            if (spremljenId != null) {
+                pokaziDetalje(spremljenId);
+                return;
             }
-        });
+        }        
     }
     else {
         $("#detalji").empty();
-    }
-    $("#tablica").empty();    
+    }      
 }
 
 function pokaziDetalje(id) {
     var tip = $("#tip").text();
     var skola = $("#selectSkola").val();
     var val = $("#selectGodina").val();
-    var akt = $("#selectAktivnost").val();    
+    var akt = $("#selectAktivnost").val();  
+    if (val == "0") {
+        showSnackBar("Odaberite godinu");
+        return;
+    }
     window.sessionStorage.setItem(skola + tip + "_idNastavnik", id);
     $.ajax({
         url: akt + '/Detalji?id=' + id + '&godina=' + val,
