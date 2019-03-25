@@ -540,6 +540,7 @@
     <Content Include="Views\NastavnikAnaliza\NovaAnaliza.cshtml" />
     <Content Include="Views\NastavnikAnaliza\ObrisiAnaliza.cshtml" />
     <Content Include="Views\NastavnikProtokol\Index.cshtml" />
+    <Content Include="Views\NastavnikProtokol\Detalji.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

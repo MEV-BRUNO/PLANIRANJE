@@ -24,5 +24,21 @@ namespace Planiranje.Controllers
             ViewBag.godine = baza.SkolskaGodina.ToList();
             return View();
         }
+        public ActionResult Detalji(int id, int godina)
+        {
+            //ulazni parametar id je id nastavnika, a godina je skolska godina
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            List<Nastavnik_protokol> model = baza.NastavnikProtokol.Where(w => w.Id_nastavnik == id && w.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId &&
+            w.Sk_godina == godina && w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola).ToList();
+            Nastavnik nastavnik = baza.Nastavnik.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            ViewBag.nastavnik = nastavnik;
+            ViewBag.godina = godina;
+            ViewBag.listaodjela = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.PedagogId &&
+            w.Sk_godina == godina).ToList();
+            return View(model);
+        }
     }
 }
