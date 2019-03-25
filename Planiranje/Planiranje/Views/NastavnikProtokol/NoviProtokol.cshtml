@@ -60,23 +60,23 @@
                                                     @Html.EditorFor(model => model.Nastavni_predmet, new { htmlAttributes = new { @class = "form-control" } })
                                                     @Html.ValidationMessageFor(model => model.Nastavni_predmet, "", new { @class = "text-danger" })
                                                 </div>
-                                                <div class="form-group col-lg-12">
-                                                    @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.EditorFor(model => model.Datum, new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessageFor(model => model.Datum, "", new { @class = "text-danger" })
-                                                </div>
-                                                <div class="form-group col-lg-12">
-                                                    @Html.LabelFor(model => model.Vrijeme, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.EditorFor(model => model.Vrijeme, new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessageFor(model => model.Vrijeme, "", new { @class = "text-danger" })
+                                                <div class="row col-lg-12">
+                                                    <div class="form-group col-lg-6">
+                                                        @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label" })
+                                                        @Html.EditorFor(model => model.Datum, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Datum, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="form-group col-lg-6">
+                                                        @Html.LabelFor(model => model.Vrijeme, htmlAttributes: new { @class = "control-label" })
+                                                        @Html.EditorFor(model => model.Vrijeme, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Vrijeme, "", new { @class = "text-danger" })
+                                                    </div>
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     @Html.LabelFor(model => model.Broj_nastavnog_sata, htmlAttributes: new { @class = "control-label" })
                                                     @Html.EditorFor(model => model.Broj_nastavnog_sata, new { htmlAttributes = new { @class = "form-control" } })
                                                     @Html.ValidationMessageFor(model => model.Broj_nastavnog_sata, "", new { @class = "text-danger" })
                                                 </div>
-                                            </div><!--END COL -->
-                                            <div class="col-lg-6">
                                                 <div class="form-group col-lg-12">
                                                     @Html.LabelFor(model => model.Mjesto_izvodjenja, htmlAttributes: new { @class = "control-label" })
                                                     @Html.EditorFor(model => model.Mjesto_izvodjenja, new { htmlAttributes = new { @class = "form-control" } })
@@ -92,6 +92,8 @@
                                                     @Html.EditorFor(model => model.Nastavna_cjelina, new { htmlAttributes = new { @class = "form-control" } })
                                                     @Html.ValidationMessageFor(model => model.Nastavna_cjelina, "", new { @class = "text-danger" })
                                                 </div>
+                                            </div><!--END COL -->
+                                            <div class="col-lg-6">                                         
                                                 @*<div class="form-group col-lg-12">
                                                     @Html.LabelFor(model => model.Planiranje_priprema, htmlAttributes: new { @class = "control-label" })
                                                     @Html.TextAreaFor(model => model.Planiranje_priprema, new { @class = "edit-opis", rows = "2" })
