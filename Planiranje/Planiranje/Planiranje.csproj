@@ -198,6 +198,7 @@
     <Compile Include="Controllers\GodisnjiPlanController.cs" />
     <Compile Include="Controllers\MjesecniPlanController.cs" />
     <Compile Include="Controllers\NastavnikAnalizaController.cs" />
+    <Compile Include="Controllers\NastavnikProtokolController.cs" />
     <Compile Include="Controllers\ObliciMetodeController.cs" />
     <Compile Include="Controllers\OpciPodaciController.cs" />
     <Compile Include="Controllers\PlaniranjeController.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="Models\Ucenici\Mjesecna_biljeska.cs" />
     <Compile Include="Models\Ucenici\Nastavnik.cs" />
     <Compile Include="Models\Ucenici\Nastavnik_analiza.cs" />
+    <Compile Include="Models\Ucenici\Nastavnik_protokol.cs" />
     <Compile Include="Models\Ucenici\Neposredni_rad.cs" />
     <Compile Include="Models\Ucenici\Obitelj.cs" />
     <Compile Include="Models\Ucenici\Pedagog_skola.cs" />
@@ -541,6 +543,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Dokumenti\" />
+    <Folder Include="Views\NastavnikProtokol\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
