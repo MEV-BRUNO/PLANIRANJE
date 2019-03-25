@@ -51,9 +51,9 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group col-lg-12">
-                                                    @Html.LabelFor(model => model.Odjel, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.EditorFor(model => model.Odjel, new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessageFor(model => model.Odjel, "", new { @class = "text-danger" })
+                                                    @Html.LabelFor(model => model.Id_odjel, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.DropDownListFor(model => model.Id_odjel, ViewBag.select as IEnumerable<SelectListItem>, "Odaberite odjel", new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Id_odjel, "", new { @class = "text-danger" })
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     @Html.LabelFor(model => model.Cilj_posjete, htmlAttributes: new { @class = "control-label" })

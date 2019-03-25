@@ -258,7 +258,7 @@ CREATE TABLE nastavnik_analiza (
   id_nastavnik int(20) NOT NULL,
   id_skola int(20) NOT NULL,
   sk_godina int(20) NOT NULL,
-  odjel text,
+  id_odjel int(20) NOT NULL,
   datum datetime,
   nastavni_sat text,
   cilj_posjete text,
@@ -274,7 +274,8 @@ CREATE TABLE nastavnik_analiza (
   osvrt text,
   prijedlozi text,
   uvid text,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  CONSTRAINT nas_analiza_to_odjel FOREIGN KEY(id_odjel) REFERENCES razredniodjel(id)  
 );
 
 CREATE TABLE aktivnost (

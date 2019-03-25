@@ -16,7 +16,8 @@ namespace Planiranje.Models.Ucenici
         public int Sk_godina { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
         [DisplayName("Razredni odjel")]
-        public string Odjel { get; set; }
+        [Range(1,int.MaxValue,ErrorMessage ="Obavezno polje")]
+        public int Id_odjel { get; set; }
         [Required(ErrorMessage = "Obavezno polje")]
         [DisplayName("Datum")]
         [DataType(DataType.Date)]

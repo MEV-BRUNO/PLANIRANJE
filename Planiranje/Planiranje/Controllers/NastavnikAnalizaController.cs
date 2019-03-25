@@ -50,6 +50,8 @@ namespace Planiranje.Controllers
             Nastavnik nastavnik = baza.Nastavnik.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
             ViewBag.nastavnik = nastavnik;
             ViewBag.godina = godina;
+            ViewBag.listaodjela = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.PedagogId &&
+            w.Sk_godina == godina).ToList();
             return View(model);
         }
         public ActionResult NovaAnaliza(int idNastavnik, int godina, int id)
@@ -58,7 +60,7 @@ namespace Planiranje.Controllers
             if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
-            }
+            }            
             if(id == 0 && godina > 0 && idNastavnik > 0)
             {
                 Nastavnik nastavnik = baza.Nastavnik.SingleOrDefault(s => s.Id == idNastavnik);
@@ -68,6 +70,7 @@ namespace Planiranje.Controllers
                 }
                 ViewBag.godina = godina;
                 ViewBag.idNastavnik = idNastavnik;
+                ViewBag.select = VratiSelectListu(godina);
                 return View();
             }
             else if (id > 0)
@@ -77,6 +80,7 @@ namespace Planiranje.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
                 }
+                ViewBag.select = VratiSelectListu(model.Sk_godina);
                 return View(model);
             }
             else
@@ -94,7 +98,7 @@ namespace Planiranje.Controllers
             if (string.IsNullOrWhiteSpace(model.Cilj_posjete) || string.IsNullOrWhiteSpace(model.Planiranje_priprema) || 
                 string.IsNullOrWhiteSpace(model.Vrsta_nastavnog_sata) || string.IsNullOrWhiteSpace(model.Nastavna_jedinica) || 
                 string.IsNullOrWhiteSpace(model.Nastavni_sat) || string.IsNullOrWhiteSpace(model.Predmet) || 
-                string.IsNullOrWhiteSpace(model.Odjel) || model.Datum.CompareTo(new DateTime(1,1,1))==0)
+                model.Id_odjel<=0 || model.Datum.CompareTo(new DateTime(1,1,1))==0)
             {
                 if (model.Id > 0)
                 {
@@ -104,7 +108,8 @@ namespace Planiranje.Controllers
                 {
                     ViewBag.godina = model.Sk_godina;
                     ViewBag.idNastavnik = model.Id_nastavnik;
-                }                
+                }
+                ViewBag.select = VratiSelectListu(model.Sk_godina);
                 return View(model);
             }
             else if (string.IsNullOrWhiteSpace(model.Izvedba_nastavnog_sata) || string.IsNullOrWhiteSpace(model.Vodjenje_nastavnog_sata) ||
@@ -122,6 +127,7 @@ namespace Planiranje.Controllers
                     ViewBag.idNastavnik = model.Id_nastavnik;
                 }
                 ViewBag.promijeni = true;
+                ViewBag.select = VratiSelectListu(model.Sk_godina);
                 return View(model);
             }
             model.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
@@ -207,6 +213,13 @@ namespace Planiranje.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
+        }
+        private IEnumerable<SelectListItem> VratiSelectListu(int godina)
+        {
+            List<RazredniOdjel> odjeli = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.PedagogId
+            && w.Sk_godina==godina).ToList();            
+            IEnumerable<SelectListItem> select = new SelectList(odjeli, "Id", "Naziv");
+            return select;
         }
     }
 }

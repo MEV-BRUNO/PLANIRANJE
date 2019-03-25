@@ -25,20 +25,23 @@
                             <th>#</th>
                             <th>Razredni odjel</th>
                             <th>Datum</th>
+                            <th>Predmet</th>
                             <th>Aktivnost</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @{ int brojac = 0;                            
+                        @{ int brojac = 0;
+                            List<RazredniOdjel> odjeli = ViewBag.listaodjela as List<RazredniOdjel>;
                         }
                         @foreach (var item in Model)
                         {
-                            brojac++;                            
-                            
+                            brojac++;
+                            RazredniOdjel odjel = odjeli.SingleOrDefault(s => s.Id == item.Id_odjel);
                             <tr>
                                 <td class="col-md-1">@brojac</td>
-                                <td class="col-md-3">@item.Odjel</td>
-                                <td class="col-md-6">@item.Datum.ToShortDateString()</td>
+                                <td class="col-md-2">@odjel.Naziv</td>
+                                <td class="col-md-2">@item.Datum.ToShortDateString()</td>
+                                <td class="col-md-5">@item.Predmet</td>
                                 <td class="col-md-2">
                                     <a target="_blank" href="@Url.Action("Ispis","NastavnikAnaliza",new { id=item.Id})" class="btn btn-info btn-xs btn-grad">Ispis</a>
                                     <a onclick="showModal('@Url.Action("NovaAnaliza","NastavnikAnaliza",new { idNastavnik=0, godina=0, id=item.Id})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
