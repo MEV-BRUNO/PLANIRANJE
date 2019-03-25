@@ -9,6 +9,7 @@ namespace Planiranje.Models.Ucenici
 {
     public class Nastavnik_analiza
     {
+        [Key]
         public int Id { get; set; }
         public int Id_pedagog { get; set; }
         public int Id_nastavnik { get; set; }
