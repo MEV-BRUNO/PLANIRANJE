@@ -539,11 +539,11 @@
     <Content Include="Views\NastavnikAnaliza\Detalji.cshtml" />
     <Content Include="Views\NastavnikAnaliza\NovaAnaliza.cshtml" />
     <Content Include="Views\NastavnikAnaliza\ObrisiAnaliza.cshtml" />
+    <Content Include="Views\NastavnikProtokol\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Dokumenti\" />
-    <Folder Include="Views\NastavnikProtokol\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
