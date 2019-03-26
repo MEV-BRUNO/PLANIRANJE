@@ -61,6 +61,7 @@ namespace Planiranje.Controllers
                 ViewBag.selectPrimjenaNastavnihMetoda = VratiSelectPrimjenaNastavnihMetoda();
                 ViewBag.selectTipNastavnogSata = VratiSelectTipNastavnogSata();
                 ViewBag.selectSocioloskiObliciRada = VratiSelectSocioloskiObliciRada();
+                ViewBag.selectFunkcionalnaPripremljenost = VratiSelectFunkcionalnaPripremljenost();
                 return View();
             }
             else if (id > 0)
@@ -128,6 +129,17 @@ namespace Planiranje.Controllers
              new SelectListItem {Text="Individualni", Value="2"},
              new SelectListItem {Text="Rad u skupinama", Value="3"},
              new SelectListItem {Text="Rad u parovima", Value="4"}             
+            }, "Value", "Text");
+            return select;
+        }
+        private SelectList VratiSelectFunkcionalnaPripremljenost()
+        {
+            var select = new SelectList(new List<SelectListItem> {
+             new SelectListItem {Text="-", Value="0"},
+             new SelectListItem {Text="Nepripremljeno", Value="1"},
+             new SelectListItem {Text="Donekle", Value="2"},
+             new SelectListItem {Text="Uglavnom", Value="3"},
+             new SelectListItem {Text="Potpuno", Value="4"}
             }, "Value", "Text");
             return select;
         }

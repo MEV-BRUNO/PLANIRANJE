@@ -242,30 +242,30 @@
                                     </div>
                                     <div class="@Html.Raw(str2)" id="ostalo">
                                         <div class="row">                                            
-                                            @*<div class="col-lg-6">
+                                            <div class="col-lg-6">
                                                 <div class="form-group col-lg-12">
-                                                    @Html.LabelFor(model => model.Izvedba_nastavnog_sata, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.TextAreaFor(model => model.Izvedba_nastavnog_sata, new { @class = "edit-opis", rows = "2" })
-                                                    @Html.ValidationMessageFor(model => model.Izvedba_nastavnog_sata, "", new { @class = "text-danger" })
+                                                    @Html.LabelFor(model => model.Funkcionalna_pripremljenost, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.DropDownListFor(model => model.Funkcionalna_pripremljenost, ViewBag.selectFunkcionalnaPripremljenost as SelectList, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Funkcionalna_pripremljenost, "", new { @class = "text-danger" })
                                                 </div>
                                                 <div class="form-group col-lg-12">
-                                                    @Html.LabelFor(model => model.Vodjenje_nastavnog_sata, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.TextAreaFor(model => model.Vodjenje_nastavnog_sata, new { @class = "edit-opis", rows = "2" })
-                                                    @Html.ValidationMessageFor(model => model.Vodjenje_nastavnog_sata, "", new { @class = "text-danger" })
+                                                    @Html.LabelFor(model => model.Koristenje_nastavnih_sredstava, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Koristenje_nastavnih_sredstava, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Koristenje_nastavnih_sredstava, "", new { @class = "text-danger" })
                                                 </div><!--END form-group -->
                                                 <div class="form-group col-lg-12">
-                                                    @Html.LabelFor(model => model.Disciplina, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.TextAreaFor(model => model.Disciplina, new { @class = "edit-opis", rows = "2" })
-                                                    @Html.ValidationMessageFor(model => model.Disciplina, "", new { @class = "text-danger" })
+                                                    @Html.LabelFor(model => model.Kratki_komentar_nastavnika, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Kratki_komentar_nastavnika, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Kratki_komentar_nastavnika, "", new { @class = "text-danger" })
                                                 </div><!--END form-group -->
                                                 <div class="form-group col-lg-12">
-                                                    @Html.LabelFor(model => model.Razredni_ugodjaj, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.TextAreaFor(model => model.Razredni_ugodjaj, new { @class = "edit-opis", rows = "2" })
-                                                    @Html.ValidationMessageFor(model => model.Razredni_ugodjaj, "", new { @class = "text-danger" })
+                                                    @Html.LabelFor(model => model.Prijedlozi_za_daljnje_unapredjenje_rada, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Prijedlozi_za_daljnje_unapredjenje_rada, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Prijedlozi_za_daljnje_unapredjenje_rada, "", new { @class = "text-danger" })
                                                 </div><!--END form-group -->
                                             </div><!--END COL -->
                                             <div class="col-lg-6">
-                                                <div class="form-group col-lg-12">
+                                                @*<div class="form-group col-lg-12">
                                                     @Html.LabelFor(model => model.Ocjenjivanje_ucenika, htmlAttributes: new { @class = "control-label" })
                                                     @Html.TextAreaFor(model => model.Ocjenjivanje_ucenika, new { @class = "edit-opis", rows = "2" })
                                                     @Html.ValidationMessageFor(model => model.Ocjenjivanje_ucenika, "", new { @class = "text-danger" })
@@ -284,8 +284,8 @@
                                                     @Html.LabelFor(model => model.Uvid, htmlAttributes: new { @class = "control-label" })
                                                     @Html.TextAreaFor(model => model.Uvid, new { @class = "edit-opis", rows = "2" })
                                                     @Html.ValidationMessageFor(model => model.Uvid, "", new { @class = "text-danger" })
-                                                </div><!--END form-group -->
-                                            </div><!--END COL -->*@
+                                                </div><!--END form-group -->*@
+                                            </div><!--END COL -->
                                         </div><!--END ROW -->
                                     </div>
                                 </div>
