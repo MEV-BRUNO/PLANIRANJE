@@ -93,18 +93,85 @@
                                                     @Html.ValidationMessageFor(model => model.Nastavna_cjelina, "", new { @class = "text-danger" })
                                                 </div>
                                             </div><!--END COL -->
-                                            <div class="col-lg-6">                                         
-                                                @*<div class="form-group col-lg-12">
-                                                    @Html.LabelFor(model => model.Planiranje_priprema, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.TextAreaFor(model => model.Planiranje_priprema, new { @class = "edit-opis", rows = "2" })
-                                                    @Html.ValidationMessageFor(model => model.Planiranje_priprema, "", new { @class = "text-danger" })
-                                                </div>*@
+                                            <div class="col-lg-6">
+                                                <div class="panel-group" id="accordion">
+                                                    <!--početak panela-->
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                                                    Priprema za nastavni sat sadržava
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse2" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Cilj_i_zadaci_za_nastavnu_jedinicu, htmlAttributes: new { @class = "control-label col-lg-7" })
+                                                                    <div class="col-lg-5">
+                                                                        @Html.DropDownListFor(model => model.Cilj_i_zadaci_za_nastavnu_jedinicu, ViewBag.selectPripremaZaNastavu as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Cilj_i_zadaci_za_nastavnu_jedinicu, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Struktura_sadrzaja, htmlAttributes: new { @class = "control-label col-lg-7" })
+                                                                    <div class="col-lg-5">
+                                                                        @Html.DropDownListFor(model => model.Struktura_sadrzaja, ViewBag.selectPripremaZaNastavu as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Struktura_sadrzaja, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Plan_i_shvatljiv_koncept, htmlAttributes: new { @class = "control-label col-lg-7" })
+                                                                    <div class="col-lg-5">
+                                                                        @Html.DropDownListFor(model => model.Plan_i_shvatljiv_koncept, ViewBag.selectPripremaZaNastavu as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Plan_i_shvatljiv_koncept, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Plan_ploce, htmlAttributes: new { @class = "control-label col-lg-7" })
+                                                                    <div class="col-lg-5">
+                                                                        @Html.DropDownListFor(model => model.Plan_ploce, ViewBag.selectPripremaZaNastavu as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Plan_ploce, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                                                    Inicijalna procjena - razgovor s roditeljem/skrbnikom
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse3" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                @*@Html.TextAreaFor(model => model.PracenjeUcenika.Inic_Procjena_roditelj, new { @class = "form-control", rows = "5" })*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                                                    Inicijalna procjena - razgovor s razrednikom
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse4" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                @*@Html.TextAreaFor(model => model.PracenjeUcenika.Inic_Procjena_razrednik, new { @class = "form-control", rows = "5" })*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!--kraj panela-->
                                             </div><!--END COL -->
                                         </div><!--END ROW -->
                                     </div>
                                     <div class="@Html.Raw(str2)" id="ostalo">
-                                        @*<div class="row">
-                                            <div class="col-lg-6">
+                                        <div class="row">                                            
+                                            @*<div class="col-lg-6">
                                                 <div class="form-group col-lg-12">
                                                     @Html.LabelFor(model => model.Izvedba_nastavnog_sata, htmlAttributes: new { @class = "control-label" })
                                                     @Html.TextAreaFor(model => model.Izvedba_nastavnog_sata, new { @class = "edit-opis", rows = "2" })
@@ -147,8 +214,8 @@
                                                     @Html.TextAreaFor(model => model.Uvid, new { @class = "edit-opis", rows = "2" })
                                                     @Html.ValidationMessageFor(model => model.Uvid, "", new { @class = "text-danger" })
                                                 </div><!--END form-group -->
-                                            </div><!--END COL -->
-                                        </div><!--END ROW -->*@
+                                            </div><!--END COL -->*@
+                                        </div><!--END ROW -->
                                     </div>
                                 </div>
                             </div><!--END PANEL-->

@@ -57,6 +57,7 @@ namespace Planiranje.Controllers
                 ViewBag.godina = godina;
                 ViewBag.idNastavnik = idNastavnik;
                 ViewBag.select = VratiSelectListu(godina);
+                ViewBag.selectPripremaZaNastavu = VratiSelectPripremaZaNastavu();
                 return View();
             }
             else if (id > 0)
@@ -81,6 +82,17 @@ namespace Planiranje.Controllers
             List<RazredniOdjel> odjeli = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.PedagogId
             && w.Sk_godina == godina).ToList();
             IEnumerable<SelectListItem> select = new SelectList(odjeli, "Id", "Naziv");
+            return select;
+        }
+        private SelectList VratiSelectPripremaZaNastavu()
+        {
+            var select = new SelectList(new List<SelectListItem> {
+             new SelectListItem {Text="-", Value="0"},
+             new SelectListItem {Text="Ne", Value="1"},
+             new SelectListItem {Text="Donekle", Value="2"},
+             new SelectListItem {Text="Uglavnom", Value="3"},
+             new SelectListItem {Text="Potpuno", Value="4"}
+            }, "Value", "Text");
             return select;
         }
     }
