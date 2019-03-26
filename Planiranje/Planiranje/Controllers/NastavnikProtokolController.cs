@@ -58,6 +58,8 @@ namespace Planiranje.Controllers
                 ViewBag.idNastavnik = idNastavnik;
                 ViewBag.select = VratiSelectListu(godina);
                 ViewBag.selectPripremaZaNastavu = VratiSelectPripremaZaNastavu();
+                ViewBag.selectPrimjenaNastavnihMetoda = VratiSelectPrimjenaNastavnihMetoda();
+                ViewBag.selectTipNastavnogSata = VratiSelectTipNastavnogSata();
                 return View();
             }
             else if (id > 0)
@@ -92,6 +94,28 @@ namespace Planiranje.Controllers
              new SelectListItem {Text="Donekle", Value="2"},
              new SelectListItem {Text="Uglavnom", Value="3"},
              new SelectListItem {Text="Potpuno", Value="4"}
+            }, "Value", "Text");
+            return select;
+        }
+        private SelectList VratiSelectPrimjenaNastavnihMetoda()
+        {
+            var select = new SelectList(new List<SelectListItem> {
+             new SelectListItem {Text="-", Value="0"},
+             new SelectListItem {Text="Nije uočeno", Value="1"},
+             new SelectListItem {Text="Često uočeno", Value="2"},
+             new SelectListItem {Text="Istaknuto", Value="3"}             
+            }, "Value", "Text");
+            return select;
+        }
+        private SelectList VratiSelectTipNastavnogSata()
+        {
+            var select = new SelectList(new List<SelectListItem> {
+             new SelectListItem {Text="-", Value="0"},
+             new SelectListItem {Text="Obrada novog gradiva", Value="1"},
+             new SelectListItem {Text="Ponavljanje", Value="2"},
+             new SelectListItem {Text="Vježbanje", Value="3"},             
+             new SelectListItem {Text="Provjeravanje, vrjednovanje i ocjenjivanje", Value="4"},
+             new SelectListItem {Text="Kombinirani sat", Value="5"}
             }, "Value", "Text");
             return select;
         }
