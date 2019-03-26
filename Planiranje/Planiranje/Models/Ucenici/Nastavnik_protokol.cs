@@ -15,15 +15,15 @@ namespace Planiranje.Models.Ucenici
         public int Id_pedagog { get; set; }
         public int Id_skola { get; set; }
         public int Sk_godina { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Obavezno polje")]
         public int Id_odjel { get; set; }
         public string Nastavni_predmet { get; set; }
         [Required(ErrorMessage = "Obavezno polje")]
         [DisplayName("Datum")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime Datum { get; set; }
-        [Required(ErrorMessage = "Obavezno polje")]
+        public DateTime Datum { get; set; }      
+        [Required(ErrorMessage =" ")]
         [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
         public DateTime Vrijeme { get; set; }
