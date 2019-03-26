@@ -413,6 +413,47 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion3" href="#collapse8">
+                                                                    Domaća zadaća
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse8" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Nastavnik_redovito_provjerava_uratke, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Nastavnik_redovito_provjerava_uratke, ViewBag.selectDomacaZadaca as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Nastavnik_redovito_provjerava_uratke, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Daje_povratnu_informaciju, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Daje_povratnu_informaciju, ViewBag.selectDomacaZadaca as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Daje_povratnu_informaciju, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Koristi_se_domacom_zadacom_kao_podlogom, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Koristi_se_domacom_zadacom_kao_podlogom, ViewBag.selectDomacaZadaca as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Koristi_se_domacom_zadacom_kao_podlogom, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Daje_ocjenu_za_ucenje_u_razredu, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Daje_ocjenu_za_ucenje_u_razredu, ViewBag.selectDomacaZadaca as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Daje_ocjenu_za_ucenje_u_razredu, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <!--kraj panela 3-->
                                             </div>
