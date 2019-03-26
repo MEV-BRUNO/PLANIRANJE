@@ -150,6 +150,26 @@ namespace Planiranje.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
+        public ActionResult ObrisiProtokol(int id)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Nastavnik_protokol model = baza.NastavnikProtokol.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            int idOdjel = model.Id_odjel;
+            var odjel = baza.RazredniOdjel.SingleOrDefault(s => s.Id == idOdjel && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (odjel == null)
+            {
+                odjel = new RazredniOdjel();
+            }
+            ViewBag.nazivOdjela = odjel.Naziv;
+            return View(model);
+        }
 
 
         private IEnumerable<SelectListItem> VratiSelectListu(int godina)
