@@ -178,6 +178,13 @@ namespace Planiranje.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
+            int idOdjel = model.Id_odjel;
+            var odjel = baza.RazredniOdjel.SingleOrDefault(s => s.Id == idOdjel && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (odjel == null)
+            {
+                odjel = new RazredniOdjel();
+            }
+            ViewBag.nazivOdjela = odjel.Naziv;
             return View(model);
         }
         [HttpPost]

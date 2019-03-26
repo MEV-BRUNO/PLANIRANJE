@@ -17,9 +17,9 @@
                 <p><b>Jeste li sigurni da želite obrisati ovu analizu nastavnog sata?</b></p>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                  <div class="form-group">
-                    @Html.LabelFor(model => model.Odjel, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.Id_odjel, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.TextBoxFor(model => model.Odjel, new { @class = "form-control", disabled = "" })
+                        @Html.TextBox(" ",ViewBag.nazivOdjela as string, new { @class = "form-control", disabled = "" })
                     </div>
                 </div> 
                 <div class="form-group">
