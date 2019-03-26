@@ -73,6 +73,12 @@ namespace Planiranje.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
                 }
                 ViewBag.select = VratiSelectListu(model.Sk_godina);
+                ViewBag.selectPripremaZaNastavu = VratiSelectPripremaZaNastavu();
+                ViewBag.selectPrimjenaNastavnihMetoda = VratiSelectPrimjenaNastavnihMetoda();
+                ViewBag.selectTipNastavnogSata = VratiSelectTipNastavnogSata();
+                ViewBag.selectSocioloskiObliciRada = VratiSelectSocioloskiObliciRada();
+                ViewBag.selectFunkcionalnaPripremljenost = VratiSelectFunkcionalnaPripremljenost();
+                ViewBag.selectDomacaZadaca = VratiSelectDomacaZadaca();
                 return View(model);
             }
             else
