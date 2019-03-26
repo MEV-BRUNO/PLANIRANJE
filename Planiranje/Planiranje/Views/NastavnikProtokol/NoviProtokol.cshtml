@@ -27,30 +27,18 @@
                         <div class="col-lg-12">
                             <div class="panel-body">
                                 <ul class="nav nav-pills">
-                                    <li @{ string str1 = "", str2 = ""; if (ViewBag.promijeni == null) { str1 = "class='active'"; } else { str2 = "class='active'"; } } @Html.Raw(str1)>
+                                    <li class="active">
                                         <a href="#osnovni" data-toggle="tab">Osnovno</a>
                                     </li>
-                                    <li @Html.Raw(str2)>
+                                    <li>
                                         <a href="#ostalo" data-toggle="tab">Ostalo</a>
                                     </li>
                                     <li>
                                        <a href="#ostalo2" data-toggle="tab">Ostalo 2</a>
                                     </li>
-                                </ul>
-                                @{
-                                    if (string.IsNullOrEmpty(str1))
-                                    {
-                                        str2 = "tab-pane fade in active";
-                                        str1 = "tab-pane fade";
-                                    }
-                                    else
-                                    {
-                                        str1 = "tab-pane fade in active";
-                                        str2 = "tab-pane fade";
-                                    }
-                                }
+                                </ul>                                
                                 <div class="tab-content">
-                                    <div class="@Html.Raw(str1)" id="osnovni">
+                                    <div class="tab-pane fade in active" id="osnovni">
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group col-lg-12">
@@ -233,7 +221,7 @@
                                             </div><!--END COL -->
                                         </div><!--END ROW -->
                                     </div>
-                                    <div class="@Html.Raw(str2)" id="ostalo">
+                                    <div class="tab-pane fade" id="ostalo">
                                         <div class="row">                                            
                                             <div class="col-lg-6">
                                                 <div class="form-group col-lg-12">
