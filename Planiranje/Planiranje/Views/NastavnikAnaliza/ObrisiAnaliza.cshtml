@@ -19,7 +19,7 @@
                  <div class="form-group">
                     @Html.LabelFor(model => model.Id_odjel, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.TextBox(" ",ViewBag.nazivOdjela as string, new { @class = "form-control", disabled = "" })
+                        @Html.TextBox("0",ViewBag.nazivOdjela as string, new { @class = "form-control", disabled = "" })
                     </div>
                 </div> 
                 <div class="form-group">
@@ -31,7 +31,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.TextBoxFor(model => model.Datum, new { @class = "form-control", disabled = "" })
+                        @Html.TextBox("1", Model.Datum.ToShortDateString(), new { @class = "form-control", disabled = "" })
                     </div>
                 </div>                
                 <div class="modal-footer">
