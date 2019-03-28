@@ -216,13 +216,42 @@
                                                                    @Html.ValidationMessageFor(model => model.Odgojno_obrazovni_sadrzaji_broj_novih_pojmova, "", new { @class = "text-danger" })
                                                                </div>
                                                                <div class="form-group col-lg-12">
-                                                                   @Html.LabelFor(model => model.Nastavne_metode, htmlAttributes: new { @class = "control-label" })
-                                                                   @Html.EditorFor(model => model.Nastavne_metode, new { htmlAttributes = new { @class = "form-control" } })
-                                                                   @Html.ValidationMessageFor(model => model.Nastavne_metode, "", new { @class = "text-danger" })
+                                                                   @Html.LabelFor(model => model.Nastavne_metode_metodicki_postupci, htmlAttributes: new { @class = "control-label" })
+                                                                   @Html.EditorFor(model => model.Nastavne_metode_metodicki_postupci, new { htmlAttributes = new { @class = "form-control" } })
+                                                                   @Html.ValidationMessageFor(model => model.Nastavne_metode_metodicki_postupci, "", new { @class = "text-danger" })
                                                                </div>
                                                            </div>
                                                            <div class="col-lg-6">
-
+                                                               <div class="form-group col-lg-12">
+                                                                   @Html.LabelFor(model => model.Ciljevi_postignuca_i_kompetencije_ucenika, htmlAttributes: new { @class = "control-label" })
+                                                                   @Html.EditorFor(model => model.Ciljevi_postignuca_i_kompetencije_ucenika, new { htmlAttributes = new { @class = "form-control" } })
+                                                                   @Html.ValidationMessageFor(model => model.Ciljevi_postignuca_i_kompetencije_ucenika, "", new { @class = "text-danger" })
+                                                               </div>
+                                                               <div class="form-group col-lg-12">
+                                                                   @Html.LabelFor(model => model.Odnos_nastavnika_prema_ucenicima, htmlAttributes: new { @class = "control-label" })
+                                                                   @Html.EditorFor(model => model.Odnos_nastavnika_prema_ucenicima, new { htmlAttributes = new { @class = "form-control" } })
+                                                                   @Html.ValidationMessageFor(model => model.Odnos_nastavnika_prema_ucenicima, "", new { @class = "text-danger" })
+                                                               </div>
+                                                               <div class="form-group col-lg-12">
+                                                                   @Html.LabelFor(model => model.Nastavnik_posvecuje_pozornost, htmlAttributes: new { @class = "control-label" })
+                                                                   @Html.EditorFor(model => model.Nastavnik_posvecuje_pozornost, new { htmlAttributes = new { @class = "form-control" } })
+                                                                   @Html.ValidationMessageFor(model => model.Nastavnik_posvecuje_pozornost, "", new { @class = "text-danger" })
+                                                               </div>
+                                                               <div class="form-group col-lg-12">
+                                                                   @Html.LabelFor(model => model.Nastavnikov_nastup, htmlAttributes: new { @class = "control-label" })
+                                                                   @Html.EditorFor(model => model.Nastavnikov_nastup, new { htmlAttributes = new { @class = "form-control" } })
+                                                                   @Html.ValidationMessageFor(model => model.Nastavnikov_nastup, "", new { @class = "text-danger" })
+                                                               </div>
+                                                               <div class="form-group col-lg-12">
+                                                                   @Html.LabelFor(model => model.Govor_nastavnika_u_skladu_je, htmlAttributes: new { @class = "control-label" })
+                                                                   @Html.EditorFor(model => model.Govor_nastavnika_u_skladu_je, new { htmlAttributes = new { @class = "form-control" } })
+                                                                   @Html.ValidationMessageFor(model => model.Govor_nastavnika_u_skladu_je, "", new { @class = "text-danger" })
+                                                               </div>
+                                                               <div class="form-group col-lg-12">
+                                                                   @Html.LabelFor(model => model.Kakvim_se_stilom_poucavanja_nastavnik_koristi, htmlAttributes: new { @class = "control-label" })
+                                                                   @Html.EditorFor(model => model.Kakvim_se_stilom_poucavanja_nastavnik_koristi, new { htmlAttributes = new { @class = "form-control" } })
+                                                                   @Html.ValidationMessageFor(model => model.Kakvim_se_stilom_poucavanja_nastavnik_koristi, "", new { @class = "text-danger" })
+                                                               </div>
                                                            </div>
                                                        </div>
                                                     </div>
