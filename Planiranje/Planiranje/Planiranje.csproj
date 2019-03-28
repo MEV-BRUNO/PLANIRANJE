@@ -546,6 +546,7 @@
     <Content Include="Views\NastavnikProtokol\NoviProtokol.cshtml" />
     <Content Include="Views\NastavnikProtokol\ObrisiProtokol.cshtml" />
     <Content Include="Views\NastavnikUvid\Index.cshtml" />
+    <Content Include="Views\NastavnikUvid\Detalji.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
