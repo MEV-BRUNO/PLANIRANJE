@@ -171,84 +171,23 @@
                                 </div>
                                 <div class="tab-pane fade" id="ostalo">
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            @*<div class="form-group col-lg-12">
-                                                @Html.LabelFor(model => model.Tip_nastavnog_sata, htmlAttributes: new { @class = "control-label" })
-                                                @Html.DropDownListFor(model => model.Tip_nastavnog_sata, ViewBag.selectTipNastavnogSata as SelectList, new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.Tip_nastavnog_sata, "", new { @class = "text-danger" })
-                                            </div>
-                                            <div class="form-group col-lg-12">
-                                                @Html.LabelFor(model => model.Socioloski_oblici_rada, htmlAttributes: new { @class = "control-label" })
-                                                @Html.DropDownListFor(model => model.Socioloski_oblici_rada, ViewBag.selectSocioloskiObliciRada as SelectList, new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.Socioloski_oblici_rada, "", new { @class = "text-danger" })
-                                            </div>
-                                            <div class="form-group col-lg-12">
-                                                @Html.LabelFor(model => model.Funkcionalna_pripremljenost, htmlAttributes: new { @class = "control-label" })
-                                                @Html.DropDownListFor(model => model.Funkcionalna_pripremljenost, ViewBag.selectFunkcionalnaPripremljenost as SelectList, new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.Funkcionalna_pripremljenost, "", new { @class = "text-danger" })
-                                            </div>*@
-                                        </div><!--END COL -->
-                                        <div class="col-lg-6">
-                                            <!--početak panela 2-->
-                                            <div class="panel-group" id="accordion2">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion2" href="#collapse5">
-                                                                Prezentacijske vještine - nastavnici
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="collapse5" class="panel-collapse collapse">
-                                                        <div class="panel-body">
-                                                            @*<div class="form-group col-lg-12">
-                                                                @Html.LabelFor(model => model.Sto_nastavnik_radi, htmlAttributes: new { @class = "control-label" })
-                                                                @Html.EditorFor(model => model.Sto_nastavnik_radi, new { htmlAttributes = new { @class = "form-control" } })
-                                                                @Html.ValidationMessageFor(model => model.Sto_nastavnik_radi, "", new { @class = "text-danger" })
-                                                            </div><!--END form-group -->
-                                                            <div class="form-group col-lg-12">
-                                                                @Html.LabelFor(model => model.Nas_strukturne_komponente, htmlAttributes: new { @class = "control-label" })
-                                                                @Html.EditorFor(model => model.Nas_strukturne_komponente, new { htmlAttributes = new { @class = "form-control" } })
-                                                                @Html.ValidationMessageFor(model => model.Nas_strukturne_komponente, "", new { @class = "text-danger" })
-                                                            </div><!--END form-group -->
-                                                            <div class="form-group col-lg-12">
-                                                                @Html.LabelFor(model => model.Nas_tijek_aktivnosti, htmlAttributes: new { @class = "control-label" })
-                                                                @Html.EditorFor(model => model.Nas_tijek_aktivnosti, new { htmlAttributes = new { @class = "form-control" } })
-                                                                @Html.ValidationMessageFor(model => model.Nas_tijek_aktivnosti, "", new { @class = "text-danger" })
-                                                            </div><!--END form-group -->*@
-                                                        </div>
+                                        <!--početak panela 2-->
+                                        <div class="panel-group" id="accordion2">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapse5">
+                                                            3. Analiza nakon uvida u neposredni proces nastavnog sata
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapse5" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                       
                                                     </div>
                                                 </div>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion2" href="#collapse6">
-                                                                Prezentacijske vještine - učenici
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="collapse6" class="panel-collapse collapse">
-                                                        <div class="panel-body">
-                                                            @*<div class="form-group col-lg-12">
-                                                                @Html.LabelFor(model => model.Sto_ucenici_rade, htmlAttributes: new { @class = "control-label" })
-                                                                @Html.EditorFor(model => model.Sto_ucenici_rade, new { htmlAttributes = new { @class = "form-control" } })
-                                                                @Html.ValidationMessageFor(model => model.Sto_ucenici_rade, "", new { @class = "text-danger" })
-                                                            </div><!--END form-group -->
-                                                            <div class="form-group col-lg-12">
-                                                                @Html.LabelFor(model => model.Uc_strukturne_komponente, htmlAttributes: new { @class = "control-label" })
-                                                                @Html.EditorFor(model => model.Uc_strukturne_komponente, new { htmlAttributes = new { @class = "form-control" } })
-                                                                @Html.ValidationMessageFor(model => model.Uc_strukturne_komponente, "", new { @class = "text-danger" })
-                                                            </div><!--END form-group -->
-                                                            <div class="form-group col-lg-12">
-                                                                @Html.LabelFor(model => model.Uc_tijek_aktivnosti, htmlAttributes: new { @class = "control-label" })
-                                                                @Html.EditorFor(model => model.Uc_tijek_aktivnosti, new { htmlAttributes = new { @class = "form-control" } })
-                                                                @Html.ValidationMessageFor(model => model.Uc_tijek_aktivnosti, "", new { @class = "text-danger" })
-                                                            </div><!--END form-group -->*@
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div><!--kraj panela 2-->
-                                        </div><!--END COL -->
+                                            </div>                                            
+                                        </div><!--kraj panela 2-->
                                     </div><!--END ROW -->
                                 </div>
                                 <div class="tab-pane" id="ostalo2">
