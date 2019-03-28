@@ -55,7 +55,8 @@ namespace Planiranje.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
                 }
                 ViewBag.godina = godina;
-                ViewBag.idNastavnik = idNastavnik;                
+                ViewBag.idNastavnik = idNastavnik;
+                ViewBag.select = VratiSelectListu(godina);
                 return View();
             }
             else if (id > 0)
@@ -64,7 +65,8 @@ namespace Planiranje.Controllers
                 if (model == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-                }                
+                }
+                ViewBag.select = VratiSelectListu(godina);
                 return View(model);
             }
             else
@@ -89,7 +91,8 @@ namespace Planiranje.Controllers
                 {
                     ViewBag.godina = model.Sk_godina;
                     ViewBag.idNastavnik = model.Id_nastavnik;
-                }                
+                }
+                ViewBag.select = VratiSelectListu(model.Sk_godina);
                 return View(model);
             }
             model.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
@@ -128,6 +131,13 @@ namespace Planiranje.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
+        }
+        private IEnumerable<SelectListItem> VratiSelectListu(int godina)
+        {
+            List<RazredniOdjel> odjeli = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.PedagogId
+            && w.Sk_godina == godina).ToList();
+            IEnumerable<SelectListItem> select = new SelectList(odjeli, "Id", "Naziv");
+            return select;
         }
     }
 }
