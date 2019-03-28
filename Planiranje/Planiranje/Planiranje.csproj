@@ -272,6 +272,7 @@
     <Compile Include="Models\Ucenici\Nastavnik.cs" />
     <Compile Include="Models\Ucenici\Nastavnik_analiza.cs" />
     <Compile Include="Models\Ucenici\Nastavnik_protokol.cs" />
+    <Compile Include="Models\Ucenici\Nastavnik_uvid.cs" />
     <Compile Include="Models\Ucenici\Neposredni_rad.cs" />
     <Compile Include="Models\Ucenici\Obitelj.cs" />
     <Compile Include="Models\Ucenici\Pedagog_skola.cs" />
