@@ -548,6 +548,7 @@
     <Content Include="Views\NastavnikUvid\Index.cshtml" />
     <Content Include="Views\NastavnikUvid\Detalji.cshtml" />
     <Content Include="Views\NastavnikUvid\NoviUvid.cshtml" />
+    <Content Include="Views\NastavnikUvid\ObrisiUvid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
