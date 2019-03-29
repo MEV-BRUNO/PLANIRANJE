@@ -66,7 +66,7 @@ namespace Planiranje.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
                 }
-                ViewBag.select = VratiSelectListu(godina);
+                ViewBag.select = VratiSelectListu(model.Sk_godina);
                 return View(model);
             }
             else
