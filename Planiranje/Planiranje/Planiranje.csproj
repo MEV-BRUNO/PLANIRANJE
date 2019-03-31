@@ -272,6 +272,7 @@
     <Compile Include="Models\Ucenici\Mjesecna_biljeska.cs" />
     <Compile Include="Models\Ucenici\Nastavnik.cs" />
     <Compile Include="Models\Ucenici\Nastavnik_analiza.cs" />
+    <Compile Include="Models\Ucenici\Nastavnik_obrazac.cs" />
     <Compile Include="Models\Ucenici\Nastavnik_protokol.cs" />
     <Compile Include="Models\Ucenici\Nastavnik_uvid.cs" />
     <Compile Include="Models\Ucenici\Neposredni_rad.cs" />
