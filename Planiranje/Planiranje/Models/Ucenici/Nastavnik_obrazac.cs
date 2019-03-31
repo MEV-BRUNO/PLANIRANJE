@@ -92,7 +92,7 @@ namespace Planiranje.Models.Ucenici
         public int Koristi_se_materijalima_i_primjerima_iz_zivota { get; set; }
         public int Postavlja_puno_pitanja { get; set; }
         public int Postavlja_pitanja_koja_poticu_razmisljanje { get; set; }
-        public int Daje_svim_ucenicima_dovoljno_vremena_za_razmisljanje_nakon_postavljenog_pitanja { get; set; }
+        public int Daje_svim_ucenicima_dovoljno_vremena_za_razmisljanje { get; set; }
         public int Ohrabruje_ucenike_da_postavljaju_jedni_drugima_pitanja { get; set; }
         public int Trazi_ucenike_da_objasne_jedni_drugima { get; set; }
         public int Redovito_provjerava_jesu_li_ucenici_razumjeli { get; set; }

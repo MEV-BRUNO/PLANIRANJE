@@ -49,6 +49,7 @@ namespace Planiranje.Controllers
         public DbSet<Nastavnik_analiza> NastavnikAnaliza { get; set; }
         public DbSet<Nastavnik_protokol> NastavnikProtokol { get; set; }
         public DbSet<Nastavnik_uvid> NastavnikUvid { get; set; }
+        public DbSet<Nastavnik_obrazac> NastavnikObrazac { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
