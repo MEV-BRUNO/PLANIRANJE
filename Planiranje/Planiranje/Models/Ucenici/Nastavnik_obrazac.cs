@@ -24,18 +24,18 @@ namespace Planiranje.Models.Ucenici
         public int Br_stanovnika_zajednica { get; set; }
         public int Br_ucenika_skola { get; set; }
         public string Dobna_skupina { get; set; }
-        public string Postotak_ucenika_obitelj { get; set; }
-        public string Postotak_ucenika_jezik { get; set; }
+        public int Postotak_ucenika_obitelj { get; set; }
+        public int Postotak_ucenika_jezik { get; set; }
         //pitanja za nastavnika
-        public string Koriste_li_se_cesto_udzbenici { get; set; }
-        public string Pokrivaju_li_udzbenici_i_metode { get; set; }
-        public string Jesu_li_udzbenici_i_metode_poucavanja { get; set; }
-        public string Koliko_se_sati_na_tjedan_posvecuje { get; set; }
-        public string Koliko_se_ucenika_koristi_postupcima { get; set; }
-        public string Koliko_se_puta_godisnje_testiraju_postignuca { get; set; }
-        public string Dijagnosticira_li_nastavnik_probleme_u_ucenju { get; set; }
-        public string Ima_li_nastavnik_propisane_nastavne_planove { get; set; }
-        public string Provodi_li_nastavnik_propisane_planove { get; set; }
+        public int Koriste_li_se_cesto_udzbenici { get; set; }
+        public int Pokrivaju_li_udzbenici_i_metode { get; set; }
+        public int Jesu_li_udzbenici_i_metode_poucavanja { get; set; }
+        public int Koliko_se_sati_na_tjedan_posvecuje { get; set; }
+        public int Koliko_se_ucenika_koristi_postupcima { get; set; }
+        public int Koliko_se_puta_godisnje_testiraju_postignuca { get; set; }
+        public int Dijagnosticira_li_nastavnik_probleme_u_ucenju { get; set; }
+        public int Ima_li_nastavnik_propisane_nastavne_planove { get; set; }
+        public int Provodi_li_nastavnik_propisane_planove { get; set; }
         //komentiranje ponašanja
         public int Stvara_opuštenu_atmosferu { get; set; }
         public int Djeci_se_obraca_na_pozitivan_nacin { get; set; }
