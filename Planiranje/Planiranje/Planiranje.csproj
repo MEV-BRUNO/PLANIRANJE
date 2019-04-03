@@ -553,6 +553,7 @@
     <Content Include="Views\NastavnikUvid\ObrisiUvid.cshtml" />
     <Content Include="Views\NastavnikObrazac\Index.cshtml" />
     <Content Include="Views\NastavnikObrazac\Detalji.cshtml" />
+    <Content Include="Views\NastavnikObrazac\NoviObrazac.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
