@@ -198,6 +198,7 @@
     <Compile Include="Controllers\GodisnjiPlanController.cs" />
     <Compile Include="Controllers\MjesecniPlanController.cs" />
     <Compile Include="Controllers\NastavnikAnalizaController.cs" />
+    <Compile Include="Controllers\NastavnikObrazacController.cs" />
     <Compile Include="Controllers\NastavnikProtokolController.cs" />
     <Compile Include="Controllers\NastavnikUvidController.cs" />
     <Compile Include="Controllers\ObliciMetodeController.cs" />
@@ -550,6 +551,8 @@
     <Content Include="Views\NastavnikUvid\Detalji.cshtml" />
     <Content Include="Views\NastavnikUvid\NoviUvid.cshtml" />
     <Content Include="Views\NastavnikUvid\ObrisiUvid.cshtml" />
+    <Content Include="Views\NastavnikObrazac\Index.cshtml" />
+    <Content Include="Views\NastavnikObrazac\Detalji.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
