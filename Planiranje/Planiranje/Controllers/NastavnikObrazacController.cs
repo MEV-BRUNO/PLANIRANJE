@@ -40,5 +40,57 @@ namespace Planiranje.Controllers
             w.Sk_godina == godina).ToList();
             return View(model);            
         }
+        public ActionResult NoviObrazac (int idNastavnik, int godina, int id)
+        {
+            //ulazni parametar id je id analize, ukoliko je on 0, radi se o novoj analizi
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (id == 0 && godina > 0 && idNastavnik > 0)
+            {
+                Nastavnik nastavnik = baza.Nastavnik.SingleOrDefault(s => s.Id == idNastavnik);
+                if (nastavnik == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                ViewBag.godina = godina;
+                ViewBag.idNastavnik = idNastavnik;
+                ViewBag.select = VratiSelectListu(godina);
+                ViewBag.selectDaNe = VratiSelectDaNe();
+                return View();
+            }
+            else if (id > 0)
+            {
+                Nastavnik_obrazac model = baza.NastavnikObrazac.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                if (model == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                ViewBag.select = VratiSelectListu(model.Sk_godina);
+                return View(model);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
+            }
+        }
+
+        private IEnumerable<SelectListItem> VratiSelectListu(int godina)
+        {
+            List<RazredniOdjel> odjeli = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.PedagogId
+            && w.Sk_godina == godina).ToList();
+            IEnumerable<SelectListItem> select = new SelectList(odjeli, "Id", "Naziv");
+            return select;
+        }
+        private SelectList VratiSelectDaNe()
+        {
+            var select = new SelectList(new List<SelectListItem> {
+             new SelectListItem {Text="-", Value="0"},
+             new SelectListItem {Text="Da", Value="1"},
+             new SelectListItem {Text="Ne", Value="2"}             
+            }, "Value", "Text");
+            return select;
+        }
     }
 }
