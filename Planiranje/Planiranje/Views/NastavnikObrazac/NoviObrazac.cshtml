@@ -248,57 +248,8 @@
                                                 <div id="collapse7" class="panel-collapse collapse">
                                                     <div class="panel-body">
                                                         <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Je_li_na_satu_dosao_do_izrazaja_ucenikov_rad, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Je_li_na_satu_dosao_do_izrazaja_ucenikov_rad, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Je_li_na_satu_dosao_do_izrazaja_ucenikov_rad, "", new { @class = "text-danger" })
-                                                                </div>
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Postignuca_ucenika_i_produktivnost_sata_nastavnika, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Postignuca_ucenika_i_produktivnost_sata_nastavnika, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Postignuca_ucenika_i_produktivnost_sata_nastavnika, "", new { @class = "text-danger" })
-                                                                </div>
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Domaca_zadaca_zadana_je, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Domaca_zadaca_zadana_je, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Domaca_zadaca_zadana_je, "", new { @class = "text-danger" })
-                                                                </div>
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Karakter_domace_zadace, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Karakter_domace_zadace, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Karakter_domace_zadace, "", new { @class = "text-danger" })
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Domaca_zadaca_je_provjerena, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Domaca_zadaca_je_provjerena, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Domaca_zadaca_je_provjerena, "", new { @class = "text-danger" })
-                                                                </div>
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Zapis_na_skolskoj_ploci_bio_je, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Zapis_na_skolskoj_ploci_bio_je, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Zapis_na_skolskoj_ploci_bio_je, "", new { @class = "text-danger" })
-                                                                </div>
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Procjena_uspjesnosti_nastavnog_sata, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Procjena_uspjesnosti_nastavnog_sata, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Procjena_uspjesnosti_nastavnog_sata, "", new { @class = "text-danger" })
-                                                                </div>
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Evaluacija_nastavnog_sata, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Evaluacija_nastavnog_sata, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Evaluacija_nastavnog_sata, "", new { @class = "text-danger" })
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                @Html.LabelFor(model => model.Ostala_zapazanja, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                                                <div class="col-lg-10">
-                                                                    @Html.TextAreaFor(model => model.Ostala_zapazanja, new { @class = "edit-opis", rows = "2" })
-                                                                    @Html.ValidationMessageFor(model => model.Ostala_zapazanja, "", new { @class = "text-danger" })
-                                                                </div>
-                                                            </div>
+                                                            
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -313,49 +264,7 @@
                                                 </div>
                                                 <div id="collapse8" class="panel-collapse collapse">
                                                     <div class="panel-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Nastavnik_ima_i_vodi_pedagosku_dokumentaciju, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Nastavnik_ima_i_vodi_pedagosku_dokumentaciju, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Nastavnik_ima_i_vodi_pedagosku_dokumentaciju, "", new { @class = "text-danger" })
-                                                                </div>
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.U_dnevniku_rada_upisani_su, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.U_dnevniku_rada_upisani_su, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.U_dnevniku_rada_upisani_su, "", new { @class = "text-danger" })
-                                                                </div>
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Pripreme_nastavnika_za_nastavu_su, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Pripreme_nastavnika_za_nastavu_su, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Pripreme_nastavnika_za_nastavu_su, "", new { @class = "text-danger" })
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Iz_imenika_je_vidljivo_da_nastavnik, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Iz_imenika_je_vidljivo_da_nastavnik, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Iz_imenika_je_vidljivo_da_nastavnik, "", new { @class = "text-danger" })
-                                                                </div>
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Ocjene_u_imeniku_su, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Ocjene_u_imeniku_su, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Ocjene_u_imeniku_su, "", new { @class = "text-danger" })
-                                                                </div>
-                                                                <div class="form-group col-lg-12">
-                                                                    @Html.LabelFor(model => model.Procjena_vodjenja_nastavne_dokumentacije, htmlAttributes: new { @class = "control-label" })
-                                                                    @Html.EditorFor(model => model.Procjena_vodjenja_nastavne_dokumentacije, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.Procjena_vodjenja_nastavne_dokumentacije, "", new { @class = "text-danger" })
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                @Html.LabelFor(model => model.Poslovi_razrednika_izvijesca_i_analize, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                                                <div class="col-lg-10">
-                                                                    @Html.TextAreaFor(model => model.Poslovi_razrednika_izvijesca_i_analize, new { @class = "edit-opis", rows = "2" })
-                                                                    @Html.ValidationMessageFor(model => model.Poslovi_razrednika_izvijesca_i_analize, "", new { @class = "text-danger" })
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
