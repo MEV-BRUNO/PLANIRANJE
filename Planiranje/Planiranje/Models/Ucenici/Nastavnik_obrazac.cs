@@ -21,6 +21,7 @@ namespace Planiranje.Models.Ucenici
         [Required(ErrorMessage ="Obavezno polje")]
         [DisplayName("Predmet")]
         public string Predmet { get; set; }
+        [Required(ErrorMessage = "Obavezno polje")]
         public string Supervizor { get; set; }
         public int Nastavnik_pocetnik { get; set; }
         public int Mjesovita_dobna_skupina { get; set; }
