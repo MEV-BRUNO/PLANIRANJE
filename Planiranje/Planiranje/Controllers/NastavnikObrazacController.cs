@@ -58,6 +58,7 @@ namespace Planiranje.Controllers
                 ViewBag.idNastavnik = idNastavnik;
                 ViewBag.select = VratiSelectListu(godina);
                 ViewBag.selectDaNe = VratiSelectDaNe();
+                ViewBag.select4 = VratiSelect4();
                 return View();
             }
             else if (id > 0)
@@ -89,6 +90,17 @@ namespace Planiranje.Controllers
              new SelectListItem {Text="-", Value="0"},
              new SelectListItem {Text="Da", Value="1"},
              new SelectListItem {Text="Ne", Value="2"}             
+            }, "Value", "Text");
+            return select;
+        }
+        private SelectList VratiSelect4()
+        {
+            var select = new SelectList(new List<SelectListItem> {
+             new SelectListItem {Text="-", Value="0"},
+             new SelectListItem {Text="Pretežno slabosti", Value="1"},
+             new SelectListItem {Text="Više slabosti nego prednosti", Value="2"},
+             new SelectListItem {Text="Više prednosti nego slabosti", Value="3"},
+             new SelectListItem {Text="Pretežno prednosti", Value="4"}
             }, "Value", "Text");
             return select;
         }
