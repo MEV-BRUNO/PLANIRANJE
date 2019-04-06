@@ -69,19 +69,19 @@
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     @Html.LabelFor(model => model.Br_ucenika_razred, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.EditorFor(model => model.Br_ucenika_razred, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.EditorFor(model => model.Br_ucenika_razred, new { htmlAttributes = new { @class = "form-control", min="0" } })
                                                     @Html.ValidationMessageFor(model => model.Br_ucenika_razred, "", new { @class = "text-danger" })
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     @Html.LabelFor(model => model.Br_ucenika_skola, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.EditorFor(model => model.Br_ucenika_skola, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.EditorFor(model => model.Br_ucenika_skola, new { htmlAttributes = new { @class = "form-control", min="0" } })
                                                     @Html.ValidationMessageFor(model => model.Br_ucenika_skola, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group col-lg-12">
                                                     @Html.LabelFor(model => model.Br_stanovnika_zajednica, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.EditorFor(model => model.Br_stanovnika_zajednica, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.EditorFor(model => model.Br_stanovnika_zajednica, new { htmlAttributes = new { @class = "form-control", min="0" } })
                                                     @Html.ValidationMessageFor(model => model.Br_stanovnika_zajednica, "", new { @class = "text-danger" })
                                                 </div>
                                                 <div class="form-group col-lg-12">
@@ -91,12 +91,12 @@
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     @Html.LabelFor(model => model.Postotak_ucenika_obitelj, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.EditorFor(model => model.Postotak_ucenika_obitelj, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.EditorFor(model => model.Postotak_ucenika_obitelj, new { htmlAttributes = new { @class = "form-control", min="0" } })
                                                     @Html.ValidationMessageFor(model => model.Postotak_ucenika_obitelj, "", new { @class = "text-danger" })
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     @Html.LabelFor(model => model.Postotak_ucenika_jezik, htmlAttributes: new { @class = "control-label" })
-                                                    @Html.EditorFor(model => model.Postotak_ucenika_jezik, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.EditorFor(model => model.Postotak_ucenika_jezik, new { htmlAttributes = new { @class = "form-control", min="0" } })
                                                     @Html.ValidationMessageFor(model => model.Postotak_ucenika_jezik, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>                                            

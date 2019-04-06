@@ -13,18 +13,32 @@ namespace Planiranje.Models.Ucenici
         public int Id { get; set; }
         public int Id_nastavnik { get; set; }
         public int Id_pedagog { get; set; }
+        [Required(ErrorMessage ="Obavezno polje")]
+        [DisplayName("Razredni odjel")]
         public int Id_odjel { get; set; }
         public int Sk_godina { get; set; }
         public int Id_skola { get; set; }
+        [Required(ErrorMessage ="Obavezno polje")]
+        [DisplayName("Predmet")]
         public string Predmet { get; set; }
         public string Supervizor { get; set; }
         public int Nastavnik_pocetnik { get; set; }
         public int Mjesovita_dobna_skupina { get; set; }
+        [Required(ErrorMessage = " ")]
+        [Range(0, int.MaxValue, ErrorMessage ="Minimalna vrijednost:0")]
         public int Br_ucenika_razred { get; set; }
+        [Required(ErrorMessage = " ")]
+        [Range(0, int.MaxValue, ErrorMessage = "Minimalna vrijednost:0")]
         public int Br_stanovnika_zajednica { get; set; }
+        [Required(ErrorMessage = " ")]
+        [Range(0, int.MaxValue, ErrorMessage = "Minimalna vrijednost:0")]
         public int Br_ucenika_skola { get; set; }
         public string Dobna_skupina { get; set; }
+        [Required(ErrorMessage = " ")]
+        [Range(0, int.MaxValue, ErrorMessage = "Minimalna vrijednost:0")]
         public int Postotak_ucenika_obitelj { get; set; }
+        [Required(ErrorMessage = " ")]
+        [Range(0, int.MaxValue, ErrorMessage = "Minimalna vrijednost:0")]
         public int Postotak_ucenika_jezik { get; set; }
         //pitanja za nastavnika
         public int Koriste_li_se_cesto_udzbenici { get; set; }

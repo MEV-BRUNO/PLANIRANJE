@@ -69,11 +69,73 @@ namespace Planiranje.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
                 }
                 ViewBag.select = VratiSelectListu(model.Sk_godina);
+                ViewBag.selectDaNe = VratiSelectDaNe();
+                ViewBag.select4 = VratiSelect4();
                 return View(model);
             }
             else
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
+            }
+        }
+        [HttpPost]
+        public ActionResult NoviObrazac (Nastavnik_obrazac model)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (model.Id_odjel <= 0 || string.IsNullOrWhiteSpace(model.Predmet))
+            {
+                if (model.Id > 0)
+                {
+                    ViewBag.godina = null;
+                }
+                else
+                {
+                    ViewBag.godina = model.Sk_godina;
+                    ViewBag.idNastavnik = model.Id_nastavnik;
+                }
+                ViewBag.select = VratiSelectListu(model.Sk_godina);
+                ViewBag.selectDaNe = VratiSelectDaNe();
+                ViewBag.select4 = VratiSelect4();
+                return View(model);
+            }
+            model.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+            model.Id_skola = PlaniranjeSession.Trenutni.OdabranaSkola;
+            //spremanje podataka
+            int idNastavnik = model.Id_nastavnik;
+            int idProtokol = model.Id;
+            int god = model.Sk_godina;
+            try
+            {
+                if (model.Id <= 0)
+                {
+                    using (var db = new BazaPodataka())
+                    {
+                        db.NastavnikObrazac.Add(model);
+                        db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    var v = baza.NastavnikObrazac.SingleOrDefault(s => s.Id == idProtokol && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (v == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    using (var db = new BazaPodataka())
+                    {
+                        db.NastavnikObrazac.Add(model);
+                        db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                return RedirectToAction("Detalji", new { id = idNastavnik, godina = god });
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 
