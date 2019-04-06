@@ -512,7 +512,76 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
-
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Daje_jasna_objasnjenja_materijala_za_ucenje, htmlAttributes: new { @class = "control-label col-lg-7" })
+                                                                    <div class="col-lg-5">
+                                                                        @Html.DropDownListFor(model => model.Daje_jasna_objasnjenja_materijala_za_ucenje, ViewBag.select4 as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Daje_jasna_objasnjenja_materijala_za_ucenje, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Vodi_racuna_o_tome_da_svaki_ucenik, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Vodi_racuna_o_tome_da_svaki_ucenik, ViewBag.selectDaNe as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Vodi_racuna_o_tome_da_svaki_ucenik, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Objasnjava_kaku_su_zadaci_uskladjeni, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Objasnjava_kaku_su_zadaci_uskladjeni, ViewBag.selectDaNe as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Objasnjava_kaku_su_zadaci_uskladjeni, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Jasno_navodi_koji_se_materijali_mogu_koristiti, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Jasno_navodi_koji_se_materijali_mogu_koristiti, ViewBag.selectDaNe as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Jasno_navodi_koji_se_materijali_mogu_koristiti, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Ukljucuje_sve_ucenike_na_satu, htmlAttributes: new { @class = "control-label col-lg-7" })
+                                                                    <div class="col-lg-5">
+                                                                        @Html.DropDownListFor(model => model.Ukljucuje_sve_ucenike_na_satu, ViewBag.select4 as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Ukljucuje_sve_ucenike_na_satu, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Daje_zadatke_koji_poticu_ucenike, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Daje_zadatke_koji_poticu_ucenike, ViewBag.selectDaNe as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Daje_zadatke_koji_poticu_ucenike, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Ukljucuje_i_one_ucenike_koji_sami_ne_sudjeluju, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Ukljucuje_i_one_ucenike_koji_sami_ne_sudjeluju, ViewBag.selectDaNe as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Ukljucuje_i_one_ucenike_koji_sami_ne_sudjeluju, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Potice_ucenike_da_pazljivo_slusaju, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Potice_ucenike_da_pazljivo_slusaju, ViewBag.selectDaNe as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Potice_ucenike_da_pazljivo_slusaju, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Nakon_postavljenog_pitanja_ceka_dovoljno_dugo, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Nakon_postavljenog_pitanja_ceka_dovoljno_dugo, ViewBag.selectDaNe as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Nakon_postavljenog_pitanja_ceka_dovoljno_dugo, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.Daje_priliku_ucenicima_koji_nisu_podigli_ruku, htmlAttributes: new { @class = "control-label col-lg-8" })
+                                                                    <div class="col-lg-4">
+                                                                        @Html.DropDownListFor(model => model.Daje_priliku_ucenicima_koji_nisu_podigli_ruku, ViewBag.selectDaNe as SelectList, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.Daje_priliku_ucenicima_koji_nisu_podigli_ruku, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
