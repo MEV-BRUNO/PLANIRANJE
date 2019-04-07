@@ -192,6 +192,14 @@ namespace Planiranje.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
+        public ActionResult Ispis(int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.NotImplemented,);
+        }
 
         private IEnumerable<SelectListItem> VratiSelectListu(int godina)
         {
