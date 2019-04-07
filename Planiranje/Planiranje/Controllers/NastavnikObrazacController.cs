@@ -138,6 +138,60 @@ namespace Planiranje.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
+        public ActionResult ObrisiObrazac (int id)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Nastavnik_obrazac model = baza.NastavnikObrazac.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            int idOdjel = model.Id_odjel;
+            var odjel = baza.RazredniOdjel.SingleOrDefault(s => s.Id == idOdjel && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (odjel == null)
+            {
+                odjel = new RazredniOdjel();
+            }
+            ViewBag.nazivOdjela = odjel.Naziv;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ObrisiObrazac (Nastavnik_obrazac model)
+        {
+            if (!Request.IsAjaxRequest() || PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            try
+            {
+                int id = model.Id;
+                int idNastavnik = 0;
+                int god = 0;
+                using (var db = new BazaPodataka())
+                {
+                    var result = db.NastavnikObrazac.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (result != null)
+                    {
+                        idNastavnik = result.Id_nastavnik;
+                        god = result.Sk_godina;
+                        db.NastavnikObrazac.Remove(result);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                    }
+                }
+                return RedirectToAction("Detalji", new { id = idNastavnik, godina = god });
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
 
         private IEnumerable<SelectListItem> VratiSelectListu(int godina)
         {
