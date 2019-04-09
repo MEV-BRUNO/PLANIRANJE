@@ -198,7 +198,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.NotImplemented,);
+            return new HttpStatusCodeResult(HttpStatusCode.NotImplemented);
         }
 
         private IEnumerable<SelectListItem> VratiSelectListu(int godina)
