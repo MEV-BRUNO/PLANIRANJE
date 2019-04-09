@@ -57,10 +57,13 @@ namespace Planiranje.Models.Ucenici
         [DisplayName("Jesu li udžbenici i metode poučavanja... zastarjeli ili se rijetko koriste")]
         public int Jesu_li_udzbenici_i_metode_poucavanja { get; set; }
         [DisplayName("Koliko se sati na tjedan posvećuje...")]
+        [Required(ErrorMessage =" ")]
         public int Koliko_se_sati_na_tjedan_posvecuje { get; set; }
         [DisplayName("Koliko se učenika koristi postupcima primjerenim učenicima nižih razreda")]
+        [Required(ErrorMessage =" ")]
         public int Koliko_se_ucenika_koristi_postupcima { get; set; }
         [DisplayName("Koliko se puta godišnje testiraju postignuća učenika standardiziranim testovima")]
+        [Required(ErrorMessage = " ")]
         public int Koliko_se_puta_godisnje_testiraju_postignuca { get; set; }
         [DisplayName("Dijagnosticira li nastavnik probleme u učenju učenika s poteškoćama")]
         public int Dijagnosticira_li_nastavnik_probleme_u_ucenju { get; set; }
