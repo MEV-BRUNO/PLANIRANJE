@@ -28,6 +28,7 @@ namespace Planiranje.Models.Ucenici
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
         public DateTime Vrijeme { get; set; }
         [DisplayName("Nastavni predmet")]
+        [Required(ErrorMessage ="Obavezno polje")]
         public string Nastavni_predmet { get; set; }
         [DisplayName("Nastavna cjelina")]
         public string Nastavna_cjelina { get; set; }

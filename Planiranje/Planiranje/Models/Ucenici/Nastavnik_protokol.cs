@@ -19,6 +19,7 @@ namespace Planiranje.Models.Ucenici
         [DisplayName("Razredni odjel")]
         public int Id_odjel { get; set; }
         [DisplayName("Nastavni predmet")]
+        [Required(ErrorMessage ="Obavezno polje")]
         public string Nastavni_predmet { get; set; }
         [Required(ErrorMessage = "Obavezno polje")]
         [DisplayName("Datum")]

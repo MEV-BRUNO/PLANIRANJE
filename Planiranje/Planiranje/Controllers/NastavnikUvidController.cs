@@ -81,7 +81,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (model.Id_odjel <= 0 || model.Datum.CompareTo(new DateTime(1, 1, 1)) == 0)
+            if (model.Id_odjel <= 0 || string.IsNullOrWhiteSpace(model.Nastavni_predmet) || model.Datum.CompareTo(new DateTime(1, 1, 1)) == 0)
             {
                 if (model.Id > 0)
                 {
