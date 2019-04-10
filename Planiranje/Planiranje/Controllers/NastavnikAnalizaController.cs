@@ -95,7 +95,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (string.IsNullOrEmpty(model.Cilj_posjete) || string.IsNullOrWhiteSpace(model.Planiranje_priprema) || 
+            if (string.IsNullOrWhiteSpace(model.Cilj_posjete) || string.IsNullOrWhiteSpace(model.Planiranje_priprema) || 
                 string.IsNullOrWhiteSpace(model.Vrsta_nastavnog_sata) || string.IsNullOrWhiteSpace(model.Nastavna_jedinica) || 
                 string.IsNullOrWhiteSpace(model.Nastavni_sat) || string.IsNullOrWhiteSpace(model.Predmet) || 
                 model.Id_odjel<=0 || model.Datum.CompareTo(new DateTime(1,1,1))==0)
