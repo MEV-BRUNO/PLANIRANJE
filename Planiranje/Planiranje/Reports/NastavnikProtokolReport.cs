@@ -39,31 +39,39 @@ namespace Planiranje.Reports
 
             p = new Paragraph("ŠKOLA: " + skola.Naziv, tekst);
             p.Alignment = Element.ALIGN_LEFT;
+            p.SpacingAfter = 5;
             pdfDokument.Add(p);
             p = new Paragraph("RAZREDNI ODJEL: " + odjel.Naziv, tekst);
             p.Alignment = Element.ALIGN_LEFT;
+            p.SpacingAfter = 5;
             pdfDokument.Add(p);
             p = new Paragraph("ŠKOLSKA GODINA: " + odjel.Sk_godina + "./" + (odjel.Sk_godina + 1).ToString() + ".", tekst);
             p.Alignment = Element.ALIGN_LEFT;
+            p.SpacingAfter = 5;
             pdfDokument.Add(p);
             p = new Paragraph("NASTAVNIK: " + nastavnik.ImePrezime, tekst);
             p.Alignment = Element.ALIGN_LEFT;
+            p.SpacingAfter = 5;
             pdfDokument.Add(p);
             p = new Paragraph("NASTAVNI PREDMET: " + model.Nastavni_predmet, tekst);
             p.Alignment = Element.ALIGN_LEFT;
+            p.SpacingAfter = 5;
             pdfDokument.Add(p);
             p = new Paragraph("NADNEVAK: " + model.Datum.ToShortDateString()+" VRIJEME: "+model.Vrijeme.ToShortTimeString()
                 +" RED.BR. NASTAVNOG SATA: "+ model.Broj_nastavnog_sata, tekst);
             p.Alignment = Element.ALIGN_LEFT;
+            p.SpacingAfter = 5;
             pdfDokument.Add(p);
             p = new Paragraph("MJESTO IZVOĐENJA: " + model.Mjesto_izvodjenja, tekst);
             p.Alignment = Element.ALIGN_LEFT;
+            p.SpacingAfter = 5;
             pdfDokument.Add(p);
             p = new Paragraph("NASTAVNA CJELINA: " + model.Nastavna_cjelina, tekst);
             p.Alignment = Element.ALIGN_LEFT;
+            p.SpacingAfter = 5;
             pdfDokument.Add(p);
             p = new Paragraph("NASTAVNA JEDINICA: "+ model.Nastavna_jedinica, tekst);
-            p.Alignment = Element.ALIGN_LEFT;
+            p.Alignment = Element.ALIGN_LEFT;            
             p.SpacingAfter = 20;
             pdfDokument.Add(p);
 
@@ -104,7 +112,7 @@ namespace Planiranje.Reports
 
             t = new PdfPTable(2);
             t.WidthPercentage = 100;
-            t.SetWidths(new float[] { 1.5F, 1 });
+            t.SetWidths(new float[] { 1, 1 });
             t.AddCell(VratiCeliju("verbalnih", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju(select.ElementAt(model.Verbalne), tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju("vizualno-dokumentacijskih", tekst, false, BaseColor.WHITE));
@@ -132,7 +140,9 @@ namespace Planiranje.Reports
             t.SetWidths(new int[] { 1 });
             if (string.IsNullOrEmpty(model.Koristenje_nastavnih_sredstava))
             {
-                t.AddCell(VratiCeliju2("\n\n\n", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("\n", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("\n", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("\n", tekst, false, BaseColor.WHITE));
             }
             else
             {
@@ -156,7 +166,7 @@ namespace Planiranje.Reports
 
             t = new PdfPTable(2);
             t.WidthPercentage = 100;
-            t.SetWidths(new float[] { 1.5F, 1 });
+            t.SetWidths(new float[] { 1, 1 });
             t.AddCell(VratiCeliju("Uvod i najava cilja", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju(select.ElementAt(model.Uvod_i_najava_cilja), tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju("Uspostavljanje komunikacije", tekst, false, BaseColor.WHITE));
@@ -295,7 +305,9 @@ namespace Planiranje.Reports
             t.SetWidths(new int[] { 1 });
             if (string.IsNullOrEmpty(model.Kratki_komentar_nastavnika))
             {
-                t.AddCell(VratiCeliju2("\n\n\n", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("\n", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("\n", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("\n", tekst, false, BaseColor.WHITE));
             }
             else
             {
@@ -314,28 +326,24 @@ namespace Planiranje.Reports
             t.SetWidths(new int[] { 1 });
             if (string.IsNullOrEmpty(model.Prijedlozi_za_daljnje_unapredjenje_rada))
             {
-                t.AddCell(VratiCeliju2("\n\n\n", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("\n", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("\n", tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("\n", tekst, false, BaseColor.WHITE));
             }
             else
             {
                 t.AddCell(VratiCeliju(model.Prijedlozi_za_daljnje_unapredjenje_rada, tekst, false, BaseColor.WHITE));
             }
                     
-            t.SpacingAfter = 14;
-            pdfDokument.Add(t);
-            
-
-            p = new Paragraph("Stručni suradnik pedagog: " + pedagog.Ime + " " + pedagog.Prezime + ", " + pedagog.Titula, tekst);
-            p.Alignment = Element.ALIGN_LEFT;
-            p.SpacingAfter = 14;
-            pdfDokument.Add(p);
+            t.SpacingAfter = 20;
+            pdfDokument.Add(t);     
 
             t = new PdfPTable(3);
             t.WidthPercentage = 100;
             t.SetWidths(new int[] { 1, 1, 1 });
-            t.AddCell(VratiCeliju("Stručni suradnik:", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju("Nastavnik:", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju("Ravnatelj:", tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju4("Stručni suradnik:", tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju4("Nastavnik:", tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju4("Ravnatelj:", tekst, false, BaseColor.WHITE));
             t.SpacingAfter = 17;
             pdfDokument.Add(t);
 
@@ -369,6 +377,37 @@ namespace Planiranje.Reports
             c1.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
             c1.Padding = 5;
             c1.NoWrap = nowrap;
+            return c1;
+        }
+        /// <summary>
+        /// metoda vraća ćeliju koja ima samo donji obrub
+        /// </summary>
+        /// <param name="labela"></param>
+        /// <param name="font"></param>
+        /// <param name="nowrap"></param>
+        /// <param name="boja"></param>
+        /// <returns></returns>
+        private PdfPCell VratiCeliju3(string labela, Font font,
+            bool nowrap, BaseColor boja)
+        {
+            PdfPCell c1 = new PdfPCell(new Phrase(labela, font));
+            c1.BackgroundColor = boja;
+            c1.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+            c1.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+            c1.Padding = 5;
+            c1.NoWrap = nowrap;
+            c1.Border = PdfPCell.BOTTOM_BORDER;
+            return c1;
+        }
+        private PdfPCell VratiCeliju4(string labela, Font font,
+           bool nowrap, BaseColor boja)
+        {
+            PdfPCell c1 = new PdfPCell(new Phrase(labela, font));
+            c1.BackgroundColor = boja;
+            c1.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            c1.Padding = 5;
+            c1.NoWrap = nowrap;
+            c1.Border = PdfPCell.NO_BORDER;
             return c1;
         }
     }
