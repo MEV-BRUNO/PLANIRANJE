@@ -85,7 +85,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (model.Id_odjel <= 0 || string.IsNullOrWhiteSpace(model.Predmet) || string.IsNullOrWhiteSpace(model.Supervizor))
+            if (!ModelState.IsValid)
             {
                 if (model.Id > 0)
                 {

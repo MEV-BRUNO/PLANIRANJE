@@ -15,6 +15,7 @@ namespace Planiranje.Models.Ucenici
         public int Id_pedagog { get; set; }
         [Required(ErrorMessage ="Obavezno polje")]
         [DisplayName("Razredni odjel")]
+        [Range(1, int.MaxValue, ErrorMessage ="Obavezno polje")]
         public int Id_odjel { get; set; }
         public int Sk_godina { get; set; }
         public int Id_skola { get; set; }
@@ -26,29 +27,24 @@ namespace Planiranje.Models.Ucenici
         [DisplayName("Nastavnik početnik")]
         public int Nastavnik_pocetnik { get; set; }
         [DisplayName("Mješovita dobna skupina")]
-        public int Mjesovita_dobna_skupina { get; set; }
-        [Required(ErrorMessage = " ")]
+        public int Mjesovita_dobna_skupina { get; set; }        
         [Range(0, int.MaxValue, ErrorMessage ="Minimalna vrijednost:0")]
         [DisplayName("Broj učenika u razredu")]
-        public int Br_ucenika_razred { get; set; }
-        [Required(ErrorMessage = " ")]
+        public int? Br_ucenika_razred { get; set; }        
         [Range(0, int.MaxValue, ErrorMessage = "Minimalna vrijednost:0")]
         [DisplayName("Broj stanovnika u zajednici")]
-        public int Br_stanovnika_zajednica { get; set; }
-        [Required(ErrorMessage = " ")]
+        public int? Br_stanovnika_zajednica { get; set; }        
         [Range(0, int.MaxValue, ErrorMessage = "Minimalna vrijednost:0")]
         [DisplayName("Broj učenika u školi")]
-        public int Br_ucenika_skola { get; set; }
+        public int? Br_ucenika_skola { get; set; }
         [DisplayName("Dobna skupina")]
-        public string Dobna_skupina { get; set; }
-        [Required(ErrorMessage = " ")]
+        public string Dobna_skupina { get; set; }        
         [Range(0, int.MaxValue, ErrorMessage = "Minimalna vrijednost:0")]
         [DisplayName("Postotak učenika iz socijalno ugroženih obitelji")]
-        public int Postotak_ucenika_obitelj { get; set; }
-        [Required(ErrorMessage = " ")]
+        public int? Postotak_ucenika_obitelj { get; set; }        
         [Range(0, int.MaxValue, ErrorMessage = "Minimalna vrijednost:0")]
         [DisplayName("Postotak učenika za koje jezik poučavanja nije materinski jezik")]
-        public int Postotak_ucenika_jezik { get; set; }
+        public int? Postotak_ucenika_jezik { get; set; }
         //pitanja za nastavnika
         [DisplayName("Koriste li se često udžbenici i metode poučavanja... u drugim školama")]
         public int Koriste_li_se_cesto_udzbenici { get; set; }
@@ -56,15 +52,14 @@ namespace Planiranje.Models.Ucenici
         public int Pokrivaju_li_udzbenici_i_metode { get; set; }
         [DisplayName("Jesu li udžbenici i metode poučavanja... zastarjeli ili se rijetko koriste")]
         public int Jesu_li_udzbenici_i_metode_poucavanja { get; set; }
-        [DisplayName("Koliko se sati na tjedan posvećuje...")]
-        [Required(ErrorMessage =" ")]
-        public int Koliko_se_sati_na_tjedan_posvecuje { get; set; }
+        [DisplayName("Koliko se sati na tjedan posvećuje...")]        
+        public int? Koliko_se_sati_na_tjedan_posvecuje { get; set; }
         [DisplayName("Koliko se učenika koristi postupcima primjerenim učenicima nižih razreda")]
-        [Required(ErrorMessage =" ")]
-        public int Koliko_se_ucenika_koristi_postupcima { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Minimalna vrijednost:0")]
+        public int? Koliko_se_ucenika_koristi_postupcima { get; set; }
         [DisplayName("Koliko se puta godišnje testiraju postignuća učenika standardiziranim testovima")]
-        [Required(ErrorMessage = " ")]
-        public int Koliko_se_puta_godisnje_testiraju_postignuca { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Minimalna vrijednost:0")]
+        public int? Koliko_se_puta_godisnje_testiraju_postignuca { get; set; }
         [DisplayName("Dijagnosticira li nastavnik probleme u učenju učenika s poteškoćama")]
         public int Dijagnosticira_li_nastavnik_probleme_u_ucenju { get; set; }
         [DisplayName("Ima li nastavnik propisane nastavne planove za učenike s poteškoćama")]

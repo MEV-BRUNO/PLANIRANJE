@@ -78,30 +78,30 @@ namespace Planiranje.Reports
             t.AddCell(VratiCeliju2("Mješovita dobna skupina:", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju(selectDaNe.ElementAt(i), tekst, false, BaseColor.WHITE));
 
-            i = model.Br_ucenika_razred;
+            var i2 = model.Br_ucenika_razred;
             t.AddCell(VratiCeliju2("Broj učenika u razredu:", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju(i.ToString(), tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju6(i2.ToString(), tekst, false, BaseColor.WHITE));
 
-            i = model.Br_ucenika_skola;
+            i2 = model.Br_ucenika_skola;
             t.AddCell(VratiCeliju2("Broj učenika u školi:", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju(i.ToString(), tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju6(i2.ToString(), tekst, false, BaseColor.WHITE));
 
-            i = model.Br_stanovnika_zajednica;
+            i2 = model.Br_stanovnika_zajednica;
             t.AddCell(VratiCeliju2("Broj stanovnika u zajednici:", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju(i.ToString(), tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju6(i2.ToString(), tekst, false, BaseColor.WHITE));
                         
             t.AddCell(VratiCeliju2("Dobna skupina:", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju(model.Dobna_skupina, tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju6(model.Dobna_skupina, tekst, false, BaseColor.WHITE));
 
             t.AddCell(SpojiCelijeCol(VratiCeliju("\n", tekst, false, BaseColor.WHITE), 4));
 
-            i = model.Postotak_ucenika_obitelj;
+            i2 = model.Postotak_ucenika_obitelj;
             t.AddCell(SpojiCelijeCol(VratiCeliju2("Postotak učenika iz socijalno ugroženih obitelji:", tekst, false, BaseColor.WHITE),3));
-            t.AddCell(VratiCeliju(i.ToString(), tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju6(i2.ToString(), tekst, false, BaseColor.WHITE));
 
-            i = model.Postotak_ucenika_jezik;
+            i2 = model.Postotak_ucenika_jezik;
             t.AddCell(SpojiCelijeCol(VratiCeliju2("Postotak učenika za koje jezik poučavanja nije materinski jezik:", tekst, false, BaseColor.WHITE), 3));
-            t.AddCell(VratiCeliju(i.ToString(), tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju6(i2.ToString(), tekst, false, BaseColor.WHITE));
 
             t.SpacingAfter = 15;
             pdfDokument.Add(t);
@@ -124,19 +124,19 @@ namespace Planiranje.Reports
             t.AddCell(VratiCeliju3("Jesu li udžbenici i metode poučavanja... zastarjeli ili se rijetko koriste?", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju4(selectDaNe.ElementAt(i), tekst, false, BaseColor.WHITE));
 
-            i = model.Koliko_se_sati_na_tjedan_posvecuje;
+            i2 = model.Koliko_se_sati_na_tjedan_posvecuje;
             t.AddCell(VratiCeliju3("Koliko se sati na tjedan posvećuje...?", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju4(i.ToString(), tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju4(i2.ToString(), tekst, false, BaseColor.WHITE));
 
-            i = model.Koliko_se_ucenika_koristi_postupcima;
+            i2 = model.Koliko_se_ucenika_koristi_postupcima;
             t.AddCell(VratiCeliju3("Koliko se učenika koristi postupcima primjerenim učenicima nižih razreda?", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju4(i.ToString(), tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju4(i2.ToString(), tekst, false, BaseColor.WHITE));
 
             t.AddCell(VratiCeliju5("Praćenje", tekst, false, BaseColor.WHITE));
 
-            i = model.Koliko_se_puta_godisnje_testiraju_postignuca;
+            i2 = model.Koliko_se_puta_godisnje_testiraju_postignuca;
             t.AddCell(VratiCeliju3("Koliko se puta godišnje testiraju postignuća učenika standardiziranim testovima?", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju4(i.ToString(), tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju4(i2.ToString(), tekst, false, BaseColor.WHITE));
 
             t.AddCell(SpojiCelijeRow(VratiCeliju5("Mjere pomoći\nza učenike s\npoteškoćama", tekst, false, BaseColor.WHITE), 3));
 
@@ -551,6 +551,34 @@ namespace Planiranje.Reports
             c1.NoWrap = nowrap;
             c1.Rotation = 90;
             c1.Rotate();
+            return c1;
+        }
+        /// <summary>
+        /// vraća ćeliju koja ima donji obrub ukoliko je string empty ili null
+        /// </summary>
+        /// <param name="labela"></param>
+        /// <param name="font"></param>
+        /// <param name="nowrap"></param>
+        /// <param name="boja"></param>
+        /// <returns></returns>
+        private PdfPCell VratiCeliju6(string labela, Font font,
+           bool nowrap, BaseColor boja)
+        {
+            PdfPCell c1 = new PdfPCell(new Phrase(labela, font));
+            c1.BackgroundColor = boja;
+            c1.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            c1.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+            c1.Padding = 5;
+            c1.NoWrap = nowrap;
+            if (string.IsNullOrWhiteSpace(labela))
+            {
+                c1.Border = PdfPCell.BOTTOM_BORDER;
+            }
+            else
+            {
+                c1.Border = PdfPCell.NO_BORDER;
+            }
+
             return c1;
         }
         private PdfPCell SpojiCelijeRow(PdfPCell cell, int broj)
