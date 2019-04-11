@@ -302,6 +302,7 @@
     <Compile Include="Reports\GodisnjiReport.cs" />
     <Compile Include="Reports\MjesecniPlanReport.cs" />
     <Compile Include="Reports\NastavnikAnalizaReport.cs" />
+    <Compile Include="Reports\NastavnikObrazacReport.cs" />
     <Compile Include="Reports\NastavnikProtokolReport.cs" />
     <Compile Include="Reports\NastavnikUvidReport.cs" />
     <Compile Include="Reports\PlanOs1DetailsReport.cs" />

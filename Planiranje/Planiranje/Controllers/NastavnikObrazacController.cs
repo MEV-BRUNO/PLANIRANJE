@@ -198,7 +198,20 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.NotImplemented);
+            Nastavnik_obrazac model = baza.NastavnikObrazac.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            int idOdjel = model.Id_odjel;
+            int idNastavnik = model.Id_nastavnik;
+            RazredniOdjel odjel = baza.RazredniOdjel.SingleOrDefault(s => s.Id == idOdjel);
+            Nastavnik nastavnik = baza.Nastavnik.SingleOrDefault(s => s.Id == idNastavnik);
+            int idSkola = odjel.Id_skola;
+            Skola skola = baza.Skola.SingleOrDefault(s => s.Id_skola == idSkola);
+            Pedagog pedagog = baza.Pedagog.SingleOrDefault(s => s.Id_Pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            NastavnikObrazacReport report = new NastavnikObrazacReport(model, skola, nastavnik, odjel, pedagog);
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
         }
 
         private IEnumerable<SelectListItem> VratiSelectListu(int godina)
