@@ -195,6 +195,7 @@
     <Compile Include="Controllers\AkcijeController.cs" />
     <Compile Include="Controllers\AktivnostiController.cs" />
     <Compile Include="Controllers\CiljeviController.cs" />
+    <Compile Include="Controllers\DokumentController.cs" />
     <Compile Include="Controllers\GodisnjiPlanController.cs" />
     <Compile Include="Controllers\MjesecniPlanController.cs" />
     <Compile Include="Controllers\NastavnikAnalizaController.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="Models\SubjektiModel.cs" />
     <Compile Include="Models\Subjekt_DBHandle.cs" />
     <Compile Include="Models\GodisnjiModel.cs" />
+    <Compile Include="Models\Ucenici\Dokument.cs" />
     <Compile Include="Models\Ucenici\Mjesecna_biljeska.cs" />
     <Compile Include="Models\Ucenici\Nastavnik.cs" />
     <Compile Include="Models\Ucenici\Nastavnik_analiza.cs" />
@@ -559,6 +561,7 @@
     <Content Include="Views\NastavnikObrazac\Detalji.cshtml" />
     <Content Include="Views\NastavnikObrazac\NoviObrazac.cshtml" />
     <Content Include="Views\NastavnikObrazac\ObrisiObrazac.cshtml" />
+    <Content Include="Views\Dokument\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
