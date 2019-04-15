@@ -1,0 +1,27 @@
+﻿@{
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Dodavanje novog dokumenta</h4>
+        </div>
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviDokument", enctype = "multipart/form-data" }))
+        {
+            <div class="modal-body">                
+                <div class="col-md-9">
+                    <input type="file" name="file" />
+                </div>
+                @if (ViewBag.greska != null)
+                {
+                    <div class="text-danger">@ViewBag.greska</div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                <input type="button" class="btn btn-primary" value="Spremi" onclick='upload("@Url.Action("Upload","Dokument")","noviDokument", "Dokument je spremljen")' />
+            </div>
+        }
+    </div>
+</div>

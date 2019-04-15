@@ -245,6 +245,30 @@
                 }
             });
         }
+        function upload(path, id, poruka) {
+            var forma = document.getElementById(id);
+            $.ajax({
+                type: 'POST',
+                url: path,
+                enctype: 'multipart/form-data',
+                data: new FormData(forma),
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if ($(data)[0].className === "inner") {
+                        $("#content").html(data);
+                        $('#modal').modal('hide');
+                        $('#modalContainer').removeData();
+                        $('.modal-backdrop').remove();
+                        showSnackBar(poruka);
+                    }
+                    else {
+                        $("#modalContainer").html(data);
+                    }
+                }
+            }
+            );
+        }    
     </script>
 </body>
 </html>
