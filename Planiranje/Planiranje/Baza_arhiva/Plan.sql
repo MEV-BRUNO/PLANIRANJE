@@ -477,6 +477,15 @@ CREATE TABLE nastavnik_obrazac (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE dokument (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_pedagog int(20) NOT NULL,
+  id_skola int(20) NOT NULL,
+  naziv text,
+  path text,
+  PRIMARY KEY(id)
+);
+
 CREATE TABLE aktivnost (
   id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
