@@ -61,7 +61,7 @@ namespace Planiranje.Controllers
                     Directory.CreateDirectory(direktorij);
                 }
                 var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(direktorij, fileName);
+                var path = Path.Combine(direktorij+"/", fileName);
                 file.SaveAs(path);
                 //datoteka je spremljena, slijedi upis u bazu podataka
                 Dokument dokument = new Dokument();
@@ -79,6 +79,53 @@ namespace Planiranje.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
             return RedirectToAction("Index");
+        }
+        public ActionResult ObrisiDokument(int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Dokument model = baza.Dokument.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ObrisiDokument(Dokument model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int id = model.Id;
+            try
+            {
+                using (var db = new BazaPodataka())
+                {
+                    var result = db.Dokument.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (result == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                    }
+                    string direktorij = Server.MapPath("~/Dokumenti/" + PlaniranjeSession.Trenutni.PedagogId.ToString());
+                    string path = Path.Combine(direktorij + "/", result.Naziv);
+                    FileInfo file = new FileInfo(path);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                    db.Dokument.Remove(result);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

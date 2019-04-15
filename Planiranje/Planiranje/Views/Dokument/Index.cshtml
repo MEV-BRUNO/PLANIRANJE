@@ -42,7 +42,7 @@
                                             <td class="col-md-8">@item.Naziv</td>
                                             <td class="col-md-3">
                                                 <a class="btn btn-primary btn-xs btn-grad">Preuzmi</a>
-                                                <a class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                                <a class="btn btn-danger btn-xs btn-grad" onclick="showModal('@Url.Action("ObrisiDokument","Dokument", new { id = item.Id})')">Obriši</a>
                                             </td>
                                         </tr>
                                     }

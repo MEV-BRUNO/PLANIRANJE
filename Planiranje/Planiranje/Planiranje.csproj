@@ -563,6 +563,7 @@
     <Content Include="Views\NastavnikObrazac\ObrisiObrazac.cshtml" />
     <Content Include="Views\Dokument\Index.cshtml" />
     <Content Include="Views\Dokument\NoviDokument.cshtml" />
+    <Content Include="Views\Dokument\ObrisiDokument.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
