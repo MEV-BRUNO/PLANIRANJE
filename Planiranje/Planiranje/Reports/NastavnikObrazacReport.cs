@@ -154,6 +154,7 @@ namespace Planiranje.Reports
 
             t.SpacingAfter = 20;
             pdfDokument.Add(t);
+            pdfDokument.NewPage();
 
             t = new PdfPTable(5);
             t.WidthPercentage = 100;
@@ -427,7 +428,7 @@ namespace Planiranje.Reports
             i = OdrediI(model.Postavlja_pitanja_koja_poticu_davanje_povratne_informacije);
             t.AddCell(VratiCeliju4(selectDaNe.ElementAt(i), tekst, false, BaseColor.WHITE));
 
-            t.SpacingAfter = 30;
+            t.SpacingAfter = 10;
             pdfDokument.Add(t);
 
             t = new PdfPTable(3);
@@ -436,7 +437,7 @@ namespace Planiranje.Reports
             t.AddCell(VratiCeliju("Obrazac ispunila/ispunio:", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju(string.Empty, tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju("Nadnevak:", tekst, false, BaseColor.WHITE));
-            t.SpacingAfter = 17;
+            t.SpacingAfter = 0;
             pdfDokument.Add(t);
 
             t = new PdfPTable(3);
