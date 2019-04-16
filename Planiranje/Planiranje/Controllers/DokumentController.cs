@@ -40,7 +40,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if(Request.Files.Count==0)
+            if(Request.Files.Count==0 || Request.Files[0].ContentLength==0)
             {
                 ViewBag.greska = "Nema datoteke";
                 return View("NoviDokument");
