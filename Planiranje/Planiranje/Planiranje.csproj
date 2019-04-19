@@ -564,6 +564,7 @@
     <Content Include="Views\Dokument\Index.cshtml" />
     <Content Include="Views\Dokument\NoviDokument.cshtml" />
     <Content Include="Views\Dokument\ObrisiDokument.cshtml" />
+    <Content Include="Views\GodisnjiPlan\Kopiraj.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
