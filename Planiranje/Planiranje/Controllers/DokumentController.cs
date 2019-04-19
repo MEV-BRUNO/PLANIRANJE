@@ -62,7 +62,18 @@ namespace Planiranje.Controllers
                 }
                 var fileName = Path.GetFileName(file.FileName);
                 var path = Path.Combine(direktorij+"/", fileName);
-                file.SaveAs(path);
+                //provjera ukoliko datoteka postoji ne upisuje se u bazu već se samo zamijeni na disku
+                FileInfo fileInfo = new FileInfo(path);
+                if (fileInfo.Exists)
+                {
+                    file.SaveAs(path);
+                    string poruka = "Dokument koji želite spremiti već postoji. Novi dokument je zamijenjen starim.";
+                    return RedirectToAction("Info", "OpciPodaci", new { poruka = poruka });
+                }
+                else
+                {
+                    file.SaveAs(path);
+                }                
                 //datoteka je spremljena, slijedi upis u bazu podataka
                 Dokument dokument = new Dokument();
                 dokument.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
