@@ -12,7 +12,11 @@
         $("#selectGodina").val(saved);
         pokaziDetalje(saved1);
     }
-    $("#dataTableNastavnici").dataTable({ stateSave: true });
+    $("#dataTableNastavnici").dataTable({
+        stateSave: true,
+        pageLength: 10,
+        lengthChange: false        
+    });
 });
 function provjeriEnter(event, path, form, target, poruka) {
     if (event.type === "keydown") {
