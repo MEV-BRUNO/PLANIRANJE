@@ -156,7 +156,7 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
-            if (model.MjesecniPlan.Naziv == null || model.MjesecniPlan.Ak_godina==0)
+            if (model.MjesecniPlan.Naziv == null || model.MjesecniPlan.Ak_godina == 0)
             {
                 model.SkolskaGodina = baza.SkolskaGodina.ToList();
                 return View("UrediNoviPlan",model);
@@ -414,21 +414,29 @@ namespace Planiranje.Controllers
             plan.Opis = model.Opis;
             plan.Ak_godina = model.Ak_godina;
             List<Mjesecni_detalji> detalji = baza.MjesecniDetalji.Where(w => w.ID_plan == id).ToList();
-            using(var db = new BazaPodataka())
+            try
             {
-                db.MjesecniPlan.Add(plan);
-                db.SaveChanges();
-                int noviId = db.MjesecniPlan.Where(w => w.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId).Max(m => m.ID_plan);
-                foreach(var item in detalji)
+                using (var db = new BazaPodataka())
                 {
-                    item.ID = 0;
-                    item.ID_plan = noviId;
-                    db.MjesecniDetalji.Add(item);
-                }
-                if (detalji.Count > 0)
-                {
+                    db.MjesecniPlan.Add(plan);
                     db.SaveChanges();
+                    int noviId = db.MjesecniPlan.Where(w => w.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId).Max(m => m.ID_plan);
+                    foreach (var item in detalji)
+                    {
+                        item.ID = 0;
+                        item.ID_plan = noviId;
+                        db.MjesecniDetalji.Add(item);
+                    }
+                    if (detalji.Count > 0)
+                    {
+                        db.SaveChanges();
+                    }
                 }
+                TempData["poruka"] = "Plan je uspješno kopiran";
+            }
+            catch
+            {
+                TempData["poruka"] = "Kopiranje plana nije uspjelo! Pokušajte ponovno.";
             }
             return RedirectToAction("Index", new { godina = model.Ak_godina });
         }

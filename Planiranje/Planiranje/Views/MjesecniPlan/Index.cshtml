@@ -57,6 +57,7 @@
                                             <th>#</th>
                                             <th>Šk. godina</th>
                                             <th>Naziv</th>
+                                            <th>Opis</th>
                                             <th>Aktivnost</th>
                                         </tr>
                                     </thead>
@@ -71,7 +72,8 @@
                                             <tr>
                                                 <td class="col-md-1">@br.</td>
                                                 <td class="col-md-1">@item.Ak_godina./@godina.</td>
-                                                <td class="col-md-7">@item.Naziv</td>
+                                                <td class="col-md-3">@item.Naziv</td>
+                                                <td class="col-md-4">@item.Opis</td>
                                                 <td class="col-md-3">
                                                     <a onclick="reloadPage('@Url.Action("Detalji","MjesecniPlan",new { id=item.ID_plan})')" class="btn btn-info btn-xs btn-grad">Detalji</a>
                                                     <a onclick="showModal('@Url.Action("UrediPlan","MjesecniPlan",new { id=item.ID_plan})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
