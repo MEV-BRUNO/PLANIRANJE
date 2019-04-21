@@ -9,16 +9,15 @@ namespace Planiranje.Models
 {
     public class Mjesecni_plan
     {		
-		[Required]
-        [Key]
-        public int ID_plan { get; set; }
-        [Required]
+		[Key]
+        public int ID_plan { get; set; }        
         public int ID_pedagog { get; set; }
         [DisplayName("Školska godina")]
-        [Required(ErrorMessage ="Šk godina je obavezna")]
+        [Required(ErrorMessage ="Obavezno polje")]
+        [Range(1,int.MaxValue, ErrorMessage ="Obavezno polje")]
 		public int Ak_godina { get; set; }        
 		[DisplayName("Naziv plana")]
-        [Required(ErrorMessage ="Naziv je obavezan")]
+        [Required(ErrorMessage ="Obavezno polje")]
 		public string Naziv { get; set; }		
 		public string Opis { get; set; }
     }
