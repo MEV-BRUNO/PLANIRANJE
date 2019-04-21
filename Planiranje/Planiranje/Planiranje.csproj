@@ -389,7 +389,6 @@
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\Navigation.cshtml" />
     <Content Include="Views\MjesecniPlan\Index.cshtml" />
-    <Content Include="Views\MjesecniPlan\Table.cshtml" />
     <Content Include="Views\MjesecniPlan\Detalji.cshtml" />
     <Content Include="Views\MjesecniPlan\NoviPlan.cshtml" />
     <Content Include="Views\MjesecniPlan\Obrisi.cshtml" />
