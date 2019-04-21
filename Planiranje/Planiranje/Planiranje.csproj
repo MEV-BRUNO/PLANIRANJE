@@ -442,7 +442,6 @@
     <Content Include="Views\Ciljevi\Uredi.cshtml" />
     <Content Include="Views\GodisnjiPlan\Detalji.cshtml" />
     <Content Include="Views\MjesecniPlan\NoviDetalji.cshtml" />
-    <Content Include="Views\MjesecniPlan\TableDetails.cshtml" />
     <Content Include="Views\MjesecniPlan\ObrisiDetalj.cshtml" />
     <Content Include="Views\MjesecniPlan\UrediNoviPlan.cshtml" />
     <Content Include="Views\MjesecniPlan\UrediDetalje.cshtml" />
