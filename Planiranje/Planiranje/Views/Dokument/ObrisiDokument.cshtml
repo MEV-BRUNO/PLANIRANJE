@@ -16,11 +16,17 @@
                 <p><b>Jeste li sigurni da želite obrisati ovaj dokument?</b></p>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })                
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.Path, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.TextBoxFor(model => model.Naziv, new { @class = "form-control", disabled = "" })
+                        @Html.TextBoxFor(model => model.Path, new { @class = "form-control", disabled = "" })
                     </div>
-                </div>                
+                </div>  
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Opis, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(model => model.Opis, new { @class = "form-control", disabled = "" })
+                    </div>
+                </div> 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
                     <input type="button" class="btn btn-danger" value="Obriši" onclick='hideModal("@Url.Action("ObrisiDokument","Dokument")","#obrisiDokument", "Dokument je obrisan")' />

@@ -481,8 +481,8 @@ CREATE TABLE dokument (
   id int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
   id_skola int(20) NOT NULL,
-  naziv text,
   path text,
+  opis text,
   PRIMARY KEY(id)
 );
 

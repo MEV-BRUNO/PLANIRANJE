@@ -45,6 +45,8 @@ namespace Planiranje.Controllers
                 ViewBag.greska = "Nema datoteke";
                 return View("NoviDokument");
             }
+            var forma = Request.Form;
+            string opis = forma.Get("Opis");
             try
             {
                 var file = Request.Files[0];
@@ -67,7 +69,8 @@ namespace Planiranje.Controllers
                 if (fileInfo.Exists)
                 {
                     file.SaveAs(path);
-                    string poruka = "Dokument koji želite spremiti već postoji. Novi dokument je zamijenjen starim.";
+                    string poruka = "Dokument koji želite spremiti već postoji. Novi dokument je zamijenjen starim." +
+                        " Opis dokumenat nije promijenjen";
                     return RedirectToAction("Info", "OpciPodaci", new { poruka = poruka });
                 }
                 else
@@ -78,7 +81,8 @@ namespace Planiranje.Controllers
                 Dokument dokument = new Dokument();
                 dokument.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
                 dokument.Id_skola = PlaniranjeSession.Trenutni.OdabranaSkola;
-                dokument.Naziv = fileName;
+                dokument.Path = fileName;
+                dokument.Opis = opis;
                 using(var db = new BazaPodataka())
                 {
                     db.Dokument.Add(dokument);
@@ -132,7 +136,7 @@ namespace Planiranje.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
             string direktorij = Server.MapPath("~/Dokumenti/" + PlaniranjeSession.Trenutni.PedagogId.ToString());
-            FileInfo file = new FileInfo(direktorij + "/" + Model.Naziv);
+            FileInfo file = new FileInfo(direktorij + "/" + Model.Path);
             if (!file.Exists)
             {
                 Obrisi(Model.Id);
@@ -140,7 +144,7 @@ namespace Planiranje.Controllers
             }
             else
             {
-                return File(Path.Combine(direktorij + "/", Model.Naziv), MimeMapping.GetMimeMapping(direktorij + "/" + Model.Naziv), Model.Naziv);
+                return File(Path.Combine(direktorij + "/", Model.Path), MimeMapping.GetMimeMapping(direktorij + "/" + Model.Path), Model.Path);
             }
         }
         private bool Obrisi(int id)
@@ -155,7 +159,7 @@ namespace Planiranje.Controllers
                         return false;
                     }
                     string direktorij = Server.MapPath("~/Dokumenti/" + PlaniranjeSession.Trenutni.PedagogId.ToString());
-                    string path = Path.Combine(direktorij + "/", result.Naziv);
+                    string path = Path.Combine(direktorij + "/", result.Path);
                     FileInfo file = new FileInfo(path);
                     if (file.Exists)
                     {

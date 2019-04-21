@@ -13,7 +13,8 @@ namespace Planiranje.Models.Ucenici
         public int Id { get; set; }
         public int Id_pedagog { get; set; }
         public int Id_skola { get; set; }
-        public string Naziv { get; set; }
+        [DisplayName("Naziv datoteke")]
         public string Path { get; set; }
+        public string Opis { get; set; }
     }
 }

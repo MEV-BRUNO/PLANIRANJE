@@ -28,6 +28,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Naziv</th>
+                                        <th>Opis</th>
                                         <th>Aktivnost</th>
                                     </tr>
                                 </thead>
@@ -39,8 +40,9 @@
                                         brojac++;
                                         <tr>
                                             <td class="col-md-1">@brojac</td>
-                                            <td class="col-md-8">@item.Naziv</td>
-                                            <td class="col-md-3">
+                                            <td class="col-md-4">@item.Path</td>
+                                            <td class="col-md-5">@item.Opis</td>
+                                            <td class="col-md-2">
                                                 <a class="btn btn-primary btn-xs btn-grad" href="@Url.Action("Download","Dokument", new { id=item.Id})">Preuzmi</a>
                                                 <a class="btn btn-danger btn-xs btn-grad" onclick="showModal('@Url.Action("ObrisiDokument","Dokument", new { id = item.Id})')">Obriši</a>
                                             </td>
