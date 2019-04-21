@@ -230,8 +230,7 @@ namespace Planiranje.Controllers
             }
             DateTime date = new DateTime(1, 1, 1, 0, 0, 0);
             if (model.mjesecniDetalj.Aktivnost == null||model.mjesecniDetalj.Subjekti==null||model.mjesecniDetalj.Suradnici==null
-                || model.mjesecniDetalj.Podrucje==null||model.mjesecniDetalj.Vrijeme.CompareTo(date)==0||model.mjesecniDetalj.Br_sati<0
-                || model.mjesecniDetalj.Biljeska==null)
+                || model.mjesecniDetalj.Podrucje==null||model.mjesecniDetalj.Vrijeme.CompareTo(date)==0||model.mjesecniDetalj.Br_sati<0)
             {
                 model.Aktivnosti = aktivnosti.ReadAktivnost();
                 model.Subjekti = subjekti.ReadSubjekti();
@@ -287,13 +286,18 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             if (model.mjesecniDetalj.Aktivnost == null || model.mjesecniDetalj.Subjekti == null || model.mjesecniDetalj.Suradnici == null
-                || model.mjesecniDetalj.Podrucje == null || model.mjesecniDetalj.Vrijeme == null || model.mjesecniDetalj.Br_sati < 0
-                || model.mjesecniDetalj.Biljeska == null)
+                || model.mjesecniDetalj.Podrucje == null || model.mjesecniDetalj.Vrijeme == null || model.mjesecniDetalj.Br_sati < 0)
             {
                 model.Aktivnosti = aktivnosti.ReadAktivnost();
                 model.Subjekti = subjekti.ReadSubjekti();
                 model.PodrucjaRada = podrucja_rada.ReadPodrucjeRada();
                 return View(model);
+            }
+            int idPlan = model.mjesecniDetalj.ID_plan;
+            Mjesecni_plan test = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == idPlan && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (test == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
             using (var db = new BazaPodataka())
             {
@@ -343,7 +347,8 @@ namespace Planiranje.Controllers
             {
                 try
                 {
-                    var item = db.MjesecniDetalji.SingleOrDefault(s => s.ID == id);
+                    var item = (Mjesecni_detalji)(from dt in db.MjesecniDetalji join pl in db.MjesecniPlan on dt.ID_plan equals pl.ID_plan
+                                where dt.ID==id && pl.ID_pedagog==PlaniranjeSession.Trenutni.PedagogId select dt).SingleOrDefault();
                     if (item != null)
                     {
                         db.MjesecniDetalji.Remove(item);

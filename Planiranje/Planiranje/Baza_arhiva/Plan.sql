@@ -594,7 +594,21 @@ CREATE TABLE mjesecni_plan (
   opis text,
   PRIMARY KEY (id_plan),
   KEY id_pedagog (id_pedagog),
-  CONSTRAINT mjesecni_plan_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
+  CONSTRAINT mjesecni_plan_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog) ON DELETE CASCADE
+);
+
+CREATE TABLE mjesecni_detalji (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_plan int(20) NOT NULL,
+  subjekti text,
+  podrucje text,
+  aktivnost text,
+  suradnici text,
+  vrijeme datetime NOT NULL,
+  br_sati int(11) NOT NULL,
+  biljeska text,
+  PRIMARY KEY (id),
+  CONSTRAINT mjdetalji_to_mjplan FOREIGN KEY (id_plan) REFERENCES mjesecni_plan (id_plan) ON DELETE CASCADE
 );
 
 CREATE TABLE godisnji_plan (
@@ -667,19 +681,6 @@ CREATE TABLE dnevnik_detalji (
   CONSTRAINT dnevnik_detalji_ibfk_1 FOREIGN KEY (aktivnost) REFERENCES aktivnost (id_aktivnost),
   CONSTRAINT dnevnik_detalji_ibfk_2 FOREIGN KEY (subjekt) REFERENCES subjekti (id_subjekt),
   CONSTRAINT dnevnik_detalji_ibfk_3 FOREIGN KEY (suradnja) REFERENCES pedagog (id_pedagog)
-);
-
-CREATE TABLE mjesecni_detalji (
-  id int(20) NOT NULL AUTO_INCREMENT,
-  id_plan int(20) NOT NULL,
-  subjekti text,
-  podrucje text,
-  aktivnost text,
-  suradnici text,
-  vrijeme datetime NOT NULL,
-  br_sati int(11) NOT NULL,
-  biljeska text,
-  PRIMARY KEY (id)
 );
 
 CREATE TABLE os_plan_2_akcija (
