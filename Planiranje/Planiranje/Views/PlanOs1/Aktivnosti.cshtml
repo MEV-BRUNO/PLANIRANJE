@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-lg-2">
 
-        <button id="btnAktivnost" onclick="showModal('@Url.Action("NovaAktivnost","PlanOs1",new { id=Model.Id, pozicija=Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Dodaj aktivnost</button>
+        <button id="btnAktivnost" onclick="showModal('@Url.Action("NovaAktivnost","PlanOs1",new { id=ViewBag.id})')" class="btn btn-primary btn-xs btn-grad">Dodaj aktivnost</button>
 
     </div>
     <div class="col-lg-10">
