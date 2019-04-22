@@ -9,10 +9,8 @@ namespace Planiranje.Models
 {
     public class OS_Plan_1
     {
-        [Key]
-        [Required]
-        public int Id_plan { get; set; }
-        [Required]
+        [Key]        
+        public int Id_plan { get; set; }        
         public int Id_pedagog { get; set; }
         [Required(ErrorMessage ="Školska godina je obavezna")]
 		[DisplayName("Šk. godina")]        

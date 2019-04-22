@@ -26,116 +26,143 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
             {
                 return RedirectToAction("Index", "Planiranje");
-            }
-            ViewBag.Title = "Pregled - osnovna škola 1";
+            }         
 
             List<OS_Plan_1> planovi = new List<OS_Plan_1>();
-            planovi = planovi_os1.ReadOS_Plan_1();
+            planovi = baza.OsPlan1.Where(w => w.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId).ToList();
             return View("Index",planovi);            
         }
 
         public ActionResult NoviPlan()
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            PlanOs1View plan = new PlanOs1View();
-            plan.SkolskaGodina = baza.SkolskaGodina.ToList();
-            return View("NoviPlan", plan);
+            ViewBag.select = VratiSelectList();
+            return View();
         }
 
         [HttpPost]
-        public ActionResult NoviPlan(PlanOs1View plan)
+        public ActionResult NoviPlan(OS_Plan_1 model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }			
-            if(plan.OsPlan1.Ak_godina==0||plan.OsPlan1.Naziv==""|| plan.OsPlan1.Opis == null)
+            if(!ModelState.IsValid)
             {
-                plan.SkolskaGodina = baza.SkolskaGodina.ToList();
-                return View(plan);
+                ViewBag.select = VratiSelectList();
+                return View(model);
             }
-            plan.OsPlan1.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
-            
-            if (planovi_os1.CreateOS_Plan_1(plan.OsPlan1))
-			{
-				TempData["note"] = "Novi plan za osnovnu školu 1 je spremljen!";
-			}
-			else
-			{
-				TempData["note"] = "Novi plan nije spremljen";
-			}
+            model.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+            try
+            {
+                using(var db = new BazaPodataka())
+                {
+                    db.OsPlan1.Add(model);
+                    db.SaveChanges();
+                    TempData["note"] = "Novi plan za osnovnu školu 1 je spremljen!";
+                }
+            }
+            catch
+            {
+                TempData["note"] = "Novi plan nije spremljen";
+            }         
+			
 			return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            PlanOs1View plan = new PlanOs1View();
-            plan.OsPlan1 = planovi_os1.ReadOS_Plan_1(id);
-            plan.SkolskaGodina = baza.SkolskaGodina.ToList();
+            OS_Plan_1 plan = baza.OsPlan1.SingleOrDefault(s => s.Id_plan == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (plan == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            ViewBag.select = VratiSelectList();
             return View("Uredi", plan);
         }
         [HttpPost]
-        public ActionResult Edit(PlanOs1View plan)
+        public ActionResult Edit(OS_Plan_1 plan)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (plan.OsPlan1.Ak_godina == 0 || plan.OsPlan1.Naziv == "" || plan.OsPlan1.Opis == null)
+            if (!ModelState.IsValid)
             {
-                plan.SkolskaGodina = baza.SkolskaGodina.ToList();
+                ViewBag.select = VratiSelectList();
                 return View("Uredi", plan);
             }
-            if (!planovi_os1.UpdateOS_Plan_1(plan.OsPlan1))
-			{
-				TempData["note"] = "Plan nije promjenjen!";
-			}
-			else
-			{
-				TempData["note"] = "Plan je uspješno promijenjen!";
-			}
+            plan.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+            try
+            {
+                using(var db = new BazaPodataka())
+                {
+                    db.OsPlan1.Add(plan);
+                    db.Entry(plan).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["note"] = "Plan je uspješno promijenjen!";
+                }
+            }
+            catch
+            {
+                TempData["note"] = "Plan nije promijenjen!";
+            }            
 			return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            OS_Plan_1 plan = new OS_Plan_1();
-			plan = planovi_os1.ReadOS_Plan_1(id);            
+            OS_Plan_1 plan = baza.OsPlan1.SingleOrDefault(s => s.Id_plan == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (plan == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
             return View("Obrisi",plan);
         }
 
         [HttpPost]
-        public ActionResult Delete(OS_Plan_1 os_plan_1)
+        public ActionResult Delete(OS_Plan_1 plan)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (!planovi_os1.DeleteOS_Plan_1(os_plan_1.Id_plan))
-			{
-				TempData["note"] = "Plan nije obrisan, dogodila se greška!";
-			}
-			else
-			{
-				TempData["note"] = "Plan je uspješno obrisan!";
-			}
+            int id = plan.Id_plan;
+            try
+            {
+                TempData["note"] = "Plan nije obrisan, dogodila se greška!";
+                using (var db = new BazaPodataka())
+                {
+                    var result = db.OsPlan1.SingleOrDefault(s => s.Id_plan == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (result != null)
+                    {
+                        db.OsPlan1.Remove(result);
+                        db.SaveChanges();
+                        TempData["note"] = "Plan je uspješno obrisan!";
+                    }
+                }
+            }
+            catch
+            {
+
+            }            
 			return RedirectToAction("Index");
 		}
 
 		public FileStreamResult Ispis()
 		{
-			List<OS_Plan_1> planovi = planovi_os1.ReadOS_Plan_1();
+            List<OS_Plan_1> planovi = baza.OsPlan1.Where(w => w.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId).ToList();
 
 			PlanOs1Report report = new PlanOs1Report(planovi);
 
@@ -894,6 +921,17 @@ namespace Planiranje.Controllers
             PlanOs1DetailsReport report = new PlanOs1DetailsReport(plan, p);
 
             return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+        }
+        private SelectList VratiSelectList()
+        {
+            List<Sk_godina> skGodina = baza.SkolskaGodina.ToList();
+            var selectListItem = new List<SelectListItem>();
+            foreach (var item in skGodina)
+            {
+                selectListItem.Add(new SelectListItem { Value = item.Sk_Godina.ToString(), Text = item.Sk_Godina + "./" + (item.Sk_Godina + 1).ToString() + "." });
+            }
+            var select = new SelectList(selectListItem, "Value", "Text");
+            return select;
         }
     }
 }
