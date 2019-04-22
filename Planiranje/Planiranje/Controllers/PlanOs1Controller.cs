@@ -508,7 +508,53 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Details", new { id = idGlavniPlan });
         }
-
+        public ActionResult Aktivnosti (int idPodrucje,int id)
+        {
+            //ulazni parametar idPodrucje je id podrucja djelovanja 
+            //ulazni parametar id je id glavnog plana
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if(id>0 && idPodrucje==0)
+            {
+                if (!PlanIsValid(id)) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                PlanOs1View model = new PlanOs1View();
+                model.OsPlan1 = baza.OsPlan1.SingleOrDefault(s => s.Id_plan == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                model.OsPlan1Podrucje = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == id).OrderBy(o => o.Red_br_podrucje).ToList();
+                model.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();
+                model.OsPlan1Aktivnost = new List<OS_Plan_1_aktivnost>();
+                model.Aktivnosti = aktivnost_db.ReadAktivnost();
+                if (model.OsPlan1Podrucje.Count > 0)
+                {
+                    int _id = model.OsPlan1Podrucje.ElementAt(0).Id_plan;
+                    model.OsPlan1Aktivnost = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == _id).ToList();
+                }
+                return View(model);
+            }
+            else if (id==0 && idPodrucje > 0)
+            {
+                PlanOs1View model = new PlanOs1View();
+                model.Podrucje = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
+                if (model.Podrucje == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                if (!PlanIsValid(model.Podrucje.Id_glavni_plan)) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                model.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();
+                model.OsPlan1Aktivnost = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == idPodrucje).ToList();
+                model.Aktivnosti = aktivnost_db.ReadAktivnost();
+                int _id = model.Podrucje.Id_glavni_plan;
+                model.OsPlan1Podrucje = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == _id).ToList();
+                ViewBag.id = model.Podrucje.Id_plan;
+                return View(model);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
+            }            
+        }
+        
         public ActionResult NovaAktivnost(int id, int pozicija)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)

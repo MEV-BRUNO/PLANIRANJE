@@ -114,7 +114,7 @@
 										</div>
 									</div>
 									<div class="tab-pane fade" id="aktivnosti">
-										
+										@{ Html.RenderAction("Aktivnosti", "PlanOs1", new { idPodrucje = 0, id = Model.OsPlan1.Id_plan });}
 									</div>
 									<div class="tab-pane fade" id="vrijeme">
 										
@@ -183,61 +183,21 @@
             showSnackBar("@TempData["note"]");
         }
     });
-    function provjeriEnter(event, path, form, target, poruka) {
-        if (event.type === "keydown") {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                zatvoriModal(path, form, target, poruka);
-            }
-        }
-    }
-    function ispis() {
-        var tip = $("#tip").text();
-        var skola = $("#selectSkola").val();
-        var akt = $("#selectAktivnost").val();
-        var god = $("#selectGodina").val();
-        if (god > 0) {
-            var id = window.sessionStorage.getItem(skola + tip + "_idUcenik");
-            if (id != null) {
-                window.open(akt + "/Ispis?godina=" + god + "&id=" + id);
-            }
-            else {
-                showSnackBar("Odaberite učenika");
-            }
-        }
-        else {
-            showSnackBar("Odaberite godinu");
-        }
-    }
-    function promjenaGodine() {
-        var tip = $("#tip").text();
-        var skola = $("#selectSkola").val();
-        var val = $("#selectGodina").val();
+    
+    
+    function promjenaPodrucja() {        
+        var val = $("#selectPodrucje").val();
         if (val != "0") {
             $.ajax({
-                url: '/PracenjeUcenika/OdabirRazreda?godina=' + val,
+                url: '/PlanOs1/Aktivnosti?idPodrucje=' + val+'&id=0',
                 success: function (data) {
-                    $("#razredi").html(data);
-                    var akt = $("#selectAktivnost").val();
-                    var saved = window.sessionStorage.getItem(skola + tip + "_godina");
-                    if (saved != null && saved == $("#selectGodina").val()) {
-                        var saved1 = window.sessionStorage.getItem(skola + tip + "_razred");
-                        if (saved1 != null) {
-                            $("#selectRazred").val(saved1);
-                            promjenaRazreda();
-                        }
-                    }
+                    $("#aktivnosti").html(data);                    
                 },
                 error: function (request, status, error) {
                     showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
                 }
             });
-        }
-        else {
-            $("#razredi").empty();
-        }
-        $("#tablica").empty();
-        $("#detalji").empty();
+        }        
     }
     function promjenaRazreda() {
         var tip = $("#tip").text();

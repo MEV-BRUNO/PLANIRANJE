@@ -564,7 +564,6 @@
     <Content Include="Views\Dokument\ObrisiDokument.cshtml" />
     <Content Include="Views\GodisnjiPlan\Kopiraj.cshtml" />
     <Content Include="Views\MjesecniPlan\Kopiraj.cshtml" />
-    <Content Include="Views\PlanOs1\OdabirPodrucja.cshtml" />
     <Content Include="Views\PlanOs1\Aktivnosti.cshtml" />
     <Content Include="Views\PlanOs1\Vrijeme.cshtml" />
   </ItemGroup>
