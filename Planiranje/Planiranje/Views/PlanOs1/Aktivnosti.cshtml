@@ -15,12 +15,14 @@
             <div class="col-lg-7">
                 @*@Html.DropDownListFor(m=>m.Os_Plan_1_Aktivnost.Id_podrucje,Model.PodrucjeRadaSelectedItems,new { @class="form-control"})*@
                 <select id="selectPodrucje" onchange="promjenaPodrucja()" class="form-control">
-                    @{ int br = 1;                        
+                    @{ int br = 1;
+                        int pozicija = 0;
                     }
                     @foreach (var item in Model.OsPlan1Podrucje)
                     {
                         if(ViewBag.id!=null && ViewBag.id == item.Id_plan)
                         {
+                            pozicija = br;
                             <option selected value="@item.Id_plan">
                             @br. @Model.PodrucjeRada.SingleOrDefault(s => s.Id_podrucje == item.Opis_Podrucje).Naziv
                         </option>
@@ -56,12 +58,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @{ int i = 0; int a = Model.Pozicija + 1;}
+                        @{ int i = 0;}
                         @foreach (var item in Model.OsPlan1Aktivnost)
                         {
                             i++;
                             <tr>
-                                <td class="col-md-1">@a.@i</td>
+                                <td class="col-md-1">@pozicija.@i</td>
                                 <td class="col-md-7">@Model.Aktivnosti.Single(s => s.Id_aktivnost == item.Opis_aktivnost).Naziv</td>
                                 <td class="col-md-2">@item.Potrebno_sati</td>
                                 <td class="col-md-1">
@@ -69,8 +71,8 @@
                                     <a onclick="reloadPage('@Url.Action("AktivnostPomakDolje","PlanOs1", new { id=item.Id_plan, pozicija_podrucja = Model.Pozicija})')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
                                 </td>
                                 <td class="col-md-1">
-                                    <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs1",new { id=item.Id_plan, pozicija=a.ToString()+"."+i.ToString(), pozicija_podrucja=Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                    <a onclick="showModal('@Url.Action("ObrisiAktivnost","PlanOs1", new { id=item.Id_plan, pozicija=Model.Pozicija, broj=a.ToString()+"."+i.ToString()})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                    <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs1",new { id=item.Id_plan, pozicija=pozicija.ToString()+"."+i.ToString(), pozicija_podrucja=Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                    <a onclick="showModal('@Url.Action("ObrisiAktivnost","PlanOs1", new { id=item.Id_plan, pozicija=Model.Pozicija, broj=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                 </td>
                             </tr>
                         }
