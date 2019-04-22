@@ -1,65 +1,65 @@
-﻿@model Planiranje.Models.PlanOs1View
-@{
-    Layout = null;
-}
+﻿@model Planiranje.Models.OS_Plan_1_podrucje
+    @{
+        Layout = null;
+    }
 
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Uređivanje područja rada</h4>
-        </div>
-        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "NoviDetaljModalView", @class = "form-horizontal", role = "form" }))
-		{
-        <div class="modal-body">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Podrucje.Id_plan)
-            <div class="form-group">
-                @Html.LabelFor(model => model.Podrucje.Opis_Podrucje, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.DropDownListFor(model => model.Podrucje.Opis_Podrucje, Model.PodrucjeItems, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Podrucje.Opis_Podrucje, "", new { @class = "text-danger" })
-                </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Uređivanje područja djelovanja</h4>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Podrucje.Potrebno_sati, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.Podrucje.Potrebno_sati, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Podrucje.Potrebno_sati, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <!--CILJEVI-->
-            <div class="form-group">
-                <div class="col-lg-12">
-                    @Html.LabelFor(model => model.Podrucje.Cilj)
-                </div>
-                <div class="col-lg-7">
+            @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "urediPodrucje", @class = "form-horizontal", role = "form" }))
+            {
+                <div class="modal-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id_plan)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Opis_Podrucje, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.Opis_Podrucje, ViewBag.selectPodrucje as SelectList, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Opis_Podrucje, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Potrebno_sati, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Potrebno_sati, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Potrebno_sati, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <!--CILJEVI-->
                     <div class="form-group">
                         <div class="col-lg-12">
-                            @Html.TextAreaFor(model => model.Podrucje.Cilj, new { @class = "edit-text-area", id = "ciljeviText", @required = "" })
-                            @Html.ValidationMessageFor(model => model.Podrucje.Cilj, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => model.Cilj)
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.TextAreaFor(model => model.Cilj, new { @class = "edit-text-area", id = "ciljeviText" })
+                                    @Html.ValidationMessageFor(model => model.Cilj, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.DropDownList("Ciljevi", ViewBag.selectCilj as SelectList, "--Odaberi ciljeve--", new { @class = "form-control", id = "ciljeviList" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("ciljeviList", "ciljeviText")' value="Dodaj" />
+                            </div>
+                        </div>
+                    </div>
+                    <!--//CILJEVI-->
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                            <input type="button" onclick="reload('@Url.Action("UrediPodrucje","PlanOs1")','#urediPodrucje')" class="btn btn-primary" value="Promijeni" />
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            @Html.DropDownList("Ciljevi", Model.CiljeviItems, "--Odaberi ciljeve--", new { @class = "form-control", id = "ciljeviList" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("ciljeviList", "ciljeviText")' value="Dodaj" />
-                    </div>
-                </div>
-            </div>
-            <!--//CILJEVI-->
-            <div class="modal-footer">
-                <div class="form-group">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                    <input type="button" onclick="reload('@Url.Action("UrediPodrucje","PlanOs1")','#NoviDetaljModalView')" class="btn btn-primary" value="Promijeni" />
-                </div>
-            </div>
+            }
         </div>
-        }
     </div>
-</div>

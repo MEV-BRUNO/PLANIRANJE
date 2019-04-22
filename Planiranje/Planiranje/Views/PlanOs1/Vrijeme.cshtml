@@ -1,0 +1,163 @@
+﻿@model Planiranje.Models.PlanOs1View
+@{
+    Layout = null;
+}
+
+<div class="table-responsive">
+    <br>
+    <table class="table table-bordered table-hover" id="dataTableVrijeme">
+        <thead class="thead-light">
+            <tr>
+                <th class="col-md-1">Rb.</th>
+                <th class="col-md-3"><strong>Područje rada</strong>/Aktivnosti</th>
+                <th class="col-md-1">Br. sati</th>
+                <th class="col-md-7">
+                    Vrijeme realizacije<br>
+                    <div class="row">
+                        <div class="col-md-1">
+                            IX
+                        </div>
+                        <div class="col-md-1">
+                            X
+                        </div>
+                        <div class="col-md-1">
+                            XI
+                        </div>
+                        <div class="col-md-1">
+                            XII
+                        </div>
+                        <div class="col-md-1">
+                            I
+                        </div>
+                        <div class="col-md-1">
+                            II
+                        </div>
+                        <div class="col-md-1">
+                            III
+                        </div>
+                        <div class="col-md-1">
+                            IV
+                        </div>
+                        <div class="col-md-1">
+                            V
+                        </div>
+                        <div class="col-md-1">
+                            VI
+                        </div>
+                        <div class="col-md-1">
+                            VII
+                        </div>
+                        <div class="col-md-1">
+                            VIII
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int b = 0;}
+            @foreach (var item in Model.OsPlan1Podrucje)
+            {
+                b++;
+                <tr>
+                    <td class="col-md-1">@b</td>
+                    <td class="col-md-3"><b>@Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv</b></td>
+                    <td class="col-md-1">@item.Br_sati</td>
+                    <td class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-1">
+                                @item.Mj_9
+                            </div>
+                            <div class="col-md-1">
+                                @item.Mj_10
+                            </div>
+                            <div class="col-md-1">
+                                @item.Mj_11
+                            </div>
+                            <div class="col-md-1">
+                                @item.Mj_12
+                            </div>
+                            <div class="col-md-1">
+                                @item.Mj_1
+                            </div>
+                            <div class="col-md-1">
+                                @item.Mj_2
+                            </div>
+                            <div class="col-md-1">
+                                @item.Mj_3
+                            </div>
+                            <div class="col-md-1">
+                                @item.Mj_4
+                            </div>
+                            <div class="col-md-1">
+                                @item.Mj_5
+                            </div>
+                            <div class="col-md-1">
+                                @item.Mj_6
+                            </div>
+                            <div class="col-md-1">
+                                @item.Mj_7
+                            </div>
+                            <div class="col-md-1">
+                                @item.Mj_8
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                List<OS_Plan_1_aktivnost> ak = new List<OS_Plan_1_aktivnost>();
+                ak = Model.OsPlan1Aktivnost.Where(w => w.Id_podrucje == item.Id_plan).ToList();
+                int c = 0;
+                foreach (var it in ak)
+                {
+                    c++;
+
+                    <tr>
+                        <td class="col-md-1">@b.@c</td>
+                        <td class="col-md-3">@Model.Aktivnosti.Single(s => s.Id_aktivnost == it.Opis_aktivnost).Naziv</td>
+                        <td class="col-md-1">@it.Br_sati</td>
+                        <td class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    @it.Mj_9
+                                </div>
+                                <div class="col-md-1">
+                                    @it.Mj_10
+                                </div>
+                                <div class="col-md-1">
+                                    @it.Mj_11
+                                </div>
+                                <div class="col-md-1">
+                                    @it.Mj_12
+                                </div>
+                                <div class="col-md-1">
+                                    @it.Mj_1
+                                </div>
+                                <div class="col-md-1">
+                                    @it.Mj_2
+                                </div>
+                                <div class="col-md-1">
+                                    @it.Mj_3
+                                </div>
+                                <div class="col-md-1">
+                                    @it.Mj_4
+                                </div>
+                                <div class="col-md-1">
+                                    @it.Mj_5
+                                </div>
+                                <div class="col-md-1">
+                                    @it.Mj_6
+                                </div>
+                                <div class="col-md-1">
+                                    @it.Mj_7
+                                </div>
+                                <div class="col-md-1">
+                                    @it.Mj_8
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

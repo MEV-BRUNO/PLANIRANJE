@@ -3,26 +3,26 @@
 @{ Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";}
 
 <div class="inner">
-	<script>
+	@*<script>
          $(document).ready(function () {
              if ($("#poruka").text() == "1") {
                  showSnackBar('@TempData["note"]');
              }
          })
-	</script>
+	</script>*@
 
 	@if (TempData["note"] != null)
 	{
 		<div id="poruka" style="display:none">1</div>
 	}
-	@if (TempData["prikaz"] != null)
+	@*@if (TempData["prikaz"] != null)
 	{
 		<div id="prikaz" style="display:none">1</div>
 	}
 	@if (Model.OsPlan1Podrucje.Count == 0)
 	{
 		<div id="provjerapodrucja" style="display:none">1</div>
-	}
+	}*@
 	<div class="row">
 		<div class="col-lg-12">
 
@@ -72,7 +72,7 @@
 													</button>
 												</p>
 												<div class="table-responsive">
-													<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+													<table class="table table-striped table-bordered table-hover" id="dataTablePodrucje">
 														<thead>
 															<tr>
 																<th>Rb.</th>
@@ -114,244 +114,10 @@
 										</div>
 									</div>
 									<div class="tab-pane fade" id="aktivnosti">
-										<div class="row">
-											<div class="col-lg-2">
-
-												<button id="btnAktivnost" onclick="showModal('@Url.Action("NovaAktivnost","PlanOs1",new { id=Model.Id, pozicija=Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Dodaj aktivnost</button>
-
-											</div>
-											<div class="col-lg-10">
-												<div class="form-group">
-													<label class="control-label col-lg-2">Odaberi područja rada:</label>
-													<div class="col-lg-7">
-														@*@Html.DropDownListFor(m=>m.Os_Plan_1_Aktivnost.Id_podrucje,Model.PodrucjeRadaSelectedItems,new { @class="form-control"})*@
-														<select id="selectPodrucje" onchange="PromjenaPodrucje()" class="form-control">
-															@{ int br = 1;}
-															@foreach (var item in Model.OsPlan1Podrucje)
-															{
-																if (br - 1 == Model.Pozicija)
-																{
-																	<option selected="selected">
-																		@br. @Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv
-																	</option>
-																}
-																else
-																{
-																	br--;
-																	<option value="@br">
-																		@{ br++;}
-																		@br. @Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv
-																	</option>
-																}
-																br++;
-															}
-														</select>
-													</div>
-												</div>
-											</div><!--END COL 10-->
-										</div>
-										<div class="row">
-											<div class="col-lg-12">
-												<p>
-
-												</p>
-												<div class="table-responsive">
-													<table class="table table-striped table-bordered table-hover" id="dataTable">
-														<thead>
-															<tr>
-																<th>Rb.</th>
-																<th>Naziv aktivnosti</th>
-																<th>Potrebno<br>sati</th>
-																<th>Pomak</th>
-																<th>Aktivnost</th>
-															</tr>
-														</thead>
-														<tbody>
-															@{ int i = 0; int a = Model.Pozicija + 1;}
-															@foreach (var item in Model.OsPlan1Aktivnost)
-															{
-																i++;
-																<tr>
-																	<td class="col-md-1">@a.@i</td>
-																	<td class="col-md-7">@Model.Aktivnosti.Single(s => s.Id_aktivnost == item.Opis_aktivnost).Naziv</td>
-																	<td class="col-md-2">@item.Potrebno_sati</td>
-																	<td class="col-md-1">
-																		<a onclick="reloadPage('@Url.Action("AktivnostPomakGore","PlanOs1", new { id=item.Id_plan, pozicija_podrucja=Model.Pozicija})')" class="btn btn-warning btn-xs btn-grad">Gore</a>
-																		<a onclick="reloadPage('@Url.Action("AktivnostPomakDolje","PlanOs1", new { id=item.Id_plan, pozicija_podrucja = Model.Pozicija})')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
-																	</td>
-																	<td class="col-md-1">
-																		<a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs1",new { id=item.Id_plan, pozicija=a.ToString()+"."+i.ToString(), pozicija_podrucja=Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-																		<a onclick="showModal('@Url.Action("ObrisiAktivnost","PlanOs1", new { id=item.Id_plan, pozicija=Model.Pozicija, broj=a.ToString()+"."+i.ToString()})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
-																	</td>
-																</tr>
-															}
-
-														</tbody>
-													</table>
-												</div>
-											</div><!--END COL 12-->
-										</div>
+										
 									</div>
 									<div class="tab-pane fade" id="vrijeme">
-										<div class="table-responsive">
-											<br>
-											<table class="table table-bordered table-hover" id="dataTables-example">
-
-												<thead class="thead-light">
-													<tr>
-														<th class="col-md-1">Rb.</th>
-														<th class="col-md-3"><strong>Područje rada</strong>/Aktivnosti</th>
-														<th class="col-md-1">Br. sati</th>
-														<th class="col-md-7">
-															Vrijeme realizacije<br>
-															<div class="row">
-																<div class="col-md-1">
-																	IX
-																</div>
-																<div class="col-md-1">
-																	X
-																</div>
-																<div class="col-md-1">
-																	XI
-																</div>
-																<div class="col-md-1">
-																	XII
-																</div>
-																<div class="col-md-1">
-																	I
-																</div>
-																<div class="col-md-1">
-																	II
-																</div>
-																<div class="col-md-1">
-																	III
-																</div>
-																<div class="col-md-1">
-																	IV
-																</div>
-																<div class="col-md-1">
-																	V
-																</div>
-																<div class="col-md-1">
-																	VI
-																</div>
-																<div class="col-md-1">
-																	VII
-																</div>
-																<div class="col-md-1">
-																	VIII
-																</div>
-															</div>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													@{ int b = 0;}
-													@foreach (var item in Model.OsPlan1Podrucje)
-													{
-														b++;
-														<tr>
-															<td class="col-md-1">@b</td>
-															<td class="col-md-3"><b>@Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv</b></td>
-															<td class="col-md-1">@item.Br_sati</td>
-															<td class="col-md-7">
-																<div class="row">
-																	<div class="col-md-1">
-																		@item.Mj_9
-																	</div>
-																	<div class="col-md-1">
-																		@item.Mj_10
-																	</div>
-																	<div class="col-md-1">
-																		@item.Mj_11
-																	</div>
-																	<div class="col-md-1">
-																		@item.Mj_12
-																	</div>
-																	<div class="col-md-1">
-																		@item.Mj_1
-																	</div>
-																	<div class="col-md-1">
-																		@item.Mj_2
-																	</div>
-																	<div class="col-md-1">
-																		@item.Mj_3
-																	</div>
-																	<div class="col-md-1">
-																		@item.Mj_4
-																	</div>
-																	<div class="col-md-1">
-																		@item.Mj_5
-																	</div>
-																	<div class="col-md-1">
-																		@item.Mj_6
-																	</div>
-																	<div class="col-md-1">
-																		@item.Mj_7
-																	</div>
-																	<div class="col-md-1">
-																		@item.Mj_8
-																	</div>
-																</div>
-															</td>
-														</tr>
-														List<OS_Plan_1_aktivnost> ak = new List<OS_Plan_1_aktivnost>();
-														ak = Model.OsPlan1Aktivnost.Where(w => w.Id_podrucje == item.Id_plan).ToList();
-														int c = 0;
-														foreach (var it in ak)
-														{
-															c++;
-
-															<tr>
-																<td class="col-md-1">@b.@c</td>
-																<td class="col-md-3">@Model.Aktivnosti.Single(s => s.Id_aktivnost == it.Opis_aktivnost).Naziv</td>
-																<td class="col-md-1">@it.Br_sati</td>
-																<td class="col-md-7">
-																	<div class="row">
-																		<div class="col-md-1">
-																			@it.Mj_9
-																		</div>
-																		<div class="col-md-1">
-																			@it.Mj_10
-																		</div>
-																		<div class="col-md-1">
-																			@it.Mj_11
-																		</div>
-																		<div class="col-md-1">
-																			@it.Mj_12
-																		</div>
-																		<div class="col-md-1">
-																			@it.Mj_1
-																		</div>
-																		<div class="col-md-1">
-																			@it.Mj_2
-																		</div>
-																		<div class="col-md-1">
-																			@it.Mj_3
-																		</div>
-																		<div class="col-md-1">
-																			@it.Mj_4
-																		</div>
-																		<div class="col-md-1">
-																			@it.Mj_5
-																		</div>
-																		<div class="col-md-1">
-																			@it.Mj_6
-																		</div>
-																		<div class="col-md-1">
-																			@it.Mj_7
-																		</div>
-																		<div class="col-md-1">
-																			@it.Mj_8
-																		</div>
-																	</div>
-																</td>
-															</tr>
-														}
-													}
-												</tbody>
-											</table>
-										</div>
+										
 									</div>
 								</div>
 							</div><!--END nav-pills -->
@@ -363,9 +129,9 @@
 		</div>
 
 	</div>
-	<div style="display:none" id="pozicija">@Model.OsPlan1.Id_plan</div>
+	@*<div style="display:none" id="pozicija">@Model.OsPlan1.Id_plan</div>*@
 </div>
-<script>
+@*<script>
 	function PromjenaPodrucje() {
 		var val = $("#selectPodrucje").val();
 		var poz = $("#pozicija").text();
@@ -397,6 +163,204 @@
 			$("#btnAktivnostTab").click();
 		}
 	});
+</script>*@
+<script>
+    $(document).ready(function () {
+        //var tip = $("#tip").text();
+        //var skola = $("#selectSkola").val();
+        //var akt = $("#selectAktivnost").val();
+        //var saved1 = window.sessionStorage.getItem(skola + tip + "_select");
+        //if (saved1 != null && saved1 != akt) {
+        //    reloadPage(saved1 + "/Index");
+        //}
+        //else if (window.sessionStorage.getItem(skola + tip + "_godina") != null) {
+        //    var saved = window.sessionStorage.getItem(skola + tip + "_godina");
+        //    $("#selectGodina").val(saved);
+        //    promjenaGodine();
+        //}
+        $('#dataTablePodrucje').dataTable({ stateSave: true });
+        if ($("#poruka").text() == "1") {
+            showSnackBar("@TempData["note"]");
+        }
+    });
+    function provjeriEnter(event, path, form, target, poruka) {
+        if (event.type === "keydown") {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                zatvoriModal(path, form, target, poruka);
+            }
+        }
+    }
+    function ispis() {
+        var tip = $("#tip").text();
+        var skola = $("#selectSkola").val();
+        var akt = $("#selectAktivnost").val();
+        var god = $("#selectGodina").val();
+        if (god > 0) {
+            var id = window.sessionStorage.getItem(skola + tip + "_idUcenik");
+            if (id != null) {
+                window.open(akt + "/Ispis?godina=" + god + "&id=" + id);
+            }
+            else {
+                showSnackBar("Odaberite učenika");
+            }
+        }
+        else {
+            showSnackBar("Odaberite godinu");
+        }
+    }
+    function promjenaGodine() {
+        var tip = $("#tip").text();
+        var skola = $("#selectSkola").val();
+        var val = $("#selectGodina").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/PracenjeUcenika/OdabirRazreda?godina=' + val,
+                success: function (data) {
+                    $("#razredi").html(data);
+                    var akt = $("#selectAktivnost").val();
+                    var saved = window.sessionStorage.getItem(skola + tip + "_godina");
+                    if (saved != null && saved == $("#selectGodina").val()) {
+                        var saved1 = window.sessionStorage.getItem(skola + tip + "_razred");
+                        if (saved1 != null) {
+                            $("#selectRazred").val(saved1);
+                            promjenaRazreda();
+                        }
+                    }
+                },
+                error: function (request, status, error) {
+                    showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+                }
+            });
+        }
+        else {
+            $("#razredi").empty();
+        }
+        $("#tablica").empty();
+        $("#detalji").empty();
+    }
+    function promjenaRazreda() {
+        var tip = $("#tip").text();
+        var skola = $("#selectSkola").val();
+        var val = $("#selectRazred").val();
+        var god = $("#selectGodina").val();
+        var akt = $("#selectAktivnost").val();
+
+        if (val != "0") {
+            $.ajax({
+                url: '/PracenjeUcenika/OdabirUcenika?razred=' + val + '&godina=' + god,
+                success: function (data) {
+                    $("#tablica").html(data);
+                    $("#dataTableUcenici").dataTable({ stateSave: true });
+                    var saved = window.sessionStorage.getItem(skola + tip + "_godina");
+                    var saved1 = window.sessionStorage.getItem(skola + tip + "_razred");
+                    var id = window.sessionStorage.getItem(skola + tip + "_idUcenik");
+                    if (saved != null && saved1 != null) {
+                        if (saved == god && saved1 == val && id != null) {
+                            pokaziDetalje(id);
+                        }
+                    }
+                },
+                error: function (request, status, error) {
+                    showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+                }
+            });
+        }
+
+        else {
+            $("#tablica").empty();
+            $("#detalji").empty();
+        }
+    }
+    function pokaziDetalje(id) {
+        var tip = $("#tip").text();
+        var skola = $("#selectSkola").val();
+        var val = $("#selectGodina").val();
+        var akt = $("#selectAktivnost").val();
+        var raz = $("#selectRazred").val();
+        window.sessionStorage.setItem(skola + tip + "_idUcenik", id);
+        $.ajax({
+            url: akt + '/Detalji?id=' + id + '&godina=' + val,
+            success: function (data) {
+                $("#detalji").html(data);
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+            }
+        });
+        window.sessionStorage.setItem(skola + tip + "_godina", val);
+        window.sessionStorage.setItem(skola + tip + "_razred", raz);
+    }
+    function potvrdi(path, id, poruka) {
+        var dt = $(id).serialize();
+        $.ajax({
+            url: path,
+            type: "POST",
+            data: dt,
+            success: function (data) {
+                showSnackBar(poruka);
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+            }
+        });
+    }
+    function odustani(path, id) {
+        $.ajax({
+            url: path,
+            success: function (data) {
+                $(id).html(data);
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+            }
+        });
+    }
+    function zatvoriModal(path, id, spremi, poruka) {
+        var dt = $(id).serialize();
+        $.ajax({
+            url: path,
+            type: "POST",
+            data: dt,
+            success: function (data) {
+                if ($(data)[0].tagName === "P") {
+                    $(spremi).html(data);
+                    $('#modal').modal('hide');
+                    $('#modalContainer').removeData();
+                    $('.modal-backdrop').remove();
+                    showSnackBar(poruka);
+                }
+                else if ($(data)[0].tagName === "DIV") {
+                    $("#modalContainer").html(data);
+                }
+                else {
+                    location.reload();
+                }
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+            }
+        });
+    }
+    function promjenaAktivnost() {
+        var tip = $("#tip").text();
+        var skola = $("#selectSkola").val();
+        var val = $("#selectAktivnost").val();
+        if (val == "/PopisUcenika" || $("#selectGodina").val() == "0" || !$("#selectRazred").length || $("#selectRazred").val() == "0") {
+            window.sessionStorage.setItem(skola + tip + "_select", val);
+            reloadPage(val + "/Index");
+        }
+        else if (/*$("#selectRazred").length==0 &&*/ $("#selectRazred").val() != "0") {
+            var id = window.sessionStorage.getItem(skola + tip + "_idUcenik");
+            window.sessionStorage.setItem(skola + tip + "_select", val);
+            pokaziDetalje(id);
+        }
+        else {
+            window.sessionStorage.setItem(skola + tip + "_select", val);
+            val = val + "/Index";
+            reloadPage(val);
+        }
+    }
 </script>
 
 
