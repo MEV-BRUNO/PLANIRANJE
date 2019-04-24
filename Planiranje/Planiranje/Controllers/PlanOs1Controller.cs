@@ -564,6 +564,10 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
+            if (id <= 0)
+            {
+                return RedirectToAction("Info", "OpciPodaci", new { poruka = "Morate dodati područje djelovanja" });
+            }
             ViewBag.selectAktivnost = VratiSelectAktivnost();
             ViewBag.id = id;
             return View();
