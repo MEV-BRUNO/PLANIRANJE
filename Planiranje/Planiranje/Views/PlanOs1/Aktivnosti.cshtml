@@ -62,13 +62,17 @@
                         @foreach (var item in Model.OsPlan1Aktivnost)
                         {
                             i++;
+                            string disabled1 = "";
+                            string disabled2 = "";
+                            if (i == 1) { disabled1 = "disabled"; }
+                            if (i == Model.OsPlan1Aktivnost.Count) { disabled2 = "disabled"; }
                             <tr>
                                 <td class="col-md-1">@pozicija.@i</td>
                                 <td class="col-md-7">@Model.Aktivnosti.Single(s => s.Id_aktivnost == item.Opis_aktivnost).Naziv</td>
                                 <td class="col-md-2">@item.Potrebno_sati</td>
                                 <td class="col-md-1">
-                                    <a onclick="pomak('@Url.Action("AktivnostPomakGore","PlanOs1", new { id=item.Id_plan})','#aktivnosti', 'Aktivnost je pomaknuta gore')" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                    <a onclick="pomak('@Url.Action("AktivnostPomakDolje","PlanOs1", new { id=item.Id_plan})','#aktivnosti', 'Aktivnost je pomaknuta dolje')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+                                    <button @disabled1 onclick="pomak('@Url.Action("AktivnostPomakGore","PlanOs1", new { id=item.Id_plan})','#aktivnosti', 'Aktivnost je pomaknuta gore')" class="btn btn-warning btn-xs btn-grad">Gore</button>
+                                    <button @disabled2 onclick="pomak('@Url.Action("AktivnostPomakDolje","PlanOs1", new { id=item.Id_plan})','#aktivnosti', 'Aktivnost je pomaknuta dolje')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
                                 </td>
                                 <td class="col-md-1">
                                     <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs1",new { id=item.Id_plan, pozicija=pozicija.ToString()+"."+i.ToString(), pozicija_podrucja=Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
