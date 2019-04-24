@@ -570,7 +570,7 @@ namespace Planiranje.Controllers
             }
             ViewBag.selectAktivnost = VratiSelectAktivnost();
             ViewBag.id = id;
-            return View();
+            return View(new OS_Plan_1_aktivnost());
         }
         [HttpPost]
         public ActionResult NovaAktivnost (OS_Plan_1_aktivnost plan)
