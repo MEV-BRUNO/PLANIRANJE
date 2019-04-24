@@ -630,7 +630,7 @@ namespace Planiranje.Controllers
                 }
                 catch
                 {
-                    
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }
             }            
             return RedirectToAction("Aktivnosti", new { idPodrucje = plan.Id_podrucje, id=0 });
@@ -728,42 +728,43 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Aktivnosti", new { idPodrucje = podrucje.Id_plan, id = 0 });
         }
-        public ActionResult UrediAktivnost (int id, string pozicija, int pozicija_podrucja)
+        public ActionResult UrediAktivnost (int id, string pozicija)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
+            }            
+            OS_Plan_1_aktivnost aktivnost = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+            if(aktivnost==null || !PodrucjeIsValid(aktivnost.Id_podrucje))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-            PlanOs1View plan = new PlanOs1View();            
-            OS_Plan_1_aktivnost aktivnost = new OS_Plan_1_aktivnost();
-            aktivnost = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id);
-
-            plan.Pozicija = pozicija_podrucja;
-            plan.Aktivnosti = new List<Aktivnost>();
-            plan.Aktivnosti = aktivnost_db.ReadAktivnost();
-            plan.Os_Plan_1_Aktivnost = aktivnost;
-            plan.Broj = pozicija_podrucja;
-            ViewBag.pozicija = pozicija;
-            return View("UrediAktivnost", plan);
+            else
+            {
+                ViewBag.selectAktivnost = VratiSelectAktivnost();
+                ViewBag.pozicija = pozicija;
+                return View(aktivnost);
+            }            
         }
         [HttpPost]
-        public ActionResult UrediAktivnost (PlanOs1View plan)
+        public ActionResult UrediAktivnost (OS_Plan_1_aktivnost model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (plan.Os_Plan_1_Aktivnost.Potrebno_sati == null || plan.Os_Plan_1_Aktivnost.Opis_aktivnost==0 || plan.Os_Plan_1_Aktivnost.Mj_1<0||
-                plan.Os_Plan_1_Aktivnost.Mj_10<0 || plan.Os_Plan_1_Aktivnost.Mj_11<0 || plan.Os_Plan_1_Aktivnost.Mj_12<0 || plan.Os_Plan_1_Aktivnost.Mj_2<0 ||
-                plan.Os_Plan_1_Aktivnost.Mj_3<0 || plan.Os_Plan_1_Aktivnost.Mj_4<0 || plan.Os_Plan_1_Aktivnost.Mj_5<0 || plan.Os_Plan_1_Aktivnost.Mj_6<0 ||
-                plan.Os_Plan_1_Aktivnost.Mj_7<0 || plan.Os_Plan_1_Aktivnost.Mj_8<0 || plan.Os_Plan_1_Aktivnost.Mj_9<0)
+            if (!ModelState.IsValid)
             {
-                plan.Aktivnosti = aktivnost_db.ReadAktivnost();
-                return View(plan);
+                ViewBag.selectAktivnost = VratiSelectAktivnost();
+                ViewBag.pozicija = Request.Form.Get("pozicija");
+                return View(model);
             }
-            int _id, poz = plan.Pozicija;
-            OS_Plan_1_aktivnost aktivnost = new OS_Plan_1_aktivnost();
-            aktivnost = plan.Os_Plan_1_Aktivnost;
+            if (!PodrucjeIsValid(model.Id_podrucje))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            int _id;
+            OS_Plan_1_aktivnost aktivnost = model;            
             int id_ak = aktivnost.Id_plan;
             int id_pod = aktivnost.Id_podrucje;
             OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
@@ -788,15 +789,14 @@ namespace Planiranje.Controllers
                     db.Entry(aktivnost).State = System.Data.Entity.EntityState.Modified;
                     db.OsPlan1Podrucje.Add(p);
                     db.Entry(p).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
-                    TempData["note"] = "Aktivnost je promijenjena";
+                    db.SaveChanges();                    
                 }
                 catch
                 {
-                    TempData["note"] = "Aktivnost nije promijenjena.Pokušajte ponovno.";
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }
-            }                
-            return RedirectToAction("Details2", new { id = _id, pozicija = plan.Pozicija });            
+            }
+            return RedirectToAction("Aktivnosti", new { idPodrucje = p.Id_plan, id = 0 });
         }
         public ActionResult ObrisiAktivnost(int id, int pozicija, string broj)
         {
