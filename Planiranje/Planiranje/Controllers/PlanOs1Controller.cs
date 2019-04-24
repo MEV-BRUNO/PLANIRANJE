@@ -856,8 +856,16 @@ namespace Planiranje.Controllers
 
             return RedirectToAction("Aktivnosti", new { idPodrucje = p.Id_plan, id = 0 });
         }
-        public FileStreamResult IspisDetalji(int id)
+        public ActionResult IspisDetalji(int id)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (!PlanIsValid(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
             PlanOs1View plan = new PlanOs1View();
             plan.Aktivnosti = new List<Aktivnost>();
             plan.Aktivnosti = aktivnost_db.ReadAktivnost();
