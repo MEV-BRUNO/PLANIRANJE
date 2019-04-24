@@ -75,8 +75,8 @@
                                     <button @disabled2 onclick="pomak('@Url.Action("AktivnostPomakDolje","PlanOs1", new { id=item.Id_plan})','#aktivnosti', 'Aktivnost je pomaknuta dolje')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
                                 </td>
                                 <td class="col-md-1">
-                                    <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs1",new { id=item.Id_plan, pozicija=pozicija.ToString()+"."+i.ToString(), pozicija_podrucja=Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                    <a onclick="showModal('@Url.Action("ObrisiAktivnost","PlanOs1", new { id=item.Id_plan, pozicija=Model.Pozicija, broj=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                    <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs1",new { id=item.Id_plan, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                    <a onclick="showModal('@Url.Action("ObrisiAktivnost","PlanOs1", new { id=item.Id_plan, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                                 </td>
                             </tr>
                         }

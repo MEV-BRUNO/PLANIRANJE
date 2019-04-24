@@ -1,6 +1,8 @@
 ﻿@model Planiranje.Models.PlanOs1View
 @using Planiranje.Models
-@{ Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";}
+@{ Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    Page.Title = "Detalji OS plana 1";
+    }
 
 <div class="inner">
 	@*<script>
