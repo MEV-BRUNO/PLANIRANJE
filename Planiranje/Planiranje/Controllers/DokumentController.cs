@@ -89,7 +89,7 @@ namespace Planiranje.Controllers
                     db.SaveChanges();
                 }                
             }
-            catch(Exception e)
+            catch
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
