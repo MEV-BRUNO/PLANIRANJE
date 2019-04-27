@@ -1,6 +1,6 @@
 ﻿@using Planiranje.Models
 @{
-    Page.Title = "Protokol promatranja učenika";
+    Page.Title = "Zapisnik praćenja napredovanja učenika";
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 <div id="tip" style="display:none">UC</div>
@@ -13,14 +13,14 @@
                     <option value="/PopisUcenika">Popis učenika u razrednom odjelu</option>
                     <option value="/UcenikBiljeska">Bilješke o radu s učenikom</option>
                     <option value="/PracenjeUcenika">Lista praćenja učenika - pedagoška obrada i anamneza</option>
-                    <option value="/PromatranjeUcenika" selected>Protokol promatranja</option>
-                    <option value="/UcenikZapisnik">Zapisnik praćenja napredovanja učenika</option>
+                    <option value="/PromatranjeUcenika">Protokol promatranja</option>
+                    <option value="/UcenikZapisnik" selected>Zapisnik praćenja napredovanja učenika</option>
                 </select>
             </div>
         </div>
         <br />
         <div class="col-lg-3 pull-right">
-            <a id="ispisButton" style="display:none" onclick="ispis()" class="btn btn-info btn-sm">Ispis</a>
+            <a id="ispisButton" onclick="ispis()" class="btn btn-info btn-sm">Ispis</a>
         </div>
     </div>
 
@@ -72,3 +72,4 @@
 </div>
 
 <script src="~/Scripts/ucenici_funkcije.js"></script>
+

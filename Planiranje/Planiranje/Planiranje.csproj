@@ -219,6 +219,7 @@
     <Compile Include="Controllers\RoditeljUgovorController.cs" />
     <Compile Include="Controllers\SubjektiController.cs" />
     <Compile Include="Controllers\UcenikBiljeskaController.cs" />
+    <Compile Include="Controllers\UcenikZapisnikController.cs" />
     <Compile Include="Controllers\ZadaciController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -566,6 +567,7 @@
     <Content Include="Views\MjesecniPlan\Kopiraj.cshtml" />
     <Content Include="Views\PlanOs1\Aktivnosti.cshtml" />
     <Content Include="Views\PlanOs1\Vrijeme.cshtml" />
+    <Content Include="Views\UcenikZapisnik\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
