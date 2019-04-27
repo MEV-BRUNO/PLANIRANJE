@@ -40,17 +40,15 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if(Request.Files.Count==0 || Request.Files[0].ContentLength==0)
-            {
-                ViewBag.greska = "Nema datoteke";
-                return View("NoviDokument");
-            }
             var forma = Request.Form;
             string opis = forma.Get("Opis");
-            if (string.IsNullOrWhiteSpace(opis))
+            if (Request.Files.Count==0 || Request.Files[0].ContentLength==0 || string.IsNullOrWhiteSpace(opis))
             {
-                return View("NoviDokument", new Dokument() { Opis = opis });
+                ViewBag.greska = "Nema datoteke";
+                ViewBag.greska1 = string.IsNullOrWhiteSpace(opis) ? "Obavezno polje" : null;
+                return View("NoviDokument", new Dokument() { Opis=opis});
             }
+                        
             try
             {
                 var file = Request.Files[0];
@@ -59,7 +57,7 @@ namespace Planiranje.Controllers
                 if (ekstenzija.CompareTo(".exe") == 0 || ekstenzija.CompareTo(".bin") == 0)
                 {
                     ViewBag.greska = "Datoteke *.exe i *.bin nisu podržane";
-                    return View("NoviDokument");
+                    return View("NoviDokument", new Dokument() { Opis = opis });
                 }
                 string direktorij = Server.MapPath("~/Dokumenti/" + PlaniranjeSession.Trenutni.PedagogId.ToString());
                 if (!Directory.Exists(direktorij))
@@ -68,13 +66,14 @@ namespace Planiranje.Controllers
                 }
                 var fileName = Path.GetFileName(file.FileName);
                 var path = Path.Combine(direktorij+"/", fileName);
-                //provjera ukoliko datoteka postoji ne upisuje se u bazu već se samo zamijeni na disku
+                //provjera ukoliko datoteka postoji ne sprema se
                 FileInfo fileInfo = new FileInfo(path);
                 if (fileInfo.Exists)
                 {
-                    file.SaveAs(path);
-                    string poruka = "Dokument koji želite spremiti već postoji. Novi dokument je zamijenjen starim." +
-                        " Opis dokumenat nije promijenjen";
+                    Dokument d = baza.Dokument.FirstOrDefault(f => f.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId &&
+                    f.Path.CompareTo(fileName) == 0);                    
+                    //file.SaveAs(path);
+                    string poruka = "Dokument "+fileName+" već postoji na serveru pod nazivom "+d.Opis;
                     return RedirectToAction("Info", "OpciPodaci", new { poruka = poruka });
                 }
                 else
