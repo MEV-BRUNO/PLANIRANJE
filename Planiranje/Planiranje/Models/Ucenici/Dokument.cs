@@ -12,9 +12,10 @@ namespace Planiranje.Models.Ucenici
         [Key]
         public int Id { get; set; }
         public int Id_pedagog { get; set; }
-        public int Id_skola { get; set; }
-        [DisplayName("Naziv datoteke")]
+        public int Id_skola { get; set; }        
         public string Path { get; set; }
+        [Required(ErrorMessage ="Obavezno polje")]
+        [DisplayName("Naziv datoteke")]
         public string Opis { get; set; }
     }
 }

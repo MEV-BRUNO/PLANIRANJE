@@ -47,6 +47,10 @@ namespace Planiranje.Controllers
             }
             var forma = Request.Form;
             string opis = forma.Get("Opis");
+            if (string.IsNullOrWhiteSpace(opis))
+            {
+                return View("NoviDokument", new Dokument() { Opis = opis });
+            }
             try
             {
                 var file = Request.Files[0];
