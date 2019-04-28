@@ -1,0 +1,57 @@
+﻿@model Planiranje.Models.Ucenici.Ucenik
+@{
+    Layout = null;
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <form class="form-horizontal">
+                <div class="col-lg-1">
+                </div>
+                <div class="col-lg-8">
+                    <div class="form-group pull-left">
+                        <label class="control-label col-lg-12">Odabrani učenik: @Model.ImePrezime</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                </div>
+            </form>
+        </div><!--END ROW -->
+        <div class="panel-body">
+            <ul class="nav nav-pills">
+                <li class="active">
+                    <a href="#osobni" data-toggle="tab">Osobni podaci</a>
+                </li>
+                <li>
+                    <a href="#obitelj" data-toggle="tab">Obitelj</a>
+                </li>
+                <li>
+                    <a href="#utjecaj" data-toggle="tab">Odgojni utjecaj</a>
+                </li>
+                <li>
+                    <a href="#pracenje" data-toggle="tab">Tijek praćenja</a>
+                </li>               
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="osobni">
+                    @{ Html.RenderAction("Osnovni", new { id = Model.Id_ucenik });}
+                </div><!--END osobni podaci -->
+                <div class="tab-pane fade" id="obitelj">
+                    
+                </div><!--END TAB obitelj -->
+                <div class="tab-pane fade" id="utjecaj">
+                   
+                </div><!--END TAB utjecaj -->
+                <div class="tab-pane fade" id="pracenje">
+                    
+                </div> <!--END TAB pracenje -->                
+            </div>
+        </div>
+    </div>
+</div><!--END COL 9 -->
+<script>
+    $(document).ready(function () {
+        document.getElementById("ispisButton").style.display = "";
+    });
+</script>
