@@ -38,7 +38,7 @@
                     @{ Html.RenderAction("Osnovni", new { id = Model.Id_ucenik });}
                 </div><!--END osobni podaci -->
                 <div class="tab-pane fade" id="obitelj">
-                    
+                    @{ Html.RenderAction("Obitelj", "PracenjeUcenika", new { id = Model.Id_ucenik });}
                 </div><!--END TAB obitelj -->
                 <div class="tab-pane fade" id="utjecaj">
                    
