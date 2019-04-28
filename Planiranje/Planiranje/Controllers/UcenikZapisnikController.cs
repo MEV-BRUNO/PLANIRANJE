@@ -36,7 +36,39 @@ namespace Planiranje.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-            return View(ucenik);
+            ViewBag.ucenik = ucenik;
+            Ucenik_razred UR = (from raz in baza.RazredniOdjel
+                                join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred
+                                join uc in baza.Ucenik on ur.Id_ucenik equals uc.Id_ucenik
+                                where raz.Sk_godina == godina && uc.Id_ucenik == id && raz.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola
+                                select ur).SingleOrDefault();
+            if (UR == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            int idUR = UR.Id;
+
+            Ucenik_zapisnik model = baza.UcenikZapisnik.SingleOrDefault(s => s.Id_ucenik_razred == idUR && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                model = new Ucenik_zapisnik();
+                model.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                model.Id_ucenik_razred = idUR;
+                using(var db=new BazaPodataka())
+                {
+                    try
+                    {
+                        db.UcenikZapisnik.Add(model);
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                    }
+                }
+                model = baza.UcenikZapisnik.SingleOrDefault(s => s.Id_ucenik_razred == idUR && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            }
+            return View(model);
         }        
         public ActionResult Osnovni (int id)
         {
@@ -83,6 +115,57 @@ namespace Planiranje.Controllers
                 }
             }
             return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        public ActionResult Odgoj(int id)
+        {
+            //id je id od ucenik_zapisnik modela
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Ucenik_zapisnik model = baza.UcenikZapisnik.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            ViewBag.selectOdgojniUtjecaj = VratiSelectOdgojniUtjecaj();
+            ViewBag.selectOdnos = VratiSelectOdnos();
+            ViewBag.selectSuradnja = VratiSelectSuradnja();
+            return View(model);
+        }
+        private SelectList VratiSelectOdgojniUtjecaj()
+        {
+            SelectList select = new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem{Value="0", Text="-"},
+                new SelectListItem{Value="1", Text="Strogi"},
+                new SelectListItem{Value="2", Text="Ravnodušni"},
+                new SelectListItem{Value="3", Text="Blagi"},
+                new SelectListItem{Value="4", Text="Autoritativni"}
+            }, "Value","Text");
+            return select;
+        }
+        private SelectList VratiSelectOdnos()
+        {
+            SelectList select = new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem{Value="0", Text="-"},
+                new SelectListItem{Value="1", Text="Ne pokazuju zanimanje"},
+                new SelectListItem{Value="2", Text="Povremeno pokazuju zanimanje"},
+                new SelectListItem{Value="3", Text="Redovito surađuju i potiču na učenje"}                
+            },"Value","Text");
+            return select;
+        }
+        private SelectList VratiSelectSuradnja()
+        {
+            SelectList select = new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem{Value="0", Text="-"},
+                new SelectListItem{Value="1", Text="Redovita"},
+                new SelectListItem{Value="2", Text="Povremena"},
+                new SelectListItem{Value="3", Text="Ne surađuju"}
+            }, "Value", "Text");
+            return select;
         }
     }
 }

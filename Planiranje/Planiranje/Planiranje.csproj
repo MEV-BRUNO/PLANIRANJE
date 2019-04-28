@@ -571,6 +571,7 @@
     <Content Include="Views\UcenikZapisnik\Index.cshtml" />
     <Content Include="Views\UcenikZapisnik\Detalji.cshtml" />
     <Content Include="Views\UcenikZapisnik\Osnovni.cshtml" />
+    <Content Include="Views\UcenikZapisnik\Odgoj.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

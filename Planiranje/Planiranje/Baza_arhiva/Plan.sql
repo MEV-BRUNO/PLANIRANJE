@@ -165,6 +165,28 @@ CREATE TABLE promatranje_ucenika (
   CONSTRAINT promatranje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)  
 );
 
+CREATE TABLE ucenik_zapisnik (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_razred int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  razlog text,
+  odgojni_utjecaj_majka tinyint,
+  odgojni_utjecaj_otac tinyint,
+  procjena_statusa_obitelji text,
+  odnos_prema_ucenju_majka tinyint,
+  odnos_prema_ucenju_otac tinyint,
+  suradnja_roditelja_majka tinyint,
+  suradnja_roditelja_otac tinyint,
+  odnos_s_prijateljima text,
+  kako_provodi_slobodno_vrijeme text,
+  procjena_mogucih_losih_utjecaja text,
+  zdravstvene_poteskoce_ucenika text,
+  podaci_o_naglim_promjenama text,
+  izrecene_pedagoske_mjere text,
+  PRIMARY KEY(id),
+  CONSTRAINT zapisnik_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
+);
+
 CREATE TABLE roditelj_biljeska (
   id int(20) NOT NULL AUTO_INCREMENT,
   id_ucenik_razred int(20) NOT NULL,

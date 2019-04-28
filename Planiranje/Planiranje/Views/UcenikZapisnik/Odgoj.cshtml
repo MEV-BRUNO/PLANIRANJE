@@ -1,0 +1,115 @@
+﻿@model Planiranje.Models.Ucenici.Ucenik_zapisnik
+@{
+    Layout = null;
+}
+@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "odgojForm", @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.Id)    
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                        Razlog
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="form-group col-lg-12">
+                        @Html.LabelFor(model => model.Razlog, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.Razlog, new { @class = "edit-opis", rows = "3" })
+                        @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                        Odgojni utjecaj obitelji
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.Odgojni_utjecaj_majka, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.Odgojni_utjecaj_majka, ViewBag.selectOdgojniUtjecaj as SelectList, new { @class = "form-control" })
+                                @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.Odgojni_utjecaj_otac, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.Odgojni_utjecaj_otac, ViewBag.selectOdgojniUtjecaj as SelectList, new { @class = "form-control" })
+                                @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        @Html.LabelFor(model => model.Procjena_statusa_obitelji, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Procjena_statusa_obitelji, new { htmlAttributes = new { @class = "form-control" } })
+                        @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.Odnos_prema_ucenju_majka, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.Odnos_prema_ucenju_majka, ViewBag.selectOdnos as SelectList, new { @class = "form-control" })
+                                @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.Odnos_prema_ucenju_otac, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.Odnos_prema_ucenju_otac, ViewBag.selectOdnos as SelectList, new { @class = "form-control" })
+                                @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.Suradnja_roditelja_majka, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.Suradnja_roditelja_majka, ViewBag.selectSuradnja as SelectList, new { @class = "form-control" })
+                                @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.Suradnja_roditelja_otac, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.Suradnja_roditelja_otac, ViewBag.selectSuradnja as SelectList, new { @class = "form-control" })
+                                @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                        novo!
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse">
+                <div class="panel-body">
+                    
+                </div>
+            </div>
+        </div>*@
+    </div>
+    <br>
+
+    <div class="form-group">
+        <button type="button" onclick="potvrdi('@Url.Action("Odgoj","UcenikZapisnik")','#odgojForm','Spremljeno')" class="btn btn-success">Potvrdi</button>
+        <button type="button" onclick="odustani('@Url.Action("Odgoj","UcenikZapisnik", new { id=Model.Id})','#procjena')" class="btn btn-default">Odustani</button>
+    </div>
+}
+
