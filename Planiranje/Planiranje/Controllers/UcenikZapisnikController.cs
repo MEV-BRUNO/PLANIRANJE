@@ -133,6 +133,43 @@ namespace Planiranje.Controllers
             ViewBag.selectSuradnja = VratiSelectSuradnja();
             return View(model);
         }
+        [HttpPost]
+        public ActionResult Odgoj (Ucenik_zapisnik model)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    int id = model.Id;
+                    var result = db.UcenikZapisnik.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (result != null)
+                    {
+                        result.Razlog = model.Razlog;
+                        result.Odgojni_utjecaj_majka = model.Odgojni_utjecaj_majka;
+                        result.Odgojni_utjecaj_otac = model.Odgojni_utjecaj_otac;
+                        result.Procjena_statusa_obitelji = model.Procjena_statusa_obitelji;
+                        result.Odnos_prema_ucenju_majka = model.Odnos_prema_ucenju_majka;
+                        result.Odnos_prema_ucenju_otac = model.Odnos_prema_ucenju_otac;
+                        result.Suradnja_roditelja_majka = model.Suradnja_roditelja_majka;
+                        result.Suradnja_roditelja_otac = model.Suradnja_roditelja_otac;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                    }
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
         private SelectList VratiSelectOdgojniUtjecaj()
         {
             SelectList select = new SelectList(new List<SelectListItem>()
