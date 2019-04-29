@@ -17,6 +17,7 @@ namespace Planiranje.Models.Ucenici
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Datum { get; set; }
         [Required(ErrorMessage = "Obavezno polje")]
+        [DisplayName("Sadržaj")]
         public string Sadrzaj { get; set; }
         [Required(ErrorMessage = "Obavezno polje")]
         public string Dogovor { get; set; }

@@ -308,6 +308,43 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Biljeska", new { id = model.Id_ucenik_zapisnik });
         }
+        public ActionResult ObrisiBiljeska (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (!BiljeskaIsValid(id)) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            Ucenik_zapisnik_biljeska model = baza.UcenikZapisnikBiljeska.SingleOrDefault(s => s.Id == id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ObrisiBiljeska (Ucenik_zapisnik_biljeska model)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }            
+            if (!BiljeskaIsValid(model.Id) || !ZapisnikIsValid(model.Id_ucenik_zapisnik)) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.UcenikZapisnikBiljeska.SingleOrDefault(s => s.Id == model.Id && s.Id_ucenik_zapisnik == model.Id_ucenik_zapisnik);
+                    if (result != null)
+                    {
+                        db.UcenikZapisnikBiljeska.Remove(result);
+                        db.SaveChanges();
+                    }                    
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return RedirectToAction("Biljeska", new { id = model.Id_ucenik_zapisnik });
+        }
         private SelectList VratiSelectOdgojniUtjecaj()
         {
             SelectList select = new SelectList(new List<SelectListItem>()

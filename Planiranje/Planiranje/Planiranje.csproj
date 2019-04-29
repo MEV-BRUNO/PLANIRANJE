@@ -577,6 +577,7 @@
     <Content Include="Views\UcenikZapisnik\Biljeska.cshtml" />
     <Content Include="Views\UcenikZapisnik\NovaBiljeska.cshtml" />
     <Content Include="Views\UcenikZapisnik\UrediBiljeska.cshtml" />
+    <Content Include="Views\UcenikZapisnik\ObrisiBiljeska.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
