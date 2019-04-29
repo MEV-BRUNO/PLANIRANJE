@@ -233,6 +233,46 @@ namespace Planiranje.Controllers
             ViewBag.id = id;
             return View(model);
         }
+        public ActionResult NovaBiljeska(int id)
+        {
+            //id je id od ucenik_zapisnik
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            ViewBag.id = id;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult NovaBiljeska (Ucenik_zapisnik_biljeska model)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (!ModelState.IsValid)
+            {
+                ViewBag.id = model.Id_ucenik_zapisnik;
+                return View(model);
+            }
+            if (!ZapisnikIsValid(model.Id_ucenik_zapisnik))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.UcenikZapisnikBiljeska.Add(model);
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return RedirectToAction("Biljeska", new { id = model.Id_ucenik_zapisnik });
+        }
         private SelectList VratiSelectOdgojniUtjecaj()
         {
             SelectList select = new SelectList(new List<SelectListItem>()
@@ -275,6 +315,12 @@ namespace Planiranje.Controllers
                 return false;
             }
             else return true;
+        }
+        private bool BiljeskaIsValid(int id)
+        {
+            Ucenik_zapisnik_biljeska model = baza.UcenikZapisnikBiljeska.SingleOrDefault(s => s.Id == id);
+            if (model == null) return false;
+            else return ZapisnikIsValid(model.Id_ucenik_zapisnik);            
         }
     }
 }
