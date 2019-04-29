@@ -170,6 +170,57 @@ namespace Planiranje.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+        public ActionResult Ostalo (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Ucenik_zapisnik model = baza.UcenikZapisnik.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+        [HttpPost]
+        public ActionResult Ostalo(Ucenik_zapisnik model)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int id = model.Id;
+            using(var db = new BazaPodataka())
+            {
+                try
+                {
+                    var result = db.UcenikZapisnik.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (result != null)
+                    {
+                        result.Odnos_s_prijateljima = model.Odnos_s_prijateljima;
+                        result.Kako_provodi_slobodno_vrijeme = model.Kako_provodi_slobodno_vrijeme;
+                        result.Procjena_mogucih_losih_utjecaja = model.Procjena_mogucih_losih_utjecaja;
+                        result.Zdravstvene_poteskoce_ucenika = model.Zdravstvene_poteskoce_ucenika;
+                        result.Podaci_o_naglim_promjenama = model.Podaci_o_naglim_promjenama;
+                        result.Izrecene_pedagoske_mjere = model.Izrecene_pedagoske_mjere;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                    }
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
         private SelectList VratiSelectOdgojniUtjecaj()
         {
             SelectList select = new SelectList(new List<SelectListItem>()
