@@ -187,6 +187,16 @@ CREATE TABLE ucenik_zapisnik (
   CONSTRAINT zapisnik_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
 );
 
+CREATE TABLE ucenik_zapisnik_biljeska (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_ucenik_zapisnik int(20) NOT NULL,
+  datum datetime,
+  sadrzaj text,
+  dogovor text,
+  PRIMARY KEY(id),
+  CONSTRAINT uc_zap_bilj_to_uc_zapisnik FOREIGN KEY (id_ucenik_zapisnik) REFERENCES ucenik_zapisnik(id) ON DELETE CASCADE
+);
+
 CREATE TABLE roditelj_biljeska (
   id int(20) NOT NULL AUTO_INCREMENT,
   id_ucenik_razred int(20) NOT NULL,

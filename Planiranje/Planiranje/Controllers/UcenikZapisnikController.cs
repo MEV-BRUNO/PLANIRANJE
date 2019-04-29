@@ -221,6 +221,18 @@ namespace Planiranje.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+        public ActionResult Biljeska (int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if(!ZapisnikIsValid(id)) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            List<Ucenik_zapisnik_biljeska> model = baza.UcenikZapisnikBiljeska.Where(w => w.Id_ucenik_zapisnik == id).ToList();
+            ViewBag.id = id;
+            return View(model);
+        }
         private SelectList VratiSelectOdgojniUtjecaj()
         {
             SelectList select = new SelectList(new List<SelectListItem>()
@@ -254,6 +266,15 @@ namespace Planiranje.Controllers
                 new SelectListItem{Value="3", Text="Ne surađuju"}
             }, "Value", "Text");
             return select;
+        }
+        private bool ZapisnikIsValid (int id)
+        {
+            Ucenik_zapisnik model = baza.UcenikZapisnik.SingleOrDefault(s => s.Id == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                return false;
+            }
+            else return true;
         }
     }
 }
