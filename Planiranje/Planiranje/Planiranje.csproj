@@ -299,6 +299,7 @@
     <Compile Include="Models\Ucenici\Ucenik_biljeska.cs" />
     <Compile Include="Models\Ucenici\Ucenik_razred.cs" />
     <Compile Include="Models\Ucenici\Ucenik_zapisnik.cs" />
+    <Compile Include="Models\Ucenici\Ucenik_zapisnik_biljeska.cs" />
     <Compile Include="Models\Zadaci.cs" />
     <Compile Include="Models\ZadaciModel.cs" />
     <Compile Include="Models\Zadaci_DBHandle.cs" />
