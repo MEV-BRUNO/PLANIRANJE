@@ -14,13 +14,7 @@
             @Html.HiddenFor(model => model.Id)
             <div class="modal-body">
                 <p><b>Jeste li sigurni da želite obrisati ovaj dokument?</b></p>
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })                
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Path, htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.TextBoxFor(model => model.Path, new { @class = "form-control", disabled = "" })
-                    </div>
-                </div>  
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })         
                 <div class="form-group">
                     @Html.LabelFor(model => model.Opis, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
