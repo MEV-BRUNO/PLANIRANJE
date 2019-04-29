@@ -22,14 +22,15 @@
         <tbody>
             @foreach (var item in Model)
             {
+                brojac++;
                 <tr>
-                    <td class="col-md-1">@(brojac+1)</td>
+                    <td class="col-md-1">@brojac</td>
                     <td class="col-md-1">@item.Datum.ToShortDateString()</td>
                     <td class="col-md-5">@item.Sadrzaj</td>
                     <td class="col-md-4">@item.Dogovor</td>
                     <td class="col-md-2">
-                        <a onclick="showModal('@Url.Action("","", new { })')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                        <a onclick="showModal('@Url.Action("","", new { })')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                        <a onclick="showModal('@Url.Action("UrediBiljeska","UcenikZapisnik", new { id=item.Id})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                        <a onclick="showModal('@Url.Action("ObrisiBiljeska","UcenikZapisnik", new { id=item.Id})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                     </td>
                 </tr>
             }
