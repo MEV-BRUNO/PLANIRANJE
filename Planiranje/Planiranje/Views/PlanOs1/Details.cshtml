@@ -207,7 +207,8 @@
             $.ajax({
                 url: '/PlanOs1/Aktivnosti?idPodrucje=' + val+'&id=0',
                 success: function (data) {
-                    $("#aktivnosti").html(data);                    
+                    $("#aktivnosti").html(data);
+                    updateAkcija();
                 },
                 error: function (request, status, error) {
                     showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
@@ -220,6 +221,20 @@
         if (val != "0") {
             $.ajax({
                 url: '/PlanOs1/Akcije?idAktivnost=' + val + '&idPodrucje=0',
+                success: function (data) {
+                    $("#akcije").html(data);
+                },
+                error: function (request, status, error) {
+                    showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+                }
+            });
+        }
+    } 
+    function updateAkcija() {
+        var val = $("#selectPodrucje").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/PlanOs1/Akcije?idAktivnost=0&idPodrucje=' + val,
                 success: function (data) {
                     $("#akcije").html(data);
                 },
@@ -261,6 +276,46 @@
             success: function (data) {
                 $(spremi).html(data);
                 showSnackBar(poruka);
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+            }
+        });
+    }
+    function pomak1(path, spremi, poruka) {
+        $.ajax({
+            url: path,
+            success: function (data) {
+                $(spremi).html(data);
+                showSnackBar(poruka);
+                updateAkcija();
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+            }
+        });
+    }
+    function zatvoriModal1(path, id, spremi, poruka) {
+        var dt = $(id).serialize();
+        $.ajax({
+            url: path,
+            type: "POST",
+            data: dt,
+            success: function (data) {
+                if ($(data)[0].className === "row") {
+                    $(spremi).html(data);
+                    $('#modal').modal('hide');
+                    $('#modalContainer').removeData();
+                    $('.modal-backdrop').remove();
+                    showSnackBar(poruka);
+                    updateAkcija();
+                }
+                else if ($(data)[0].className === "modal-dialog") {
+                    $("#modalContainer").html(data);
+                }
+                else {
+                    location.reload();
+                }
             },
             error: function (request, status, error) {
                 showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
