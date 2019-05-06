@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-lg-2">
 
-        <button id="btnAkcija" onclick="showModal('@Url.Action("NovaAkcija","PlanOs1",new { id=ViewBag.id})')" class="btn btn-primary btn-xs btn-grad">Dodaj akciju</button>
+        <button onclick="showModal('@Url.Action("NovaAkcija","PlanOs1",new { id=ViewBag.id})')" class="btn btn-primary btn-xs btn-grad">Dodaj akciju</button>
 
     </div>
     <div class="col-lg-10">
@@ -17,7 +17,7 @@
             <label class="control-label col-lg-3">Odaberi aktivnosti:</label>
             <div class="col-lg-7">
                 @*@Html.DropDownListFor(m=>m.Os_Plan_1_Aktivnost.Id_podrucje,Model.PodrucjeRadaSelectedItems,new { @class="form-control"})*@
-                <select id="selectPodrucje" onchange="promjenaAktivnosti()" class="form-control">
+                <select id="selectAktivnost" onchange="promjenaAktivnosti()" class="form-control">
                     @{ int br = 1;
                         int pozicija = 0;
                     }
@@ -78,7 +78,7 @@
                                 <button @disabled2 onclick="pomak('@Url.Action("AktivnostPomakDolje","PlanOs1", new { id=item.Id})','#aktivnosti', 'Aktivnost je pomaknuta dolje')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
                             </td>
                             <td class="col-md-1">
-                                <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs1",new { id=item.Id, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                <a onclick="showModal('@Url.Action("UrediAkcija","PlanOs1",new { id=item.Id, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
                                 <a onclick="showModal('@Url.Action("ObrisiAktivnost","PlanOs1", new { id=item.Id, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                             </td>
                         </tr>

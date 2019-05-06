@@ -971,6 +971,51 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Akcije", new { idAktivnost=akcija.Id_aktivnost, idPodrucje=0});
         }
+        public ActionResult UrediAkcija(int id, string pozicija)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (!AkcijaIsValid(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            OS_Plan_1_akcija akcija = baza.OsPlan1Akcija.SingleOrDefault(s => s.Id == id);
+            ViewBag.pozicija = pozicija;
+            return View(akcija);
+        }
+        [HttpPost]
+        public async Task<ActionResult> UrediAkcijaAsync(OS_Plan_1_akcija akcija)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(akcija);
+            }
+            if (!AkcijaIsValid(akcija.Id) || !AktivnostIsValid(akcija.Id_aktivnost))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    db.OsPlan1Akcija.Add(akcija);
+                    db.Entry(akcija).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            await UpdateAktivnost(akcija.Id_aktivnost);
+            return RedirectToAction("Akcije", new { idAktivnost = akcija.Id_aktivnost, idPodrucje = 0 });
+        }
         public ActionResult IspisDetalji(int id)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
@@ -1120,6 +1165,7 @@ namespace Planiranje.Controllers
             p.Opis_Podrucje = podrucje.Opis_Podrucje;
             p.Potrebno_sati = podrucje.Potrebno_sati;
             p.Red_br_podrucje = podrucje.Red_br_podrucje;
+            p.Cilj = podrucje.Cilj;
             foreach (var item in aktivnosti)
             {
                 p.Mj_9 += item.Mj_9;

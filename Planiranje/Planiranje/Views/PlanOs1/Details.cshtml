@@ -214,6 +214,20 @@
                 }
             });
         }        
+    }
+    function promjenaAktivnosti() {
+        var val = $("#selectAktivnost").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/PlanOs1/Akcije?idAktivnost=' + val + '&idPodrucje=0',
+                success: function (data) {
+                    $("#akcije").html(data);
+                },
+                error: function (request, status, error) {
+                    showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+                }
+            });
+        }
     }  
     function zatvoriModal(path, id, spremi, poruka) {
         var dt = $(id).serialize();
