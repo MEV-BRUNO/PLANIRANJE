@@ -729,7 +729,7 @@ CREATE TABLE os_plan_1_akcija (
   id_aktivnost int(20) NOT NULL,
   red_br_akcija int(20) NOT NULL,
   opis_akcija text,  
-  potrebno_sati int(11) NOT NULL,
+  potrebno_sati text,
   br_sati int(11) NOT NULL,
   mj_1 int(11) DEFAULT NULL,
   mj_2 int(11) DEFAULT NULL,
