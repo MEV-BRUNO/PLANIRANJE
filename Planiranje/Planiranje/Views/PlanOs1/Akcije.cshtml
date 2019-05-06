@@ -74,8 +74,8 @@
                             <td class="col-md-7">@item.Opis_akcija</td>
                             <td class="col-md-2">@item.Potrebno_sati</td>
                             <td class="col-md-1">
-                                <button @disabled1 onclick="pomak('@Url.Action("AkcijaPomakGore","PlanOs1", new { id=item.Id})','#aktivnosti', 'Aktivnost je pomaknuta gore')" class="btn btn-warning btn-xs btn-grad">Gore</button>
-                                <button @disabled2 onclick="pomak('@Url.Action("AkcijaPomakDolje","PlanOs1", new { id=item.Id})','#aktivnosti', 'Aktivnost je pomaknuta dolje')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
+                                <button @disabled1 onclick="pomak('@Url.Action("AkcijaPomakGore","PlanOs1", new { id=item.Id})','#akcije', 'Akcija je pomaknuta gore')" class="btn btn-warning btn-xs btn-grad">Gore</button>
+                                <button @disabled2 onclick="pomak('@Url.Action("AkcijaPomakDolje","PlanOs1", new { id=item.Id})','#akcije', 'Akcija je pomaknuta dolje')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
                             </td>
                             <td class="col-md-1">
                                 <a onclick="showModal('@Url.Action("UrediAkcija","PlanOs1",new { id=item.Id, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>

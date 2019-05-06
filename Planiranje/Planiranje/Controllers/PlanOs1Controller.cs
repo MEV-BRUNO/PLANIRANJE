@@ -1000,6 +1000,8 @@ namespace Planiranje.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
+            akcija.Br_sati = akcija.Mj_9 + akcija.Mj_10 + akcija.Mj_11 + akcija.Mj_12 + akcija.Mj_1 + akcija.Mj_2 + akcija.Mj_3 + akcija.Mj_4 + akcija.Mj_5
+                + akcija.Mj_6 + akcija.Mj_7 + akcija.Mj_8;
             using (var db = new BazaPodataka())
             {
                 try
@@ -1060,6 +1062,104 @@ namespace Planiranje.Controllers
                 await UpdateAktivnost(id);
             }            
             return RedirectToAction("Akcije", new { idAktivnost = id, idPodrucje = 0 });
+        }
+        public ActionResult AkcijaPomakGore(int id)
+        {
+            //ulazni parametar id je id akcije
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (!AkcijaIsValid(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            OS_Plan_1_akcija akcija = baza.OsPlan1Akcija.SingleOrDefault(s => s.Id == id);            
+            //OS_Plan_1_aktivnost aktivnost = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == akcija.Id_aktivnost);           
+
+            int pozicija = akcija.Red_br_akcija;
+
+            List<OS_Plan_1_akcija> akcije = new List<OS_Plan_1_akcija>();
+            akcije = baza.OsPlan1Akcija.Where(w => w.Id_aktivnost == akcija.Id_aktivnost && w.Red_br_akcija <= pozicija).ToList();
+            akcije = akcije.OrderBy(o => o.Red_br_akcija).ToList();
+
+            if (akcije.Count <= 1)
+            {
+                return RedirectToAction("Akcije", new { idAktivnost = akcija.Id_aktivnost, idPodrucje = 0 });
+            }
+
+            int pozicija_prethodni = akcije.ElementAt(akcije.Count - 2).Red_br_akcija;
+            int id_prethodni = akcije.ElementAt(akcije.Count - 2).Id;
+
+            using (var db = new BazaPodataka())
+            {
+                var rezultat = db.OsPlan1Akcija.SingleOrDefault(s => s.Id == id);
+                var rezultat1 = db.OsPlan1Akcija.SingleOrDefault(s => s.Id == id_prethodni);
+                if (rezultat != null && rezultat1 != null)
+                {
+                    try
+                    {
+                        rezultat.Red_br_akcija = pozicija_prethodni;
+                        rezultat1.Red_br_akcija = pozicija;
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                    }
+                }
+            }
+
+            return RedirectToAction("Akcije", new { idAktivnost = akcija.Id_aktivnost, idPodrucje = 0 });
+        }
+        public ActionResult AkcijaPomakDolje(int id)
+        {
+            //ulazni parametar id je id akcije
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (!AkcijaIsValid(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            OS_Plan_1_akcija akcija = baza.OsPlan1Akcija.SingleOrDefault(s => s.Id == id);
+            //OS_Plan_1_aktivnost aktivnost = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == akcija.Id_aktivnost);           
+
+            int pozicija = akcija.Red_br_akcija;
+
+            List<OS_Plan_1_akcija> akcije = new List<OS_Plan_1_akcija>();
+            akcije = baza.OsPlan1Akcija.Where(w => w.Id_aktivnost == akcija.Id_aktivnost && w.Red_br_akcija >= pozicija).ToList();
+            akcije = akcije.OrderBy(o => o.Red_br_akcija).ToList();
+
+            if (akcije.Count <= 1)
+            {
+                return RedirectToAction("Akcije", new { idAktivnost = akcija.Id_aktivnost, idPodrucje = 0 });
+            }
+
+            int pozicija_prethodni = akcije.ElementAt(1).Red_br_akcija;
+            int id_prethodni = akcije.ElementAt(1).Id;
+
+            using (var db = new BazaPodataka())
+            {
+                var rezultat = db.OsPlan1Akcija.SingleOrDefault(s => s.Id == id);
+                var rezultat1 = db.OsPlan1Akcija.SingleOrDefault(s => s.Id == id_prethodni);
+                if (rezultat != null && rezultat1 != null)
+                {
+                    try
+                    {
+                        rezultat.Red_br_akcija = pozicija_prethodni;
+                        rezultat1.Red_br_akcija = pozicija;
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                    }
+                }
+            }
+
+            return RedirectToAction("Akcije", new { idAktivnost = akcija.Id_aktivnost, idPodrucje = 0 });
         }
         public ActionResult IspisDetalji(int id)
         {
