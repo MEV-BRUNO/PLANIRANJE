@@ -1016,6 +1016,51 @@ namespace Planiranje.Controllers
             await UpdateAktivnost(akcija.Id_aktivnost);
             return RedirectToAction("Akcije", new { idAktivnost = akcija.Id_aktivnost, idPodrucje = 0 });
         }
+        public ActionResult ObrisiAkcija(int id, string pozicija)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (!AkcijaIsValid(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            OS_Plan_1_akcija akcija = baza.OsPlan1Akcija.SingleOrDefault(s => s.Id == id);
+            ViewBag.pozicija = pozicija;
+            return View(akcija);
+        }
+        public async Task<ActionResult> ObrisiAkcijaAsync (OS_Plan_1_akcija akcija)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            if (!AkcijaIsValid(akcija.Id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            int id = akcija.Id;
+            using (var db = new BazaPodataka())
+            {
+                var result = db.OsPlan1Akcija.SingleOrDefault(s => s.Id == id);
+                if (result != null)
+                {
+                    id = result.Id_aktivnost;
+                    db.OsPlan1Akcija.Remove(result);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    id = 0;
+                }
+            }
+            if (id != 0)
+            {
+                await UpdateAktivnost(id);
+            }            
+            return RedirectToAction("Akcije", new { idAktivnost = id, idPodrucje = 0 });
+        }
         public ActionResult IspisDetalji(int id)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
