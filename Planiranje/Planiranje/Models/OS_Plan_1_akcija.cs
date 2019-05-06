@@ -8,20 +8,12 @@ namespace Planiranje.Models
 {
     public class OS_Plan_1_akcija
     {
-        [Key]
-        [Required]
-        public int Id_plan { get; set; }
-        [Required]
-        public int Red_br_podrucje { get; set; }
-        [Required]
-        public int Red_br_aktivnost { get; set; }
-        [Required]
+        [Key]        
+        public int Id { get; set; }        
+        public int Id_aktivnost { get; set; }        
         public int Red_br_akcija { get; set; }
         [Required]
-        public string Opis_akcija { get; set; }
-        [Required]
-        public int Red_br { get; set; }
-        [Required]
+        public string Opis_akcija { get; set; }      
         public int Potrebno_sati { get; set; }
         [Required]
         public int Br_sati { get; set; }
@@ -49,7 +41,5 @@ namespace Planiranje.Models
         public int Mj_11 { get; set; }
         [Required]
         public int Mj_12 { get; set; }
-
-
     }
 }

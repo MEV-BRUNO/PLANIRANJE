@@ -725,12 +725,10 @@ CREATE TABLE os_plan_2_akcija (
 );
 
 CREATE TABLE os_plan_1_akcija (
-  id_plan int(20) NOT NULL AUTO_INCREMENT,
-  red_br_podrucje int(20) NOT NULL,
-  red_br_aktivnost int(20) NOT NULL,
+  id int(20) NOT NULL AUTO_INCREMENT,  
+  id_aktivnost int(20) NOT NULL,
   red_br_akcija int(20) NOT NULL,
-  opis_akcija text,
-  red_br int(11) NOT NULL,
+  opis_akcija text,  
   potrebno_sati int(11) NOT NULL,
   br_sati int(11) NOT NULL,
   mj_1 int(11) DEFAULT NULL,
@@ -745,13 +743,7 @@ CREATE TABLE os_plan_1_akcija (
   mj_10 int(11) DEFAULT NULL,
   mj_11 int(11) DEFAULT NULL,
   mj_12 int(11) DEFAULT NULL,
-  PRIMARY KEY (id_plan),
-  KEY red_broj_podrucje (red_br_podrucje),
-  KEY red_broj_aktivnost (red_br_aktivnost),
-  KEY red_broj_akcija (red_br_akcija),
-  CONSTRAINT os_plan_1_akcija_ibfk_1 FOREIGN KEY (red_br_podrucje) REFERENCES podrucje_rada (id_podrucje),
-  CONSTRAINT os_plan_1_akcija_ibfk_2 FOREIGN KEY (red_br_aktivnost) REFERENCES aktivnost (id_aktivnost),
-  CONSTRAINT os_plan_1_akcija_ibfk_3 FOREIGN KEY (red_br_akcija) REFERENCES aktivnost_akcija (id_akcija)
+  PRIMARY KEY (id)  
 );
 
 CREATE TABLE os_plan_1_aktivnost (

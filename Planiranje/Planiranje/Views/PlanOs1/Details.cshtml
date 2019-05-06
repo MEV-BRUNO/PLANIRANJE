@@ -14,9 +14,9 @@
 	</script>*@
 
 	@if (TempData["note"] != null)
-	{
+    {
 		<div id="poruka" style="display:none">1</div>
-	}
+    }
 	@*@if (TempData["prikaz"] != null)
 	{
 		<div id="prikaz" style="display:none">1</div>
@@ -43,7 +43,7 @@
 							</p>
 						</div><!--END COL 10-->
 						<div class="col-lg-2">
-							<a href="@Url.Action("IspisDetalji","PlanOs1",new { id=Model.OsPlan1.Id_plan})" target="_blank" class="btn btn-success btn-sm">ISPIS / PDF DOKUMENT</a>
+							<a href="@Url.Action("IspisDetalji", "PlanOs1", new { id = Model.OsPlan1.Id_plan })" target="_blank" class="btn btn-success btn-sm">ISPIS / PDF DOKUMENT</a>
 						</div>
 					</div><!--END ROW -->
 				</div>
@@ -52,17 +52,20 @@
 						<div class="col-lg-12">
 							<div class="panel-body">
 
-								<ul class="nav nav-pills">
-									<li class="active">
-										<a href="#podrucje" data-toggle="tab">Područja rada</a>
-									</li>
-									<li>
-										<a id="btnAktivnostTab" href="#aktivnosti" data-toggle="tab">Programske aktivnosti</a>
-									</li>
-									<li>
-										<a href="#vrijeme" data-toggle="tab">Vrijeme realizacije</a>
-									</li>
-								</ul>
+                                <ul class="nav nav-pills">
+                                    <li class="active">
+                                        <a href="#podrucje" data-toggle="tab">Područja rada</a>
+                                    </li>
+                                    <li>
+                                        <a id="btnAktivnostTab" href="#aktivnosti" data-toggle="tab">Programske aktivnosti</a>
+                                    </li>
+                                    <li>
+                                        <a id="btnAkcijTab" href="#akcije" data-toggle="tab">Akcije</a>
+                                    </li>
+                                    <li>
+                                        <a href="#vrijeme" data-toggle="tab">Vrijeme realizacije</a>
+                                    </li>
+                                </ul>
 
 								<div class="tab-content">
 									<div class="tab-pane fade in active" id="podrucje">
@@ -88,9 +91,9 @@
 														<tbody>
 															@{int brojac = 1;}
 															@foreach (var item in Model.OsPlan1Podrucje)
-															{
-																var podrucje = new Podrucje_rada();
-																podrucje = Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje);																
+                                                            {
+                                                                var podrucje = new Podrucje_rada();
+                                                                podrucje = Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje);
 
 																<tr>
 																	<td class="col-md-1">@brojac</td>
@@ -103,12 +106,12 @@
 																	</td>
 																	<td class="col-md-1">
 																		<a onclick="showModal('@Url.Action("UrediPodrucje", "PlanOs1", new { id = item.Id_plan })')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-																		<a onclick="showModal('@Url.Action("ObrisiPodrucje", "PlanOs1", new { id = item.Id_plan, pozicija=brojac })')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+																		<a onclick="showModal('@Url.Action("ObrisiPodrucje", "PlanOs1", new { id = item.Id_plan, pozicija = brojac })')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
 																	</td>
 																</tr>
-																brojac++;
+                                                                brojac++;
 
-															}
+                                                            }
 														</tbody>
 													</table>
 												</div>
@@ -117,6 +120,17 @@
 									</div>
 									<div class="tab-pane fade" id="aktivnosti">
 										@{ Html.RenderAction("Aktivnosti", "PlanOs1", new { idPodrucje = 0, id = Model.OsPlan1.Id_plan });}
+									</div>
+                                    <div class="tab-pane fade" id="akcije">
+										@{ if (Model.OsPlan1Podrucje.Count > 0)
+                                            {
+                                                Html.RenderAction("Akcije", "PlanOs1", new { idAktivnost = 0, idPodrucje = Model.OsPlan1Podrucje.First().Id_plan });
+                                            }
+                                            else
+                                            {
+                                                <div><b>Da biste uređivali akcije morate dodati programske aktivnosti</b></div>
+                                            }
+                                           }
 									</div>
 									<div class="tab-pane fade" id="vrijeme">
 										
