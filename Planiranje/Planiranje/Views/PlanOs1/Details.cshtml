@@ -57,13 +57,13 @@
                                         <a href="#podrucje" data-toggle="tab">Područja rada</a>
                                     </li>
                                     <li>
-                                        <a id="btnAktivnostTab" href="#aktivnosti" data-toggle="tab">Programske aktivnosti</a>
+                                        <a href="#aktivnosti" data-toggle="tab">Programske aktivnosti</a>
                                     </li>
                                     <li>
-                                        <a id="btnAkcijTab" href="#akcije" data-toggle="tab">Akcije</a>
+                                        <a href="#akcije" data-toggle="tab">Akcije</a>
                                     </li>
                                     <li>
-                                        <a href="#vrijeme" data-toggle="tab">Vrijeme realizacije</a>
+                                        <a href="#vrijeme" onclick="pokaziVrijeme('@Url.Action("Vrijeme","PlanOs1", new { id=Model.OsPlan1.Id_plan})','#vrijeme')" data-toggle="tab">Vrijeme realizacije</a>
                                     </li>
                                 </ul>
 
@@ -316,6 +316,18 @@
                 else {
                     location.reload();
                 }
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+            }
+        });
+    }
+    function pokaziVrijeme(path, spremi) {
+        $.ajax({
+            url: path,
+            success: function (data) {
+                $(spremi).html(data);  
+                $('#dataTableVrijeme').dataTable({ stateSave: true });
             },
             error: function (request, status, error) {
                 showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");

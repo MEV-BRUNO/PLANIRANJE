@@ -1161,6 +1161,35 @@ namespace Planiranje.Controllers
 
             return RedirectToAction("Akcije", new { idAktivnost = akcija.Id_aktivnost, idPodrucje = 0 });
         }
+        public ActionResult Vrijeme (int id)
+        {
+            //id je id glavnog plana
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            PlanOs1View model = new PlanOs1View();
+            if (!PlanIsValid(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            model.OsPlan1Podrucje = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == id).ToList();
+            model.OsPlan1Aktivnost = (from pl in baza.OsPlan1
+                                      join pod in baza.OsPlan1Podrucje on pl.Id_plan equals pod.Id_glavni_plan
+                                      join akt in baza.OsPlan1Aktivnost on pod.Id_plan equals akt.Id_podrucje
+                                      where pl.Id_plan == id && pl.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId
+                                      select akt).ToList();
+            model.OsPlan1Akcija = (from pl in baza.OsPlan1
+                                      join pod in baza.OsPlan1Podrucje on pl.Id_plan equals pod.Id_glavni_plan
+                                      join akt in baza.OsPlan1Aktivnost on pod.Id_plan equals akt.Id_podrucje
+                                      join akc in baza.OsPlan1Akcija on akt.Id_plan equals akc.Id_aktivnost
+                                      where pl.Id_plan == id && pl.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId
+                                      select akc).ToList();
+            model.Aktivnosti = aktivnost_db.ReadAktivnost();
+            model.Ciljevi = ciljevi_db.ReadCiljevi();
+            model.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();
+            return View(model);
+        }
         public ActionResult IspisDetalji(int id)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
