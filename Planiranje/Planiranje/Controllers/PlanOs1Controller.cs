@@ -1255,11 +1255,12 @@ namespace Planiranje.Controllers
                         {
                             akcija.Id_aktivnost = akt;
                             db.OsPlan1Akcija.Add(akcija);
-                            //db.SaveChanges();
+                            db.SaveChanges();
                         }
                     }
                 }
             }
+            TempData["note"] = "Plan je kopiran";
             return RedirectToAction("Index");
         }
         public ActionResult IspisDetalji(int id)

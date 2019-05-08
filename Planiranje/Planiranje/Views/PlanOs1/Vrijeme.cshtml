@@ -106,7 +106,7 @@
                     </td>
                 </tr>
                 List<OS_Plan_1_aktivnost> ak = new List<OS_Plan_1_aktivnost>();
-                ak = Model.OsPlan1Aktivnost.Where(w => w.Id_podrucje == item.Id_plan).ToList();
+                ak = Model.OsPlan1Aktivnost.Where(w => w.Id_podrucje == item.Id_plan).OrderBy(o=>o.Red_broj_aktivnost).ToList();
                 int c = 0;
                 foreach (var akt in ak)
                 {
