@@ -981,7 +981,7 @@ namespace Planiranje.Controllers
             return View(akcija);
         }
         [HttpPost]
-        public async Task<ActionResult> UrediAkcijaAsync(OS_Plan_1_akcija akcija)
+        public async Task<ActionResult> UrediAkcija(OS_Plan_1_akcija akcija)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
