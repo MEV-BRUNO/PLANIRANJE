@@ -595,10 +595,10 @@ namespace Planiranje.Controllers
             }
             int i = plan.Id_podrucje;
             //OS_Plan_1_aktivnost ak = new OS_Plan_1_aktivnost();
-            //ak = plan.Os_Plan_1_Aktivnost;
+            OS_Plan_1_aktivnost ak = plan;
             //ak.Id_podrucje = i;
             ////zbrajanje
-            //ak.Br_sati = ak.Mj_1 + ak.Mj_10 + ak.Mj_11 + ak.Mj_12 + ak.Mj_2 + ak.Mj_3 + ak.Mj_4 + ak.Mj_5 + ak.Mj_6 + ak.Mj_7 + ak.Mj_8 + ak.Mj_9;
+            ak.Br_sati = ak.Mj_1 + ak.Mj_10 + ak.Mj_11 + ak.Mj_12 + ak.Mj_2 + ak.Mj_3 + ak.Mj_4 + ak.Mj_5 + ak.Mj_6 + ak.Mj_7 + ak.Mj_8 + ak.Mj_9;
             ////zbrajanje-kraj
             //OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
             //p = baza.OsPlan1Podrucje.Single(s => s.Id_plan == i);
@@ -607,6 +607,7 @@ namespace Planiranje.Controllers
             //p.Br_sati += ak.Br_sati; p.Mj_1 += ak.Mj_1;p.Mj_2 += ak.Mj_2;p.Mj_3 += ak.Mj_3;p.Mj_4 += ak.Mj_4;p.Mj_5 += ak.Mj_5;p.Mj_6 += ak.Mj_6;
             //p.Mj_7 += ak.Mj_7;p.Mj_8 += ak.Mj_8;p.Mj_9 += ak.Mj_9;p.Mj_10 += ak.Mj_10;p.Mj_11 += ak.Mj_11;p.Mj_12 += ak.Mj_12;
             ////zbrajanje podrucja-kraj
+            plan.Br_sati = ak.Br_sati;
             if (!PodrucjeIsValid(plan.Id_podrucje))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
@@ -636,7 +637,8 @@ namespace Planiranje.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }
-            }            
+            }
+            UpdatePodrucje(plan.Id_podrucje);
             return RedirectToAction("Aktivnosti", new { idPodrucje = plan.Id_podrucje, id=0 });
         }        
 
@@ -832,8 +834,8 @@ namespace Planiranje.Controllers
             OS_Plan_1_podrucje p = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id_pod);            
             
             //
-            p.Br_sati -= a.Br_sati; p.Mj_1 -= a.Mj_1; p.Mj_2 -= a.Mj_2; p.Mj_3 -= a.Mj_3; p.Mj_4 -= a.Mj_4; p.Mj_5 -= a.Mj_5;
-            p.Mj_6 -= a.Mj_6; p.Mj_7 -= a.Mj_7; p.Mj_8 -= a.Mj_8; p.Mj_9 -= a.Mj_9; p.Mj_10 -= a.Mj_10; p.Mj_11 -= a.Mj_11; p.Mj_12 -=a.Mj_12;
+            //p.Br_sati -= a.Br_sati; p.Mj_1 -= a.Mj_1; p.Mj_2 -= a.Mj_2; p.Mj_3 -= a.Mj_3; p.Mj_4 -= a.Mj_4; p.Mj_5 -= a.Mj_5;
+            //p.Mj_6 -= a.Mj_6; p.Mj_7 -= a.Mj_7; p.Mj_8 -= a.Mj_8; p.Mj_9 -= a.Mj_9; p.Mj_10 -= a.Mj_10; p.Mj_11 -= a.Mj_11; p.Mj_12 -=a.Mj_12;
             //
             using (var db = new BazaPodataka())
             {
@@ -843,8 +845,8 @@ namespace Planiranje.Controllers
                     try
                     {
                         db.OsPlan1Aktivnost.Remove(aktivnost);
-                        db.OsPlan1Podrucje.Add(p);
-                        db.Entry(p).State = System.Data.Entity.EntityState.Modified;
+                        //db.OsPlan1Podrucje.Add(p);
+                        //db.Entry(p).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();                        
                     }
                     catch
@@ -853,7 +855,7 @@ namespace Planiranje.Controllers
                     }
                 }
             }
-
+            UpdatePodrucje(p.Id_plan);
             return RedirectToAction("Aktivnosti", new { idPodrucje = p.Id_plan, id = 0 });
         }
         public ActionResult Akcije (int idAktivnost, int idPodrucje)
@@ -961,14 +963,7 @@ namespace Planiranje.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
                 }
             }
-            try
-            {
-                await UpdateAktivnost(akcija.Id_aktivnost);
-            }
-            catch
-            {
-
-            }
+            await UpdateAktivnost(akcija.Id_aktivnost);
             return RedirectToAction("Akcije", new { idAktivnost=akcija.Id_aktivnost, idPodrucje=0});
         }
         public ActionResult UrediAkcija(int id, string pozicija)
@@ -1297,6 +1292,7 @@ namespace Planiranje.Controllers
         }
         private async Task UpdateAktivnost(int id)
         {
+            baza = new BazaPodataka();
             List<OS_Plan_1_akcija> akcije = baza.OsPlan1Akcija.Where(w => w.Id_aktivnost == id).ToList();
             OS_Plan_1_aktivnost aktivnost = baza.OsPlan1Aktivnost.SingleOrDefault(s => s.Id_plan == id);
             OS_Plan_1_aktivnost a = new OS_Plan_1_aktivnost();
@@ -1331,6 +1327,7 @@ namespace Planiranje.Controllers
         }
         private void UpdatePodrucje(int id)
         {
+            baza = new BazaPodataka();
             List<OS_Plan_1_aktivnost> aktivnosti = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == id).ToList();
             OS_Plan_1_podrucje podrucje = baza.OsPlan1Podrucje.SingleOrDefault(s => s.Id_plan == id);
             OS_Plan_1_podrucje p = new OS_Plan_1_podrucje();
