@@ -45,7 +45,7 @@ namespace Planiranje.Controllers
             SSModel model = new SSModel();
             using(var db = new BazaPodataka())
             {
-                model.SkGodina = db.SkolskaGodina.ToList();
+                model.SKGodinaItems = VratiSelectList();
             }
             return View(model);
         }
@@ -58,7 +58,7 @@ namespace Planiranje.Controllers
             }
             if(model.SS_Plan.Naziv==null || model.SS_Plan.Ak_godina==0 || model.SS_Plan.Opis == null)
             {
-                model.SkGodina = baza.SkolskaGodina.ToList();
+                model.SKGodinaItems = VratiSelectList();
                 return View(model);
             }
             using(var db = new BazaPodataka())
@@ -89,7 +89,7 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
-            model.SkGodina = baza.SkolskaGodina.ToList();
+            model.SKGodinaItems = VratiSelectList();
             model.ID_PLAN = pozicija;
             return View(model);
         }
@@ -102,7 +102,7 @@ namespace Planiranje.Controllers
             }
             if (model.SS_Plan.Naziv == null || model.SS_Plan.Opis == null || model.SS_Plan.Ak_godina < baza.SkolskaGodina.Min(m => m.Sk_Godina))
             {
-                model.SkGodina = baza.SkolskaGodina.ToList();
+                model.SKGodinaItems = VratiSelectList();
                 return View(model);
             }
             model.SS_Plan.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
@@ -457,6 +457,66 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Detalji", new { id = idPlan });
         }
+        public ActionResult Kopiraj(int id)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            SS_Plan plan = baza.SSPlan.SingleOrDefault(s => s.Id_plan == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (plan == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            ViewBag.naziv = plan.Naziv;
+            ViewBag.godina = plan.Ak_godina;
+            ViewBag.select = VratiSelectList();
+
+            plan.Naziv = string.Empty;
+            plan.Opis = string.Empty;
+            return View(plan);
+        }
+        [HttpPost]
+        public ActionResult Kopiraj(SS_Plan model)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            int id = model.Id_plan;
+            SS_Plan plan = baza.SSPlan.SingleOrDefault(s => s.Id_plan == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (plan == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            if (!ModelState.IsValid)
+            {                
+                ViewBag.naziv = plan.Naziv;
+                ViewBag.select = VratiSelectList();
+                ViewBag.godina = plan.Ak_godina;
+                return View(model);
+            }
+            plan.Naziv = model.Naziv;
+            plan.Opis = model.Opis;
+            plan.Ak_godina = model.Ak_godina;
+            
+            List<SS_Plan_podrucje> podrucja = baza.SSPodrucje.Where(w => w.ID_plan == id).ToList();
+            using (var db = new BazaPodataka())
+            {
+                db.SSPlan.Add(plan);
+                db.SaveChanges();
+
+                id = db.SSPlan.Where(w => w.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId).Max(m => m.Id_plan);
+                foreach (var item in podrucja)
+                {
+                    item.ID_plan = id;
+                    db.SSPodrucje.Add(item);
+                    db.SaveChanges();
+                }
+            }
+            TempData["poruka"] = "Plan je kopiran";
+            return RedirectToAction("Index");
+        }
         public FileStreamResult Ispis (int id)
         {
             SSModel model = new SSModel();
@@ -469,5 +529,16 @@ namespace Planiranje.Controllers
             PlanSsPodrucjaReport report = new PlanSsPodrucjaReport(model.SS_Podrucja);
             return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
         }
-	}
+        private SelectList VratiSelectList()
+        {
+            List<Sk_godina> skGodina = baza.SkolskaGodina.ToList();
+            var selectListItem = new List<SelectListItem>();
+            foreach (var item in skGodina)
+            {
+                selectListItem.Add(new SelectListItem { Value = item.Sk_Godina.ToString(), Text = item.Sk_Godina + "./" + (item.Sk_Godina + 1).ToString() + "." });
+            }
+            var select = new SelectList(selectListItem, "Value", "Text");
+            return select;
+        }        
+    }
 }

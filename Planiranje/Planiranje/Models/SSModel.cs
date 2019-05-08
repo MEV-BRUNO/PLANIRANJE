@@ -15,8 +15,7 @@ namespace Planiranje.Models
 		public List<SS_Plan_podrucje> SS_Podrucja { get; set;  }
 		public SS_Plan SS_Plan { get; set; }
 		public SS_Plan_podrucje SS_Plan_Podrucje { get; set; }
-		public int Ak_godina { get; set; }
-        public List<Sk_godina> SkGodina { get; set; }
+		public int Ak_godina { get; set; }        
 		public List<Podrucje_rada> PodrucjeRada { get; set; }
         public List<Oblici> Oblici { get; set; }
         public List<Subjekti> Subjekti { get; set; }
@@ -38,10 +37,7 @@ namespace Planiranje.Models
         {
             get { return new SelectList(Ciljevi, "Naziv", "Naziv"); }
         }
-        public IEnumerable<SelectListItem> SKGodinaItems
-        {
-            get { return new SelectList(SkGodina, "sk_godina", "sk_godina"); }
-        }
+        public SelectList SKGodinaItems { get; set; }
         public IEnumerable<SelectListItem> ZadaciItems
         {
             get { return new SelectList(Zadaci, "Naziv", "Naziv"); }
