@@ -9,13 +9,13 @@
             <td class="col-lg-3">
                 Naziv
             </td>
-            <td class="col-lg-2">
+            <td class="col-lg-1">
                 Šk. godina
             </td>
             <td class="col-lg-4">
                Opis
             </td>
-            <td class="col-lg-2">
+            <td class="col-lg-3">
                 Akcija
             </td>
         </tr>
@@ -43,8 +43,9 @@
             <td>
                 <div class="pull-right">
                     <a onclick="reloadPage('@Url.Action("Details","PlanOs1",new { id=item.Id_plan})')" class="btn btn-success btn-xs ">Detalji</a>
-                    <a onclick="showModal('@Url.Action("Edit","PlanOs1",new { id = item.Id_plan })')"  class="btn btn-primary btn-xs ">Uredi</a>
-                    <a onclick="showModal('@Url.Action("Delete","PlanOs1",new { id = item.Id_plan })')"  class="btn btn-danger btn-xs ">Obriši</a>
+                    <a onclick="showModal('@Url.Action("Edit","PlanOs1",new { id = item.Id_plan })')" class="btn btn-primary btn-xs ">Uredi</a>
+                    <a onclick="showModal('@Url.Action("Delete","PlanOs1",new { id = item.Id_plan })')" class="btn btn-danger btn-xs ">Obriši</a>
+                    <a onclick="showModal('@Url.Action("Kopiraj","PlanOs1",new { id = item.Id_plan })')" class="btn btn-default btn-xs ">Kopiraj</a>
                 </div>
             </td>
         </tr>

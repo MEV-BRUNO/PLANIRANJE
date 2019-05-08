@@ -582,6 +582,7 @@
     <Content Include="Views\PlanOs1\NovaAkcija.cshtml" />
     <Content Include="Views\PlanOs1\UrediAkcija.cshtml" />
     <Content Include="Views\PlanOs1\ObrisiAkcija.cshtml" />
+    <Content Include="Views\PlanOs1\Kopiraj.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
