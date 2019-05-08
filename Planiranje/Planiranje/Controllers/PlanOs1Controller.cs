@@ -1195,32 +1195,25 @@ namespace Planiranje.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-            PlanOs1View plan = new PlanOs1View();
-            plan.Aktivnosti = new List<Aktivnost>();
-            plan.Aktivnosti = aktivnost_db.ReadAktivnost();
-            plan.Ciljevi = new List<Ciljevi>();
-            plan.Ciljevi = ciljevi_db.ReadCiljevi();
-            plan.PodrucjeRada = new List<Podrucje_rada>();
-            plan.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();
-            plan.OsPlan1 = new OS_Plan_1();
-            plan.OsPlan1 = baza.OsPlan1.SingleOrDefault(s => s.Id_plan == id);
-
-            plan.OsPlan1Podrucje = new List<OS_Plan_1_podrucje>();
+            PlanOs1View plan = new PlanOs1View();           
+            plan.Aktivnosti = aktivnost_db.ReadAktivnost();            
+            plan.Ciljevi = ciljevi_db.ReadCiljevi();            
+            plan.PodrucjeRada = podrucje_rada_db.ReadPodrucjeRada();            
+            plan.OsPlan1 = baza.OsPlan1.SingleOrDefault(s => s.Id_plan == id);            
             plan.OsPlan1Podrucje = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == id).ToList();
+            plan.OsPlan1Aktivnost = (from pl in baza.OsPlan1
+                                     join pod in baza.OsPlan1Podrucje on pl.Id_plan equals pod.Id_glavni_plan
+                                     join akt in baza.OsPlan1Aktivnost on pod.Id_plan equals akt.Id_podrucje
+                                     where pl.Id_plan == id && pl.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId
+                                     select akt).ToList();
+            plan.OsPlan1Akcija = (from pl in baza.OsPlan1
+                                  join pod in baza.OsPlan1Podrucje on pl.Id_plan equals pod.Id_glavni_plan
+                                  join akt in baza.OsPlan1Aktivnost on pod.Id_plan equals akt.Id_podrucje
+                                  join akc in baza.OsPlan1Akcija on akt.Id_plan equals akc.Id_aktivnost
+                                  where pl.Id_plan == id && pl.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId
+                                  select akc).ToList();
 
-            plan.OsPlan1Aktivnost = new List<OS_Plan_1_aktivnost>();
-            foreach(var item in plan.OsPlan1Podrucje)
-            {
-                List<OS_Plan_1_aktivnost> a = new List<OS_Plan_1_aktivnost>();
-                a = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == item.Id_plan).ToList();
-                foreach(var i in a)
-                {
-                    plan.OsPlan1Aktivnost.Add(i);
-                }
-            }
-            Pedagog p = new Pedagog();
-            int id_p = PlaniranjeSession.Trenutni.PedagogId;
-            p = baza.Pedagog.SingleOrDefault(s => s.Id_Pedagog == id_p);
+            Pedagog p = baza.Pedagog.SingleOrDefault(s => s.Id_Pedagog == PlaniranjeSession.Trenutni.PedagogId);
             PlanOs1DetailsReport report = new PlanOs1DetailsReport(plan, p);
 
             return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
