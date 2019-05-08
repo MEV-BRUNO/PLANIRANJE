@@ -65,7 +65,7 @@ namespace Planiranje.Reports
 				t.AddCell(VratiCeliju(plan.Oblici, tekst, false, BaseColor.WHITE));
 				t.AddCell(VratiCeliju(plan.Suradnici, tekst, false, BaseColor.WHITE));
 				t.AddCell(VratiCeliju(plan.Mjesto, tekst, false, BaseColor.WHITE));
-				t.AddCell(VratiCeliju(plan.Sati.ToString(), tekst, false, BaseColor.WHITE));
+				t.AddCell(VratiCeliju(plan.Vrijeme, tekst, false, BaseColor.WHITE));
 				t.AddCell(VratiCeliju(plan.Ishodi, tekst, false, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(plan.Sati.ToString(), tekst, false, BaseColor.WHITE));
             }
