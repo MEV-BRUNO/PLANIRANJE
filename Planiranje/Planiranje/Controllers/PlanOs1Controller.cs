@@ -1168,7 +1168,7 @@ namespace Planiranje.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-            model.OsPlan1Podrucje = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == id).ToList();
+            model.OsPlan1Podrucje = baza.OsPlan1Podrucje.Where(w => w.Id_glavni_plan == id).OrderBy(o=>o.Red_br_podrucje).ToList();
             model.OsPlan1Aktivnost = (from pl in baza.OsPlan1
                                       join pod in baza.OsPlan1Podrucje on pl.Id_plan equals pod.Id_glavni_plan
                                       join akt in baza.OsPlan1Aktivnost on pod.Id_plan equals akt.Id_podrucje

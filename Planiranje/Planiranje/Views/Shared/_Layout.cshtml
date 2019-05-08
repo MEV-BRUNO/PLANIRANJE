@@ -174,7 +174,9 @@
                 success: function (data) {
                     if ($(data)[0].tagName === "DIV") {
                         $('#content').html(data);
-                        window.history.replaceState(data, "Naslov", path);
+                        if (!path.includes("Pomak")) {
+                            window.history.replaceState(data, "Naslov", path);
+                        }                        
                     } else {
                         location.reload();
                     }
@@ -183,7 +185,7 @@
                     alert(xhr.responseText);
                 }
             });
-        }
+        }        
     </script>
     <script>
         function smoothscroll() {

@@ -91,9 +91,8 @@
 														<tbody>
 															@{int brojac = 1;}
 															@foreach (var item in Model.OsPlan1Podrucje)
-                                                            {
-                                                                var podrucje = new Podrucje_rada();
-                                                                podrucje = Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje);
+                                                            {                                                                
+                                                                var podrucje = Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje);
 
 																<tr>
 																	<td class="col-md-1">@brojac</td>
