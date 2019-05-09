@@ -345,6 +345,53 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Biljeska", new { id = model.Id_ucenik_zapisnik });
         }
+        public ActionResult Ispis(int godina, int id)
+        {
+            //id je id učenika
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Ucenik ucenik = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
+            if (ucenik == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            int idUcenikRazred = (from uc in baza.Ucenik
+                                  join ur in baza.UcenikRazred on uc.Id_ucenik equals ur.Id_ucenik
+                                  join raz in baza.RazredniOdjel on ur.Id_razred equals raz.Id
+                                  where raz.Sk_godina == godina && uc.Id_ucenik == id
+                                  select ur.Id).FirstOrDefault();
+            Ucenik_zapisnik model = baza.UcenikZapisnik.SingleOrDefault(s => s.Id_ucenik_razred==idUcenikRazred && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            int idUcenikZapisnik = model.Id;
+            List<Ucenik_zapisnik_biljeska> biljeske = baza.UcenikZapisnikBiljeska.Where(w => w.Id_ucenik_zapisnik == idUcenikZapisnik).ToList();
+            
+            Skola skola = (from sk in baza.Skola
+                           join raz in baza.RazredniOdjel on sk.Id_skola equals raz.Id_skola
+                           join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred
+                           where ur.Id == idUcenikRazred
+                           select sk).FirstOrDefault();
+            RazredniOdjel odjel = (from raz in baza.RazredniOdjel
+                                   join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred
+                                   where ur.Id == idUcenikRazred
+                                   select raz).FirstOrDefault();
+            Nastavnik razrednik = (from nas in baza.Nastavnik
+                                   join raz in baza.RazredniOdjel on nas.Id equals raz.Id_razrednik
+                                   join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred
+                                   where ur.Id == idUcenikRazred
+                                   select nas).FirstOrDefault();
+            
+            int idUcenik = ucenik.Id_ucenik;
+            List<Obitelj> roditelji = baza.Obitelj.Where(w => w.Id_ucenik == idUcenik).ToList();
+            Pedagog pedagog = baza.Pedagog.SingleOrDefault(s => s.Id_Pedagog == PlaniranjeSession.Trenutni.PedagogId);
+
+            UcenikZapisnikReport report = new UcenikZapisnikReport(skola, ucenik, odjel, model, biljeske, pedagog, razrednik, roditelji);
+            return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+        }
         private SelectList VratiSelectOdgojniUtjecaj()
         {
             SelectList select = new SelectList(new List<SelectListItem>()

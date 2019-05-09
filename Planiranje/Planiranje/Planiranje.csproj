@@ -324,6 +324,7 @@
     <Compile Include="Reports\RoditeljRazgovorReport.cs" />
     <Compile Include="Reports\RoditeljUgovorReport.cs" />
     <Compile Include="Reports\UcenikBiljeskaReport.cs" />
+    <Compile Include="Reports\UcenikZapisnikReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Baza_arhiva\Plan\dnevnik_rada_42_A.JPG" />
