@@ -15,8 +15,7 @@ namespace Planiranje.Controllers
 {
     public class PlanOs1Controller : Controller
     {
-        private BazaPodataka baza = new BazaPodataka();
-        private OS_Plan_1_DBHandle planovi_os1 = new OS_Plan_1_DBHandle();
+        private BazaPodataka baza = new BazaPodataka();        
         private Ciljevi_DBHandle ciljevi_db = new Ciljevi_DBHandle();
         private Podrucje_rada_DBHandle podrucje_rada_db = new Podrucje_rada_DBHandle();
         private Aktivnost_DBHandle aktivnost_db = new Aktivnost_DBHandle();     
