@@ -40,7 +40,9 @@ CREATE TABLE nastavnik (
   prezime text,
   titula text,
   kontakt text,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  CONSTRAINT nastavnik_to_skola FOREIGN KEY (id_skola) REFERENCES skola(id_skola),
+  CONSTRAINT nastavnik_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog)
 );
 
 CREATE TABLE RazredniOdjel (
@@ -51,7 +53,10 @@ CREATE TABLE RazredniOdjel (
   razred tinyint,
   id_razrednik int(20),
   id_pedagog int(20),
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  CONSTRAINT razredniOdjel_to_skola FOREIGN KEY (id_skola) REFERENCES skola(id_skola),
+  CONSTRAINT razredniOdjel_to_nastavnik FOREIGN KEY (id_razrednik) REFERENCES nastavnik(id),
+  CONSTRAINT razredniOdjel_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog)
 );
 
 CREATE TABLE ucenik (
@@ -87,14 +92,17 @@ CREATE TABLE ucenik_razred (
   id_razred int(20) NOT NULL,
   id_ucenik int(20) NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT ucenik_razred_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik) ON DELETE CASCADE
+  CONSTRAINT ucenik_razred_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik),
+  CONSTRAINT ucenik_razred_to_razredniOdjel FOREIGN KEY (id_razred) REFERENCES RazredniOdjel(id)
 );
 
 CREATE TABLE pedagog_skola (
   id int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
   id_skola int(20) NOT NULL,
-  PRIMARY KEY (id)   
+  PRIMARY KEY (id),
+  CONSTRAINT pedagog_skola_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),
+  CONSTRAINT pedagog_skola_to_skola FOREIGN KEY (id_skola) REFERENCES skola(id_skola)  
 );
 
 CREATE TABLE aktivnost (
@@ -163,7 +171,8 @@ CREATE TABLE pracenje_ucenika (
   zakljucak text,
   PRIMARY KEY (id),
   KEY (id_ucenik_razred),
-  CONSTRAINT pracenje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
+  CONSTRAINT pracenje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id),
+  CONSTRAINT pracenje_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog)
 );
 
 CREATE TABLE postignuce (
@@ -175,6 +184,8 @@ CREATE TABLE postignuce (
   napomena text,
   PRIMARY KEY (id_postignuce),  
   KEY (id_pedagog),
+  CONSTRAINT postignuce_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id),
+  CONSTRAINT postignuce_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),
   CONSTRAINT postignuce_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
 ); 
 
@@ -186,7 +197,8 @@ CREATE TABLE neposredni_rad (
   napomena text,
   PRIMARY KEY (id),
   KEY (id_pedagog),
-  CONSTRAINT rad_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
+  CONSTRAINT rad_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id),
+  CONSTRAINT rad_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog)
 ); 
 
 CREATE TABLE popis_ucenika (
@@ -208,7 +220,8 @@ CREATE TABLE ucenik_biljeska (
   zapazanje text,
   PRIMARY KEY (id_biljeska),
   KEY (id_ucenik_razred),
-  CONSTRAINT biljeska_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
+  CONSTRAINT biljeska_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id),
+  CONSTRAINT biljeska_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog)
 );
 
 CREATE TABLE mjesecna_biljeska (
@@ -219,7 +232,7 @@ CREATE TABLE mjesecna_biljeska (
   sk_godina int(20) NOT NULL,
   PRIMARY KEY (id),
   KEY (id_ucenik_biljeska),
-  CONSTRAINT mj_biljeska_to_biljeska FOREIGN KEY (id_ucenik_biljeska) REFERENCES ucenik_biljeska (id_biljeska)
+  CONSTRAINT mj_biljeska_to_biljeska FOREIGN KEY (id_ucenik_biljeska) REFERENCES ucenik_biljeska (id_biljeska) ON DELETE CASCADE
 );
 
 CREATE TABLE promatranje_ucenika (
@@ -238,7 +251,8 @@ CREATE TABLE promatranje_ucenika (
   zakljucak text,
   PRIMARY KEY (id),
   KEY (id_ucenik_razred),
-  CONSTRAINT promatranje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)  
+  CONSTRAINT promatranje_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id),
+  CONSTRAINT promatranje_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog)  
 );
 
 CREATE TABLE ucenik_zapisnik (
@@ -260,7 +274,8 @@ CREATE TABLE ucenik_zapisnik (
   podaci_o_naglim_promjenama text,
   izrecene_pedagoske_mjere text,
   PRIMARY KEY(id),
-  CONSTRAINT zapisnik_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
+  CONSTRAINT zapisnik_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id),
+  CONSTRAINT zapisnik_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog)
 );
 
 CREATE TABLE ucenik_zapisnik_biljeska (
@@ -293,7 +308,9 @@ CREATE TABLE roditelj_biljeska (
   zakljucak2 text,
   zapazanje text,
   PRIMARY KEY (id),
-  CONSTRAINT roditelj_biljeska_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
+  CONSTRAINT roditelj_biljeska_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id),
+  CONSTRAINT roditelj_biljeska_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),
+  CONSTRAINT roditelj_biljeska_to_obitelj FOREIGN KEY (id_roditelj) REFERENCES obitelj(id_obitelj)
 );  
 
 CREATE TABLE roditelj_procjena (
@@ -313,7 +330,9 @@ CREATE TABLE roditelj_procjena (
   ocekivanja text,
   dodatni_podaci text,
   PRIMARY KEY(id),
-  CONSTRAINT roditelj_procjena_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
+  CONSTRAINT roditelj_procjena_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id),
+  CONSTRAINT roditelj_procjena_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),
+  CONSTRAINT roditelj_procjena_to_obitelj FOREIGN KEY (id_roditelj) REFERENCES obitelj(id_obitelj)
 );
 
 CREATE TABLE roditelj_razgovor (
@@ -333,7 +352,9 @@ CREATE TABLE roditelj_razgovor (
   izvjestiti text,
   datum_slijedeci datetime,
   PRIMARY KEY(id),
-  CONSTRAINT roditelj_razgovor_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
+  CONSTRAINT roditelj_razgovor_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id),
+  CONSTRAINT roditelj_razgovor_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),
+  CONSTRAINT roditelj_razgovor_to_obitelj FOREIGN KEY (id_roditelj) REFERENCES obitelj(id_obitelj)
 );
 
 CREATE TABLE roditelj_ugovor (
@@ -357,7 +378,9 @@ CREATE TABLE roditelj_ugovor (
   izvjesce text,
   ostala_zapazanja text,
   PRIMARY KEY(id),
-  CONSTRAINT roditelj_ugovor_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id)
+  CONSTRAINT roditelj_ugovor_to_ucenik_razred FOREIGN KEY(id_ucenik_razred) REFERENCES ucenik_razred(id),
+  CONSTRAINT roditelj_ugovor_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),
+  CONSTRAINT roditelj_ugovor_to_obitelj FOREIGN KEY (id_roditelj) REFERENCES obitelj(id_obitelj)
 );
 
 CREATE TABLE nastavnik_analiza (
@@ -383,7 +406,10 @@ CREATE TABLE nastavnik_analiza (
   prijedlozi text,
   uvid text,
   PRIMARY KEY (id),
-  CONSTRAINT nas_analiza_to_odjel FOREIGN KEY(id_odjel) REFERENCES razredniodjel(id)  
+  CONSTRAINT nas_analiza_to_odjel FOREIGN KEY(id_odjel) REFERENCES razredniodjel(id),
+  CONSTRAINT nas_analiza_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),
+  CONSTRAINT nas_analiza_to_nastavnik FOREIGN KEY (id_nastavnik) REFERENCES nastavnik(id),
+  CONSTRAINT nas_analiza_to_skola FOREIGN KEY (id_skola) REFERENCES skola(id_skola)  
 );
 
 CREATE TABLE nastavnik_protokol (
@@ -438,7 +464,11 @@ CREATE TABLE nastavnik_protokol (
   daje_ocjenu_za_ucenje_u_razredu tinyint,
   kratki_komentar_nastavnika text,
   prijedlozi_za_daljnje_unapredjenje_rada text,
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  CONSTRAINT nas_protokol_to_odjel FOREIGN KEY(id_odjel) REFERENCES razredniodjel(id),
+  CONSTRAINT nas_protokol_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),
+  CONSTRAINT nas_protokol_to_nastavnik FOREIGN KEY (id_nastavnik) REFERENCES nastavnik(id),
+  CONSTRAINT nas_protokol_to_skola FOREIGN KEY (id_skola) REFERENCES skola(id_skola)
 );
 
 CREATE TABLE nastavnik_uvid (
@@ -493,7 +523,11 @@ CREATE TABLE nastavnik_uvid (
   ocjene_u_imeniku_su text,
   poslovi_razrednika_izvijesca_i_analize text,
   procjena_vodjenja_nastavne_dokumentacije text,
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  CONSTRAINT nas_uvid_to_odjel FOREIGN KEY(id_odjel) REFERENCES razredniodjel(id),
+  CONSTRAINT nas_uvid_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),
+  CONSTRAINT nas_uvid_to_nastavnik FOREIGN KEY (id_nastavnik) REFERENCES nastavnik(id),
+  CONSTRAINT nas_uvid_to_skola FOREIGN KEY (id_skola) REFERENCES skola(id_skola)  
 );
 
 CREATE TABLE nastavnik_obrazac (
@@ -582,7 +616,11 @@ CREATE TABLE nastavnik_obrazac (
   Trazi_ucenike_da_objasne_jedni_drugima tinyint,
   Redovito_provjerava_jesu_li_ucenici_razumjeli tinyint,
   Postavlja_pitanja_koja_poticu_davanje_povratne_informacije tinyint,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  CONSTRAINT nas_obrazac_to_odjel FOREIGN KEY(id_odjel) REFERENCES razredniodjel(id),
+  CONSTRAINT nas_obrazac_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),
+  CONSTRAINT nas_obrazac_to_nastavnik FOREIGN KEY (id_nastavnik) REFERENCES nastavnik(id),
+  CONSTRAINT nas_obrazac_to_skola FOREIGN KEY (id_skola) REFERENCES skola(id_skola)  
 );
 
 CREATE TABLE dokument (
@@ -591,7 +629,9 @@ CREATE TABLE dokument (
   id_skola int(20) NOT NULL,
   path text,
   opis text,
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),  
+  CONSTRAINT dokument_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),  
+  CONSTRAINT dokument_to_skola FOREIGN KEY (id_skola) REFERENCES skola(id_skola)  
 );
 
 CREATE TABLE os_plan_1 (
@@ -602,7 +642,7 @@ CREATE TABLE os_plan_1 (
   opis text,
   PRIMARY KEY (id_plan),
   KEY id_pedagog (id_pedagog),
-  CONSTRAINT os_plan_1_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
+  CONSTRAINT osp1_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
 );
 
 CREATE TABLE os_plan_1_podrucje (
@@ -627,7 +667,8 @@ CREATE TABLE os_plan_1_podrucje (
   mj_12 int(11) DEFAULT NULL,
   PRIMARY KEY (id_plan),
   KEY opis_podrucje (opis_podrucje),  
-  CONSTRAINT os_plan_1_podrucje_ibfk_1 FOREIGN KEY (opis_podrucje) REFERENCES podrucje_rada (id_podrucje)  
+  CONSTRAINT osp1_pdrucje_to_podrucje_rada FOREIGN KEY (opis_podrucje) REFERENCES podrucje_rada (id_podrucje),
+  CONSTRAINT osp1_to_osp1 FOREIGN KEY (id_glavni_plan) REFERENCES os_plan_1 (id_plan) ON DELETE CASCADE  
 );
 
 CREATE TABLE os_plan_1_aktivnost (
@@ -652,7 +693,8 @@ CREATE TABLE os_plan_1_aktivnost (
   PRIMARY KEY (id_plan),
   KEY opis_aktivnost (opis_aktivnost),
   KEY red_broj_aktivnost (red_broj_aktivnost),
-  CONSTRAINT os_plan_1_aktivnost_ibfk_1 FOREIGN KEY (opis_aktivnost) REFERENCES aktivnost (id_aktivnost)  
+  CONSTRAINT osp1_aktivnost_to_aktivnost FOREIGN KEY (opis_aktivnost) REFERENCES aktivnost (id_aktivnost),
+  CONSTRAINT osp1_aktivnost_to_osp1_podrucje FOREIGN KEY (id_podrucje) REFERENCES os_plan_1_podrucje (id_plan) ON DELETE CASCADE   
 );
 
 CREATE TABLE os_plan_1_akcija (
@@ -674,7 +716,8 @@ CREATE TABLE os_plan_1_akcija (
   mj_10 int(11) DEFAULT NULL,
   mj_11 int(11) DEFAULT NULL,
   mj_12 int(11) DEFAULT NULL,
-  PRIMARY KEY (id)  
+  PRIMARY KEY (id),
+  CONSTRAINT osp1_akcija_to_osp1_aktivnost FOREIGN KEY (id_aktivnost) REFERENCES os_plan_1_aktivnost (id_plan) ON DELETE CASCADE 
 );
 
 CREATE TABLE os_plan_2 (
@@ -685,7 +728,7 @@ CREATE TABLE os_plan_2 (
   opis text,
   PRIMARY KEY (id_plan),
   KEY id_pedagog (id_pedagog),
-  CONSTRAINT os_plan_2_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
+  CONSTRAINT osp2_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
 );
 
 CREATE TABLE os_plan_2_podrucje (
@@ -699,7 +742,8 @@ CREATE TABLE os_plan_2_podrucje (
   oblici text,
   vrijeme text,
   sati int(11) NOT NULL,   
-  PRIMARY KEY (id_plan)  
+  PRIMARY KEY (id_plan),
+  CONSTRAINT osp2_podrucje_to_osp2 FOREIGN KEY (id_glavni_plan) REFERENCES os_plan_2 (id_plan) ON DELETE CASCADE  
 );
 
 CREATE TABLE os_plan_2_aktivnost (
@@ -708,7 +752,8 @@ CREATE TABLE os_plan_2_aktivnost (
   red_br_aktivnost int(11) NOT NULL,
   opis_aktivnost text, 
   sati int(11) NOT NULL, 
-  PRIMARY KEY (id_plan)  
+  PRIMARY KEY (id_plan),
+  CONSTRAINT osp2_aktivnost_to_osp2_podrucje FOREIGN KEY (id_podrucje) REFERENCES os_plan_2_podrucje (id_plan) ON DELETE CASCADE 
 );
 
 CREATE TABLE os_plan_2_akcija (
@@ -717,7 +762,8 @@ CREATE TABLE os_plan_2_akcija (
   red_br_akcija int(11) NOT NULL,
   opis_akcija text,
   sati int(11) NOT NULL,
-  PRIMARY KEY (id_plan)   
+  PRIMARY KEY (id_plan),
+  CONSTRAINT osp2_akcija_to_osp2_aktivnost FOREIGN KEY (id_aktivnost) REFERENCES os_plan_2_aktivnost (id_plan) ON DELETE CASCADE  
 );
 
 CREATE TABLE ss_plan (
@@ -728,7 +774,7 @@ CREATE TABLE ss_plan (
   opis text,
   PRIMARY KEY (id_plan),
   KEY id_pedagog (id_pedagog),
-  CONSTRAINT ss_plan_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
+  CONSTRAINT ss_plan_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
 );
 
 CREATE TABLE ss_plan_podrucje (
@@ -745,7 +791,8 @@ CREATE TABLE ss_plan_podrucje (
   ishodi text,
   sati int(20) NOT NULL,
   red_br int(20) NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  CONSTRAINT ss_plan_podrucje_to_ss_plan FOREIGN KEY (id_plan) REFERENCES ss_plan (id_plan) ON DELETE CASCADE
 );
 
 CREATE TABLE mjesecni_plan (
@@ -756,7 +803,7 @@ CREATE TABLE mjesecni_plan (
   opis text,
   PRIMARY KEY (id_plan),
   KEY id_pedagog (id_pedagog),
-  CONSTRAINT mjesecni_plan_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog) ON DELETE CASCADE
+  CONSTRAINT mj_plan_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
 );
 
 CREATE TABLE mjesecni_detalji (
@@ -770,7 +817,7 @@ CREATE TABLE mjesecni_detalji (
   br_sati int(11) NOT NULL,
   biljeska text,
   PRIMARY KEY (id),
-  CONSTRAINT mjdetalji_to_mjplan FOREIGN KEY (id_plan) REFERENCES mjesecni_plan (id_plan) ON DELETE CASCADE
+  CONSTRAINT mj_detalji_to_mj_plan FOREIGN KEY (id_plan) REFERENCES mjesecni_plan (id_plan) ON DELETE CASCADE
 );
 
 CREATE TABLE godisnji_plan (
@@ -784,7 +831,7 @@ CREATE TABLE godisnji_plan (
   god_fond_sati int(11) DEFAULT NULL,
   PRIMARY KEY (id_god),
   KEY id_pedagog (id_pedagog),
-  CONSTRAINT godisnji_plan_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
+  CONSTRAINT god_plan_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
 );
 
 CREATE TABLE godisnji_detalji (
@@ -804,7 +851,7 @@ CREATE TABLE godisnji_detalji (
   odmor_sati int(11) DEFAULT NULL,
   mj_fond_sati int(11) DEFAULT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT g_plan_det FOREIGN KEY (id_god) REFERENCES godisnji_plan(id_god) ON DELETE CASCADE
+  CONSTRAINT god_detalji_to_god_plan FOREIGN KEY (id_god) REFERENCES godisnji_plan (id_god) ON DELETE CASCADE
 );
 
 CREATE TABLE dnevnik_rada (
@@ -814,9 +861,7 @@ CREATE TABLE dnevnik_rada (
   naziv varchar(50) NOT NULL,
   opis text,
   datum datetime NOT NULL,
-  PRIMARY KEY (id_dnevnik),
-  KEY id_pedagog (id_pedagog),
-  CONSTRAINT dnevnik_rada_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
+  PRIMARY KEY (id_dnevnik)  
 );
 
 CREATE TABLE dnevnik_detalji (
@@ -827,13 +872,7 @@ CREATE TABLE dnevnik_detalji (
   aktivnost int(20) NOT NULL,
   suradnja int(20) DEFAULT NULL,
   zakljucak text,
-  PRIMARY KEY (id_dnevnik),
-  KEY aktivnost (aktivnost),
-  KEY subjekt (subjekt),
-  KEY suradnja (suradnja),
-  CONSTRAINT dnevnik_detalji_ibfk_1 FOREIGN KEY (aktivnost) REFERENCES aktivnost (id_aktivnost),
-  CONSTRAINT dnevnik_detalji_ibfk_2 FOREIGN KEY (subjekt) REFERENCES subjekti (id_subjekt),
-  CONSTRAINT dnevnik_detalji_ibfk_3 FOREIGN KEY (suradnja) REFERENCES pedagog (id_pedagog)
+  PRIMARY KEY (id_dnevnik)  
 );
 
 INSERT INTO skola VALUES (
