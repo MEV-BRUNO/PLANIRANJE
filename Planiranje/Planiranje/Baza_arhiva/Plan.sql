@@ -185,8 +185,7 @@ CREATE TABLE postignuce (
   PRIMARY KEY (id_postignuce),  
   KEY (id_pedagog),
   CONSTRAINT postignuce_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id),
-  CONSTRAINT postignuce_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog),
-  CONSTRAINT postignuce_to_ucenik_razred FOREIGN KEY (id_ucenik_razred) REFERENCES ucenik_razred(id)
+  CONSTRAINT postignuce_to_pedagog FOREIGN KEY (id_pedagog) REFERENCES pedagog(id_pedagog)  
 ); 
 
 CREATE TABLE neposredni_rad (
