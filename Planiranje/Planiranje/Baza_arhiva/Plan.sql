@@ -97,6 +97,57 @@ CREATE TABLE pedagog_skola (
   PRIMARY KEY (id)   
 );
 
+CREATE TABLE aktivnost (
+  id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
+  naziv text,
+  vrsta int NOT NULL,
+  PRIMARY KEY (id_aktivnost)
+);
+
+CREATE TABLE ciljevi (
+  id_cilj int(20) NOT NULL AUTO_INCREMENT,
+  naziv text,
+  vrsta int NOT NULL,
+  PRIMARY KEY (id_cilj)
+);
+
+CREATE TABLE oblici (
+  id_oblici int(20) NOT NULL AUTO_INCREMENT,
+  naziv text,
+  vrsta int NOT NULL,
+  PRIMARY KEY (id_oblici)
+);
+
+CREATE TABLE podrucje_rada (
+  id_podrucje int(20) NOT NULL AUTO_INCREMENT,
+  naziv text,
+  vrsta int NOT NULL,
+  PRIMARY KEY (id_podrucje)
+);
+
+CREATE TABLE subjekti (
+  id_subjekt int(20) NOT NULL AUTO_INCREMENT,
+  naziv text,
+  vrsta int NOT NULL,
+  PRIMARY KEY (id_subjekt)
+);
+
+CREATE TABLE zadaci (
+  id_zadatak int(20) NOT NULL AUTO_INCREMENT,
+  naziv text,
+  vrsta int NOT NULL,
+  PRIMARY KEY (id_zadatak)
+);
+
+CREATE TABLE aktivnost_akcija (
+  id_akcija int(20) NOT NULL AUTO_INCREMENT,
+  naziv varchar(50) NOT NULL,
+  id_aktivnost int(20) DEFAULT NULL,
+  PRIMARY KEY (id_akcija),
+  KEY id_aktivnost (id_aktivnost),
+  CONSTRAINT aktivnost_akcija_ibfk_1 FOREIGN KEY (id_aktivnost) REFERENCES aktivnost (id_aktivnost) ON DELETE CASCADE
+);
+
 CREATE TABLE pracenje_ucenika (
   id int(20) NOT NULL AUTO_INCREMENT,  
   id_ucenik_razred int(20) NOT NULL,
@@ -543,48 +594,6 @@ CREATE TABLE dokument (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE aktivnost (
-  id_aktivnost int(20) NOT NULL AUTO_INCREMENT,
-  naziv text,
-  vrsta int NOT NULL,
-  PRIMARY KEY (id_aktivnost)
-);
-
-CREATE TABLE ciljevi (
-  id_cilj int(20) NOT NULL AUTO_INCREMENT,
-  naziv text,
-  vrsta int NOT NULL,
-  PRIMARY KEY (id_cilj)
-);
-
-CREATE TABLE oblici (
-  id_oblici int(20) NOT NULL AUTO_INCREMENT,
-  naziv text,
-  vrsta int NOT NULL,
-  PRIMARY KEY (id_oblici)
-);
-
-CREATE TABLE podrucje_rada (
-  id_podrucje int(20) NOT NULL AUTO_INCREMENT,
-  naziv text,
-  vrsta int NOT NULL,
-  PRIMARY KEY (id_podrucje)
-);
-
-CREATE TABLE subjekti (
-  id_subjekt int(20) NOT NULL AUTO_INCREMENT,
-  naziv text,
-  vrsta int NOT NULL,
-  PRIMARY KEY (id_subjekt)
-);
-
-CREATE TABLE zadaci (
-  id_zadatak int(20) NOT NULL AUTO_INCREMENT,
-  naziv text,
-  vrsta int NOT NULL,
-  PRIMARY KEY (id_zadatak)
-);
-
 CREATE TABLE os_plan_1 (
   id_plan int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
@@ -675,15 +684,6 @@ CREATE TABLE godisnji_detalji (
   mj_fond_sati int(11) DEFAULT NULL,
   PRIMARY KEY (id),
   CONSTRAINT g_plan_det FOREIGN KEY (id_god) REFERENCES godisnji_plan(id_god) ON DELETE CASCADE
-);
-
-CREATE TABLE aktivnost_akcija (
-  id_akcija int(20) NOT NULL AUTO_INCREMENT,
-  naziv varchar(50) NOT NULL,
-  id_aktivnost int(20) DEFAULT NULL,
-  PRIMARY KEY (id_akcija),
-  KEY id_aktivnost (id_aktivnost),
-  CONSTRAINT aktivnost_akcija_ibfk_1 FOREIGN KEY (id_aktivnost) REFERENCES aktivnost (id_aktivnost) ON DELETE CASCADE
 );
 
 CREATE TABLE dnevnik_rada (
