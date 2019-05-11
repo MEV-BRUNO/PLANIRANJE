@@ -605,6 +605,78 @@ CREATE TABLE os_plan_1 (
   CONSTRAINT os_plan_1_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
 );
 
+CREATE TABLE os_plan_1_podrucje (
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_glavni_plan int(20) NOT NULL,
+  red_br_podrucje int(11) NOT NULL,
+  opis_podrucje int(20) NOT NULL,
+  potrebno_sati text,
+  cilj text,
+  br_sati int(11) DEFAULT NULL,
+  mj_1 int(11) DEFAULT NULL,
+  mj_2 int(11) DEFAULT NULL,
+  mj_3 int(11) DEFAULT NULL,
+  mj_4 int(11) DEFAULT NULL,
+  mj_5 int(11) DEFAULT NULL,
+  mj_6 int(11) DEFAULT NULL,
+  mj_7 int(11) DEFAULT NULL,
+  mj_8 int(11) DEFAULT NULL,
+  mj_9 int(11) DEFAULT NULL,
+  mj_10 int(11) DEFAULT NULL,
+  mj_11 int(11) DEFAULT NULL,
+  mj_12 int(11) DEFAULT NULL,
+  PRIMARY KEY (id_plan),
+  KEY opis_podrucje (opis_podrucje),  
+  CONSTRAINT os_plan_1_podrucje_ibfk_1 FOREIGN KEY (opis_podrucje) REFERENCES podrucje_rada (id_podrucje)  
+);
+
+CREATE TABLE os_plan_1_aktivnost (
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_podrucje int(20) NOT NULL,
+  red_broj_aktivnost int(11) NOT NULL,
+  opis_aktivnost int(20) NOT NULL,  
+  potrebno_sati text,
+  br_sati int(11) DEFAULT NULL,
+  mj_1 int(11) DEFAULT NULL,
+  mj_2 int(11) DEFAULT NULL,
+  mj_3 int(11) DEFAULT NULL,
+  mj_4 int(11) DEFAULT NULL,
+  mj_5 int(11) DEFAULT NULL,
+  mj_6 int(11) DEFAULT NULL,
+  mj_7 int(11) DEFAULT NULL,
+  mj_8 int(11) DEFAULT NULL,
+  mj_9 int(11) DEFAULT NULL,
+  mj_10 int(11) DEFAULT NULL,
+  mj_11 int(11) DEFAULT NULL,
+  mj_12 int(11) DEFAULT NULL,
+  PRIMARY KEY (id_plan),
+  KEY opis_aktivnost (opis_aktivnost),
+  KEY red_broj_aktivnost (red_broj_aktivnost),
+  CONSTRAINT os_plan_1_aktivnost_ibfk_1 FOREIGN KEY (opis_aktivnost) REFERENCES aktivnost (id_aktivnost)  
+);
+
+CREATE TABLE os_plan_1_akcija (
+  id int(20) NOT NULL AUTO_INCREMENT,  
+  id_aktivnost int(20) NOT NULL,
+  red_br_akcija int(20) NOT NULL,
+  opis_akcija text,  
+  potrebno_sati text,
+  br_sati int(11) NOT NULL,
+  mj_1 int(11) DEFAULT NULL,
+  mj_2 int(11) DEFAULT NULL,
+  mj_3 int(11) DEFAULT NULL,
+  mj_4 int(11) DEFAULT NULL,
+  mj_5 int(11) DEFAULT NULL,
+  mj_6 int(11) DEFAULT NULL,
+  mj_7 int(11) DEFAULT NULL,
+  mj_8 int(11) DEFAULT NULL,
+  mj_9 int(11) DEFAULT NULL,
+  mj_10 int(11) DEFAULT NULL,
+  mj_11 int(11) DEFAULT NULL,
+  mj_12 int(11) DEFAULT NULL,
+  PRIMARY KEY (id)  
+);
+
 CREATE TABLE os_plan_2 (
   id_plan int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
@@ -616,6 +688,38 @@ CREATE TABLE os_plan_2 (
   CONSTRAINT os_plan_2_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
 );
 
+CREATE TABLE os_plan_2_podrucje (
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_glavni_plan int(20) NOT NULL,
+  red_br_podrucje int(11) NOT NULL,
+  opis_podrucje text,
+  cilj text,
+  zadaci text,
+  subjekti text,
+  oblici text,
+  vrijeme text,
+  sati int(11) NOT NULL,   
+  PRIMARY KEY (id_plan)  
+);
+
+CREATE TABLE os_plan_2_aktivnost (
+  id_plan int(20) NOT NULL AUTO_INCREMENT,
+  id_podrucje int(20) NOT NULL,
+  red_br_aktivnost int(11) NOT NULL,
+  opis_aktivnost text, 
+  sati int(11) NOT NULL, 
+  PRIMARY KEY (id_plan)  
+);
+
+CREATE TABLE os_plan_2_akcija (
+  id_plan int(20) NOT NULL AUTO_INCREMENT,  
+  id_aktivnost int(20) NOT NULL,
+  red_br_akcija int(11) NOT NULL,
+  opis_akcija text,
+  sati int(11) NOT NULL,
+  PRIMARY KEY (id_plan)   
+);
+
 CREATE TABLE ss_plan (
   id_plan int(20) NOT NULL AUTO_INCREMENT,
   id_pedagog int(20) NOT NULL,
@@ -625,6 +729,23 @@ CREATE TABLE ss_plan (
   PRIMARY KEY (id_plan),
   KEY id_pedagog (id_pedagog),
   CONSTRAINT ss_plan_ibfk_1 FOREIGN KEY (id_pedagog) REFERENCES pedagog (id_pedagog)
+);
+
+CREATE TABLE ss_plan_podrucje (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_plan int(20) NOT NULL,
+  opis_podrucje text,
+  svrha text,
+  zadaca text,
+  sadrzaj text,
+  oblici text,
+  suradnici text,
+  mjesto text,
+  vrijeme text,
+  ishodi text,
+  sati int(20) NOT NULL,
+  red_br int(20) NOT NULL,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE mjesecni_plan (
@@ -715,133 +836,12 @@ CREATE TABLE dnevnik_detalji (
   CONSTRAINT dnevnik_detalji_ibfk_3 FOREIGN KEY (suradnja) REFERENCES pedagog (id_pedagog)
 );
 
-CREATE TABLE os_plan_2_akcija (
-  id_plan int(20) NOT NULL AUTO_INCREMENT,  
-  id_aktivnost int(20) NOT NULL,
-  red_br_akcija int(11) NOT NULL,
-  opis_akcija text,
-  sati int(11) NOT NULL,
-  PRIMARY KEY (id_plan)   
-);
-
-CREATE TABLE os_plan_1_akcija (
-  id int(20) NOT NULL AUTO_INCREMENT,  
-  id_aktivnost int(20) NOT NULL,
-  red_br_akcija int(20) NOT NULL,
-  opis_akcija text,  
-  potrebno_sati text,
-  br_sati int(11) NOT NULL,
-  mj_1 int(11) DEFAULT NULL,
-  mj_2 int(11) DEFAULT NULL,
-  mj_3 int(11) DEFAULT NULL,
-  mj_4 int(11) DEFAULT NULL,
-  mj_5 int(11) DEFAULT NULL,
-  mj_6 int(11) DEFAULT NULL,
-  mj_7 int(11) DEFAULT NULL,
-  mj_8 int(11) DEFAULT NULL,
-  mj_9 int(11) DEFAULT NULL,
-  mj_10 int(11) DEFAULT NULL,
-  mj_11 int(11) DEFAULT NULL,
-  mj_12 int(11) DEFAULT NULL,
-  PRIMARY KEY (id)  
-);
-
-CREATE TABLE os_plan_1_aktivnost (
-  id_plan int(20) NOT NULL AUTO_INCREMENT,
-  id_podrucje int(20) NOT NULL,
-  red_broj_aktivnost int(11) NOT NULL,
-  opis_aktivnost int(20) NOT NULL,  
-  potrebno_sati text,
-  br_sati int(11) DEFAULT NULL,
-  mj_1 int(11) DEFAULT NULL,
-  mj_2 int(11) DEFAULT NULL,
-  mj_3 int(11) DEFAULT NULL,
-  mj_4 int(11) DEFAULT NULL,
-  mj_5 int(11) DEFAULT NULL,
-  mj_6 int(11) DEFAULT NULL,
-  mj_7 int(11) DEFAULT NULL,
-  mj_8 int(11) DEFAULT NULL,
-  mj_9 int(11) DEFAULT NULL,
-  mj_10 int(11) DEFAULT NULL,
-  mj_11 int(11) DEFAULT NULL,
-  mj_12 int(11) DEFAULT NULL,
-  PRIMARY KEY (id_plan),
-  KEY opis_aktivnost (opis_aktivnost),
-  KEY red_broj_aktivnost (red_broj_aktivnost),
-  CONSTRAINT os_plan_1_aktivnost_ibfk_1 FOREIGN KEY (opis_aktivnost) REFERENCES aktivnost (id_aktivnost)  
-);
-
-CREATE TABLE os_plan_1_podrucje (
-  id_plan int(20) NOT NULL AUTO_INCREMENT,
-  id_glavni_plan int(20) NOT NULL,
-  red_br_podrucje int(11) NOT NULL,
-  opis_podrucje int(20) NOT NULL,
-  potrebno_sati text,
-  cilj text,
-  br_sati int(11) DEFAULT NULL,
-  mj_1 int(11) DEFAULT NULL,
-  mj_2 int(11) DEFAULT NULL,
-  mj_3 int(11) DEFAULT NULL,
-  mj_4 int(11) DEFAULT NULL,
-  mj_5 int(11) DEFAULT NULL,
-  mj_6 int(11) DEFAULT NULL,
-  mj_7 int(11) DEFAULT NULL,
-  mj_8 int(11) DEFAULT NULL,
-  mj_9 int(11) DEFAULT NULL,
-  mj_10 int(11) DEFAULT NULL,
-  mj_11 int(11) DEFAULT NULL,
-  mj_12 int(11) DEFAULT NULL,
-  PRIMARY KEY (id_plan),
-  KEY opis_podrucje (opis_podrucje),  
-  CONSTRAINT os_plan_1_podrucje_ibfk_1 FOREIGN KEY (opis_podrucje) REFERENCES podrucje_rada (id_podrucje)  
-);
-
-CREATE TABLE os_plan_2_aktivnost (
-  id_plan int(20) NOT NULL AUTO_INCREMENT,
-  id_podrucje int(20) NOT NULL,
-  red_br_aktivnost int(11) NOT NULL,
-  opis_aktivnost text, 
-  sati int(11) NOT NULL, 
-  PRIMARY KEY (id_plan)  
-);
-
-CREATE TABLE os_plan_2_podrucje (
-  id_plan int(20) NOT NULL AUTO_INCREMENT,
-  id_glavni_plan int(20) NOT NULL,
-  red_br_podrucje int(11) NOT NULL,
-  opis_podrucje text,
-  cilj text,
-  zadaci text,
-  subjekti text,
-  oblici text,
-  vrijeme text,
-  sati int(11) NOT NULL,   
-  PRIMARY KEY (id_plan)  
-);
-
-CREATE TABLE ss_plan_podrucje (
-  id int(20) NOT NULL AUTO_INCREMENT,
-  id_plan int(20) NOT NULL,
-  opis_podrucje text,
-  svrha text,
-  zadaca text,
-  sadrzaj text,
-  oblici text,
-  suradnici text,
-  mjesto text,
-  vrijeme text,
-  ishodi text,
-  sati int(20) NOT NULL,
-  red_br int(20) NOT NULL,
-  PRIMARY KEY (id)
+INSERT INTO skola VALUES (
+  1, "Međimursko veleučilište", "Bana Josipa Jelačića", "Čakovec", "", "", "",1
 );
 
 INSERT INTO skola VALUES (
-  1, "Međimursko veleučiliste", "Bana Josipa Jelačića", "Čakovec", "", "", "",1
-);
-
-INSERT INTO skola VALUES (
-  2, "Sveučiliste Sjever", "", "Varaždin", "", "", "",1
+  2, "Sveučilište Sjever", "", "Varaždin", "", "", "",1
 );
 
 INSERT INTO aktivnost (vrsta, naziv) VALUES (0, "Utvrđivanje obrazovnih potreba učenika, škole i okruženja");
