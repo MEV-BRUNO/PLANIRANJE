@@ -2,6 +2,58 @@
 CREATE DATABASE planiranje;
 USE PLANIRANJE;
 
+CREATE TABLE pedagog (
+  id_pedagog int(20) NOT NULL AUTO_INCREMENT,
+  ime varchar(50) NOT NULL,
+  prezime varchar(50) NOT NULL,
+  email varchar(50) NOT NULL,
+  lozinka varchar(40) NOT NULL,
+  licenca datetime NOT NULL,  
+  aktivan char(1) NOT NULL,
+  titula varchar(50) NOT NULL,
+  PRIMARY KEY (id_pedagog),
+  UNIQUE KEY email (email)  
+);
+
+CREATE TABLE sk_godina (
+  sk_godina int(20) NOT NULL,
+  PRIMARY KEY (sk_godina)
+);
+
+CREATE TABLE skola (
+  id_skola int(20) NOT NULL AUTO_INCREMENT,
+  naziv varchar(50) NOT NULL,
+  adresa varchar(50) DEFAULT NULL,
+  grad varchar(20) DEFAULT NULL,
+  tel varchar(20) DEFAULT NULL,
+  url varchar(50) DEFAULT NULL,
+  kontakt varchar(20) DEFAULT NULL,
+  vrsta tinyint NOT NULL,
+  PRIMARY KEY (id_skola)
+);
+
+CREATE TABLE nastavnik (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_skola int(20) NOT NULL,
+  id_pedagog int(20) NOT NULL,
+  ime text,
+  prezime text,
+  titula text,
+  kontakt text,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE RazredniOdjel (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  id_skola int(20) NOT NULL,
+  sk_godina int(20) NOT NULL,
+  naziv text,
+  razred tinyint,
+  id_razrednik int(20),
+  id_pedagog int(20),
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE ucenik (
   id_ucenik int(20) NOT NULL AUTO_INCREMENT,
   ime text,
@@ -14,18 +66,6 @@ CREATE TABLE ucenik (
   datum datetime,  
   id_razred int(20),
   PRIMARY KEY (id_ucenik)
-);
-
-CREATE TABLE sk_godina (
-  sk_godina int(20) NOT NULL,
-  PRIMARY KEY (sk_godina)
-);
-
-CREATE TABLE pedagog_skola (
-  id int(20) NOT NULL AUTO_INCREMENT,
-  id_pedagog int(20) NOT NULL,
-  id_skola int(20) NOT NULL,
-  PRIMARY KEY (id)   
 );
 
 CREATE TABLE obitelj (
@@ -50,26 +90,11 @@ CREATE TABLE ucenik_razred (
   CONSTRAINT ucenik_razred_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik) ON DELETE CASCADE
 );
 
-CREATE TABLE RazredniOdjel (
+CREATE TABLE pedagog_skola (
   id int(20) NOT NULL AUTO_INCREMENT,
-  id_skola int(20) NOT NULL,
-  sk_godina int(20) NOT NULL,
-  naziv text,
-  razred tinyint,
-  id_razrednik int(20),
-  id_pedagog int(20),
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE nastavnik (
-  id int(20) NOT NULL AUTO_INCREMENT,
-  id_skola int(20) NOT NULL,
   id_pedagog int(20) NOT NULL,
-  ime text,
-  prezime text,
-  titula text,
-  kontakt text,
-  PRIMARY KEY (id)
+  id_skola int(20) NOT NULL,
+  PRIMARY KEY (id)   
 );
 
 CREATE TABLE pracenje_ucenika (
@@ -546,18 +571,6 @@ CREATE TABLE podrucje_rada (
   PRIMARY KEY (id_podrucje)
 );
 
-CREATE TABLE skola (
-  id_skola int(20) NOT NULL AUTO_INCREMENT,
-  naziv varchar(50) NOT NULL,
-  adresa varchar(50) DEFAULT NULL,
-  grad varchar(20) DEFAULT NULL,
-  tel varchar(20) DEFAULT NULL,
-  url varchar(50) DEFAULT NULL,
-  kontakt varchar(20) DEFAULT NULL,
-  vrsta tinyint NOT NULL,
-  PRIMARY KEY (id_skola)
-);
-
 CREATE TABLE subjekti (
   id_subjekt int(20) NOT NULL AUTO_INCREMENT,
   naziv text,
@@ -570,19 +583,6 @@ CREATE TABLE zadaci (
   naziv text,
   vrsta int NOT NULL,
   PRIMARY KEY (id_zadatak)
-);
-
-CREATE TABLE pedagog (
-  id_pedagog int(20) NOT NULL AUTO_INCREMENT,
-  ime varchar(50) NOT NULL,
-  prezime varchar(50) NOT NULL,
-  email varchar(50) NOT NULL,
-  lozinka varchar(40) NOT NULL,
-  licenca datetime NOT NULL,  
-  aktivan char(1) NOT NULL,
-  titula varchar(50) NOT NULL,
-  PRIMARY KEY (id_pedagog),
-  UNIQUE KEY email (email)  
 );
 
 CREATE TABLE os_plan_1 (
