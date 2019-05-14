@@ -1,12 +1,13 @@
-﻿var tip = $("#tip").text();
-$(document).ready(function () {
+﻿$(document).ready(function () {
+    var tip = $("#tip").text();
+    var skola = $("#selectSkola").val();
     var akt = $("#selectAktivnost").val();
-    var saved1 = window.sessionStorage.getItem(tip+"_select");
+    var saved1 = window.sessionStorage.getItem(skola+tip+"_select");
     if (saved1 != null && saved1 != akt) {
         reloadPage(saved1 + "/Index");
     }
-    else if (window.sessionStorage.getItem(tip+"_godina") != null) {
-        var saved = window.sessionStorage.getItem(tip+"_godina");
+    else if (window.sessionStorage.getItem(skola +tip+"_godina") != null) {
+        var saved = window.sessionStorage.getItem(skola +tip+"_godina");
         $("#selectGodina").val(saved);
         promjenaGodine();
     }
@@ -20,10 +21,12 @@ function provjeriEnter(event, path, form, target, poruka) {
     }
 }
 function ispis() {
+    var tip = $("#tip").text();
+    var skola = $("#selectSkola").val();
     var akt = $("#selectAktivnost").val();
     var god = $("#selectGodina").val();
     if (god > 0) {
-        var id = window.sessionStorage.getItem(tip+"_idUcenik");
+        var id = window.sessionStorage.getItem(skola +tip+"_idUcenik");
         if (id != null) {
             window.open(akt + "/Ispis?godina=" + god + "&id=" + id);
         }
@@ -36,6 +39,8 @@ function ispis() {
     }
 }
 function promjenaGodine() {
+    var tip = $("#tip").text();
+    var skola = $("#selectSkola").val();
     var val = $("#selectGodina").val();
     if (val != "0") {
         $.ajax({
@@ -43,9 +48,9 @@ function promjenaGodine() {
             success: function (data) {
                 $("#razredi").html(data);
                 var akt = $("#selectAktivnost").val();
-                var saved = window.sessionStorage.getItem(tip+"_godina");
+                var saved = window.sessionStorage.getItem(skola +tip+"_godina");
                 if (saved != null && saved == $("#selectGodina").val()) {
-                    var saved1 = window.sessionStorage.getItem(tip+"_razred");
+                    var saved1 = window.sessionStorage.getItem(skola +tip+"_razred");
                     if (saved1 != null) {
                         $("#selectRazred").val(saved1);
                         promjenaRazreda();
@@ -64,6 +69,8 @@ function promjenaGodine() {
     $("#detalji").empty();
 }
 function promjenaRazreda() {
+    var tip = $("#tip").text();
+    var skola = $("#selectSkola").val();
     var val = $("#selectRazred").val();
     var god = $("#selectGodina").val();
     var akt = $("#selectAktivnost").val();
@@ -74,9 +81,9 @@ function promjenaRazreda() {
             success: function (data) {
                 $("#tablica").html(data);
                 $("#dataTableUcenici").dataTable({ stateSave: true });
-                var saved = window.sessionStorage.getItem(tip+"_godina");
-                var saved1 = window.sessionStorage.getItem(tip+"_razred");
-                var id = window.sessionStorage.getItem(tip+"_idUcenik");
+                var saved = window.sessionStorage.getItem(skola +tip+"_godina");
+                var saved1 = window.sessionStorage.getItem(skola +tip+"_razred");
+                var id = window.sessionStorage.getItem(skola +tip+"_idUcenik");
                 if (saved != null && saved1 != null) {
                     if (saved == god && saved1 == val && id != null) {
                         pokaziDetalje(id);
@@ -95,10 +102,12 @@ function promjenaRazreda() {
     }
 }
 function pokaziDetalje(id) {
+    var tip = $("#tip").text();
+    var skola = $("#selectSkola").val();
     var val = $("#selectGodina").val();
     var akt = $("#selectAktivnost").val();
     var raz = $("#selectRazred").val();
-    window.sessionStorage.setItem(tip+"_idUcenik", id);    
+    window.sessionStorage.setItem(skola +tip+"_idUcenik", id);    
     $.ajax({
         url: akt+'/Detalji?id=' + id + '&godina=' + val,
         success: function (data) {
@@ -108,8 +117,8 @@ function pokaziDetalje(id) {
             showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
         }
     });
-    window.sessionStorage.setItem(tip+"_godina", val);
-    window.sessionStorage.setItem(tip+"_razred", raz);
+    window.sessionStorage.setItem(skola +tip+"_godina", val);
+    window.sessionStorage.setItem(skola +tip+"_razred", raz);
 }
 function potvrdi(path, id, poruka) {
     var dt = $(id).serialize();
@@ -163,18 +172,20 @@ function zatvoriModal(path, id, spremi, poruka) {
     });
 }
 function promjenaAktivnost() {
+    var tip = $("#tip").text();
+    var skola = $("#selectSkola").val();
     var val = $("#selectAktivnost").val();
     if (val == "/PopisUcenika" || $("#selectGodina").val() == "0" || !$("#selectRazred").length || $("#selectRazred").val()=="0") {
-        window.sessionStorage.setItem(tip+"_select", val);
+        window.sessionStorage.setItem(skola +tip+"_select", val);
         reloadPage(val + "/Index");
     }
     else if (/*$("#selectRazred").length==0 &&*/ $("#selectRazred").val() != "0") {        
-        var id = window.sessionStorage.getItem(tip+"_idUcenik");
-        window.sessionStorage.setItem(tip+"_select", val);
+        var id = window.sessionStorage.getItem(skola +tip+"_idUcenik");
+        window.sessionStorage.setItem(skola +tip+"_select", val);
         pokaziDetalje(id);
     }
     else {
-        window.sessionStorage.setItem(tip+"_select", val);
+        window.sessionStorage.setItem(skola +tip+"_select", val);
         val = val + "/Index";       
         reloadPage(val);
     }    

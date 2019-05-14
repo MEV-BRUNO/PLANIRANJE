@@ -1,0 +1,50 @@
+﻿@model Planiranje.Models.Mjesecni_plan
+@{
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Kopiranje mjesečnog plana</h4>
+        </div>
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "kopirajMjPlan", @class = "form-horizontal", role = "form" }))
+        {
+            <div class="modal-body">
+                @Html.HiddenFor(model => model.ID_plan)
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <h5>
+                            @{ int god = int.Parse(ViewBag.godina as string)+1;}
+                            Plan: <b>@ViewBag.naziv</b>
+                            za školsku godinu <b>@ViewBag.godina./@god.</b>?
+                        </h5>
+                    </div>
+                </div>
+                <div class="form-group col-lg-12">
+                    @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })                    
+                </div>
+                <div class="form-group col-lg-12">
+                    @Html.LabelFor(model => model.Opis, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Opis, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Opis, "", new { @class = "text-danger" })                    
+                </div>
+                <div class="form-group col-lg-12">
+                    @Html.LabelFor(model => model.Ak_godina, htmlAttributes: new { @class = "control-label" })
+                    @*@Html.EditorFor(model => model.Ak_godina, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.DropDownListFor(model => model.Ak_godina, ViewBag.select as SelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Ak_godina, "", new { @class = "text-danger" })
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                        <input type="button" class="btn btn-success" value="Kopiraj" onclick="reload('@Url.Action("Kopiraj","MjesecniPlan")','#kopirajMjPlan')" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

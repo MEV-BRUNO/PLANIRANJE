@@ -13,7 +13,7 @@
                     <option value="/UcenikBiljeska">Bilješke o radu s učenikom</option>
                     <option value="/PracenjeUcenika">Lista praćenja učenika - pedagoška obrada i anamneza</option>
                     <option value="/PromatranjeUcenika">Protokol promatranja</option>
-                    <option>Procjena suradnje</option>
+                    <option value="/UcenikZapisnik">Zapisnik praćenja napredovanja učenika</option>
                 </select>
             </div>
         </div>
@@ -66,8 +66,9 @@
 </div>
 <script>
     $(document).ready(function () {
-        if (window.sessionStorage.getItem("UC_select") != null) {
-            var saved = window.sessionStorage.getItem("UC_select");
+        var skola = $("#selectSkola").val();
+        if (window.sessionStorage.getItem(skola + "UC_select") != null) {
+            var saved = window.sessionStorage.getItem(skola + "UC_select");
             if ($("#selectAktivnost").val() != saved) {
                 reloadPage(saved + "/Index");
             }
@@ -171,7 +172,8 @@
     }
     function promjenaAktivnost() {
         var val = $("#selectAktivnost").val();
-        window.sessionStorage.setItem("UC_select", val);
+        var skola = $("#selectSkola").val();
+        window.sessionStorage.setItem(skola + "UC_select", val);
         val = val + "/Index";
         reloadPage(val);
     }

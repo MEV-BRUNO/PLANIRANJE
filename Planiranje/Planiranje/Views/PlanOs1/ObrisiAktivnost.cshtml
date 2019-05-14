@@ -1,53 +1,52 @@
-﻿@model Planiranje.Models.PlanOs1View
-@{
-    Layout = null;
-}
+﻿@model Planiranje.Models.OS_Plan_1_aktivnost
+    @{
+        Layout = null;
+    }
 
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Brisanje područja djelovanja</h4>
-        </div>
-         @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "NoviDetaljModalView", @class = "form-horizontal", role = "form" }))
-		{
-            <div class="modal-body">
-                @Html.HiddenFor(model => model.Os_Plan_1_Aktivnost.Id_plan)
-                @Html.HiddenFor(m=>m.Pozicija)
-                @Html.HiddenFor(m=>m.Id)
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <h5>
-                            Jeste li sigurni da želite obrisati ovu aktivnost?
-                        </h5>
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.Label("Redni broj", new { @class = "control-label col-md-3" })
-                    <div class="col-md-4">
-                        @Html.TextBox("a",ViewBag.broj as string, new { @class = "form-control", @disabled = "true" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Opis_aktivnost, htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.TextAreaFor(model => model.Aktivnosti.First().Naziv, new { @class = "form-control", @disabled = "true" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m=>m.Os_Plan_1_Aktivnost.Potrebno_sati, new { @class = "control-label col-md-3" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m=>m.Os_Plan_1_Aktivnost.Potrebno_sati, new { @class = "form-control", @disabled = "true" })
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="form-group">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                        <input type="button" onclick="reload('@Url.Action("ObrisiAktivnost","PlanOs1")','#NoviDetaljModalView')" class="btn btn-danger" value="Obriši" />
-                    </div>
-                </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Brisanje aktivnosti</h4>
             </div>
-        }
+            @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiAktivnost", @class = "form-horizontal", role = "form" }))
+            {
+                <div class="modal-body">
+                    @Html.HiddenFor(model => model.Id_plan)
+                   
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <h5>
+                                Jeste li sigurni da želite obrisati ovu aktivnost?
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("pozicija", "Redni broj", new { @class = "control-label col-md-3" })
+                        <div class="col-md-4">
+                            @Html.TextBox("pozicija", ViewBag.pozicija as string, new { @class = "form-control", @disabled = "true" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Opis_aktivnost, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextArea("Opis_aktivnost", ViewBag.aktivnost as string, new { @class = "form-control", @disabled = "true" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Potrebno_sati, new { @class = "control-label col-md-3" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.Potrebno_sati, new { @class = "form-control", @disabled = "true" })
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                            <input type="button" onclick="zatvoriModal1('@Url.Action("ObrisiAktivnost","PlanOs1")','#obrisiAktivnost','#aktivnosti','Aktivnost je obrisana')" class="btn btn-danger" value="Obriši" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
-</div>
 

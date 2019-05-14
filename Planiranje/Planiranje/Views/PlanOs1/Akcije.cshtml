@@ -1,0 +1,97 @@
+﻿@model List<Planiranje.Models.OS_Plan_1_akcija>
+    @using Planiranje.Models
+@{
+    Layout = null;
+    List<OS_Plan_1_aktivnost> aktivnosti = ViewBag.aktivnosti as List<OS_Plan_1_aktivnost>;
+    List<Aktivnost> akt = ViewBag.akt as List<Aktivnost>;
+}
+
+<div class="row">
+    <div class="col-lg-2">
+
+        <button onclick="showModal('@Url.Action("NovaAkcija","PlanOs1",new { id=ViewBag.id})')" class="btn btn-primary btn-xs btn-grad">Dodaj akciju</button>
+
+    </div>
+    <div class="col-lg-10">
+        <div class="form-group">
+            <label class="control-label col-lg-3">Odaberi aktivnosti:</label>
+            <div class="col-lg-7">
+                @*@Html.DropDownListFor(m=>m.Os_Plan_1_Aktivnost.Id_podrucje,Model.PodrucjeRadaSelectedItems,new { @class="form-control"})*@
+                <select id="selectAktivnost" onchange="promjenaAktivnosti()" class="form-control">
+                    @{ int br = 1;
+                        int pozicija = 0;
+                    }
+                    @foreach (var item in aktivnosti)
+                    {
+                        if (ViewBag.id != null && ViewBag.id == item.Id_plan)
+                        {
+                            pozicija = br;
+                            <option selected value="@item.Id_plan">
+                                @br. @akt.SingleOrDefault(s => s.Id_aktivnost==item.Opis_aktivnost).Naziv
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id_plan">
+                                @br. @akt.SingleOrDefault(s => s.Id_aktivnost==item.Opis_aktivnost).Naziv
+                            </option>
+                        }
+
+                        br++;
+                    }
+                </select>
+            </div>
+        </div>
+    </div><!--END COL 10-->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <p>
+
+        </p>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover" id="dataTableAkcije">
+                <thead>
+                    <tr>
+                        <th>Rb.</th>
+                        <th>Naziv akcije</th>
+                        <th>Potrebno<br>sati</th>
+                        <th>Pomak</th>
+                        <th>Aktivnost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0;}
+                    @foreach (var item in Model)
+                    {
+                        i++;
+                        string disabled1 = "";
+                        string disabled2 = "";
+                        if (i == 1) { disabled1 = "disabled"; }
+                        if (i == Model.Count) { disabled2 = "disabled"; }
+                        <tr>
+                            <td class="col-md-1">@pozicija.@i</td>
+                            <td class="col-md-7">@item.Opis_akcija</td>
+                            <td class="col-md-2">@item.Potrebno_sati</td>
+                            <td class="col-md-1">
+                                <button @disabled1 onclick="pomak('@Url.Action("AkcijaPomakGore","PlanOs1", new { id=item.Id})','#akcije', 'Akcija je pomaknuta gore')" class="btn btn-warning btn-xs btn-grad">Gore</button>
+                                <button @disabled2 onclick="pomak('@Url.Action("AkcijaPomakDolje","PlanOs1", new { id=item.Id})','#akcije', 'Akcija je pomaknuta dolje')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
+                            </td>
+                            <td class="col-md-1">
+                                <a onclick="showModal('@Url.Action("UrediAkcija","PlanOs1",new { id=item.Id, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                <a onclick="showModal('@Url.Action("ObrisiAkcija","PlanOs1", new { id=item.Id, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div><!--END COL 12-->
+</div>
+<script>
+    $(document).ready(function () {
+        $('#dataTableAkcije').dataTable({ stateSave: true });
+    });
+</script>
+

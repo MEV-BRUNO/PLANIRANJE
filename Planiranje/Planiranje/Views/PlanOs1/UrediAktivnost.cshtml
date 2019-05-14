@@ -1,140 +1,139 @@
-﻿@model Planiranje.Models.PlanOs1View
+﻿@model Planiranje.Models.OS_Plan_1_aktivnost
 
-@{
-    Layout = null;    
-}
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Uređivanje aktivnosti</h4>
+    @{
+        Layout = null;
+    }
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Uređivanje aktivnosti</h4>
+            </div>
+            @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "urediAktivnost", @class = "form-horizontal", role = "form" }))
+            {
+                <div class="modal-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id_plan)
+                    @Html.HiddenFor(m => m.Id_podrucje)
+                    @Html.HiddenFor(m => m.Red_broj_aktivnost)
+                    @Html.HiddenFor(m => m.Br_sati)                    
+
+                    <div class="form-group">
+                        @Html.Label("pozicija", "Redni broj", new { @class = "control-label col-md-3" })
+                        <div class="col-md-4">
+                            @Html.TextBox("pozicija", ViewBag.pozicija as string, new { @class = "form-control", @disabled = "true" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Opis_aktivnost, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.Opis_aktivnost, ViewBag.selectAktivnost as SelectList, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Opis_aktivnost, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Potrebno_sati, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Potrebno_sati, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Potrebno_sati, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_9, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_9, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_9, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_10, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_10, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_10, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_11, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_11, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_11, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_12, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_12, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_12, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_1, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_1, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_1, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_2, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_2, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_2, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_3, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_3, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_3, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_4, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_4, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_4, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_5, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_5, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_5, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_6, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_6, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_6, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_7, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_7, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_7, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Mj_8, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Mj_8, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                                    @Html.ValidationMessageFor(model => model.Mj_8, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                        <input type="button" onclick="zatvoriModal1('@Url.Action("UrediAktivnost","PlanOs1")','#urediAktivnost', '#aktivnosti', 'Aktivnost je promijenjena')" class="btn btn-primary" value="Promijeni" />
+                    </div>
+                </div>
+            }
         </div>
-       @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "NoviDetaljModalView", @class = "form-horizontal", role = "form" }))
-		{
-        <div class="modal-body">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Os_Plan_1_Aktivnost.Id_plan)
-            @Html.HiddenFor(m => m.Os_Plan_1_Aktivnost.Id_podrucje)
-            @Html.HiddenFor(m => m.Os_Plan_1_Aktivnost.Red_broj_aktivnost)
-            @Html.HiddenFor(m => m.Os_Plan_1_Aktivnost.Br_sati)
-            @Html.HiddenFor(m => m.Pozicija, new { @Value = Model.Broj })
-
-            <div class="form-group">
-                @Html.Label("Redni broj", new { @class = "control-label col-md-3" })
-                <div class="col-md-4">
-                    @Html.TextBox("a", ViewBag.pozicija as string, new { @class = "form-control", @disabled = "true" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Opis_aktivnost, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.DropDownListFor(model => model.Os_Plan_1_Aktivnost.Opis_aktivnost, Model.AktivnostiItems, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Opis_aktivnost, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Potrebno_sati, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Potrebno_sati, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Potrebno_sati, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_9, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_9, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_9, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_10, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_10, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_10, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_11, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_11, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_11, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_12, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_12, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_12, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_1, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_1, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_1, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_2, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_2, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_2, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_3, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_3, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_3, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_4, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_4, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_4, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_5, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_5, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_5, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_6, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_6, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_6, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_7, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_7, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_7, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Os_Plan_1_Aktivnost.Mj_8, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.EditorFor(model => model.Os_Plan_1_Aktivnost.Mj_8, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                            @Html.ValidationMessageFor(model => model.Os_Plan_1_Aktivnost.Mj_8, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                <input type="button" onclick="reload('@Url.Action("UrediAktivnost","PlanOs1")','#NoviDetaljModalView')" class="btn btn-primary" value="Spremi" />
-            </div>
-        </div>
-        }
     </div>
-</div>

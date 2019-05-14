@@ -1,0 +1,164 @@
+﻿@model Planiranje.Models.Ucenici.Nastavnik_analiza
+@{
+    Layout = null;
+}
+<div class="modal-dialog" style="width:1200px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">@{string s = ViewBag.godina == null ? "Uređivanje analize nastavnog sata" : "Nova analiza nastavnog sata"; }@s</h4>
+        </div>
+        <div class="modal-body">
+            @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "novaAnaliza" }))
+            {
+                @Html.HiddenFor(model => model.Id)
+                if (ViewBag.godina == null)
+                {
+                    @Html.HiddenFor(model => model.Sk_godina)
+                    @Html.HiddenFor(model => model.Id_nastavnik)
+                }
+                else
+                {
+                    @Html.HiddenFor(model => model.Sk_godina, new { Value = ViewBag.godina })
+                    @Html.HiddenFor(model => model.Id_nastavnik, new { Value = ViewBag.idNastavnik})
+                }
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel-body">
+                                <ul class="nav nav-pills">
+                                    <li @{ string str1 = "", str2 = ""; if (ViewBag.promijeni == null) { str1 = "class='active'"; } else { str2 = "class='active'"; } } @Html.Raw(str1)>
+                                        <a href="#osnovni" data-toggle="tab">Osnovno</a>
+                                    </li>
+                                    <li @Html.Raw(str2)>
+                                        <a href="#ostalo" data-toggle="tab">Ostalo</a>
+                                    </li>                                    
+                                </ul>
+                                @{
+                                    if (string.IsNullOrEmpty(str1))
+                                    {
+                                        str2 = "tab-pane fade in active";
+                                        str1 = "tab-pane fade";
+                                    }
+                                    else
+                                    {
+                                        str1 = "tab-pane fade in active";
+                                        str2 = "tab-pane fade";
+                                    }
+                                }
+                                <div class="tab-content">
+                                    <div class="@Html.Raw(str1)" id="osnovni">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Id_odjel, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.DropDownListFor(model => model.Id_odjel, ViewBag.select as IEnumerable<SelectListItem>, "Odaberite odjel", new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Id_odjel, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Cilj_posjete, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Cilj_posjete, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Cilj_posjete, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.EditorFor(model => model.Datum, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Datum, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Nastavni_sat, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.EditorFor(model => model.Nastavni_sat, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Nastavni_sat, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div><!--END COL -->
+                                            <div class="col-lg-6">
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Nastavna_jedinica, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Nastavna_jedinica, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Nastavna_jedinica, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Predmet, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.EditorFor(model => model.Predmet, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Predmet, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Vrsta_nastavnog_sata, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.EditorFor(model => model.Vrsta_nastavnog_sata, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Vrsta_nastavnog_sata, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Planiranje_priprema, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Planiranje_priprema, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Planiranje_priprema, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div><!--END COL -->
+                                        </div><!--END ROW -->
+                                    </div>
+                                    <div class="@Html.Raw(str2)" id="ostalo">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Izvedba_nastavnog_sata, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Izvedba_nastavnog_sata, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Izvedba_nastavnog_sata, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Vodjenje_nastavnog_sata, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Vodjenje_nastavnog_sata, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Vodjenje_nastavnog_sata, "", new { @class = "text-danger" })
+                                                </div><!--END form-group -->
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Disciplina, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Disciplina, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Disciplina, "", new { @class = "text-danger" })
+                                                </div><!--END form-group -->
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Razredni_ugodjaj, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Razredni_ugodjaj, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Razredni_ugodjaj, "", new { @class = "text-danger" })
+                                                </div><!--END form-group -->                                                
+                                            </div><!--END COL -->
+                                            <div class="col-lg-6">
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Ocjenjivanje_ucenika, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Ocjenjivanje_ucenika, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Ocjenjivanje_ucenika, "", new { @class = "text-danger" })
+                                                </div><!--END form-group -->
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Osvrt, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Osvrt, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Osvrt, "", new { @class = "text-danger" })
+                                                </div><!--END form-group -->
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Prijedlozi, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Prijedlozi, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Prijedlozi, "", new { @class = "text-danger" })
+                                                </div><!--END form-group -->
+                                                <div class="form-group col-lg-12">
+                                                    @Html.LabelFor(model => model.Uvid, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Uvid, new { @class = "edit-opis", rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Uvid, "", new { @class = "text-danger" })
+                                                </div><!--END form-group -->
+                                            </div><!--END COL -->
+                                        </div><!--END ROW -->
+                                    </div>                                    
+                                </div>
+                            </div><!--END PANEL-->
+                        </div><!--END COL 12-->
+                    </div><!--END ROW -->
+                </div>
+            }
+        </div>
+        <div class="modal-footer">
+            @{ string naziv = ViewBag.godina == null ? "Promijeni" : "Spremi";
+                string naziv1 = ViewBag.godina == null ? "Analiza nastavnog sata je promijenjena" : "Nova analiza nastavnog sata je spremljena";}
+            @if (ViewBag.godina == null)
+            {
+                <a href="@Url.Action("Ispis","NastavnikAnaliza",new { id=Model.Id})" target="_blank" class="btn btn-info">Ispis</a>
+            }
+            <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+            <input type="button" class="btn btn-primary" value="@naziv" onclick='zatvoriModal("@Url.Action("NovaAnaliza","NastavnikAnaliza")","#novaAnaliza","#detalji","@naziv1")' />
+        </div>
+    </div>
+</div>

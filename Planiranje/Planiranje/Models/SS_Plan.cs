@@ -9,10 +9,8 @@ namespace Planiranje.Models
 {
     public class SS_Plan
     {
-        [Key]
-        [Required]
-        public int Id_plan { get; set; }
-        [Required]
+        [Key]        
+        public int Id_plan { get; set; }        
         public int Id_pedagog { get; set; }
 		[Required(ErrorMessage = "Obavezno polje")]
         [Range(1,Int32.MaxValue,ErrorMessage ="Obavezno polje")]

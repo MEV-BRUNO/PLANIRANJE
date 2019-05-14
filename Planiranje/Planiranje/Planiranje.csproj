@@ -195,8 +195,13 @@
     <Compile Include="Controllers\AkcijeController.cs" />
     <Compile Include="Controllers\AktivnostiController.cs" />
     <Compile Include="Controllers\CiljeviController.cs" />
+    <Compile Include="Controllers\DokumentController.cs" />
     <Compile Include="Controllers\GodisnjiPlanController.cs" />
     <Compile Include="Controllers\MjesecniPlanController.cs" />
+    <Compile Include="Controllers\NastavnikAnalizaController.cs" />
+    <Compile Include="Controllers\NastavnikObrazacController.cs" />
+    <Compile Include="Controllers\NastavnikProtokolController.cs" />
+    <Compile Include="Controllers\NastavnikUvidController.cs" />
     <Compile Include="Controllers\ObliciMetodeController.cs" />
     <Compile Include="Controllers\OpciPodaciController.cs" />
     <Compile Include="Controllers\PlaniranjeController.cs" />
@@ -214,6 +219,7 @@
     <Compile Include="Controllers\RoditeljUgovorController.cs" />
     <Compile Include="Controllers\SubjektiController.cs" />
     <Compile Include="Controllers\UcenikBiljeskaController.cs" />
+    <Compile Include="Controllers\UcenikZapisnikController.cs" />
     <Compile Include="Controllers\ZadaciController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -232,7 +238,6 @@
     <Compile Include="Models\Oblici_DBHandle.cs" />
     <Compile Include="Models\OS_Plan_1_akcija.cs" />
     <Compile Include="Models\OS_Plan_1_aktivnost.cs" />
-    <Compile Include="Models\OS_Plan_1_DBHandle.cs" />
     <Compile Include="Models\OS_Plan_1_podrucje.cs" />
     <Compile Include="Models\OS_Plan_2.cs" />
     <Compile Include="Models\OS_Plan_2_akcija.cs" />
@@ -266,8 +271,13 @@
     <Compile Include="Models\SubjektiModel.cs" />
     <Compile Include="Models\Subjekt_DBHandle.cs" />
     <Compile Include="Models\GodisnjiModel.cs" />
+    <Compile Include="Models\Ucenici\Dokument.cs" />
     <Compile Include="Models\Ucenici\Mjesecna_biljeska.cs" />
     <Compile Include="Models\Ucenici\Nastavnik.cs" />
+    <Compile Include="Models\Ucenici\Nastavnik_analiza.cs" />
+    <Compile Include="Models\Ucenici\Nastavnik_obrazac.cs" />
+    <Compile Include="Models\Ucenici\Nastavnik_protokol.cs" />
+    <Compile Include="Models\Ucenici\Nastavnik_uvid.cs" />
     <Compile Include="Models\Ucenici\Neposredni_rad.cs" />
     <Compile Include="Models\Ucenici\Obitelj.cs" />
     <Compile Include="Models\Ucenici\Pedagog_skola.cs" />
@@ -287,12 +297,18 @@
     <Compile Include="Models\Ucenici\UcenikBiljeskaModel.cs" />
     <Compile Include="Models\Ucenici\Ucenik_biljeska.cs" />
     <Compile Include="Models\Ucenici\Ucenik_razred.cs" />
+    <Compile Include="Models\Ucenici\Ucenik_zapisnik.cs" />
+    <Compile Include="Models\Ucenici\Ucenik_zapisnik_biljeska.cs" />
     <Compile Include="Models\Zadaci.cs" />
     <Compile Include="Models\ZadaciModel.cs" />
     <Compile Include="Models\Zadaci_DBHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\GodisnjiReport.cs" />
     <Compile Include="Reports\MjesecniPlanReport.cs" />
+    <Compile Include="Reports\NastavnikAnalizaReport.cs" />
+    <Compile Include="Reports\NastavnikObrazacReport.cs" />
+    <Compile Include="Reports\NastavnikProtokolReport.cs" />
+    <Compile Include="Reports\NastavnikUvidReport.cs" />
     <Compile Include="Reports\PlanOs1DetailsReport.cs" />
     <Compile Include="Reports\PlanOs1Report.cs" />
     <Compile Include="Reports\PlanOs2DetailsReport.cs" />
@@ -305,7 +321,9 @@
     <Compile Include="Reports\RoditeljBiljeskaReport.cs" />
     <Compile Include="Reports\RoditeljProcjenaReport.cs" />
     <Compile Include="Reports\RoditeljRazgovorReport.cs" />
+    <Compile Include="Reports\RoditeljUgovorReport.cs" />
     <Compile Include="Reports\UcenikBiljeskaReport.cs" />
+    <Compile Include="Reports\UcenikZapisnikReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Baza_arhiva\Plan\dnevnik_rada_42_A.JPG" />
@@ -343,6 +361,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\nastavnici_funkcije.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\ucenici_funkcije.js" />
@@ -373,7 +392,6 @@
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\Navigation.cshtml" />
     <Content Include="Views\MjesecniPlan\Index.cshtml" />
-    <Content Include="Views\MjesecniPlan\Table.cshtml" />
     <Content Include="Views\MjesecniPlan\Detalji.cshtml" />
     <Content Include="Views\MjesecniPlan\NoviPlan.cshtml" />
     <Content Include="Views\MjesecniPlan\Obrisi.cshtml" />
@@ -427,7 +445,6 @@
     <Content Include="Views\Ciljevi\Uredi.cshtml" />
     <Content Include="Views\GodisnjiPlan\Detalji.cshtml" />
     <Content Include="Views\MjesecniPlan\NoviDetalji.cshtml" />
-    <Content Include="Views\MjesecniPlan\TableDetails.cshtml" />
     <Content Include="Views\MjesecniPlan\ObrisiDetalj.cshtml" />
     <Content Include="Views\MjesecniPlan\UrediNoviPlan.cshtml" />
     <Content Include="Views\MjesecniPlan\UrediDetalje.cshtml" />
@@ -528,6 +545,45 @@
     <Content Include="Views\RoditeljUgovor\Detalji.cshtml" />
     <Content Include="Views\RoditeljUgovor\NoviUgovor.cshtml" />
     <Content Include="Views\RoditeljUgovor\ObrisiUgovor.cshtml" />
+    <Content Include="Views\NastavnikAnaliza\Index.cshtml" />
+    <Content Include="Views\NastavnikAnaliza\OdabirNastavnika.cshtml" />
+    <Content Include="Views\NastavnikAnaliza\Detalji.cshtml" />
+    <Content Include="Views\NastavnikAnaliza\NovaAnaliza.cshtml" />
+    <Content Include="Views\NastavnikAnaliza\ObrisiAnaliza.cshtml" />
+    <Content Include="Views\NastavnikProtokol\Index.cshtml" />
+    <Content Include="Views\NastavnikProtokol\Detalji.cshtml" />
+    <Content Include="Views\NastavnikProtokol\NoviProtokol.cshtml" />
+    <Content Include="Views\NastavnikProtokol\ObrisiProtokol.cshtml" />
+    <Content Include="Views\NastavnikUvid\Index.cshtml" />
+    <Content Include="Views\NastavnikUvid\Detalji.cshtml" />
+    <Content Include="Views\NastavnikUvid\NoviUvid.cshtml" />
+    <Content Include="Views\NastavnikUvid\ObrisiUvid.cshtml" />
+    <Content Include="Views\NastavnikObrazac\Index.cshtml" />
+    <Content Include="Views\NastavnikObrazac\Detalji.cshtml" />
+    <Content Include="Views\NastavnikObrazac\NoviObrazac.cshtml" />
+    <Content Include="Views\NastavnikObrazac\ObrisiObrazac.cshtml" />
+    <Content Include="Views\Dokument\Index.cshtml" />
+    <Content Include="Views\Dokument\NoviDokument.cshtml" />
+    <Content Include="Views\Dokument\ObrisiDokument.cshtml" />
+    <Content Include="Views\GodisnjiPlan\Kopiraj.cshtml" />
+    <Content Include="Views\MjesecniPlan\Kopiraj.cshtml" />
+    <Content Include="Views\PlanOs1\Aktivnosti.cshtml" />
+    <Content Include="Views\PlanOs1\Vrijeme.cshtml" />
+    <Content Include="Views\UcenikZapisnik\Index.cshtml" />
+    <Content Include="Views\UcenikZapisnik\Detalji.cshtml" />
+    <Content Include="Views\UcenikZapisnik\Osnovni.cshtml" />
+    <Content Include="Views\UcenikZapisnik\Odgoj.cshtml" />
+    <Content Include="Views\UcenikZapisnik\Ostalo.cshtml" />
+    <Content Include="Views\UcenikZapisnik\Biljeska.cshtml" />
+    <Content Include="Views\UcenikZapisnik\NovaBiljeska.cshtml" />
+    <Content Include="Views\UcenikZapisnik\UrediBiljeska.cshtml" />
+    <Content Include="Views\UcenikZapisnik\ObrisiBiljeska.cshtml" />
+    <Content Include="Views\PlanOs1\Akcije.cshtml" />
+    <Content Include="Views\PlanOs1\NovaAkcija.cshtml" />
+    <Content Include="Views\PlanOs1\UrediAkcija.cshtml" />
+    <Content Include="Views\PlanOs1\ObrisiAkcija.cshtml" />
+    <Content Include="Views\PlanOs1\Kopiraj.cshtml" />
+    <Content Include="Views\PlanSs\Kopiraj.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

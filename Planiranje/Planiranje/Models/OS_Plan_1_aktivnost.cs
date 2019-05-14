@@ -9,15 +9,12 @@ namespace Planiranje.Models
 {
     public class OS_Plan_1_aktivnost
     {
-        [Key]
-        [Required]
-        public int Id_plan { get; set; }
-        [Required]
+        [Key]        
+        public int Id_plan { get; set; }        
         public int Id_podrucje { get; set; }        
         [Required(ErrorMessage = "Ovo je obavezno polje")]
         [DisplayName("Opis aktivnosti")]        
-        public int Opis_aktivnost { get; set; }
-        [Required]
+        public int Opis_aktivnost { get; set; }        
         public int Red_broj_aktivnost { get; set; }
         [Required(ErrorMessage = "Ovo je obavezno polje")]
         [DisplayName("Potrebno sati")]

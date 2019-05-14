@@ -19,11 +19,17 @@
 			<div class="form-group">
 				@Html.LabelFor(model => model.MjesecniPlan.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
 				<div class="col-md-9">
-					@Html.EditorFor(model => model.MjesecniPlan.Naziv, new { htmlAttributes = new { @class = "form-control",@required=""
-			   } })
+					@Html.EditorFor(model => model.MjesecniPlan.Naziv, new { htmlAttributes = new { @class = "form-control"} })
 					@Html.ValidationMessageFor(model => model.MjesecniPlan.Naziv, "", new { @class = "text-danger" })
 				</div>
-			</div>			
+			</div>
+            <div class="form-group">
+				@Html.LabelFor(model => model.MjesecniPlan.Opis, htmlAttributes: new { @class = "control-label col-md-3" })
+				<div class="col-md-9">
+					@Html.EditorFor(model => model.MjesecniPlan.Opis, new { htmlAttributes = new { @class = "form-control"} })
+					@Html.ValidationMessageFor(model => model.MjesecniPlan.Opis, "", new { @class = "text-danger" })
+				</div>
+			</div>	
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
 				<input type="button" class="btn btn-primary" value="Spremi" onclick='reload("@Url.Action("NoviPlan","MjesecniPlan")","#noviPlanModalView")' />

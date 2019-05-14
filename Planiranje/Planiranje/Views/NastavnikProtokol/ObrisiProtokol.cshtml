@@ -1,0 +1,44 @@
+﻿@model Planiranje.Models.Ucenici.Nastavnik_protokol
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Brisanje protokola praćenja odgojno-obrazovnog procesa</h4>
+        </div>
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "obrisiProtokol", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.HiddenFor(model => model.Id)
+            <div class="modal-body">
+                <p><b>Jeste li sigurni da želite obrisati ovaj protokol praćenja odgojno-obrazovnog procesa?</b></p>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Id_odjel, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBox("0", ViewBag.nazivOdjela as string, new { @class = "form-control", disabled = "" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBox("1", Model.Datum.ToShortDateString(), new { @class = "form-control", disabled = "" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Vrijeme, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBox("2", Model.Vrijeme.ToShortTimeString(), new { @class = "form-control", disabled = "" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                    <input type="button" class="btn btn-danger" value="Obriši" onclick='zatvoriModal("@Url.Action("ObrisiProtokol","NastavnikProtokol")","#obrisiProtokol","#detalji","Protokol praćenja odgojno-obrazovnog procesa je obrisan")' />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

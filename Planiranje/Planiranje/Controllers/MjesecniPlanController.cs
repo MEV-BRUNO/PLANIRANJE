@@ -156,7 +156,7 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
-            if (model.MjesecniPlan.Naziv == null || model.MjesecniPlan.Ak_godina==0)
+            if (model.MjesecniPlan.Naziv == null || model.MjesecniPlan.Ak_godina == 0)
             {
                 model.SkolskaGodina = baza.SkolskaGodina.ToList();
                 return View("UrediNoviPlan",model);
@@ -230,8 +230,7 @@ namespace Planiranje.Controllers
             }
             DateTime date = new DateTime(1, 1, 1, 0, 0, 0);
             if (model.mjesecniDetalj.Aktivnost == null||model.mjesecniDetalj.Subjekti==null||model.mjesecniDetalj.Suradnici==null
-                || model.mjesecniDetalj.Podrucje==null||model.mjesecniDetalj.Vrijeme.CompareTo(date)==0||model.mjesecniDetalj.Br_sati<0
-                || model.mjesecniDetalj.Biljeska==null)
+                || model.mjesecniDetalj.Podrucje==null||model.mjesecniDetalj.Vrijeme.CompareTo(date)==0||model.mjesecniDetalj.Br_sati<0)
             {
                 model.Aktivnosti = aktivnosti.ReadAktivnost();
                 model.Subjekti = subjekti.ReadSubjekti();
@@ -287,13 +286,18 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             if (model.mjesecniDetalj.Aktivnost == null || model.mjesecniDetalj.Subjekti == null || model.mjesecniDetalj.Suradnici == null
-                || model.mjesecniDetalj.Podrucje == null || model.mjesecniDetalj.Vrijeme == null || model.mjesecniDetalj.Br_sati < 0
-                || model.mjesecniDetalj.Biljeska == null)
+                || model.mjesecniDetalj.Podrucje == null || model.mjesecniDetalj.Vrijeme == null || model.mjesecniDetalj.Br_sati < 0)
             {
                 model.Aktivnosti = aktivnosti.ReadAktivnost();
                 model.Subjekti = subjekti.ReadSubjekti();
                 model.PodrucjaRada = podrucja_rada.ReadPodrucjeRada();
                 return View(model);
+            }
+            int idPlan = model.mjesecniDetalj.ID_plan;
+            Mjesecni_plan test = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == idPlan && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (test == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
             using (var db = new BazaPodataka())
             {
@@ -343,7 +347,8 @@ namespace Planiranje.Controllers
             {
                 try
                 {
-                    var item = db.MjesecniDetalji.SingleOrDefault(s => s.ID == id);
+                    var item = (Mjesecni_detalji)(from dt in db.MjesecniDetalji join pl in db.MjesecniPlan on dt.ID_plan equals pl.ID_plan
+                                where dt.ID==id && pl.ID_pedagog==PlaniranjeSession.Trenutni.PedagogId select dt).SingleOrDefault();
                     if (item != null)
                     {
                         db.MjesecniDetalji.Remove(item);
@@ -370,6 +375,86 @@ namespace Planiranje.Controllers
             }
             MjesecniPlanReport report = new MjesecniPlanReport(model);
             return new FileStreamResult(new MemoryStream(report.Podaci), "application/pdf");
+        }
+        public ActionResult Kopiraj (int id)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            Mjesecni_plan plan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == id && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (plan == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            ViewBag.select = VratiSelectList();
+            ViewBag.naziv = plan.Naziv;
+            ViewBag.godina = plan.Ak_godina.ToString();
+            plan.Naziv = string.Empty;
+            plan.Opis = string.Empty;
+            return View(plan);
+        }
+        [HttpPost]
+        public ActionResult Kopiraj (Mjesecni_plan model)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }            
+            int id = model.ID_plan;
+            Mjesecni_plan plan = baza.MjesecniPlan.SingleOrDefault(s => s.ID_plan == id && s.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (plan == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            if(!ModelState.IsValid)
+            {
+                ViewBag.select = VratiSelectList();
+                ViewBag.naziv = plan.Naziv;
+                ViewBag.godina = plan.Ak_godina.ToString();
+                return View(model);
+            }
+            plan.ID_plan = 0;
+            plan.Naziv = model.Naziv;
+            plan.Opis = model.Opis;
+            plan.Ak_godina = model.Ak_godina;
+            List<Mjesecni_detalji> detalji = baza.MjesecniDetalji.Where(w => w.ID_plan == id).ToList();
+            try
+            {
+                using (var db = new BazaPodataka())
+                {
+                    db.MjesecniPlan.Add(plan);
+                    db.SaveChanges();
+                    int noviId = db.MjesecniPlan.Where(w => w.ID_pedagog == PlaniranjeSession.Trenutni.PedagogId).Max(m => m.ID_plan);
+                    foreach (var item in detalji)
+                    {
+                        item.ID = 0;
+                        item.ID_plan = noviId;
+                        db.MjesecniDetalji.Add(item);
+                    }
+                    if (detalji.Count > 0)
+                    {
+                        db.SaveChanges();
+                    }
+                }
+                TempData["poruka"] = "Plan je uspješno kopiran";
+            }
+            catch
+            {
+                TempData["poruka"] = "Kopiranje plana nije uspjelo! Pokušajte ponovno.";
+            }
+            return RedirectToAction("Index", new { godina = model.Ak_godina });
+        }
+        private SelectList VratiSelectList()
+        {
+            List<Sk_godina> skGodina = baza.SkolskaGodina.ToList();
+            var selectListItem = new List<SelectListItem>();
+            foreach (var item in skGodina)
+            {
+                selectListItem.Add(new SelectListItem { Value = item.Sk_Godina.ToString(), Text = item.Sk_Godina + "./" + (item.Sk_Godina + 1).ToString() + "." });
+            }
+            var select = new SelectList(selectListItem, "Value", "Text");
+            return select;
         }
     }
 }

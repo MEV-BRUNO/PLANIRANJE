@@ -9,10 +9,8 @@ namespace Planiranje.Models
 {
     public class Mjesecni_detalji
 	{
-        [Key]
-		[Required]
-		public int ID { get; set; }
-		[Required]        
+        [Key]		
+		public int ID { get; set; }		      
 		public int ID_plan { get; set; }	
         [Required(ErrorMessage ="Područje rada je obavezno")]
 		[DisplayName("Područje rada")]
@@ -32,8 +30,7 @@ namespace Planiranje.Models
         [DisplayName("Vrijeme rada")]
         [Range(0,Int32.MaxValue,ErrorMessage ="Vrijednost mora biti veća ili jednaka 0")]
 		public int Br_sati { get; set; }		
-		[DisplayName("Bilješke")]
-        [Required(ErrorMessage = "Bilješka je obavezna")]
+		[DisplayName("Bilješke")]        
         public string Biljeska { get; set; }
         [DisplayName("Subjekti")]
         [Required(ErrorMessage = "Subjekti su obavezni")]

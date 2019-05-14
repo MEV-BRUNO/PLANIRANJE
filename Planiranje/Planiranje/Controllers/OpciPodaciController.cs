@@ -696,6 +696,13 @@ namespace Planiranje.Controllers
                 return View("Info", new List<string> { tekst });
             }
             return RedirectToAction("PopisUcenikaTablica", new { razred = model.Id_razred });
-        }        
+        }
+        
+        public ActionResult Info (string poruka)
+        {
+            List<string> lista = new List<string>();
+            lista.Add(poruka);
+            return View(lista);
+        }
     }    
 }

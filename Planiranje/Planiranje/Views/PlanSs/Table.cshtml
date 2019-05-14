@@ -22,11 +22,12 @@
             <td>@item.Ak_godina./@godina.</td>
             <td>@Html.DisplayFor(modelItem => item.Opis)</td>
             <td>
-				<div class="pull-right">
-					<input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='showModal("@Url.Action("Uredi","PlanSs",new { id = item.Id_plan, pozicija=br })")' />
-					<input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='reloadPage("@Url.Action("Detalji","PlanSs",new { id = item.Id_plan })")' />
-					<input type="button" class="btn btn-danger btn-xs" value="Obriši" onclick='showModal("@Url.Action("Obrisi","PlanSs",new { id = item.Id_plan, pozicija=br })")' />
-				</div>
+                <div class="pull-right">
+                    <input type="button" class="btn btn-success btn-xs" value="Detalji" onclick='reloadPage("@Url.Action("Detalji","PlanSs",new { id = item.Id_plan })")' />
+                    <input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick='showModal("@Url.Action("Uredi","PlanSs",new { id = item.Id_plan, pozicija=br })")' />
+                    <input type="button" class="btn btn-danger btn-xs" value="Obriši" onclick='showModal("@Url.Action("Obrisi","PlanSs",new { id = item.Id_plan, pozicija=br })")' />
+                    <input type="button" class="btn btn-default btn-xs" value="Kopiraj" onclick='showModal("@Url.Action("Kopiraj","PlanSs",new { id = item.Id_plan })")' />
+                </div>
             </td>
         </tr>
 		}

@@ -38,7 +38,8 @@ namespace Planiranje.Reports
             p = new Paragraph("Naziv plana: " + plan.OsPlan1.Naziv, header);
             pdfDokument.Add(p);
 
-            p = new Paragraph("Okvirni plan i program rada stručnog suradnika za osnovnu školu u šk. god. "+plan.OsPlan1.Ak_godina, naslov);
+            p = new Paragraph("Okvirni plan i program rada stručnog suradnika za osnovnu školu u šk. god. "+plan.OsPlan1.Ak_godina
+                +"./"+(plan.OsPlan1.Ak_godina+1).ToString()+".", naslov);
             p.Alignment = Element.ALIGN_CENTER;
             p.SpacingBefore = 30;
             p.SpacingAfter = 30;
@@ -83,13 +84,19 @@ namespace Planiranje.Reports
                 t.AddCell(VratiCeliju(i.ToString()+".", bold, true, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(plan.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje).Naziv, bold, false, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(item.Potrebno_sati, bold, false, BaseColor.WHITE));         
-
-                List<OS_Plan_1_aktivnost> aktivnosti = new List<OS_Plan_1_aktivnost>();
-                aktivnosti = plan.OsPlan1Aktivnost.Where(w => w.Id_podrucje == item.Id_plan).ToList();
+                                
+                List<OS_Plan_1_aktivnost> aktivnosti = plan.OsPlan1Aktivnost.Where(w => w.Id_podrucje == item.Id_plan).ToList();
                 aktivnosti = aktivnosti.OrderBy(o => o.Red_broj_aktivnost).ToList();
 
+                List<OS_Plan_1_akcija> akcije = new List<OS_Plan_1_akcija>();
+
+                foreach (var a in aktivnosti)
+                {
+                    akcije.AddRange(plan.OsPlan1Akcija.Where(w => w.Id_aktivnost == a.Id_plan).ToList());
+                }
+
                 PdfPCell cell = new PdfPCell(new Phrase(item.Cilj,tekst));
-                cell.Rowspan = aktivnosti.Count + 1;
+                cell.Rowspan = aktivnosti.Count + akcije.Count + 1;
                 cell.VerticalAlignment = PdfPCell.ALIGN_TOP;
                 cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
                 cell.NoWrap = false;
@@ -128,6 +135,28 @@ namespace Planiranje.Reports
                     t.AddCell(VratiCeliju(ak.Mj_6.ToString(), tekst, false, BaseColor.WHITE));
                     t.AddCell(VratiCeliju(ak.Mj_7.ToString(), tekst, false, BaseColor.WHITE));
                     t.AddCell(VratiCeliju(ak.Mj_8.ToString(), tekst, false, BaseColor.WHITE));
+
+                    int y = 1;
+                    akcije = plan.OsPlan1Akcija.Where(w => w.Id_aktivnost == ak.Id_plan).OrderBy(o => o.Red_br_akcija).ToList();
+                    foreach(var ac in akcije)
+                    {
+                        t.AddCell(VratiCeliju(i.ToString() + "." + (x-1).ToString() + "." + (y++).ToString(), tekst, true, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Opis_akcija, tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Potrebno_sati, tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Br_sati.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_9.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_10.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_11.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_12.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_1.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_2.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_3.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_4.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_5.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_6.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_7.ToString(), tekst, false, BaseColor.WHITE));
+                        t.AddCell(VratiCeliju(ac.Mj_8.ToString(), tekst, false, BaseColor.WHITE));
+                    }
                 }           
             }
 

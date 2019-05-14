@@ -5,8 +5,8 @@
         <tr>
             <td class="col-lg-1">#</td>
             <td class="col-lg-2">Školska godina</td>
-            <td class="col-lg-7">Naziv</td>            
-            <td class="col-lg-2">Akcija</td>
+            <td class="col-lg-6">Naziv</td>            
+            <td class="col-lg-3">Akcija</td>
         </tr>
 	</thead>
 	<tbody>
@@ -19,9 +19,10 @@
             <td>@Html.DisplayFor(modelItem => item.Naziv)</td>            
             <td>
                 <div class="pull-right">
-                    <input type="button" class="btn btn-default btn-xs" value="Uredi" onclick='reloadPage("@Url.Action("Edit","GodisnjiPlan",new { id = item.Id_god })")' />
-                    <input type="button" class="btn btn-primary btn-xs" value="Detalji" onclick='reloadPage("@Url.Action("Details","GodisnjiPlan",new { id = item.Id_god })")' />
+                    <input type="button" class="btn btn-primary btn-xs" value="Uredi" onclick='reloadPage("@Url.Action("Edit","GodisnjiPlan",new { id = item.Id_god })")' />
+                    <input type="button" class="btn btn-info btn-xs" value="Detalji" onclick='reloadPage("@Url.Action("Details","GodisnjiPlan",new { id = item.Id_god })")' />
                     <input type="button" class="btn btn-danger btn-xs" value="Obriši" onclick='showModal("@Url.Action("Delete","GodisnjiPlan",new { id = item.Id_god })")' />
+                    <input type="button" class="btn btn-default btn-xs" value="Kopiraj" onclick='showModal("@Url.Action("Kopiraj","GodisnjiPlan",new { id = item.Id_god })")' />
                 </div>
             </td>
         </tr>

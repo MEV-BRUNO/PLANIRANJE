@@ -1,0 +1,70 @@
+﻿@using Planiranje.Models
+@{
+    Page.Title = "Analiza nastavnog sata";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+<div id="tip" style="display:none">NAS</div>
+<div class="inner">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Odabir aktivnosti:</label>
+                <select id="selectAktivnost" onchange="promjenaAktivnost()" class="form-control">
+                    <option value="/NastavnikAnaliza" selected>Analiza nastavnog sata</option>
+                    <option value="/NastavnikProtokol">Protokol praćenja odgojno-obrazovnog procesa</option>
+                    <option value="/NastavnikUvid">Protokol za uvid u neposredni odgojno-obrazovni rad nastavnika</option>
+                    <option value="/NastavnikObrazac">Obrazac za promatranje nastave</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="col-lg-3 pull-right">
+            @*<a id="ispisButton" onclick="ispis()" class="btn btn-info btn-sm">Ispis</a>*@
+        </div>
+    </div>
+
+    <hr />
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Školska godina:</label>
+                                <select id="selectGodina" onchange="promjenaGodine()" class="form-control">
+                                    <option value="0">Odaberi školsku godinu</option>
+                                    @foreach (var item in ViewBag.godine as List<Sk_godina>)
+                                    {
+                                        int godina = item.Sk_Godina + 1;
+                                        <option value="@item.Sk_Godina">@item.Sk_Godina./@godina.</option>
+                                    }
+                                </select>
+                            </div>
+                        </div><!--END COL 3-->                        
+
+                    </div><!--END ROW -->
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div id="tablica" class="table-responsive">
+                                @{ Html.RenderAction("OdabirNastavnika", "NastavnikAnaliza");}
+                            </div>
+                        </div><!--END COL 3-->
+                        <div id="detalji" class="col-lg-9">
+
+                        </div><!--END COL 9 -->
+                    </div> <!--END ROW -->
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="~/Scripts/nastavnici_funkcije.js"></script>

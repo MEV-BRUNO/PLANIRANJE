@@ -31,22 +31,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.SS_Plan.Ak_godina, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-9">
-                    @*@Html.DropDownListFor(model => model.SS_Plan.Ak_godina,Model.SKGodinaItems, new { @class = "form-control" })*@
-                    <select class="form-control" data-val="true" data-val-number="The field Ak. godina must be a number." data-val-required="Obavezno polje" id="SS_Plan_Ak_godina" name="SS_Plan.Ak_godina">
-                        
-                        @foreach(var item in Model.SkGodina)
-                        {
-                            int godina = item.Sk_Godina + 1;
-                            if (item.Sk_Godina == Model.SS_Plan.Ak_godina)
-                            {
-                                <option selected="selected" value="@item.Sk_Godina">@item.Sk_Godina./@godina.</option>
-                            }
-                            else
-                            {
-                            <option value="@item.Sk_Godina">@item.Sk_Godina./@godina.</option>
-                            }
-                        }
-                    </select>
+                    @Html.DropDownListFor(model => model.SS_Plan.Ak_godina,Model.SKGodinaItems, new { @class = "form-control" })                    
                     @Html.ValidationMessageFor(model => model.SS_Plan.Ak_godina, "", new { @class = "text-danger" })
                 </div>
             </div>

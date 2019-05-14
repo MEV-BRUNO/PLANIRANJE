@@ -1,0 +1,87 @@
+﻿@model Planiranje.Models.Ucenici.Ucenik_zapisnik
+@{
+    Layout = null;
+}
+@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "ostaloForm", @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.Id)
+    <div class="panel-group" id="accordion1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse4">
+                        Ostalo 1
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="form-group col-lg-12">
+                        @Html.LabelFor(model => model.Odnos_s_prijateljima, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.Odnos_s_prijateljima, new { @class = "edit-opis", rows = "2" })
+                        @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="form-group col-lg-12">
+                        @Html.LabelFor(model => model.Kako_provodi_slobodno_vrijeme, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.Kako_provodi_slobodno_vrijeme, new { @class = "edit-opis", rows = "2", placeholder = "Posebni interesi i aktivnosti" })
+                        @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="form-group col-lg-12">
+                        @Html.LabelFor(model => model.Procjena_mogucih_losih_utjecaja, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.Procjena_mogucih_losih_utjecaja, new { @class = "edit-opis", rows = "2" })
+                        @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse5">
+                        Ostalo 2
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse5" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="form-group col-lg-12">
+                        @Html.LabelFor(model => model.Zdravstvene_poteskoce_ucenika, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.Zdravstvene_poteskoce_ucenika, new { @class = "edit-opis", rows = "2", placeholder = "Ekstremi: introvertiranost, kontrola emocija, pretjerana osjetljivost..." })
+                        @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="form-group col-lg-12">
+                        @Html.LabelFor(model => model.Podaci_o_naglim_promjenama, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.Podaci_o_naglim_promjenama, new { @class = "edit-opis", rows = "2", placeholder = "Povezanost s određenim događajima" })
+                        @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                    </div>               
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion1" href="#collapse6">
+                            Ostalo 3
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse6" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="form-group col-lg-12">
+                            @Html.LabelFor(model => model.Izrecene_pedagoske_mjere, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.Izrecene_pedagoske_mjere, new { @class = "edit-opis", rows = "4", placeholder = "Vrsta, uzrok, nadnevak" })
+                            @*@Html.ValidationMessageFor(model => model.Interes, "", new { @class = "text-danger" })*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <br>
+
+    <div class="form-group">
+        <button type="button" onclick="potvrdi('@Url.Action("Ostalo","UcenikZapisnik")','#ostaloForm','Spremljeno')" class="btn btn-success">Potvrdi</button>
+        <button type="button" onclick="odustani('@Url.Action("Ostalo","UcenikZapisnik", new { id=Model.Id})','#ostalo')" class="btn btn-default">Odustani</button>
+    </div>
+}
+
+
