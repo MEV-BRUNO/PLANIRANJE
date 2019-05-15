@@ -27,9 +27,8 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }         
 
-            List<OS_Plan_1> planovi = new List<OS_Plan_1>();
-            planovi = baza.OsPlan1.Where(w => w.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId).ToList();
-            return View("Index",planovi);            
+            List<OS_Plan_1> planovi = baza.OsPlan1.Where(w => w.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId).ToList();
+            return View(planovi);            
         }
 
         public ActionResult NoviPlan()
