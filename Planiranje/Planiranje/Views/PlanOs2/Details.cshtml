@@ -1,17 +1,16 @@
 ﻿@model Planiranje.Models.PlanOs2View
-@{ Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";}
-
-
+@{ Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    Page.Title = "Detalji OS plana 2";}
 
 <div class="inner">
-	<script>
+	@*<script>
          $(document).ready(function () {
              if ($("#poruka").text() == "1") {
                  showSnackBar('@TempData["note"]');
              }
          })
-	</script>
-	<div style="display:none" id="provjeraPrikaz">@TempData["prikaz"]</div>
+	</script>*@
+	@*<div style="display:none" id="provjeraPrikaz">@TempData["prikaz"]</div>
 	@if (TempData["note"] != null)
 	{
 		<div style="display:none" id="poruka">1</div>
@@ -23,7 +22,7 @@
 	else if (Model.OsPlan2Aktivnosti.Count == 0)
 	{
 		<div id="provjeraPodrucje" style="display:none">2</div>
-	}
+	}*@
 	<div class="row">
 		<div class="col-lg-12">
 
@@ -56,10 +55,10 @@
 										<a href="#poslovi" data-toggle="tab">Poslovi</a>
 									</li>
 									<li>
-										<a id="zadaciTab" href="#zadaci" data-toggle="tab">Zadatci</a>
+										<a href="#zadaci" data-toggle="tab">Zadatci</a>
 									</li>
 									<li>
-										<a id="aktivnostiTab" href="#vrijeme" data-toggle="tab">Aktivnosti i sati</a>
+										<a href="#vrijeme" data-toggle="tab">Aktivnosti i sati</a>
 									</li>
 								</ul>
 
@@ -71,7 +70,7 @@
 													<button onclick="showModal('@Url.Action("NoviPosao","PlanOs2", new { id=Model.OsPlan2.Id_plan})')" class="btn btn-primary btn-xs btn-grad">Dodaj novi posao</button>
 												</p>
 												<div class="table-responsive">
-													<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+													<table class="table table-striped table-bordered table-hover" id="dataTable-posao">
 														<thead>
 															<tr>
 																<th>Rb.</th>
@@ -115,144 +114,10 @@
 										</div>
 									</div>
 									<div class="tab-pane fade" id="zadaci">
-										<div class="row">
-											<div class="col-lg-2">
-												<button id="btnNoviZadatak" onclick="showModal('@Url.Action("NoviZadatak","PlanOs2", new {id=Model.OsPlan2.Id_plan, pozicija = Model.Pozicija})')" class="btn btn-primary btn-xs btn-grad">Dodaj novi zadatak</button>
-											</div>
-											<div class="col-lg-10">
-												<div class="form-group">
-													<label class="control-label col-lg-2">Odaberi posla iz god. plana:</label>
-													<div class="col-lg-7">
-														<select onchange="promjenaPosao()" id="selectPosao" class="form-control">
-															@{ int a = 0;}
-															@foreach (var posao in Model.OsPlan2Podrucja)
-															{
-																a++;
-																if (a - 1 == Model.Pozicija)
-																{
-																	<option selected="selected">@a. @posao.Opis_podrucje</option>
-																}
-																else
-																{
-																	a--;
-																	<option value="@a">
-																		@{a++;}
-																		@a. @posao.Opis_podrucje
-																	</option>
-
-																}
-															}
-														</select>
-													</div>
-												</div>
-											</div><!--END COL 10-->
-										</div>
-										<br>
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="table-responsive">
-													<table class="table table-striped table-bordered table-hover" id="dataTables-example">
-														<thead>
-															<tr>
-																<th>Rb.</th>
-																<th>Naziv zadatka</th>
-																<th>Pomak</th>
-																<th>Aktivnost</th>
-															</tr>
-														</thead>
-														<tbody>
-															@{ int b = 0; int ab = Model.Pozicija + 1;}
-															@foreach (var zadatak in Model.OsPlan2Aktivnosti)
-															{
-																b++;
-																<tr>
-																	<td class="col-md-1">@ab.@b</td>
-																	<td class="col-md-7">@zadatak.Opis_aktivnost</td>
-																	<td class="col-md-2">
-																		<a onclick="reloadPage('@Url.Action("ZadatakPomakGore","PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija})')" class="btn btn-warning btn-xs btn-grad">Gore</a>
-																		<a onclick="reloadPage('@Url.Action("ZadatakPomakDolje","PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija})')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
-																	</td>
-																	<td class="col-md-2">
-																		<a onclick="showModal('@Url.Action("UrediZadatak","PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija, tekst=ab+"."+b})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-																		<a onclick="showModal('@Url.Action("ObrisiZadatak", "PlanOs2", new { id=zadatak.Id_plan, pozicija=Model.Pozicija, tekst=ab+"."+b})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
-																	</td>
-																</tr>
-															}
-														</tbody>
-													</table>
-												</div>
-											</div><!--END COL 12-->
-										</div>
+										
 									</div>
 									<div class="tab-pane fade" id="vrijeme">
-										<div class="row">
-											<div class="col-lg-2">
-												<button onclick="showModal('@Url.Action("NovaAktivnost","PlanOs2",new { id=Model.OsPlan2.Id_plan, pA=Model.Pozicija, pB=Model.Pozicija2})')" id="btnNovaAktivnost" class="btn btn-primary btn-xs btn-grad">Dodaj novu aktivnost</button>
-											</div>
-											<div class="col-lg-10">
-												<div class="form-group">
-													<label class="control-label col-lg-2">Odaberi zadatka iz god. plana:</label>
-													<div class="col-lg-7">
-														<select id="selectZadatak" onchange="promjenaZadatak()" class="form-control">
-															@{ b = 0;}
-															@foreach (var item in Model.OsPlan2Aktivnosti)
-															{
-																b++;
-																if (b - 1 == Model.Pozicija2)
-																{
-																	<option selected="selected">@ab.@b @item.Opis_aktivnost</option>
-																}
-																else
-																{
-																	b--;
-																	<option value="pA=@Model.Pozicija&amp;pB=@b">@{b++;}@ab.@b @item.Opis_aktivnost</option>
-
-																}
-
-															}
-														</select>
-													</div>
-												</div>
-											</div><!--END COL 10-->
-										</div>
-										<br>
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="table-responsive">
-													<table class="table table-striped table-bordered table-hover" id="dataTables-example">
-														<thead>
-															<tr>
-																<th>Rb.</th>
-																<th>Naziv aktivnosti</th>
-																<th>Sati</th>
-																<th>Pomak</th>
-																<th>Aktivnost</th>
-															</tr>
-														</thead>
-														<tbody>
-															@{ int e = 0, c = Model.Pozicija + 1, d = Model.Pozicija2 + 1;}
-															@foreach (var akcija in Model.OsPlan2Akcije)
-															{
-																e++;
-																<tr>
-																	<td class="col-md-1">@c.@d.@e</td>
-																	<td class="col-md-6">@akcija.Opis_akcija</td>
-																	<td class="col-md-1">@akcija.Sati</td>
-																	<td class="col-md-2">
-																		<a onclick="reloadPage('@Url.Action("AktivnostPomakGore","PlanOs2",new { id=akcija.Id_plan, pa=Model.Pozicija, pb=Model.Pozicija2})')" class="btn btn-warning btn-xs btn-grad">Gore</a>
-																		<a onclick="reloadPage('@Url.Action("AktivnostPomakDolje","PlanOs2", new { id=akcija.Id_plan, pa=Model.Pozicija, pb=Model.Pozicija2})')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
-																	</td>
-																	<td class="col-md-2">
-																		<a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs2",new { id=akcija.Id_plan, pA=Model.Pozicija, pB=Model.Pozicija2, tekst=c+"."+d+"."+e})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-																		<a onclick="showModal('@Url.Action("ObrisiAktivnost","PlanOs2",new { id=akcija.Id_plan, pA=Model.Pozicija, pB=Model.Pozicija2, tekst=c+"."+d+"."+e})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
-																	</td>
-																</tr>
-															}
-														</tbody>
-													</table>
-												</div>
-											</div><!--END COL 12-->
-										</div>
+										
 									</div>
 								</div>
 							</div><!--END nav-pills -->
@@ -266,9 +131,9 @@
 	</div>
 
 </div>
-<div style="display:none" id="idPlan">@Model.OsPlan2.Id_plan</div>
+@*<div style="display:none" id="idPlan">@Model.OsPlan2.Id_plan</div>*@
 
-<script>
+@*<script>
 	function promjenaPosao() {
 		var val = $("#selectPosao").val();
 		var id = $("#idPlan").text();
@@ -316,5 +181,135 @@
 		}
 
 	});
+</script>*@
+<script>
+    $(document).ready(function () {
+        $('#dataTable-posao').dataTable({ stateSave: true });
+        @if (TempData["note"] != null)
+        {
+            @:showSnackBar("@TempData["note"]");
+        }
+    });
+    function promjenaPodrucja() {
+        var val = $("#selectPodrucje").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/PlanOs1/Aktivnosti?idPodrucje=' + val + '&id=0',
+                success: function (data) {
+                    $("#aktivnosti").html(data);
+                    updateAkcija();
+                },
+                error: function (request, status, error) {
+                    showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+                }
+            });
+        }
+    }
+    function promjenaAktivnosti() {
+        var val = $("#selectAktivnost").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/PlanOs1/Akcije?idAktivnost=' + val + '&idPodrucje=0',
+                success: function (data) {
+                    $("#akcije").html(data);
+                },
+                error: function (request, status, error) {
+                    showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+                }
+            });
+        }
+    }
+    function updateAkcija() {
+        var val = $("#selectPodrucje").val();
+        if (val != "0") {
+            $.ajax({
+                url: '/PlanOs1/Akcije?idAktivnost=0&idPodrucje=' + val,
+                success: function (data) {
+                    $("#akcije").html(data);
+                },
+                error: function (request, status, error) {
+                    showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+                }
+            });
+        }
+    }
+    function zatvoriModal(path, id, spremi, poruka) {
+        var dt = $(id).serialize();
+        $.ajax({
+            url: path,
+            type: "POST",
+            data: dt,
+            success: function (data) {
+                if ($(data)[0].className === "row") {
+                    $(spremi).html(data);
+                    $('#modal').modal('hide');
+                    $('#modalContainer').removeData();
+                    $('.modal-backdrop').remove();
+                    showSnackBar(poruka);
+                }
+                else if ($(data)[0].className === "modal-dialog") {
+                    $("#modalContainer").html(data);
+                }
+                else {
+                    location.reload();
+                }
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+            }
+        });
+    }
+    function pomak(path, spremi, poruka) {
+        $.ajax({
+            url: path,
+            success: function (data) {
+                $(spremi).html(data);
+                showSnackBar(poruka);
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+            }
+        });
+    }
+    function pomak1(path, spremi, poruka) {
+        $.ajax({
+            url: path,
+            success: function (data) {
+                $(spremi).html(data);
+                showSnackBar(poruka);
+                updateAkcija();
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+            }
+        });
+    }
+    function zatvoriModal1(path, id, spremi, poruka) {
+        var dt = $(id).serialize();
+        $.ajax({
+            url: path,
+            type: "POST",
+            data: dt,
+            success: function (data) {
+                if ($(data)[0].className === "row") {
+                    $(spremi).html(data);
+                    $('#modal').modal('hide');
+                    $('#modalContainer').removeData();
+                    $('.modal-backdrop').remove();
+                    showSnackBar(poruka);
+                    updateAkcija();
+                }
+                else if ($(data)[0].className === "modal-dialog") {
+                    $("#modalContainer").html(data);
+                }
+                else {
+                    location.reload();
+                }
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
+            }
+        });
+    }
 </script>
 

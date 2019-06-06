@@ -182,6 +182,12 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index", "Planiranje");
             }
             PlanOs2View plan = new PlanOs2View();
+            plan.OsPlan2 = baza.OsPlan2.SingleOrDefault(s => s.Id_plan == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            if (plan.OsPlan2 == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            plan.OsPlan2Podrucja = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == id).OrderBy(o=>o.Red_br_podrucje).ToList();
             return View(plan);
         }
         public ActionResult NoviPosao(int id)
