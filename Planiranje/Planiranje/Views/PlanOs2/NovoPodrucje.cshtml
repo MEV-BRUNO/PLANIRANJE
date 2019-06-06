@@ -2,7 +2,7 @@
 @{
     Layout = null;
 }
-<div class="modal-dialog">
+<div class="modal-dialog" style="width:1200px;">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -15,115 +15,122 @@
             @Html.HiddenFor(model => model.Id_plan, new { Value = 0 })
             @Html.HiddenFor(m => m.Id_glavni_plan, new { Value = ViewBag.id})            
             <div class="form-group">
-                @Html.LabelFor(model => model.Opis_podrucje, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
+                @Html.LabelFor(model => model.Opis_podrucje, htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-11">
                     @Html.TextAreaFor(model => model.Opis_podrucje, new { @class = "edit-opis" })
                     @Html.ValidationMessageFor(model => model.Opis_podrucje, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <!--CILJEVI-->
+            <div>
+                <div class="col-lg-6 pull-left">
+                    <!--CILJEVI-->
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.LabelFor(model => model.Cilj)
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.TextAreaFor(model => model.Cilj, new { @class = "edit-text-area", id = "ciljeviText" })
+                                    @Html.ValidationMessageFor(model => model.Cilj, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.DropDownList("Ciljevi", ViewBag.selectCiljevi as SelectList, "--Odaberi ciljeve--", new { @class = "form-control", id = "ciljeviList" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("ciljeviList", "ciljeviText")' value="Dodaj" />
+                            </div>
+                        </div>
+                    </div>
+                    <!--//CILJEVI-->
+                    <!--ZADACI-->
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.LabelFor(model => model.Zadaci)
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.TextAreaFor(model => model.Zadaci, new { @class = "edit-text-area", id = "zadaciText" })
+                                    @Html.ValidationMessageFor(model => model.Zadaci, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.DropDownList("Zadaci", ViewBag.selectZadaci as SelectList, "--Odaberi zadatke--", new { @class = "form-control", id = "zadaciList" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("zadaciList", "zadaciText")' value="Dodaj" />
+                            </div>
+                        </div>
+                    </div>
+                    <!--//ZADACI-->
+                </div>
+                <div class="col-lg-6 pull-right">
+                    <!--SUBJEKTI-->
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.LabelFor(model => model.Subjekti)
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.TextAreaFor(model => model.Subjekti, new { @class = "edit-text-area", id = "subjektiText" })
+                                    @Html.ValidationMessageFor(model => model.Subjekti, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.DropDownList("Subjekti", ViewBag.selectSubjekti as SelectList, "--Odaberi subjekte--", new { @class = "form-control", id = "subjektiList" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("subjektiList", "subjektiText")' value="Dodaj" />
+                            </div>
+                        </div>
+                    </div>
+                    <!--//SUBJEKTI-->
+                    <!--OBLICI-->
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.LabelFor(model => model.Oblici)
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.TextAreaFor(model => model.Oblici, new { @class = "edit-text-area", id = "obliciText" })
+                                    @Html.ValidationMessageFor(model => model.Oblici, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.DropDownList("Oblici", ViewBag.selectOblici as SelectList, "--Odaberi oblike--", new { @class = "form-control", id = "obliciList" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("obliciList", "obliciText")' value="Dodaj" />
+                            </div>
+                        </div>
+                    </div>
+                    <!--//OBLICI-->
+                </div>
+            </div>           
+            
             <div class="form-group">
-                <div class="col-lg-12">
-                    @Html.LabelFor(model => model.Cilj)
-                </div>
-                <div class="col-lg-7">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            @Html.TextAreaFor(model => model.Cilj, new { @class = "edit-text-area", id = "ciljeviText" })
-                            @Html.ValidationMessageFor(model => model.Cilj, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            @Html.DropDownList("Ciljevi", ViewBag.selectCiljevi as SelectList, "--Odaberi ciljeve--", new { @class = "form-control", id = "ciljeviList" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("ciljeviList", "ciljeviText")' value="Dodaj" />
-                    </div>
-                </div>
-            </div>
-            <!--//CILJEVI-->
-            <!--ZADACI-->
-            <div class="form-group">
-                <div class="col-lg-12">
-                    @Html.LabelFor(model => model.Zadaci)
-                </div>
-                <div class="col-lg-7">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            @Html.TextAreaFor(model => model.Zadaci, new { @class = "edit-text-area", id = "zadaciText" })
-                            @Html.ValidationMessageFor(model => model.Zadaci, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            @Html.DropDownList("Zadaci", ViewBag.selectZadaci as SelectList, "--Odaberi zadatke--", new { @class = "form-control", id = "zadaciList" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("zadaciList", "zadaciText")' value="Dodaj" />
-                    </div>
-                </div>
-            </div>
-            <!--//ZADACI-->
-            <!--SUBJEKTI-->
-            <div class="form-group">
-                <div class="col-lg-12">
-                    @Html.LabelFor(model => model.Subjekti)
-                </div>
-                <div class="col-lg-7">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            @Html.TextAreaFor(model => model.Subjekti, new { @class = "edit-text-area", id = "subjektiText" })
-                            @Html.ValidationMessageFor(model => model.Subjekti, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            @Html.DropDownList("Subjekti", ViewBag.selectSubjekti as SelectList, "--Odaberi subjekte--", new { @class = "form-control", id = "subjektiList" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("subjektiList", "subjektiText")' value="Dodaj" />
-                    </div>
-                </div>
-            </div>
-            <!--//SUBJEKTI-->
-            <!--OBLICI-->
-            <div class="form-group">
-                <div class="col-lg-12">
-                    @Html.LabelFor(model => model.Oblici)
-                </div>
-                <div class="col-lg-7">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            @Html.TextAreaFor(model => model.Oblici, new { @class = "edit-text-area", id = "obliciText" })
-                            @Html.ValidationMessageFor(model => model.Oblici, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            @Html.DropDownList("Oblici", ViewBag.selectOblici as SelectList, "--Odaberi oblike--", new { @class = "form-control", id = "obliciList" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="button" class="btn btn-primary" style="width:100%;" onclick='appendText("obliciList", "obliciText")' value="Dodaj" />
-                    </div>
-                </div>
-            </div>
-            <!--//OBLICI-->
-            <div class="form-group">
-                @Html.LabelFor(model => model.Vrijeme, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
+                @Html.LabelFor(model => model.Vrijeme, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
                     @Html.EditorFor(model => model.Vrijeme, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Vrijeme, "", new { @class = "text-danger" })
                 </div>
