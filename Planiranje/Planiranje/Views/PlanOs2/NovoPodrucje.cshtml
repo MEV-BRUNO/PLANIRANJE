@@ -1,4 +1,4 @@
-﻿@model Planiranje.Models.PlanOs2View
+﻿@model Planiranje.Models.OS_Plan_2_podrucje
 @{
     Layout = null;
 }
@@ -12,33 +12,32 @@
 		{
         <div class="modal-body">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.OsPlan2Podrucje.Id_plan, new { Value = 0 })
-            @Html.HiddenFor(m => m.OsPlan2.Id_plan)
-            @Html.HiddenFor(m => m.OsPlan2.Id_pedagog)
+            @Html.HiddenFor(model => model.Id_plan, new { Value = 0 })
+            @Html.HiddenFor(m => m.Id_glavni_plan, new { Value = ViewBag.id})            
             <div class="form-group">
-                @Html.LabelFor(model => model.OsPlan2Podrucje.Opis_podrucje, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.LabelFor(model => model.Opis_podrucje, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.TextAreaFor(model => model.OsPlan2Podrucje.Opis_podrucje, new { @class = "edit-opis" })
-                    @Html.ValidationMessageFor(model => model.OsPlan2Podrucje.Opis_podrucje, "", new { @class = "text-danger" })
+                    @Html.TextAreaFor(model => model.Opis_podrucje, new { @class = "edit-opis" })
+                    @Html.ValidationMessageFor(model => model.Opis_podrucje, "", new { @class = "text-danger" })
                 </div>
             </div>
             <!--CILJEVI-->
             <div class="form-group">
                 <div class="col-lg-12">
-                    @Html.LabelFor(model => model.OsPlan2Podrucje.Cilj)
+                    @Html.LabelFor(model => model.Cilj)
                 </div>
                 <div class="col-lg-7">
                     <div class="form-group">
                         <div class="col-lg-12">
-                            @Html.TextAreaFor(model => model.OsPlan2Podrucje.Cilj, new { @class = "edit-text-area", id = "ciljeviText", @required = "" })
-                            @Html.ValidationMessageFor(model => model.OsPlan2Podrucje.Cilj, "", new { @class = "text-danger" })
+                            @Html.TextAreaFor(model => model.Cilj, new { @class = "edit-text-area", id = "ciljeviText" })
+                            @Html.ValidationMessageFor(model => model.Cilj, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="form-group">
                         <div class="col-lg-12">
-                            @Html.DropDownList("Ciljevi", Model.CiljeviItems, "--Odaberi ciljeve--", new { @class = "form-control", id = "ciljeviList" })
+                            @Html.DropDownList("Ciljevi", ViewBag.selectCiljevi as SelectList, "--Odaberi ciljeve--", new { @class = "form-control", id = "ciljeviList" })
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -50,20 +49,20 @@
             <!--ZADACI-->
             <div class="form-group">
                 <div class="col-lg-12">
-                    @Html.LabelFor(model => model.OsPlan2Podrucje.Zadaci)
+                    @Html.LabelFor(model => model.Zadaci)
                 </div>
                 <div class="col-lg-7">
                     <div class="form-group">
                         <div class="col-lg-12">
-                            @Html.TextAreaFor(model => model.OsPlan2Podrucje.Zadaci, new { @class = "edit-text-area", id = "zadaciText", @required = "" })
-                            @Html.ValidationMessageFor(model => model.OsPlan2Podrucje.Zadaci, "", new { @class = "text-danger" })
+                            @Html.TextAreaFor(model => model.Zadaci, new { @class = "edit-text-area", id = "zadaciText" })
+                            @Html.ValidationMessageFor(model => model.Zadaci, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="form-group">
                         <div class="col-lg-12">
-                            @Html.DropDownList("Zadaci", Model.ZadaciItems, "--Odaberi zadatke--", new { @class = "form-control", id = "zadaciList" })
+                            @Html.DropDownList("Zadaci", ViewBag.selectZadaci as SelectList, "--Odaberi zadatke--", new { @class = "form-control", id = "zadaciList" })
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -75,20 +74,20 @@
             <!--SUBJEKTI-->
             <div class="form-group">
                 <div class="col-lg-12">
-                    @Html.LabelFor(model => model.OsPlan2Podrucje.Subjekti)
+                    @Html.LabelFor(model => model.Subjekti)
                 </div>
                 <div class="col-lg-7">
                     <div class="form-group">
                         <div class="col-lg-12">
-                            @Html.TextAreaFor(model => model.OsPlan2Podrucje.Subjekti, new { @class = "edit-text-area", id = "subjektiText", @required = "" })
-                            @Html.ValidationMessageFor(model => model.OsPlan2Podrucje.Subjekti, "", new { @class = "text-danger" })
+                            @Html.TextAreaFor(model => model.Subjekti, new { @class = "edit-text-area", id = "subjektiText" })
+                            @Html.ValidationMessageFor(model => model.Subjekti, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="form-group">
                         <div class="col-lg-12">
-                            @Html.DropDownList("Subjekti", Model.SubjektiItems, "--Odaberi subjekte--", new { @class = "form-control", id = "subjektiList" })
+                            @Html.DropDownList("Subjekti", ViewBag.selectSubjekti as SelectList, "--Odaberi subjekte--", new { @class = "form-control", id = "subjektiList" })
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -100,20 +99,20 @@
             <!--OBLICI-->
             <div class="form-group">
                 <div class="col-lg-12">
-                    @Html.LabelFor(model => model.OsPlan2Podrucje.Oblici)
+                    @Html.LabelFor(model => model.Oblici)
                 </div>
                 <div class="col-lg-7">
                     <div class="form-group">
                         <div class="col-lg-12">
-                            @Html.TextAreaFor(model => model.OsPlan2Podrucje.Oblici, new { @class = "edit-text-area", id = "obliciText", @required = "" })
-                            @Html.ValidationMessageFor(model => model.OsPlan2Podrucje.Oblici, "", new { @class = "text-danger" })
+                            @Html.TextAreaFor(model => model.Oblici, new { @class = "edit-text-area", id = "obliciText" })
+                            @Html.ValidationMessageFor(model => model.Oblici, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="form-group">
                         <div class="col-lg-12">
-                            @Html.DropDownList("Oblici", Model.ObliciItems, "--Odaberi oblike--", new { @class = "form-control", id = "obliciList" })
+                            @Html.DropDownList("Oblici", ViewBag.selectOblici as SelectList, "--Odaberi oblike--", new { @class = "form-control", id = "obliciList" })
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -123,15 +122,15 @@
             </div>
             <!--//OBLICI-->
             <div class="form-group">
-                @Html.LabelFor(model => model.OsPlan2Podrucje.Vrijeme, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.LabelFor(model => model.Vrijeme, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.OsPlan2Podrucje.Vrijeme, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.OsPlan2Podrucje.Vrijeme, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Vrijeme, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Vrijeme, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                <input type="button" onclick="reload('@Url.Action("NoviPosao","PlanOs2")','#noviPlanModalView')" class="btn btn-primary" value="Spremi" />
+                <input type="button" onclick="reload('@Url.Action("NovoPodrucje","PlanOs2")','#noviPlanModalView')" class="btn btn-primary" value="Spremi" />
             </div>
         </div>
         }
