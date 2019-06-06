@@ -461,8 +461,7 @@
     <Content Include="Views\PlanSs\UrediDetalje.cshtml" />
     <Content Include="Views\PlanOs2\Details.cshtml" />
     <Content Include="Views\PlanOs2\NovoPodrucje.cshtml" />
-    <Content Include="Views\PlanOs2\UrediPosao.cshtml" />
-    <Content Include="Views\PlanOs2\ObrisiPosao.cshtml" />
+    <Content Include="Views\PlanOs2\ObrisiPodrucje.cshtml" />
     <Content Include="Views\PlanOs2\NoviZadatak.cshtml" />
     <Content Include="Views\PlanOs2\UrediZadatak.cshtml" />
     <Content Include="Views\PlanOs2\ObrisiZadatak.cshtml" />
