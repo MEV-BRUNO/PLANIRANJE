@@ -29,7 +29,9 @@ namespace Planiranje.Models
         [Required(ErrorMessage = "Obavezno polje")]        
         [DisplayName("Vrijeme realizacije")]
         public string Vrijeme { get; set; }              
-        public int Id_glavni_plan { get; set; }        
+        public int Id_glavni_plan { get; set; }   
+        [Required(ErrorMessage ="Obavezno polje")]
+        [Range(0,int.MaxValue,ErrorMessage ="Vrijednost mora biti veća ili jednaka 0")]
         public int Sati { get; set; }
     }
 }
