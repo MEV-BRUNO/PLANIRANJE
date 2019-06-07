@@ -202,7 +202,7 @@ namespace Planiranje.Controllers
             ViewBag.selectSubjekti = VratiSelectSubjekti();
             ViewBag.selectZadaci = VratiSelectZadaci();
             ViewBag.selectOblici = VratiSelectOblici();
-            return View();
+            return View(new OS_Plan_2_podrucje());
         }
         [HttpPost]
         public ActionResult NovoPodrucje (OS_Plan_2_podrucje model)
@@ -299,7 +299,7 @@ namespace Planiranje.Controllers
             }
             model.Id_glavni_plan = podrucje.Id_glavni_plan;
             model.Red_br_podrucje = podrucje.Red_br_podrucje;
-            model.Sati = podrucje.Sati;
+            //model.Sati = podrucje.Sati;
             int id = model.Id_glavni_plan;
             using (var db = new BazaPodataka())
             {
