@@ -645,94 +645,106 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Aktivnosti", new { idPodrucje = podrucje.Id_plan, id = 0 });
         }
-        public ActionResult UrediAktivnost(int id, int pozicija, string tekst)
+        public ActionResult UrediAktivnost(int id, string pozicija)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            PlanOs2View plan = new PlanOs2View();
-            plan.OsPlan2Aktivnost = new OS_Plan_2_aktivnost();
-            plan.OsPlan2Aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
-            plan.Pozicija = pozicija;
-            plan.Tekst = tekst;
-            return View(plan);
+            OS_Plan_2_aktivnost aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+            if (aktivnost == null || !PodrucjeIsValid(aktivnost.Id_podrucje))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            else
+            {                
+                ViewBag.broj = pozicija;
+                return View(aktivnost);
+            }
         }
         [HttpPost]
-        public ActionResult UrediAktivnost(PlanOs2View plan)
+        public ActionResult UrediAktivnost(OS_Plan_2_aktivnost model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (plan.OsPlan2Aktivnost.Opis_aktivnost == null)
-            {
-                return View(plan);
+            if (!ModelState.IsValid)
+            {                
+                ViewBag.broj = Request.Form.Get("broj");
+                return View(model);
             }
-            OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
-            int idPod = plan.OsPlan2Aktivnost.Id_podrucje;
-            podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPod);
-
+            if (!PodrucjeIsValid(model.Id_podrucje) || !AktivnostIsValid(model.Id_plan))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }           
+            
+            int id_ak = model.Id_plan;
+            int id_pod = model.Id_podrucje;
+            OS_Plan_2_podrucje p = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id_pod);            
+            
+            
             using (var db = new BazaPodataka())
             {
                 try
                 {
-                    db.OsPlan2Aktivnost.Add(plan.OsPlan2Aktivnost);
-                    db.Entry(plan.OsPlan2Aktivnost).State = System.Data.Entity.EntityState.Modified;
+                    db.OsPlan2Aktivnost.Add(model);
+                    db.Entry(model).State = System.Data.Entity.EntityState.Modified;                    
                     db.SaveChanges();
-                    TempData["note"] = "Zadatak je promijenjen";
                 }
                 catch
                 {
-                    TempData["note"] = "Zadatak nije promijenjen";
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }
             }
-            return RedirectToAction("Details", new { id = podrucje.Id_glavni_plan, pA = plan.Pozicija });
+            return RedirectToAction("Aktivnosti", new { idPodrucje = p.Id_plan, id = 0 });
         }
-        public ActionResult ObrisiAktivnost (int id, int pozicija, string tekst)
+        public ActionResult ObrisiAktivnost (int id, string pozicija)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            PlanOs2View plan = new PlanOs2View();
-            plan.OsPlan2Aktivnost = new OS_Plan_2_aktivnost();
-            plan.OsPlan2Aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
-            plan.Pozicija = pozicija;
-            plan.Tekst = tekst;
-            return View(plan);
+            OS_Plan_2_aktivnost aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+            if (aktivnost == null || !PodrucjeIsValid(aktivnost.Id_podrucje)) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            ViewBag.pozicija = pozicija;            
+            return View(aktivnost);
         }
         [HttpPost]
-        public ActionResult ObrisiAktivnost(PlanOs2View plan)
+        public ActionResult ObrisiAktivnost(OS_Plan_2_aktivnost model)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            int id = plan.OsPlan2Aktivnost.Id_plan;
-            int idPodrucje = plan.OsPlan2Aktivnost.Id_podrucje;
-            OS_Plan_2_podrucje pod = new OS_Plan_2_podrucje();
-            pod = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
-            using(var db = new BazaPodataka())
+            int id_akt = model.Id_plan;
+            int id_pod;
+            OS_Plan_2_aktivnost a = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id_akt);
+
+            if (a == null || !PodrucjeIsValid(a.Id_podrucje)) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            id_pod = a.Id_podrucje;
+
+            OS_Plan_2_podrucje p = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id_pod);
+           
+            using (var db = new BazaPodataka())
             {
-                var result = db.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
-                var result1 = db.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == idPodrucje);
-                if (result != null)
+                var aktivnost = db.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id_akt);
+                if (aktivnost != null)
                 {
                     try
                     {
-                        result1.Sati -= result.Sati;
-                        db.OsPlan2Aktivnost.Remove(result);
+                        db.OsPlan2Aktivnost.Remove(aktivnost);                        
                         db.SaveChanges();
-                        TempData["note"] = "Zadatak je obrisan";
                     }
                     catch
                     {
-                        TempData["note"] = "Zadatak nije obrisan";
+                        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                     }
                 }
             }
-            return RedirectToAction("Details", new { id = pod.Id_glavni_plan, pA = plan.Pozicija });
+            //UpdatePodrucje(p.Id_plan);
+            return RedirectToAction("Aktivnosti", new { idPodrucje = p.Id_plan, id = 0 });
         }
         public ActionResult NovaAkcija(int id,int pA, int pB)
         {
@@ -1091,6 +1103,18 @@ namespace Planiranje.Controllers
             else
             {
                 return PlanIsValid(podrucje.Id_glavni_plan);
+            }
+        }
+        private bool AktivnostIsValid(int id)
+        {
+            OS_Plan_2_aktivnost aktivnost = baza.OsPlan2Aktivnost.SingleOrDefault(s => s.Id_plan == id);
+            if (aktivnost == null)
+            {
+                return false;
+            }
+            else
+            {
+                return PodrucjeIsValid(aktivnost.Id_podrucje);
             }
         }
     }

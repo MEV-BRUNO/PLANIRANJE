@@ -70,8 +70,8 @@
                                 <button @disabled2 onclick="pomak1('@Url.Action("AktivnostPomakDolje","PlanOs2", new { id=zadatak.Id_plan})','#aktivnosti','Zadatak je pomaknut prema dolje')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
                             </td>
                             <td class="col-md-2">
-                                <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs2", new { id=zadatak.Id_plan})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                <a onclick="showModal('@Url.Action("ObrisiAktivnost", "PlanOs2", new { id=zadatak.Id_plan})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs2", new { id=zadatak.Id_plan, pozicija=i})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                <a onclick="showModal('@Url.Action("ObrisiAktivnost", "PlanOs2", new { id=zadatak.Id_plan, pozicija=i})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                             </td>
                         </tr>
                     }

@@ -1,4 +1,4 @@
-﻿@model Planiranje.Models.PlanOs2View
+﻿@model Planiranje.Models.OS_Plan_2_aktivnost
 @{
     Layout = null;
 }
@@ -12,9 +12,8 @@
         @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviPlanModalView", @class = "form-horizontal", role = "form" }))
 		{
             <div class="modal-body">
-                @Html.HiddenFor(model => model.Pozicija)
-                @Html.HiddenFor(model => model.OsPlan2Aktivnost.Id_plan)
-                @Html.HiddenFor(model=>model.OsPlan2Aktivnost.Id_podrucje)
+                @Html.HiddenFor(model => model.Id_plan)
+                
                 <div class="form-group">
                     <div class="col-md-10">
                         <h5>
@@ -23,21 +22,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Broj, new { @class = "control-label col-md-3" })
+                    @Html.Label("Redni broj", new { @class = "control-label col-md-3" })
                     <div class="col-md-3">
-                        @Html.TextBoxFor(m => m.Tekst, new { @class = "form-control", @disabled = "true" })
+                        @Html.TextBox("broj", ViewBag.pozicija as string, new { @class = "form-control", @disabled = "true" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.OsPlan2Aktivnost.Opis_aktivnost, new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.Opis_aktivnost, new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.TextAreaFor(model => model.OsPlan2Aktivnost.Opis_aktivnost, new { @class = "edit-opis", @disabled = "true" })
+                        @Html.TextAreaFor(model => model.Opis_aktivnost, new { @class = "edit-opis", @disabled = "true" })
                     </div>
                 </div>                
                 <div class="modal-footer">
                     <div class="form-group">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                        <input type="button" onclick="reload('@Url.Action("ObrisiZadatak")','#noviPlanModalView')" class="btn btn-danger" value="Obriši" />
+                        <input type="button" onclick="zatvoriModal1('@Url.Action("ObrisiAktivnost","PlanOs2")','#noviPlanModalView','#aktivnosti','Zadatak je obrisan')" class="btn btn-danger" value="Obriši" />
                     </div>
                 </div>
             </div>
