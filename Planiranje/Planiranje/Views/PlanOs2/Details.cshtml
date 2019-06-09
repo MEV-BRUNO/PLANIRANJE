@@ -87,8 +87,12 @@
 														<tbody>
 															@{ int br = 0;}
 															@foreach (var item in Model.OsPlan2Podrucja)
-															{
-																br++;
+                                                            {
+                                                                br++;
+                                                                string disabled1 = "";
+                                                                string disabled2 = "";
+                                                                if (br == 1) { disabled1 = "disabled"; }
+                                                                if (br == Model.OsPlan2Podrucja.Count) { disabled2 = "disabled"; }
 																<tr>
 																	<td class="col-md-1">@br</td>
 																	<td class="col-md-3">@item.Opis_podrucje</td>
@@ -98,8 +102,8 @@
 																	<td class="col-md-1" style="white-space:pre-line">@item.Oblici</td>
 																	<td class="col-md-1">@item.Vrijeme</td>
 																	<td class="col-md-1">
-																		<a onclick="reloadPage('@Url.Action("PosaoPomakGore","PlanOs2", new { id=item.Id_plan})')" class="btn btn-warning btn-xs btn-grad">Gore</a>
-																		<a onclick="reloadPage('@Url.Action("PosaoPomakDolje","PlanOs2", new { id=item.Id_plan})')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+																		<button @disabled1 onclick="reloadPage('@Url.Action("PodrucjePomakGore","PlanOs2", new { id=item.Id_plan})')" class="btn btn-warning btn-xs btn-grad">Gore</button>
+																		<button @disabled2 onclick="reloadPage('@Url.Action("PodrucjePomakDolje","PlanOs2", new { id=item.Id_plan})')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
 																	</td>
 																	<td class="col-md-1">
 																		<a onclick="showModal('@Url.Action("UrediPodrucje","PlanOs2", new { id=item.Id_plan, broj=br})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>

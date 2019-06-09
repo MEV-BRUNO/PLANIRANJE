@@ -364,19 +364,22 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("Details", new { id = id });
         }
-        public ActionResult PosaoPomakGore(int id)
+        public ActionResult PodrucjePomakGore(int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
-            podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
+            OS_Plan_2_podrucje podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
+            if (podrucje == null || !PlanIsValid(podrucje.Id_glavni_plan))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
             int id_ = podrucje.Id_glavni_plan;
 
             int pozicija = podrucje.Red_br_podrucje;
-            List<OS_Plan_2_podrucje> pod = new List<OS_Plan_2_podrucje>();
-            pod = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == id_ && w.Red_br_podrucje <= pozicija).ToList();            
+            List<OS_Plan_2_podrucje> pod = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == id_ && w.Red_br_podrucje <= pozicija).ToList();
+                 
 
             if (pod.Count == 1)
             {
@@ -396,7 +399,7 @@ namespace Planiranje.Controllers
                         result.Red_br_podrucje = pozicijaPrethodni;
                         result2.Red_br_podrucje = pozicija;
                         db.SaveChanges();
-                        TempData["note"] = "Posao je pomaknut za jedno mjesto gore";
+                        TempData["note"] = "Posao je pomaknut prema gore";
                     }
                     catch
                     {
@@ -407,18 +410,21 @@ namespace Planiranje.Controllers
 
             return RedirectToAction("Details", new { id = id_ });
         }
-        public ActionResult PosaoPomakDolje (int id)
+        public ActionResult PodrucjePomakDolje (int id)
         {
-            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            OS_Plan_2_podrucje podrucje = new OS_Plan_2_podrucje();
-            podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
+            OS_Plan_2_podrucje podrucje = baza.OsPlan2Podrucje.SingleOrDefault(s => s.Id_plan == id);
+            if (podrucje == null || !PlanIsValid(podrucje.Id_glavni_plan))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
             int idGlavniPlan = podrucje.Id_glavni_plan;
             int pozicija = podrucje.Red_br_podrucje;
-            List<OS_Plan_2_podrucje> pod = new List<OS_Plan_2_podrucje>();
-            pod = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == idGlavniPlan && w.Red_br_podrucje >= pozicija).ToList();
+            List<OS_Plan_2_podrucje> pod = baza.OsPlan2Podrucje.Where(w => w.Id_glavni_plan == idGlavniPlan && w.Red_br_podrucje >= pozicija).ToList();
+            
             if (pod.Count == 1)
             {
                 return RedirectToAction("Details", new { id = idGlavniPlan });
@@ -437,7 +443,7 @@ namespace Planiranje.Controllers
                         result.Red_br_podrucje = pozicijaNakon;
                         result1.Red_br_podrucje = pozicija;
                         db.SaveChanges();
-                        TempData["note"] = "Posao je pomaknut za jedno mjesto prema dolje";
+                        TempData["note"] = "Posao je pomaknut prema dolje";
                     }
                     catch
                     {
