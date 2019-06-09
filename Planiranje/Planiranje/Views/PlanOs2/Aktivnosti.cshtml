@@ -66,8 +66,8 @@
                             <td class="col-md-1">@i</td>
                             <td class="col-md-7">@zadatak.Opis_aktivnost</td>
                             <td class="col-md-2">
-                                <button @disabled1 onclick="reloadPage('@Url.Action("AktivnostPomakGore","PlanOs2", new { id=zadatak.Id_plan})')" class="btn btn-warning btn-xs btn-grad">Gore</button>
-                                <button @disabled2 onclick="reloadPage('@Url.Action("AktivnostPomakDolje","PlanOs2", new { id=zadatak.Id_plan})')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
+                                <button @disabled1 onclick="pomak1('@Url.Action("AktivnostPomakGore","PlanOs2", new { id=zadatak.Id_plan})','#aktivnosti','Zadatak je pomaknut prema gore')" class="btn btn-warning btn-xs btn-grad">Gore</button>
+                                <button @disabled2 onclick="pomak1('@Url.Action("AktivnostPomakDolje","PlanOs2", new { id=zadatak.Id_plan})','#aktivnosti','Zadatak je pomaknut prema dolje')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
                             </td>
                             <td class="col-md-2">
                                 <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs2", new { id=zadatak.Id_plan})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
