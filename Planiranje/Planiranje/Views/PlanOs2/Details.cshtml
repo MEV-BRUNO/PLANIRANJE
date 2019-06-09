@@ -52,18 +52,18 @@
 
 								<ul class="nav nav-pills">
 									<li class="active">
-										<a href="#poslovi" data-toggle="tab">Poslovi</a>
+										<a href="#podrucja" data-toggle="tab">Poslovi</a>
 									</li>
 									<li>
-										<a href="#zadaci" data-toggle="tab">Zadatci</a>
+										<a href="#aktivnosti" data-toggle="tab">Zadatci</a>
 									</li>
 									<li>
-										<a href="#vrijeme" data-toggle="tab">Aktivnosti i sati</a>
+										<a href="#akcije" data-toggle="tab">Aktivnosti i sati</a>
 									</li>
 								</ul>
 
 								<div class="tab-content">
-									<div class="tab-pane fade in active" id="poslovi">
+									<div class="tab-pane fade in active" id="podrucja">
 										<div class="row">
 											<div class="col-lg-12">
 												<p>
@@ -117,10 +117,10 @@
 											</div><!--END COL 12-->
 										</div>
 									</div>
-									<div class="tab-pane fade" id="zadaci">
-										
-									</div>
-									<div class="tab-pane fade" id="vrijeme">
+                                    <div class="tab-pane fade" id="aktivnosti">
+                                        @{ Html.RenderAction("Aktivnosti", "PlanOs2", new { idPodrucje = 0, id = Model.OsPlan2.Id_plan });}
+                                    </div>
+									<div class="tab-pane fade" id="akcije">
 										
 									</div>
 								</div>
@@ -198,10 +198,10 @@
         var val = $("#selectPodrucje").val();
         if (val != "0") {
             $.ajax({
-                url: '/PlanOs1/Aktivnosti?idPodrucje=' + val + '&id=0',
+                url: '/PlanOs2/Aktivnosti?idPodrucje=' + val + '&id=0',
                 success: function (data) {
                     $("#aktivnosti").html(data);
-                    updateAkcija();
+                    //updateAkcija();
                 },
                 error: function (request, status, error) {
                     showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
@@ -213,7 +213,7 @@
         var val = $("#selectAktivnost").val();
         if (val != "0") {
             $.ajax({
-                url: '/PlanOs1/Akcije?idAktivnost=' + val + '&idPodrucje=0',
+                url: '/PlanOs2/Akcije?idAktivnost=' + val + '&idPodrucje=0',
                 success: function (data) {
                     $("#akcije").html(data);
                 },
@@ -227,7 +227,7 @@
         var val = $("#selectPodrucje").val();
         if (val != "0") {
             $.ajax({
-                url: '/PlanOs1/Akcije?idAktivnost=0&idPodrucje=' + val,
+                url: '/PlanOs2/Akcije?idAktivnost=0&idPodrucje=' + val,
                 success: function (data) {
                     $("#akcije").html(data);
                 },
