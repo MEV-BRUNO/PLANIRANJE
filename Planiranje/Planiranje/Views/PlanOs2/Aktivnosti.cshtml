@@ -11,7 +11,7 @@
     </div>
     <div class="col-lg-10">
         <div class="form-group">
-            <label class="control-label col-lg-2">Odaberi posao iz god. plana:</label>
+            <label class="control-label col-lg-2">Odaberi posao:</label>
             <div class="col-lg-7">
                 <select id="selectPodrucje" onchange="promjenaPodrucja()" class="form-control">
                     @{ int br = 1;
@@ -63,15 +63,15 @@
                         if (i == 1) { disabled1 = "disabled"; }
                         if (i == Model.Count) { disabled2 = "disabled"; }
                         <tr>
-                            <td class="col-md-1">@i</td>
+                            <td class="col-md-1">@pozicija.@i</td>
                             <td class="col-md-7">@zadatak.Opis_aktivnost</td>
                             <td class="col-md-2">
                                 <button @disabled1 onclick="pomak1('@Url.Action("AktivnostPomakGore","PlanOs2", new { id=zadatak.Id_plan})','#aktivnosti','Zadatak je pomaknut prema gore')" class="btn btn-warning btn-xs btn-grad">Gore</button>
                                 <button @disabled2 onclick="pomak1('@Url.Action("AktivnostPomakDolje","PlanOs2", new { id=zadatak.Id_plan})','#aktivnosti','Zadatak je pomaknut prema dolje')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
                             </td>
                             <td class="col-md-2">
-                                <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs2", new { id=zadatak.Id_plan, pozicija=i})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                <a onclick="showModal('@Url.Action("ObrisiAktivnost", "PlanOs2", new { id=zadatak.Id_plan, pozicija=i})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs2", new { id=zadatak.Id_plan, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                <a onclick="showModal('@Url.Action("ObrisiAktivnost", "PlanOs2", new { id=zadatak.Id_plan, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                             </td>
                         </tr>
                     }

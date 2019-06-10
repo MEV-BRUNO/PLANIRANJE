@@ -1,32 +1,40 @@
-﻿
+﻿@model List<Planiranje.Models.OS_Plan_2_akcija>
+    @using Planiranje.Models
 @{
     Layout = null;
+    List<OS_Plan_2_aktivnost> aktivnosti = ViewBag.aktivnosti as List<OS_Plan_2_aktivnost>;
+    string button = ViewBag.id != null && ViewBag.id == 0 ? "disabled" : "";
 }
 
 <div class="row">
     <div class="col-lg-2">
-        <button onclick="showModal('@Url.Action("NovaAktivnost","PlanOs2",new { id=Model.OsPlan2.Id_plan, pA=Model.Pozicija, pB=Model.Pozicija2})')" id="btnNovaAktivnost" class="btn btn-primary btn-xs btn-grad">Dodaj novu aktivnost</button>
+        <button @button onclick="showModal('@Url.Action("NovaAkcija","PlanOs2",new { id=ViewBag.id})')" class="btn btn-primary btn-xs btn-grad">Dodaj novu aktivnost</button>
     </div>
     <div class="col-lg-10">
         <div class="form-group">
-            <label class="control-label col-lg-2">Odaberi zadatka iz god. plana:</label>
+            <label class="control-label col-lg-2">Odaberi zadatak:</label>
             <div class="col-lg-7">
-                <select id="selectZadatak" onchange="promjenaZadatak()" class="form-control">
-                    @{ b = 0;}
-                    @foreach (var item in Model.OsPlan2Aktivnosti)
+                <select id="selectAktivnost" onchange="promjenaAktivnosti()" class="form-control">
+                    @{ int br = 1;
+                        int pozicija = 0;
+                    }
+                    @foreach (var item in aktivnosti)
                     {
-                        b++;
-                        if (b - 1 == Model.Pozicija2)
+                        if (ViewBag.id != null && ViewBag.id == item.Id_plan)
                         {
-                            <option selected="selected">@ab.@b @item.Opis_aktivnost</option>
+                            pozicija = br;
+                            <option selected value="@item.Id_plan">
+                                @br. @item.Opis_aktivnost
+                            </option>
                         }
                         else
                         {
-                            b--;
-                            <option value="pA=@Model.Pozicija&amp;pB=@b">@{b++;}@ab.@b @item.Opis_aktivnost</option>
-
+                            <option value="@item.Id_plan">
+                                @br. @item.Opis_aktivnost
+                            </option>
                         }
 
+                        br++;
                     }
                 </select>
             </div>
@@ -48,21 +56,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{ int e = 0, c = Model.Pozicija + 1, d = Model.Pozicija2 + 1;}
-                    @foreach (var akcija in Model.OsPlan2Akcije)
+                    @{ int i=0;}
+                    @foreach (var akcija in Model)
                     {
-                        e++;
+                        i++;
+                        string disabled1 = "";
+                        string disabled2 = "";
+                        if (i == 1) { disabled1 = "disabled"; }
+                        if (i == Model.Count) { disabled2 = "disabled"; }
                         <tr>
-                            <td class="col-md-1">@c.@d.@e</td>
+                            <td class="col-md-1">@pozicija.@i</td>
                             <td class="col-md-6">@akcija.Opis_akcija</td>
                             <td class="col-md-1">@akcija.Sati</td>
                             <td class="col-md-2">
-                                <a onclick="reloadPage('@Url.Action("AktivnostPomakGore","PlanOs2",new { id=akcija.Id_plan, pa=Model.Pozicija, pb=Model.Pozicija2})')" class="btn btn-warning btn-xs btn-grad">Gore</a>
-                                <a onclick="reloadPage('@Url.Action("AktivnostPomakDolje","PlanOs2", new { id=akcija.Id_plan, pa=Model.Pozicija, pb=Model.Pozicija2})')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+                                <button @disabled1 onclick="pomak('@Url.Action("AkcijaPomakGore","PlanOs2",new { id=akcija.Id_plan})','#akcije','Aktivnost je pomaknuta prema gore')" class="btn btn-warning btn-xs btn-grad">Gore</button>
+                                <button @disabled2 onclick="pomak('@Url.Action("AkcijaPomakDolje","PlanOs2", new { id=akcija.Id_plan})','#akcije','Aktivnost je pomaknuta prema dolje')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
                             </td>
                             <td class="col-md-2">
-                                <a onclick="showModal('@Url.Action("UrediAktivnost","PlanOs2",new { id=akcija.Id_plan, pA=Model.Pozicija, pB=Model.Pozicija2, tekst=c+"."+d+"."+e})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
-                                <a onclick="showModal('@Url.Action("ObrisiAktivnost","PlanOs2",new { id=akcija.Id_plan, pA=Model.Pozicija, pB=Model.Pozicija2, tekst=c+"."+d+"."+e})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                                <a onclick="showModal('@Url.Action("UrediAkcija","PlanOs2",new { id=akcija.Id_plan, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+                                <a onclick="showModal('@Url.Action("ObrisiAkcija","PlanOs2",new { id=akcija.Id_plan, pozicija=pozicija.ToString()+"."+i.ToString()})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
                             </td>
                         </tr>
                     }

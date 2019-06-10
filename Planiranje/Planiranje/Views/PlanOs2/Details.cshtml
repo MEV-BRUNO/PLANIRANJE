@@ -121,7 +121,15 @@
                                         @{ Html.RenderAction("Aktivnosti", "PlanOs2", new { idPodrucje = 0, id = Model.OsPlan2.Id_plan });}
                                     </div>
 									<div class="tab-pane fade" id="akcije">
-										
+										@{ if (Model.OsPlan2Podrucja.Count > 0)
+                                            {
+                                                Html.RenderAction("Akcije", "PlanOs2", new { idAktivnost = 0, idPodrucje = Model.OsPlan2Podrucja.First().Id_plan });
+                                            }
+                                            else
+                                            {
+                                                <div><b>Da biste uređivali akcije morate dodati programske aktivnosti</b></div>
+                                            }
+                                           }
 									</div>
 								</div>
 							</div><!--END nav-pills -->
@@ -201,7 +209,7 @@
                 url: '/PlanOs2/Aktivnosti?idPodrucje=' + val + '&id=0',
                 success: function (data) {
                     $("#aktivnosti").html(data);
-                    //updateAkcija();
+                    updateAkcija();
                 },
                 error: function (request, status, error) {
                     showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
@@ -281,7 +289,7 @@
             success: function (data) {
                 $(spremi).html(data);
                 showSnackBar(poruka);
-                //updateAkcija();
+                updateAkcija();
             },
             error: function (request, status, error) {
                 showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva");
@@ -301,7 +309,7 @@
                     $('#modalContainer').removeData();
                     $('.modal-backdrop').remove();
                     showSnackBar(poruka);
-                    //updateAkcija();
+                    updateAkcija();
                 }
                 else if ($(data)[0].className === "modal-dialog") {
                     $("#modalContainer").html(data);

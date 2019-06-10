@@ -9,17 +9,15 @@ namespace Planiranje.Models
 {
     public class OS_Plan_2_aktivnost
     {
-        [Key]
-        [Required]
-        public int Id_plan { get; set; }
-        [Required]
-        public int Id_podrucje { get; set; }
-        [Required]
+        [Key]        
+        public int Id_plan { get; set; }        
+        public int Id_podrucje { get; set; }        
         public int Red_br_aktivnost { get; set; }
-        [Required(ErrorMessage ="Ovo je obavezno polje")]
+        [Required(ErrorMessage ="Obavezno polje")]
         [DisplayName("Naziv zadatka")]
         public string Opis_aktivnost { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Obavezno polje")]
+        [Range(0,int.MaxValue,ErrorMessage ="Vrijednost mora biti veća ili jednaka 0")]
         public int Sati { get; set; }
     }
 }
