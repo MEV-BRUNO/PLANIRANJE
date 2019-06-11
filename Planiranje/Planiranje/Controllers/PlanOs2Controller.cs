@@ -505,7 +505,7 @@ namespace Planiranje.Controllers
             }
             if (id <= 0)
             {
-                return RedirectToAction("Info", "OpciPodaci", new { poruka = "Morate dodati područje djelovanja" });
+                return RedirectToAction("Info", "OpciPodaci", new { poruka = "Morate dodati posao" });
             }            
             ViewBag.id = id;            
             return View(new OS_Plan_2_aktivnost());
@@ -800,7 +800,7 @@ namespace Planiranje.Controllers
             }
             if (id <= 0)
             {
-                return RedirectToAction("Info", "OpciPodaci", new { poruka = "Morate dodati programske aktivnosti" });
+                return RedirectToAction("Info", "OpciPodaci", new { poruka = "Morate dodati zadatke" });
             }
             ViewBag.id = id;
             return View(new OS_Plan_2_akcija());
