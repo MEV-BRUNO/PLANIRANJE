@@ -16,11 +16,12 @@
             @Html.HiddenFor(model => model.Id_plan)
             @Html.HiddenFor(model => model.Red_br_akcija)  
             @Html.HiddenFor(model => model.Id_aktivnost)
+            @Html.Hidden("broj", ViewBag.broj as string)
 
             <div class="form-group">
                 @Html.Label("pozicija", "Redni broj", new { @class = "control-label col-md-3" })
                 <div class="col-md-4">
-                    @Html.TextBox("pozicija", ViewBag.pozicija as string, new { @class = "form-control", @disabled = "true" })
+                    @Html.TextBox("pozicija", ViewBag.broj as string, new { @class = "form-control", @disabled = "true" })
                 </div>
             </div>
             <div class="form-group">

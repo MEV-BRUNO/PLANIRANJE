@@ -28,7 +28,8 @@
                 <div class="form-group">
                 @Html.Label("broj","Redni broj", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.TextBox("broj", ViewBag.broj as string, new { @class = "form-control", disabled="" })                    
+                    @Html.TextBox("broj", ViewBag.broj as string, new { @class = "form-control", disabled="" })
+                    @Html.Hidden("broj",ViewBag.broj as string)
                 </div>
             </div>
             }

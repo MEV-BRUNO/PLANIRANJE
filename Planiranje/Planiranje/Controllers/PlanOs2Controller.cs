@@ -862,7 +862,7 @@ namespace Planiranje.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
             OS_Plan_2_akcija akcija = baza.OsPlan2Akcija.SingleOrDefault(s => s.Id_plan == id);
-            ViewBag.pozicija = pozicija;
+            ViewBag.broj = pozicija;
             return View(akcija);
         }
         [HttpPost]
@@ -874,6 +874,7 @@ namespace Planiranje.Controllers
             }
             if (!ModelState.IsValid)
             {
+                ViewBag.broj = Request.Form.Get("broj");
                 return View(akcija);
             }
             if (!AkcijaIsValid(akcija.Id_plan) || !AktivnostIsValid(akcija.Id_aktivnost))
