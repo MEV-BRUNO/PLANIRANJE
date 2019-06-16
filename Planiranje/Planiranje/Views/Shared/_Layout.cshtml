@@ -126,7 +126,7 @@
 						</a>
 						<ul class="dropdown-menu dropdown-user">
 							<li>
-								<a href="#"><i class="icon-user"></i> Korisnički profil </a>
+								<a class="pointer" onclick="showModal('@Url.Action("OsobniPodaci","Planiranje")')"><i class="icon-user"></i> Korisnički profil </a>
 							</li>
 							<li>
 								<a href="#"><i class="icon-gear"></i> Osobne postavke </a>
@@ -218,7 +218,30 @@
                     console.log(request.responseText);
                 }
             });
-        }    
+        }
+        function hideModalOnly(path, id, poruka) {
+            var dt = $(id).serialize();
+            $.ajax({
+                url: path,
+                type: "POST",
+                data: dt,
+                success: function (data, textStatus, xhr) {
+                    console.log(xhr.status);
+                    if (xhr.status==200 && $(data)[0].className === "modal-dialog") {
+                        $("#modalContainer").html(data);                        
+                    }
+                    else {
+                        $('#modal').modal('hide');
+                        $('#modalContainer').removeData();
+                        $('.modal-backdrop').remove();
+                        showSnackBar(poruka);                        
+                    }                    
+                },
+                error: function (request, status, error) {
+                    showSnackBar(error);
+                }
+            });
+        }
         
     </script>
     <script>

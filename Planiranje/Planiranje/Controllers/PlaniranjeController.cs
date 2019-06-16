@@ -197,5 +197,45 @@ namespace Planiranje.Controllers
             PlaniranjeSession.Trenutni.OdabranaSkola = id;
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+        public ActionResult OsobniPodaci()
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index");
+            }
+            Pedagog pedagog = baza.Pedagog.SingleOrDefault(s => s.Id_Pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            return View(pedagog);
+        }
+        [HttpPost]
+        public ActionResult OsobniPodaci(Pedagog pedagog)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index");
+            }            
+            if (string.IsNullOrWhiteSpace(pedagog.Ime)||string.IsNullOrWhiteSpace(pedagog.Prezime)||string.IsNullOrWhiteSpace(pedagog.Titula))
+            {               
+                return View(pedagog);
+            }
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    var ped = db.Pedagog.SingleOrDefault(s => s.Id_Pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (ped != null)
+                    {
+                        ped.Ime = pedagog.Ime;
+                        ped.Prezime = pedagog.Prezime;
+                        ped.Titula = pedagog.Titula;
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+        }
     }
 }

@@ -585,6 +585,7 @@
     <Content Include="Views\PlanOs2\Aktivnosti.cshtml" />
     <Content Include="Views\PlanOs2\Akcije.cshtml" />
     <Content Include="Views\PlanOs2\Kopiraj.cshtml" />
+    <Content Include="Views\Planiranje\OsobniPodaci.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
