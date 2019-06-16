@@ -405,7 +405,7 @@ namespace Planiranje.Controllers
             return RedirectToAction("Details", new { id = idGlavniPlan });
         }
 
-        public ActionResult UrediPodrucje (int id)
+        public ActionResult UrediPodrucje (int id, string pozicija)
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0 || !Request.IsAjaxRequest())
             {
@@ -418,7 +418,7 @@ namespace Planiranje.Controllers
 
             ViewBag.selectCilj = VratiSelectCilj();
             ViewBag.selectPodrucje = VratiSelectPodrucje();
-           
+            ViewBag.pozicija = pozicija;
             return View(podrucje);
         }
 
@@ -433,6 +433,7 @@ namespace Planiranje.Controllers
             {
                 ViewBag.selectCilj = VratiSelectCilj();
                 ViewBag.selectPodrucje = VratiSelectPodrucje();
+                ViewBag.pozicija = Request.Form.Get("pozicija");
                 return View(plan);
             }
             int id = plan.Id_plan;
@@ -987,6 +988,7 @@ namespace Planiranje.Controllers
             }
             if (!ModelState.IsValid)
             {
+                ViewBag.pozicija = Request.Form.Get("pozicija");
                 return View(akcija);
             }
             if (!AkcijaIsValid(akcija.Id) || !AktivnostIsValid(akcija.Id_aktivnost))
