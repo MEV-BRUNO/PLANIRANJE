@@ -266,7 +266,7 @@ namespace Planiranje.Controllers
                 }
                 catch
                 {
-                    TempData["poruka"] = "Razredni odjel nije obrisan! Pokušajte ponovno";
+                    return View("Info", new List<string>() { "Ne možete obrisati ovaj razredni odjel jer ste Vi ili netko drugi dodali učenike u isti."});
                 }
             }
             return RedirectToAction("RazredniOdjel", new { godina = god });
@@ -387,13 +387,14 @@ namespace Planiranje.Controllers
             }
             int id = model.Id;
             RazredniOdjel odjel = baza.RazredniOdjel.FirstOrDefault(s => s.Id_razrednik == id && s.Id_skola==PlaniranjeSession.Trenutni.OdabranaSkola);
-            if (odjel != null)
-            {
-                string tekst = "Ne možete obrisati ovog nastavnika jer ste ga Vi ili netko drugi dodijelili kao razrednika nekom razrednom odjelu";
-                List<string> lista = new List<string>();
-                lista.Add(tekst);
-                return View("Info",lista);
-            }   
+            //kod je zakomentiran jer se u slučaju da je nastavnik dodijeljen nekom razrednom odjelu kao i da potoji neko praćenje nastavnika kod brisanja javi sql exception zbog stranog ključa u bazi podataka
+            //if (odjel != null)
+            //{
+            //    string tekst = "Ne možete obrisati ovog nastavnika jer ste ga Vi ili netko drugi dodijelili kao razrednika nekom razrednom odjelu";
+            //    List<string> lista = new List<string>();
+            //    lista.Add(tekst);
+            //    return View("Info",lista);
+            //}   
             using(var db = new BazaPodataka())
             {
                 try
@@ -412,7 +413,7 @@ namespace Planiranje.Controllers
                 }
                 catch
                 {
-                    TempData["poruka"] = "Nastavnik nije obrisan! Pokušajte ponovno";
+                    return View("Info", new List<string>() { "Ne možete obrisati ovog nastavnika jer ste ga Vi ili netko drugi dodijelili kao rezrednika nekom razrednom odjelu ili pratite istog."});
                 }
             }
             return RedirectToAction("Nastavnik");
@@ -686,8 +687,7 @@ namespace Planiranje.Controllers
                 }
                 catch
                 {
-                    tekst = "Došlo je do greške kod brisanja podataka! Podaci nisu obrisani! "
-                        + "Osvježite stranicu i pokušajte ponovno.";
+                    tekst = "Ne možete obrisati ovog učenika jer ga Vi ili netko drugi prati/promatra.";
                     hasError = true;
                 }
             }

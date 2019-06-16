@@ -393,7 +393,8 @@ namespace Planiranje.Controllers
                 }
                 catch
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Greška prilikom brisanja podataka u bazi podataka");
+                    //return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Greška prilikom brisanja podataka u bazi podataka");
+                    return RedirectToAction("Info", "OpciPodaci", new { poruka = "Ne možete obrisati ovog člana obitelji jer Vi ili netko drugi prati/promatra istog" });
                 }
             }
             return RedirectToAction("Obitelj", new { id = idU });
