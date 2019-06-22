@@ -34,7 +34,7 @@
             <a onclick='reloadPage("@Url.Action("Index","NastavnikAnaliza")")'>
                 <i class="icon-table"></i> NASTAVNICI
             </a>
-        </li>        
+        </li>
         <li class="panel pointer">
             <a data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#DDLP-nav">
                 <i class=" icon-sitemap"></i>&nbsp; PLANIRANJE
@@ -102,5 +102,13 @@
                 <i class="icon-table"></i> DOKUMENTI
             </a>
         </li>
+        @if (Planiranje.Controllers.PlaniranjeSession.Trenutni.PedagogId == 1)
+        {
+            <li class="panel pointer">
+                <a onclick="reloadPage('@Url.Action("Index","Admin")')">
+                    <i class="icon-table"></i> POPIS KORISNIKA
+                </a>
+            </li>
+        }
     </ul>
 </div>
