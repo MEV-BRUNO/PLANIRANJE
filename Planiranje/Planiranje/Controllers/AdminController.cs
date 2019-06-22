@@ -55,5 +55,48 @@ namespace Planiranje.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+        public ActionResult PromjenaLicence(int id)
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId != 1 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            using(var db = new BazaPodataka())
+            {
+                Pedagog pedagog = db.Pedagog.SingleOrDefault(s => s.Id_Pedagog == id);
+                if (pedagog == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                return View(pedagog);
+            }
+        }
+        [HttpPost]
+        public ActionResult PromjenaLicence(Pedagog p)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId !=1 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            DateTime vrijeme;
+            if(!DateTime.TryParse(Request.Form.Get("vrijeme"),out vrijeme))
+            {
+                vrijeme = new DateTime();
+            }
+            using(var db = new BazaPodataka())
+            {
+                Pedagog pedagog = db.Pedagog.SingleOrDefault(s => s.Id_Pedagog == p.Id_Pedagog);
+                if(pedagog==null || pedagog.Id_Pedagog == 1)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }                
+                pedagog.Licenca = p.Licenca;
+                pedagog.Licenca = pedagog.Licenca.AddHours(vrijeme.Hour);
+                pedagog.Licenca = pedagog.Licenca.AddMinutes(vrijeme.Minute);
+                db.SaveChanges();
+                TempData["note"] = "Licenca je promijenjena";
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

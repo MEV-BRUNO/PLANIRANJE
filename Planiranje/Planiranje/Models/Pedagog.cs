@@ -22,7 +22,8 @@ namespace Planiranje.Models
 		[Required(ErrorMessage = "Lozinka je obavezna.")]
 		[StringLength(12, MinimumLength = 6, ErrorMessage = "Lozinka mora biti između 6 i 12 znakova")]
 		public string Lozinka { get; set; }		
-        [DataType(DataType.DateTime)]        
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Licenca { get; set; } //datum trajanja pristupa       
         public bool Aktivan { get; set; }
         [Required(ErrorMessage ="Titula je obavezna")]

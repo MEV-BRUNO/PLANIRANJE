@@ -91,7 +91,7 @@
                                     </td>
                                     <td>
                                         @item.Licenca.ToString()
-                                        <a class="btn btn-primary btn-xs">Uredi</a>
+                                        <a onclick="showModal('@Url.Action("PromjenaLicence","Admin", new { id=item.Id_Pedagog})')" class="btn btn-primary btn-xs">Uredi</a>
                                     </td>
                                 </tr>
                             }
