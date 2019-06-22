@@ -9,7 +9,7 @@ CREATE TABLE pedagog (
   email varchar(50) NOT NULL,
   lozinka varchar(40) NOT NULL,
   licenca datetime NOT NULL,  
-  aktivan char(1) NOT NULL,
+  aktivan tinyint NOT NULL,
   titula varchar(50) NOT NULL,
   PRIMARY KEY (id_pedagog),
   UNIQUE KEY email (email)  

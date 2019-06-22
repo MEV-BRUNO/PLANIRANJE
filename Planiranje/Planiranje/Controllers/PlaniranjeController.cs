@@ -33,14 +33,30 @@ namespace Planiranje.Controllers
 			Pedagog pedagog = baza.Pedagog.SingleOrDefault(ped => ped.Email == p.Email && ped.Lozinka == p.Lozinka);
 			if (pedagog != null)
 			{
-				PlaniranjeSession.Trenutni.PedagogId = pedagog.Id_Pedagog;
-				return RedirectToAction("Index");
+                if (pedagog.Aktivan == 1 && pedagog.Licenca.CompareTo(DateTime.Now)>=0)
+                {
+                    PlaniranjeSession.Trenutni.PedagogId = pedagog.Id_Pedagog;
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    if (pedagog.Aktivan == 0)
+                    {
+                        ViewBag.Message = "Blokirani ste od strane administratora";
+                    }
+                    else if (pedagog.Licenca.CompareTo(DateTime.Now) < 0)
+                    {
+                        ViewBag.Message = "Licenca Vam je istekla " + pedagog.Licenca.ToString() + ". Obratite se administratoru radi produljenja licence.";
+                    }                    
+                    return View();
+                }
+				
 			}
 			else
 			{
 				ViewBag.Message = "Pogrešno korisničko ime ili lozinka!";
                 p = null;
-				return View(p);
+				return View();
 			}
 		}
 		public ActionResult Index()
@@ -54,7 +70,7 @@ namespace Planiranje.Controllers
 		}
 		public ActionResult ZaboravljenaLozinka()
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId == 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
 				ViewBag.Title = "Zaboravljena lozinka";
 				return View();
@@ -106,7 +122,7 @@ namespace Planiranje.Controllers
         }
 		public ActionResult Registracija()
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId == 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
                 ViewBag.poruka = null;
 				ViewBag.Title = "Registracija";
@@ -141,8 +157,8 @@ namespace Planiranje.Controllers
             Pedagog_skola ps = new Pedagog_skola();
             string email = model.Pedagog.Email;
             ps.Id_skola = model.SelectedSchool;
-			model.Pedagog.Licenca = DateTime.Now.AddYears(2);
-			model.Pedagog.Aktivan = '1';
+			model.Pedagog.Licenca = DateTime.Now.AddDays(30);
+			model.Pedagog.Aktivan = 1;
 
             try
             {
@@ -174,6 +190,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult OdabirSkole()
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index");
+            }
             List<Skola> skole = new List<Skola>();
             int idPed = PlaniranjeSession.Trenutni.PedagogId;
             var result = (from sk in baza.Skola join ps in baza.PedagogSkola on sk.Id_skola equals ps.Id_skola join p in baza.Pedagog
@@ -194,6 +214,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult PromjenaSkole(int id)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             PlaniranjeSession.Trenutni.OdabranaSkola = id;
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

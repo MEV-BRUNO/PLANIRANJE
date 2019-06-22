@@ -24,7 +24,7 @@ namespace Planiranje.Models
 		public string Lozinka { get; set; }		
         [DataType(DataType.DateTime)]
         public DateTime Licenca { get; set; } //datum trajanja pristupa       
-        public char Aktivan { get; set; }
+        public int Aktivan { get; set; }
         [Required(ErrorMessage ="Titula je obavezna")]
         public string Titula { get; set; }
     }
