@@ -192,6 +192,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Baza\BazaPodataka.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AkcijeController.cs" />
     <Compile Include="Controllers\AktivnostiController.cs" />
     <Compile Include="Controllers\CiljeviController.cs" />
@@ -586,6 +587,7 @@
     <Content Include="Views\PlanOs2\Akcije.cshtml" />
     <Content Include="Views\PlanOs2\Kopiraj.cshtml" />
     <Content Include="Views\Planiranje\OsobniPodaci.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

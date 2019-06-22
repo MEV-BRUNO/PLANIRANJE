@@ -33,14 +33,14 @@ namespace Planiranje.Controllers
 			Pedagog pedagog = baza.Pedagog.SingleOrDefault(ped => ped.Email == p.Email && ped.Lozinka == p.Lozinka);
 			if (pedagog != null)
 			{
-                if (pedagog.Aktivan == 1 && pedagog.Licenca.CompareTo(DateTime.Now)>=0)
+                if (pedagog.Aktivan == true && pedagog.Licenca.CompareTo(DateTime.Now)>=0)
                 {
                     PlaniranjeSession.Trenutni.PedagogId = pedagog.Id_Pedagog;
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    if (pedagog.Aktivan == 0)
+                    if (pedagog.Aktivan == false)
                     {
                         ViewBag.Message = "Blokirani ste od strane administratora";
                     }
@@ -158,7 +158,7 @@ namespace Planiranje.Controllers
             string email = model.Pedagog.Email;
             ps.Id_skola = model.SelectedSchool;
 			model.Pedagog.Licenca = DateTime.Now.AddDays(30);
-			model.Pedagog.Aktivan = 1;
+			model.Pedagog.Aktivan = true;
 
             try
             {
