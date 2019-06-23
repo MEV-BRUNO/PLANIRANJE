@@ -589,6 +589,8 @@
     <Content Include="Views\Planiranje\OsobniPodaci.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\PromjenaLicence.cshtml" />
+    <Content Include="Views\Admin\ObrisiSkolu.cshtml" />
+    <Content Include="Views\Admin\DodajSkolu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

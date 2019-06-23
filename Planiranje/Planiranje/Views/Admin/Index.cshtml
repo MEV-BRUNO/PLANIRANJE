@@ -71,17 +71,24 @@
                                     <td>
                                         @{ 
                                             List<Pedagog_skola> trenutnoUpisan = pedagog_Skola.Where(w => w.Id_pedagog == item.Id_Pedagog).ToList();
-                                            List<string> naziviSkola = new List<string>();
-                                            foreach(var v in trenutnoUpisan)
-                                            {
-                                                naziviSkola.Add(skola.Single(s => s.Id_skola == v.Id_skola).Naziv+", "+skola.Single(s=>s.Id_skola==v.Id_skola).Grad);
-                                            }
+                                            //List<string> naziviSkola = new List<string>();
+                                            //foreach(var v in trenutnoUpisan)
+                                            //{
+                                            //    naziviSkola.Add(skola.Single(s => s.Id_skola == v.Id_skola).Naziv+", "+skola.Single(s=>s.Id_skola==v.Id_skola).Grad);
+                                            //}
                                         }   
-                                        @foreach(var v in naziviSkola)
+                                        @foreach(var v in trenutnoUpisan)
                                         {
-                                            @v
+                                            Skola sk = skola.Single(s=>s.Id_skola==v.Id_skola);
+                                            string disabled = "";
+                                            if (trenutnoUpisan.Count == 1)
+                                            {
+                                                disabled = "disabled";
+                                            }
+                                            <button @disabled onclick="showModal('@Url.Action("ObrisiSkolu","Admin", new { id=v.Id})')" class="btn btn-default btn-xs">@sk.Naziv, @sk.Grad</button>
                                             <br />
                                         }
+                                        <button onclick="showModal('@Url.Action("DodajSkolu","Admin", new { id=trenutnoUpisan.First().Id_pedagog})')" class="btn btn-success btn-xs">Dodaj školu</button>
                                     </td>
                                     <td>
                                         @using (Html.BeginForm())

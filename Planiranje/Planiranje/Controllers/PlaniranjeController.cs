@@ -22,6 +22,7 @@ namespace Planiranje.Controllers
 		public ActionResult Prijava()
 		{
 			PlaniranjeSession.Trenutni.PedagogId = 0;
+            PlaniranjeSession.Trenutni.OdabranaSkola = 0;
 			ViewBag.Title = "Prijava";
 			return View("Prijava");
 		}
