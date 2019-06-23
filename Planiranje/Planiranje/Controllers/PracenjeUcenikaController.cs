@@ -52,7 +52,7 @@ namespace Planiranje.Controllers
                 ucenici = (from raz in baza.RazredniOdjel
                            join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred
                            join uc in baza.Ucenik on ur.Id_ucenik equals uc.Id_ucenik
-                           where raz.Sk_godina == godina
+                           where raz.Sk_godina == godina && raz.Id_skola==PlaniranjeSession.Trenutni.OdabranaSkola
                            select uc).ToList();
                 return View(ucenici);
             }
