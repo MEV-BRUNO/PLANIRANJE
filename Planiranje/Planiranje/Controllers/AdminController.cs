@@ -174,7 +174,13 @@ namespace Planiranje.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
                 }
-                ViewBag.select = VratiSelectListSkole(id);
+                SelectList selectList = VratiSelectListSkole(id);
+                if (selectList.Count() == 0)
+                {
+                    string poruka = "Nema raspoloživih škola za tog pedagoga";
+                    return RedirectToAction("Info", "OpciPodaci", new { poruka = poruka });
+                }
+                ViewBag.select = selectList;
                 ViewBag.pedagog = pedagog;
                 return View();
             }            
@@ -185,7 +191,7 @@ namespace Planiranje.Controllers
             if (PlaniranjeSession.Trenutni.PedagogId != 1 || !Request.IsAjaxRequest())
             {
                 return RedirectToAction("Index", "Planiranje");
-            }
+            }            
             using(var db=new BazaPodataka())
             {
                 db.PedagogSkola.Add(ps);
@@ -199,8 +205,8 @@ namespace Planiranje.Controllers
             using(var db=new BazaPodataka())
             {
                 List<Skola> skole = (from sk in db.Skola
-                                     join ps in db.PedagogSkola on sk.Id_skola equals ps.Id_skola
-                                     where ps.Id_pedagog != id
+                                     //join ps in db.PedagogSkola on sk.Id_skola equals ps.Id_skola
+                                     where !db.PedagogSkola.Any(a=>a.Id_pedagog==id && a.Id_skola==sk.Id_skola)
                                      select sk).Distinct().ToList();
                 List<SelectListItem> selectListItem = new List<SelectListItem>();
                 foreach (var item in skole)
