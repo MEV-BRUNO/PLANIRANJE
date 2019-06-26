@@ -1,0 +1,137 @@
+﻿@model List<Planiranje.Models.Pedagog>
+    @using Planiranje.Models.Ucenici
+@using Planiranje.Models
+@{
+    Page.Title = "Popis svih korisnika";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    List<Pedagog_skola> pedagog_Skola = (List<Pedagog_skola>)ViewBag.pedagogSkola;
+    List<Skola> skola = (List<Skola>)ViewBag.skola;
+}
+<div class="inner">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3> Popis svih korisnika </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @*<div>
+                        <div class="pull-left">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="showModal('@Url.Action("NoviPlan", "PlanOs2")')">
+                                Novi plan
+                            </button>                            
+                        </div>
+                        <div class="pull-right">
+                            <a href="@Url.Action("Ispis", "PlanOs2")" class="btn btn-success btn-sm" target="_blank">ISPIS POPISA</a>
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                    </div>*@
+                    <table class="table table-bordered table-hover" id="dataTable-sviKorisnici">
+                        <thead>
+                            <tr>                                
+                                <td class="col-lg-2">
+                                    Ime
+                                </td>
+                                <td class="col-lg-2">
+                                    Prezime
+                                </td>
+                                <td class="col-lg-2">
+                                    E-Mail
+                                </td>
+                                <td class="col-lg-3">
+                                    Škola
+                                </td>
+                                <td class="col-lg-1">
+                                    Aktivan
+                                </td>
+                                <td class="col-lg-2">
+                                    Licenca
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int i = 0;}
+                            @foreach (var item in Model)
+                            {
+                                i++;                                
+                                <tr>                                    
+                                    <td>
+                                       @item.Ime
+                                    </td>
+                                    <td>
+                                        @item.Prezime
+                                    </td>
+                                    <td>
+                                        @item.Email
+                                    </td>
+                                    <td>
+                                        @{ 
+                                            List<Pedagog_skola> trenutnoUpisan = pedagog_Skola.Where(w => w.Id_pedagog == item.Id_Pedagog).ToList();
+                                            //List<string> naziviSkola = new List<string>();
+                                            //foreach(var v in trenutnoUpisan)
+                                            //{
+                                            //    naziviSkola.Add(skola.Single(s => s.Id_skola == v.Id_skola).Naziv+", "+skola.Single(s=>s.Id_skola==v.Id_skola).Grad);
+                                            //}
+                                        }   
+                                        @foreach(var v in trenutnoUpisan)
+                                        {
+                                            Skola sk = skola.Single(s=>s.Id_skola==v.Id_skola);
+                                            string disabled = "";
+                                            if (trenutnoUpisan.Count == 1)
+                                            {
+                                                disabled = "disabled";
+                                            }
+                                            <button @disabled onclick="showModal('@Url.Action("ObrisiSkolu","Admin", new { id=v.Id})')" class="btn btn-default btn-xs">@sk.Naziv, @sk.Grad</button>
+                                            <br />
+                                        }
+                                        <button onclick="showModal('@Url.Action("DodajSkolu","Admin", new { id=trenutnoUpisan.First().Id_pedagog})')" class="btn btn-success btn-xs">Dodaj školu</button>
+                                    </td>
+                                    <td>
+                                        @using (Html.BeginForm())
+                                        {                                            
+                                            @Html.CheckBoxFor(model=>model.Single(s=>s.Id_Pedagog==item.Id_Pedagog).Aktivan, new { @onChange="promjenaAktivan('"+item.Id_Pedagog+"')"})
+                                        }
+                                    </td>
+                                    <td>
+                                        @item.Licenca.ToString()
+                                        <a onclick="showModal('@Url.Action("PromjenaLicence","Admin", new { id=item.Id_Pedagog})')" class="btn btn-primary btn-xs">Uredi</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#dataTable-sviKorisnici').dataTable({ stateSave: true });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        @if (TempData["note"] != null)
+        {
+            @:showSnackBar("@TempData["note"]");
+        }
+    });
+    function promjenaAktivan(id) {        
+        $.ajax({
+            url: '/Admin/Aktivan?id=' + id,
+            type: 'POST',
+            success: function (data) {                
+            },
+            error: function (request, status, error) {
+                showSnackBar("Dogodila se greška prilikom obrađivanja Vašeg zahtjeva " + error + ", " + status);
+            }
+        });
+    }
+</script>

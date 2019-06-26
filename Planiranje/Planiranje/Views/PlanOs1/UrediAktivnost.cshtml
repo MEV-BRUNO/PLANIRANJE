@@ -16,7 +16,8 @@
                     @Html.HiddenFor(model => model.Id_plan)
                     @Html.HiddenFor(m => m.Id_podrucje)
                     @Html.HiddenFor(m => m.Red_broj_aktivnost)
-                    @Html.HiddenFor(m => m.Br_sati)                    
+                    @Html.HiddenFor(m => m.Br_sati)  
+                    @Html.Hidden("pozicija", ViewBag.pozicija as string)
 
                     <div class="form-group">
                         @Html.Label("pozicija", "Redni broj", new { @class = "control-label col-md-3" })

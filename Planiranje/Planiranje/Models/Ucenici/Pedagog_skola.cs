@@ -12,6 +12,7 @@ namespace Planiranje.Models.Ucenici
         [Key]
         public int Id { get; set; }
         public int Id_pedagog { get; set; }
+        [DisplayName("Škola")]
         public int Id_skola { get; set; }
     }
 }

@@ -36,7 +36,8 @@ namespace Planiranje.Reports
             p = new Paragraph("Naziv plana: " + plan.OsPlan2.Naziv, header);
             pdfDokument.Add(p);
 
-            p = new Paragraph("Godišnji plan i program rada stručnog suradnika pedagoga za osnovnu školu u šk.god. "+plan.OsPlan2.Ak_godina, naslov);
+            p = new Paragraph("Godišnji plan i program rada stručnog suradnika pedagoga za osnovnu školu u šk.god. "+plan.OsPlan2.Ak_godina+
+                "./"+(plan.OsPlan2.Ak_godina+1).ToString()+".", naslov);
             p.Alignment = Element.ALIGN_CENTER;
             p.SpacingBefore = 30;
             p.SpacingAfter = 30;

@@ -11,12 +11,7 @@
                  showSnackBar('@TempData["note"]');
              }
          })
-	</script>*@
-
-	@if (TempData["note"] != null)
-    {
-		<div id="poruka" style="display:none">1</div>
-    }
+	</script>*@	
 	@*@if (TempData["prikaz"] != null)
 	{
 		<div id="prikaz" style="display:none">1</div>
@@ -91,20 +86,24 @@
 														<tbody>
 															@{int brojac = 1;}
 															@foreach (var item in Model.OsPlan1Podrucje)
-                                                            {                                                                
+                                                            {
                                                                 var podrucje = Model.PodrucjeRada.Single(s => s.Id_podrucje == item.Opis_Podrucje);
 
+                                                                string disabled1 = "";
+                                                                string disabled2 = "";
+                                                                if (brojac == 1) { disabled1 = "disabled"; }
+                                                                if (brojac == Model.OsPlan1Podrucje.Count) { disabled2 = "disabled"; }
 																<tr>
 																	<td class="col-md-1">@brojac</td>
 																	<td class="col-md-4">@podrucje.Naziv</td>
 																	<td class="col-md-2">@item.Potrebno_sati</td>
 																	<td class="col-md-3" style="white-space:pre-line">@item.Cilj</td>
 																	<td class="col-md-1">
-																		<a onclick="reloadPage('@Url.Action("PodrucjePomakGore", "PlanOs1", new { id = item.Id_plan })')" class="btn btn-warning btn-xs btn-grad">Gore</a>
-																		<a onclick="reloadPage('@Url.Action("PodrucjePomakDolje", "PlanOs1", new { id = item.Id_plan })')" class="btn btn-warning btn-xs btn-grad">Dolje</a>
+																		<button @disabled1 onclick="reloadPage('@Url.Action("PodrucjePomakGore", "PlanOs1", new { id = item.Id_plan })')" class="btn btn-warning btn-xs btn-grad">Gore</button>
+																		<button @disabled2 onclick="reloadPage('@Url.Action("PodrucjePomakDolje", "PlanOs1", new { id = item.Id_plan })')" class="btn btn-warning btn-xs btn-grad">Dolje</button>
 																	</td>
 																	<td class="col-md-1">
-																		<a onclick="showModal('@Url.Action("UrediPodrucje", "PlanOs1", new { id = item.Id_plan })')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
+																		<a onclick="showModal('@Url.Action("UrediPodrucje", "PlanOs1", new { id = item.Id_plan, pozicija = brojac })')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
 																		<a onclick="showModal('@Url.Action("ObrisiPodrucje", "PlanOs1", new { id = item.Id_plan, pozicija = brojac })')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
 																	</td>
 																</tr>
@@ -193,9 +192,10 @@
         //    $("#selectGodina").val(saved);
         //    promjenaGodine();
         //}
-        $('#dataTablePodrucje').dataTable({ stateSave: true });
-        if ($("#poruka").text() == "1") {
-            showSnackBar("@TempData["note"]");
+        $('#dataTablePodrucje').dataTable({ stateSave: true });        
+        @if (TempData["note"] != null)
+        {
+            @:showSnackBar("@TempData["note"]");
         }
     });
     

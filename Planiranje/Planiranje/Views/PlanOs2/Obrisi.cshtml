@@ -8,7 +8,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Brisanje plana</h4>
+            <h4 class="modal-title">Brisanje plana za osnovnu školu 2</h4>
         </div>
          @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviPlanModalView", @class = "form-horizontal", role = "form" }))
 		{
@@ -17,14 +17,32 @@
             <div class="form-group">
                 <div class="col-md-10">
                     <h5>
-                        Jeste li sigurni da želite obrisati <b>@Html.DisplayFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })</b>?
+                        Jeste li sigurni da želite obrisati ovaj plan?
                     </h5>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Naziv, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Naziv, new { @class = "form-control", @disabled = "" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Ak_godina, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBox("godina", Model.Ak_godina + "./" + (Model.Ak_godina + 1) + ".", new { @class = "form-control", @disabled = "" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Opis, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextAreaFor(model=>model.Opis, new { @class = "edit-opis", @disabled = "", rows="2" })
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="form-group">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                    <input type="button" onclick="reload('@Url.Action("Delete","PlanOs2")','#noviPlanModalView')" class="btn btn-danger" value="Obrisi" />
+                    <input type="button" onclick="reload('@Url.Action("Delete","PlanOs2")','#noviPlanModalView')" class="btn btn-danger" value="Obriši" />
                 </div>
             </div>
         </div>

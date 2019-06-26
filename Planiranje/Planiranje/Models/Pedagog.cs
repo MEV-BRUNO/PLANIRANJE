@@ -9,8 +9,7 @@ namespace Planiranje.Models
 {
 	public class Pedagog
 	{
-		[Key]
-        [Required]
+		[Key]        
         public int Id_Pedagog { get; set; }
         [Required(ErrorMessage ="Ime je obavezno")]
         public string Ime { get; set; }
@@ -21,13 +20,12 @@ namespace Planiranje.Models
         public string Email { get; set; }
 		[DisplayName("Password")]
 		[Required(ErrorMessage = "Lozinka je obavezna.")]
-		[StringLength(12, MinimumLength = 6, ErrorMessage = "Lozinka mora biti izmedju 6 i 12 znakova")]
-		public string Lozinka { get; set; }
-		[Required]
-        [DataType(DataType.DateTime)]
-        public DateTime Licenca { get; set; } //datum trajanja pristupa        
-        [Required]
-        public char Aktivan { get; set; }
+		[StringLength(12, MinimumLength = 6, ErrorMessage = "Lozinka mora biti između 6 i 12 znakova")]
+		public string Lozinka { get; set; }		
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime Licenca { get; set; } //datum trajanja pristupa       
+        public bool Aktivan { get; set; }
         [Required(ErrorMessage ="Titula je obavezna")]
         public string Titula { get; set; }
     }

@@ -8,7 +8,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Uređivanje podataka</h4>
+            <h4 class="modal-title">Uređivanje plana za osnovnu školu 2</h4>
         </div>
         @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "noviPlanModalView", @class = "form-horizontal", role = "form" }))
 		{
@@ -16,37 +16,23 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Id_plan)
             <div class="form-group">
-                @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
                     @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Ak_godina, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.Ak_godina, new { htmlAttributes = new { @class = "form-control" } })*@
-                    <select class="form-control" data-val="true" data-val-number="The field Ak. godina must be a number." data-val-required="The Ak. godina field is required." id="Ak_godina" name="Ak_godina" required="">                        
-                        @foreach(var item in ViewBag.godina as List<Sk_godina>)
-                        {
-                            var godina = item.Sk_Godina + 1;
-                            if (item.Sk_Godina == Model.Ak_godina)
-                            {
-                            <option selected="selected" value="@item.Sk_Godina">@item.Sk_Godina./@godina.</option>
-                            }
-                            else
-                            {
-                                <option value="@item.Sk_Godina">@item.Sk_Godina./@godina.</option>
-                            }
-                        }
-                    </select>
+                @Html.LabelFor(model => model.Ak_godina, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">                    
+                    @Html.DropDownListFor(model => model.Ak_godina, ViewBag.selectGodina as SelectList, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Ak_godina, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Opis, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Opis, new { @class = "edit-opis" })
+                @Html.LabelFor(model => model.Opis, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextAreaFor(model => model.Opis, new { @class = "edit-opis", rows = "2" })
                     @Html.ValidationMessageFor(model => model.Opis, "", new { @class = "text-danger" })
                 </div>
             </div>

@@ -22,6 +22,7 @@ namespace Planiranje.Controllers
 		public ActionResult Prijava()
 		{
 			PlaniranjeSession.Trenutni.PedagogId = 0;
+            PlaniranjeSession.Trenutni.OdabranaSkola = 0;
 			ViewBag.Title = "Prijava";
 			return View("Prijava");
 		}
@@ -33,14 +34,30 @@ namespace Planiranje.Controllers
 			Pedagog pedagog = baza.Pedagog.SingleOrDefault(ped => ped.Email == p.Email && ped.Lozinka == p.Lozinka);
 			if (pedagog != null)
 			{
-				PlaniranjeSession.Trenutni.PedagogId = pedagog.Id_Pedagog;
-				return RedirectToAction("Index");
+                if (pedagog.Aktivan == true && pedagog.Licenca.CompareTo(DateTime.Now)>=0)
+                {
+                    PlaniranjeSession.Trenutni.PedagogId = pedagog.Id_Pedagog;
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    if (pedagog.Aktivan == false)
+                    {
+                        ViewBag.Message = "Blokirani ste od strane administratora";
+                    }
+                    else if (pedagog.Licenca.CompareTo(DateTime.Now) < 0)
+                    {
+                        ViewBag.Message = "Licenca Vam je istekla " + pedagog.Licenca.ToString() + ". Obratite se administratoru radi produljenja licence.";
+                    }                    
+                    return View();
+                }
+				
 			}
 			else
 			{
 				ViewBag.Message = "Pogrešno korisničko ime ili lozinka!";
                 p = null;
-				return View(p);
+				return View();
 			}
 		}
 		public ActionResult Index()
@@ -54,7 +71,7 @@ namespace Planiranje.Controllers
 		}
 		public ActionResult ZaboravljenaLozinka()
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId == 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
 				ViewBag.Title = "Zaboravljena lozinka";
 				return View();
@@ -106,7 +123,7 @@ namespace Planiranje.Controllers
         }
 		public ActionResult Registracija()
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId == 0)
+			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
 			{
                 ViewBag.poruka = null;
 				ViewBag.Title = "Registracija";
@@ -141,8 +158,8 @@ namespace Planiranje.Controllers
             Pedagog_skola ps = new Pedagog_skola();
             string email = model.Pedagog.Email;
             ps.Id_skola = model.SelectedSchool;
-			model.Pedagog.Licenca = DateTime.Now.AddYears(2);
-			model.Pedagog.Aktivan = '1';
+			model.Pedagog.Licenca = DateTime.Now.AddDays(30);
+			model.Pedagog.Aktivan = true;
 
             try
             {
@@ -174,6 +191,10 @@ namespace Planiranje.Controllers
         }
         public ActionResult OdabirSkole()
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index");
+            }
             List<Skola> skole = new List<Skola>();
             int idPed = PlaniranjeSession.Trenutni.PedagogId;
             var result = (from sk in baza.Skola join ps in baza.PedagogSkola on sk.Id_skola equals ps.Id_skola join p in baza.Pedagog
@@ -194,8 +215,52 @@ namespace Planiranje.Controllers
         }
         public ActionResult PromjenaSkole(int id)
         {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             PlaniranjeSession.Trenutni.OdabranaSkola = id;
             return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        public ActionResult OsobniPodaci()
+        {
+            if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+            {
+                return RedirectToAction("Index");
+            }
+            Pedagog pedagog = baza.Pedagog.SingleOrDefault(s => s.Id_Pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            return View(pedagog);
+        }
+        [HttpPost]
+        public ActionResult OsobniPodaci(Pedagog pedagog)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index");
+            }            
+            if (string.IsNullOrWhiteSpace(pedagog.Ime)||string.IsNullOrWhiteSpace(pedagog.Prezime)||string.IsNullOrWhiteSpace(pedagog.Titula))
+            {               
+                return View(pedagog);
+            }
+            using(var db=new BazaPodataka())
+            {
+                try
+                {
+                    var ped = db.Pedagog.SingleOrDefault(s => s.Id_Pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    if (ped != null)
+                    {
+                        ped.Ime = pedagog.Ime;
+                        ped.Prezime = pedagog.Prezime;
+                        ped.Titula = pedagog.Titula;
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted);
         }
     }
 }

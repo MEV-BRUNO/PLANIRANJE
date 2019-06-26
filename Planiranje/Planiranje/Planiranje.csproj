@@ -192,6 +192,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Baza\BazaPodataka.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AkcijeController.cs" />
     <Compile Include="Controllers\AktivnostiController.cs" />
     <Compile Include="Controllers\CiljeviController.cs" />
@@ -242,7 +243,6 @@
     <Compile Include="Models\OS_Plan_2.cs" />
     <Compile Include="Models\OS_Plan_2_akcija.cs" />
     <Compile Include="Models\OS_Plan_2_aktivnost.cs" />
-    <Compile Include="Models\OS_Plan_2_DBHandle.cs" />
     <Compile Include="Models\OS_Plan_2_podrucje.cs" />
     <Compile Include="Models\Aktivnost.cs" />
     <Compile Include="Models\Aktivnost_akcija.cs" />
@@ -461,15 +461,14 @@
     <Content Include="Views\PlanSs\ObrisiDetalje.cshtml" />
     <Content Include="Views\PlanSs\UrediDetalje.cshtml" />
     <Content Include="Views\PlanOs2\Details.cshtml" />
-    <Content Include="Views\PlanOs2\NoviPosao.cshtml" />
-    <Content Include="Views\PlanOs2\UrediPosao.cshtml" />
-    <Content Include="Views\PlanOs2\ObrisiPosao.cshtml" />
-    <Content Include="Views\PlanOs2\NoviZadatak.cshtml" />
-    <Content Include="Views\PlanOs2\UrediZadatak.cshtml" />
-    <Content Include="Views\PlanOs2\ObrisiZadatak.cshtml" />
+    <Content Include="Views\PlanOs2\NovoPodrucje.cshtml" />
+    <Content Include="Views\PlanOs2\ObrisiPodrucje.cshtml" />
     <Content Include="Views\PlanOs2\NovaAktivnost.cshtml" />
     <Content Include="Views\PlanOs2\UrediAktivnost.cshtml" />
     <Content Include="Views\PlanOs2\ObrisiAktivnost.cshtml" />
+    <Content Include="Views\PlanOs2\NovaAkcija.cshtml" />
+    <Content Include="Views\PlanOs2\UrediAkcija.cshtml" />
+    <Content Include="Views\PlanOs2\ObrisiAkcija.cshtml" />
     <Content Include="Views\OpciPodaci\RazredniOdjel.cshtml" />
     <Content Include="Views\Planiranje\OdabirSkole.cshtml" />
     <Content Include="Views\OpciPodaci\Nastavnik.cshtml" />
@@ -584,6 +583,14 @@
     <Content Include="Views\PlanOs1\ObrisiAkcija.cshtml" />
     <Content Include="Views\PlanOs1\Kopiraj.cshtml" />
     <Content Include="Views\PlanSs\Kopiraj.cshtml" />
+    <Content Include="Views\PlanOs2\Aktivnosti.cshtml" />
+    <Content Include="Views\PlanOs2\Akcije.cshtml" />
+    <Content Include="Views\PlanOs2\Kopiraj.cshtml" />
+    <Content Include="Views\Planiranje\OsobniPodaci.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\PromjenaLicence.cshtml" />
+    <Content Include="Views\Admin\ObrisiSkolu.cshtml" />
+    <Content Include="Views\Admin\DodajSkolu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

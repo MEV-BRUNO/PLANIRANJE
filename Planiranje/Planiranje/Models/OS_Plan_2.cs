@@ -9,21 +9,17 @@ namespace Planiranje.Models
 {
     public class OS_Plan_2
     {
-        [Key]
-        [Required]
-        public int Id_plan { get; set; }
-        [Required]
+        [Key]        
+        public int Id_plan { get; set; }        
         public int Id_pedagog { get; set; }
-        [Required(ErrorMessage ="Ovo je obavezno polje")]
+        [Required(ErrorMessage ="Obavezno polje")]
 		[DisplayName("Šk. godina")]
 		public int Ak_godina { get; set; }
-        [Required(ErrorMessage = "Ovo je obavezno polje")]
+        [Required(ErrorMessage = "Obavezno polje")]
 		[DisplayName("Naziv plana")]
-		public string Naziv { get; set; }
-        [Required(ErrorMessage = "Ovo je obavezno polje")]
+		public string Naziv { get; set; }  
+        [Required(ErrorMessage ="Obavezno polje")]
 		[DisplayName("Opis plana")]
 		public string Opis { get; set; }
-
-
     }
 }

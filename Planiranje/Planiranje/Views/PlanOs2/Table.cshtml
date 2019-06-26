@@ -1,6 +1,6 @@
 ﻿@model List<Planiranje.Models.OS_Plan_2>
 
-<table class="table table-bordered table-hover" id="dataTables-example">
+<table class="table table-bordered table-hover" id="dataTable-planOs2">
     <thead>
         <tr>
             <td class="col-lg-1">
@@ -44,9 +44,10 @@
                     <a onclick="reloadPage('@Url.Action("Details","PlanOs2", new { id=item.Id_plan})')" class="btn btn-success btn-xs">Detalji</a>
                     <a onclick="showModal('@Url.Action("Edit","PlanOs2",new { id = item.Id_plan })')" class="btn btn-primary btn-xs ">Uredi</a>
                     <a onclick="showModal('@Url.Action("Delete","PlanOs2",new { id = item.Id_plan })')" class="btn btn-danger btn-xs ">Obriši</a>
+                    <a onclick="showModal('@Url.Action("Kopiraj","PlanOs2",new { id = item.Id_plan })')" class="btn btn-default btn-xs ">Kopiraj</a>
                 </div>
             </td>
         </tr>
-}
+         }
     </tbody>
 </table>

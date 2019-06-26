@@ -1,0 +1,35 @@
+﻿@model Planiranje.Models.Ucenici.Pedagog_skola
+@using Planiranje.Models
+@{
+    Layout = null;
+    Pedagog pedagog = ViewBag.pedagog as Pedagog;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Dodavanje škole za pedagoga: @pedagog.Ime @pedagog.Prezime, @pedagog.Email</h4>
+        </div>
+        @using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post, new { @id = "novaSkola", @class = "form-horizontal", role = "form" }))
+        {
+            <div class="modal-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id, new { Value = 0 })
+                @Html.HiddenFor(model => model.Id_pedagog, new { Value=pedagog.Id_Pedagog})
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Id_skola, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.Id_skola, ViewBag.select as SelectList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Id_skola, "", new { @class = "text-danger" })
+                    </div>
+                </div>           
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                    <input type="button" class="btn btn-primary" onclick="reload('@Url.Action("DodajSkolu","Admin")','#novaSkola')" value="Dodaj" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
