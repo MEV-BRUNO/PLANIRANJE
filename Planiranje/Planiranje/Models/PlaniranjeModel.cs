@@ -8,7 +8,7 @@ namespace Planiranje.Models
 {
 	public class PlaniranjeModel
 	{
-		public List<SelectListItem> PopisSkola { get; set; }
+		public SelectList PopisSkola { get; set; }
 		public Pedagog Pedagog { get; set; }
 		public int SelectedSchool { get; set; }
 	}
