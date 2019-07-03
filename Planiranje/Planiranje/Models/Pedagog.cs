@@ -18,7 +18,7 @@ namespace Planiranje.Models
 		[Required(ErrorMessage = "Email adresa je obavezna.")]
 		[DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-		[DisplayName("Password")]
+		[DisplayName("Lozinka")]
 		[Required(ErrorMessage = "Lozinka je obavezna.")]
 		[StringLength(12, MinimumLength = 6, ErrorMessage = "Lozinka mora biti između 6 i 12 znakova")]
 		public string Lozinka { get; set; }		

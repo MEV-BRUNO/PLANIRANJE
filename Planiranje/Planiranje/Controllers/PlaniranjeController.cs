@@ -220,6 +220,7 @@ namespace Planiranje.Controllers
                 return RedirectToAction("Index");
             }
             Pedagog pedagog = baza.Pedagog.SingleOrDefault(s => s.Id_Pedagog == PlaniranjeSession.Trenutni.PedagogId);
+            pedagog.Lozinka = string.Empty;
             return View(pedagog);
         }
         [HttpPost]
@@ -233,6 +234,11 @@ namespace Planiranje.Controllers
             {               
                 return View(pedagog);
             }
+            else if(!string.IsNullOrEmpty(pedagog.Lozinka) && (pedagog.Lozinka.Length<6 || pedagog.Lozinka.Length > 12))
+            {
+                
+                return View(pedagog);
+            }
             using(var db=new BazaPodataka())
             {
                 try
@@ -243,6 +249,10 @@ namespace Planiranje.Controllers
                         ped.Ime = pedagog.Ime;
                         ped.Prezime = pedagog.Prezime;
                         ped.Titula = pedagog.Titula;
+                        if (!string.IsNullOrEmpty(pedagog.Lozinka))
+                        {
+                            ped.Lozinka = pedagog.Lozinka;
+                        }                       
                         db.SaveChanges();
                     }
                 }
