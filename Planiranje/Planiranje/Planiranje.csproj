@@ -590,6 +590,7 @@
     <Content Include="Views\Admin\PromjenaLicence.cshtml" />
     <Content Include="Views\Admin\ObrisiSkolu.cshtml" />
     <Content Include="Views\Admin\DodajSkolu.cshtml" />
+    <Content Include="Views\OpciPodaci\PromicanjeRazOdjel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

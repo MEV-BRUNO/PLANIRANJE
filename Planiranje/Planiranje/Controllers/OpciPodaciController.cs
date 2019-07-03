@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Planiranje.Models.Ucenici;
 using Planiranje.Models;
+using System.Net;
 
 namespace Planiranje.Controllers
 {
@@ -270,6 +271,83 @@ namespace Planiranje.Controllers
                 }
             }
             return RedirectToAction("RazredniOdjel", new { godina = god });
+        }
+        public ActionResult PromicanjeRazOdjel(int id)
+        {
+            //id je id razrednog odjela
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            RazredniOdjel odjel = baza.RazredniOdjel.Single(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (odjel == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            int vrstaSkole = baza.Skola.Single(s => s.Id_skola == odjel.Id_skola).Vrsta;
+            //vrsta=1 srednja škola
+            //vrsta=0 osnovna škola
+            if(vrstaSkole==0 && odjel.Razred == 8)
+            {
+                return RedirectToAction("Info", new { poruka = "Dosegnuli ste maksimalan razred (8)! Pomak nije moguć!" });
+            }
+            else if(vrstaSkole==1 && odjel.Razred == 4)
+            {
+                return RedirectToAction("Info", new { poruka = "Dosegnuli ste maksimalan razred (4)! Pomak nije moguć!" });
+            }
+            ViewBag.odjel = odjel;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult PromicanjeRazOdjel(RazredniOdjel model)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            RazredniOdjel odjel = baza.RazredniOdjel.Single(s => s.Id == model.Id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (odjel == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            if (string.IsNullOrWhiteSpace(model.Naziv))
+            {
+                ViewBag.odjel = odjel;
+                return View();
+            }
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    odjel.Id = 0;
+                    odjel.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                    odjel.Naziv = model.Naziv;
+                    odjel.Sk_godina++;
+                    odjel.Razred++;
+                    db.RazredniOdjel.Add(odjel);
+                    db.SaveChanges();
+
+                    //odjel = null;
+                    //odjel = db.RazredniOdjel.Last(s => s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    var trenutniOdjeli = db.RazredniOdjel.Where(w => w.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId && w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola && w.Id_razrednik == odjel.Id_razrednik).OrderBy(o => o.Id).ToList();
+                    odjel = trenutniOdjeli.Last();
+                    List<Ucenik_razred> listaUcenika = db.UcenikRazred.Where(w => w.Id_razred == model.Id).ToList();
+                    foreach(var item in listaUcenika)
+                    {
+                        db.UcenikRazred.Add(new Ucenik_razred() { Id_ucenik = item.Id_ucenik, Id_razred = odjel.Id });
+                    }
+                    if (listaUcenika.Count > 0)
+                    {
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception e)
+                {
+                    return RedirectToAction("Info", new { poruka = "Dogodila se greška " + e.Message });
+                }
+            }
+            TempData["poruka"] = "Razredni odjel je promaknut u sljedeću školsku godinu";
+            return RedirectToAction("RazredniOdjel", new { godina = odjel.Sk_godina });
         }
         public ActionResult Nastavnik()
         {

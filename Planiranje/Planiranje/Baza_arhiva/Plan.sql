@@ -92,8 +92,8 @@ CREATE TABLE ucenik_razred (
   id_razred int(20) NOT NULL,
   id_ucenik int(20) NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT ucenik_razred_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik),
-  CONSTRAINT ucenik_razred_to_razredniOdjel FOREIGN KEY (id_razred) REFERENCES RazredniOdjel(id)
+  CONSTRAINT ucenik_razred_to_ucenik FOREIGN KEY (id_ucenik) REFERENCES ucenik(id_ucenik) ON DELETE CASCADE,
+  CONSTRAINT ucenik_razred_to_razredniOdjel FOREIGN KEY (id_razred) REFERENCES RazredniOdjel(id) ON DELETE CASCADE
 );
 
 CREATE TABLE pedagog_skola (
