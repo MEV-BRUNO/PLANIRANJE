@@ -289,11 +289,15 @@ namespace Planiranje.Controllers
             //vrsta=0 osnovna škola
             if(vrstaSkole==0 && odjel.Razred == 8)
             {
-                return RedirectToAction("Info", new { poruka = "Dosegnuli ste maksimalan razred (8)! Pomak nije moguć!" });
+                return RedirectToAction("Info", new { poruka = "Dosegnuli ste maksimalan razred (8)! Promaknuće nije moguće!" });
             }
             else if(vrstaSkole==1 && odjel.Razred == 4)
             {
-                return RedirectToAction("Info", new { poruka = "Dosegnuli ste maksimalan razred (4)! Pomak nije moguć!" });
+                return RedirectToAction("Info", new { poruka = "Dosegnuli ste maksimalan razred (4)! Promaknuće nije moguće!" });
+            }
+            else if (odjel.Sk_godina == baza.SkolskaGodina.Max(m => m.Sk_Godina))
+            {
+                return RedirectToAction("Info", new { poruka = "Nema raspoloživih školskih godina!" });
             }
             ViewBag.odjel = odjel;
             return View();
@@ -305,7 +309,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            RazredniOdjel odjel = baza.RazredniOdjel.Single(s => s.Id == model.Id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            RazredniOdjel odjel = baza.RazredniOdjel.SingleOrDefault(s => s.Id == model.Id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
             if (odjel == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
@@ -341,9 +345,9 @@ namespace Planiranje.Controllers
                         db.SaveChanges();
                     }
                 }
-                catch (Exception e)
+                catch
                 {
-                    return RedirectToAction("Info", new { poruka = "Dogodila se greška " + e.Message });
+                    return RedirectToAction("Info", new { poruka = "Dogodila se greška. Pokušajte ponovno nakon ponovnog učitavanja stranice." });
                 }
             }
             TempData["poruka"] = "Razredni odjel je promaknut u sljedeću školsku godinu";
