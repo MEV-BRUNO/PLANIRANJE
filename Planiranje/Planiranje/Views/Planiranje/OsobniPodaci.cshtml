@@ -52,11 +52,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Lozinka, "Nova lozinka", htmlAttributes: new { @class = "control-label col-md-3" })*
                 <div class="col-md-5">
-                    @Html.EditorFor(model => model.Lozinka, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
-                    @if (!string.IsNullOrEmpty(Model.Lozinka))
-                    {
-                        @Html.ValidationMessageFor(model => model.Lozinka, "", new { @class = "text-danger" })
-                    }
+                    @Html.PasswordFor(model => model.Lozinka, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Lozinka, "", new { @class = "text-danger" })                    
                 </div>
             </div>
             <br />

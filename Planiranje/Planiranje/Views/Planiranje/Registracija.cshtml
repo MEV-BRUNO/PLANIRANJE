@@ -50,7 +50,7 @@
 						@Html.EditorFor(model => model.Pedagog.Titula, new { htmlAttributes = new { @class = "form-control", placeholder = "Titula", style = "max-width:100%; margin:10px auto;" } })
 						@Html.ValidationMessageFor(model => model.Pedagog.Titula, "", new { @class = "text-danger" })
 
-						@Html.EditorFor(model => model.Pedagog.Lozinka, new { htmlAttributes = new { @class = "form-control", @type = "password", placeholder = "Lozinka", style = "max-width:100%; margin:10px auto;" } })
+						@Html.PasswordFor(model => model.Pedagog.Lozinka,new { @class = "form-control", placeholder = "Lozinka", style = "max-width:100%; margin:10px auto;" })
 						@Html.ValidationMessageFor(model => model.Pedagog.Lozinka, "", new { @class = "text-danger" })
 
 						@Html.DropDownListFor(model => Model.SelectedSchool, Model.PopisSkola, new { @class = "form-control", style = "max-width:100%; margin:10px auto;" })

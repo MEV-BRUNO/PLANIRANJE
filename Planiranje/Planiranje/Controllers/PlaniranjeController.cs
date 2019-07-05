@@ -230,15 +230,41 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index");
             }            
-            if (string.IsNullOrWhiteSpace(pedagog.Ime)||string.IsNullOrWhiteSpace(pedagog.Prezime)||string.IsNullOrWhiteSpace(pedagog.Titula))
-            {               
-                return View(pedagog);
-            }
-            else if(!string.IsNullOrEmpty(pedagog.Lozinka) && (pedagog.Lozinka.Length<6 || pedagog.Lozinka.Length > 12))
+            if (string.IsNullOrWhiteSpace(pedagog.Ime)||string.IsNullOrWhiteSpace(pedagog.Prezime)||string.IsNullOrWhiteSpace(pedagog.Titula)
+                || (!string.IsNullOrWhiteSpace(pedagog.Lozinka) && (pedagog.Lozinka.Length < 6 || pedagog.Lozinka.Length > 12)))
             {
-                
+                if (string.IsNullOrEmpty(pedagog.Lozinka))
+                {
+                    ModelState.Remove("Lozinka");
+                }
+                else if (string.IsNullOrWhiteSpace(pedagog.Lozinka))
+                {
+                    ModelState.Remove("Lozinka");
+                    ModelState.AddModelError("Lozinka", "Lozinka ne može biti skup praznih znakova");
+                }
+                else if (pedagog.Lozinka.Length<6 || pedagog.Lozinka.Length > 12)
+                {
+                    
+                }
                 return View(pedagog);
             }
+            else if (string.IsNullOrWhiteSpace(pedagog.Lozinka))
+            {
+                try
+                {
+                    if(pedagog.Lozinka.Length<6 || pedagog.Lozinka.Length > 12)
+                    {                        
+                    }
+                    ModelState.Remove("Lozinka");
+                    ModelState.AddModelError("Lozinka", "Lozinka ne može biti skup praznih znakova");
+                    return View(pedagog);
+                }
+                catch
+                {
+
+                }
+            }
+            
             using(var db=new BazaPodataka())
             {
                 try
@@ -249,7 +275,7 @@ namespace Planiranje.Controllers
                         ped.Ime = pedagog.Ime;
                         ped.Prezime = pedagog.Prezime;
                         ped.Titula = pedagog.Titula;
-                        if (!string.IsNullOrEmpty(pedagog.Lozinka))
+                        if (!string.IsNullOrWhiteSpace(pedagog.Lozinka))
                         {
                             ped.Lozinka = pedagog.Lozinka;
                         }                       
