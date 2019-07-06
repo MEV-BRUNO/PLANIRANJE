@@ -1,4 +1,5 @@
 ﻿@model Planiranje.Models.Ucenici.Ucenik
+    @using Planiranje.Models.Ucenici
 
 @{
     Layout = null;
@@ -54,6 +55,24 @@
                     @Html.TextBoxFor(model => model.Biljeska, new { @class = "form-control", disabled = "" })
                     @Html.ValidationMessageFor(model => model.Biljeska, "", new { @class = "text-danger" })
                 </div>
+            </div>
+            <hr />                       
+            <div class="col-lg-12">
+                <h4>@Html.Label("opcija", "Odaberite način brisanja", htmlAttributes: new { @class = "control-label" })</h4>                
+            </div>
+            <div class="form-group col-md-12">
+                <div class="col-md-6">
+                    @Html.RadioButton("opcija", "0", true) Obriši učenika samo iz ovog razreda @if (ViewBag.razred != null) { RazredniOdjel raz = ViewBag.razred as RazredniOdjel; string ispis = "(" + raz.Naziv + ")"; @ispis }*
+                </div>
+                <div class="col-md-6">
+                    @Html.RadioButton("opcija", "1") Obriši učenika iz svih razreda zajedno s njegovim podacima
+                </div>               
+                
+            </div>
+            <br />
+            <br />
+            <div class="col-lg-12">
+                *NAPOMENA: Ukoliko je učenik upisan u samo ovaj razred, obrisati će se i podaci o učeniku
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>

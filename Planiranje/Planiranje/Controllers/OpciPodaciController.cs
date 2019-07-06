@@ -736,6 +736,7 @@ namespace Planiranje.Controllers
             Ucenik model = new Ucenik();
             model = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
             model.Id_razred = raz;
+            ViewBag.razred = baza.RazredniOdjel.SingleOrDefault(s => s.Id == raz && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
             return View(model);
         }
         [HttpPost]
@@ -753,19 +754,45 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
+            if(baza.RazredniOdjel.SingleOrDefault(s=>s.Id==model.Id_razred && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola) == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            string opcija = Request.Form.Get("opcija");
+            if(opcija.CompareTo("0")!=0 && opcija.CompareTo("1") != 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
+            }
             bool hasError = false;
             string tekst = "";
             using(var db = new BazaPodataka())
             {
                 try
                 {
+                    var trenutniRazredi = db.UcenikRazred.Where(w => w.Id_ucenik == id).ToList();
                     var result = db.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
-                    if (result != null)
+                    if(result!=null && trenutniRazredi.Count >= 1)
                     {
-                        db.Ucenik.Remove(result);
-                        db.SaveChanges();
-                        TempData["poruka"] = "Odabrani učenik je obrisan";
-                    }
+                        if (trenutniRazredi.Count == 1 || opcija.CompareTo("1")==0)
+                        {
+                            //db.UcenikRazred.RemoveRange(trenutniRazredi);
+                            db.Ucenik.Remove(result);
+                            db.SaveChanges();
+                            TempData["poruka"] = "Učenik je kompletno obrisan";                            
+                        }
+                        else
+                        {
+                            var result2 = db.UcenikRazred.SingleOrDefault(s => s.Id_razred == model.Id_razred && s.Id_ucenik == id);
+                            if (result2 != null)
+                            {
+                                db.UcenikRazred.Remove(result2);
+                                db.SaveChanges();
+                                TempData["poruka"] = "Učenik je obrisan samo iz ovog razreda";
+                            }
+                        }
+
+                    }                         
+                    
                 }
                 catch
                 {
