@@ -21,9 +21,8 @@ namespace Planiranje.Controllers
 		public ActionResult Prijava()
 		{
 			PlaniranjeSession.Trenutni.PedagogId = 0;
-            PlaniranjeSession.Trenutni.OdabranaSkola = 0;
-			ViewBag.Title = "Prijava";
-			return View("Prijava");
+            PlaniranjeSession.Trenutni.OdabranaSkola = 0;			
+			return View();
 		}
 
         [ValidateAntiForgeryToken]
@@ -31,7 +30,7 @@ namespace Planiranje.Controllers
 		public ActionResult Prijava(Pedagog p)
 		{
 			ViewBag.Message = null;
-			Pedagog pedagog = baza.Pedagog.SingleOrDefault(ped => ped.Email == p.Email && ped.Lozinka == p.Lozinka);
+			Pedagog pedagog = baza.Pedagog.SingleOrDefault(ped => ped.Email == p.Email && ped.Lozinka.CompareTo(p.Lozinka)==0);
 			if (pedagog != null)
 			{
                 if ((pedagog.Aktivan == true && pedagog.Licenca.CompareTo(DateTime.Now)>=0) || pedagog.Id_Pedagog==1)
@@ -63,17 +62,15 @@ namespace Planiranje.Controllers
 		public ActionResult Index()
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId > 0)
-			{
-				ViewBag.Title = "Početna";
-				return View("Index");
+			{				
+				return View();
 			}
 			return RedirectToAction("Prijava", "Planiranje");
 		}
 		public ActionResult ZaboravljenaLozinka()
 		{
 			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
-			{
-				ViewBag.Title = "Zaboravljena lozinka";
+			{				
 				return View();
 			}
 			return RedirectToAction("Prijava", "Planiranje");
@@ -124,18 +121,15 @@ namespace Planiranje.Controllers
         }
 		public ActionResult Registracija()
 		{
-			if (PlaniranjeSession.Trenutni.PedagogId <= 0)
+			if (PlaniranjeSession.Trenutni.PedagogId > 0)
 			{
-                ViewBag.poruka = null;
-				ViewBag.Title = "Registracija";
-                ViewBag.lozinka = "";
-				PlaniranjeModel model = new PlaniranjeModel();
-				model.Pedagog = new Pedagog();
-                model.PopisSkola = VratiSelectListSkole();				
-				return View("Registracija", model);
-			}
-			return RedirectToAction("Prijava", "Planiranje");
-		}
+                return RedirectToAction("Prijava", "Planiranje");                          
+			}                  
+            PlaniranjeModel model = new PlaniranjeModel();
+            model.Pedagog = new Pedagog();
+            model.PopisSkola = VratiSelectListSkole();
+            return View(model);
+        }
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Registracija(PlaniranjeModel model)
@@ -145,9 +139,13 @@ namespace Planiranje.Controllers
             {
                 ViewBag.Message = "Korisnik s tom e-mail adresom postoji. Ako ste već registrirani, možete ponovno postaviti lozinku!";
                 model.PopisSkola = VratiSelectListSkole();
-				return View("Registracija", model);
-            }	
-            
+				return View(model);
+            }
+            if (!ModelState.IsValid)
+            {                
+                model.PopisSkola = VratiSelectListSkole();
+                return View(model);
+            }
             Pedagog_skola ps = new Pedagog_skola();
             string email = model.Pedagog.Email;
             ps.Id_skola = model.SelectedSchool;
@@ -166,13 +164,13 @@ namespace Planiranje.Controllers
             {
 				ViewBag.Message = "Registracija nije uspjela. Pokušajte ponovno";
                 model.PopisSkola = VratiSelectListSkole();
-				return View("Registracija", model);
+				return View(model);
             }
             ViewBag.Message = "Registracija je uspješna. Možete se prijaviti";
             model.Pedagog = new Pedagog();
             ViewBag.uspjesno = true;
             model.PopisSkola = VratiSelectListSkole();
-			return View("Registracija", model);
+			return View(model);
         }
         public ActionResult OdabirSkole()
         {
