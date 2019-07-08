@@ -853,33 +853,40 @@ CREATE TABLE godisnji_detalji (
   CONSTRAINT god_detalji_to_god_plan FOREIGN KEY (id_god) REFERENCES godisnji_plan (id_god) ON DELETE CASCADE
 );
 
-CREATE TABLE dnevnik_rada (
-  id_dnevnik int(20) NOT NULL AUTO_INCREMENT,
-  id_pedagog int(20) NOT NULL,
-  ak_godina int(20) NOT NULL,
-  naziv varchar(50) NOT NULL,
-  opis text,
-  datum datetime NOT NULL,
-  PRIMARY KEY (id_dnevnik)  
-);
-
-CREATE TABLE dnevnik_detalji (
-  id_dnevnik int(20) NOT NULL AUTO_INCREMENT,
-  subjekt int(20) NOT NULL,
-  vrijeme_od datetime NOT NULL,
-  vrijeme_do datetime NOT NULL,
-  aktivnost int(20) NOT NULL,
-  suradnja int(20) DEFAULT NULL,
-  zakljucak text,
-  PRIMARY KEY (id_dnevnik)  
+INSERT INTO skola VALUES (
+  0, "1. OŠ Čakovec", "", "Čakovec", "", "", "",0
 );
 
 INSERT INTO skola VALUES (
-  1, "Međimursko veleučilište", "Bana Josipa Jelačića", "Čakovec", "", "", "",1
+  0, "2. OŠ Čakovec", "", "Čakovec", "", "", "",0
 );
 
 INSERT INTO skola VALUES (
-  2, "Sveučilište Sjever", "", "Varaždin", "", "", "",1
+  0, "3. OŠ Čakovec", "", "Čakovec", "", "", "",0
+);
+
+INSERT INTO skola VALUES (
+  0, "Gimnazija J.Slavenskog Čakovec", "", "Čakovec", "", "", "",1
+);
+
+INSERT INTO skola VALUES (
+  0, "Gospodarska škola Čakovec", "", "Čakovec", "", "", "",1
+);
+
+INSERT INTO skola VALUES (
+  0, "Ekonomska škola Čakovec", "", "Čakovec", "", "", "",1
+);
+
+INSERT INTO skola VALUES (
+  0, "Srednja škola Čakovec", "", "Čakovec", "", "", "",1
+);
+
+INSERT INTO skola VALUES (
+  0, "Tehnička škola Čakovec", "", "Čakovec", "", "", "",1
+);
+
+INSERT INTO skola VALUES (
+  0, "Graditeljska škola Čakovec", "", "Čakovec", "", "", "",1
 );
 
 INSERT INTO aktivnost (vrsta, naziv) VALUES (0, "Utvrđivanje obrazovnih potreba učenika, škole i okruženja");
@@ -995,10 +1002,15 @@ INSERT INTO zadaci (vrsta, naziv) VALUES (0, "Utvrditi stilove života i navike 
 INSERT INTO zadaci (vrsta, naziv) VALUES (0, "Upoznati učenike s osnovnim pojmovima i zakonitostima učenja, pamćenja i zaboravljanja");
 INSERT INTO zadaci (vrsta, naziv) VALUES (0, "Unaprijediti učinkovitost procesa i rezultata odgojno-obrazovnog rada");
 
-INSERT INTO sk_godina VALUES (2016);
-INSERT INTO sk_godina VALUES (2017);
 INSERT INTO sk_godina VALUES (2018);
 INSERT INTO sk_godina VALUES (2019);
 INSERT INTO sk_godina VALUES (2020);
 INSERT INTO sk_godina VALUES (2021);
 INSERT INTO sk_godina VALUES (2022);
+INSERT INTO sk_godina VALUES (2023);
+INSERT INTO sk_godina VALUES (2024);
+INSERT INTO sk_godina VALUES (2025);
+INSERT INTO sk_godina VALUES (2026);
+INSERT INTO sk_godina VALUES (2027);
+INSERT INTO sk_godina VALUES (2028);
+INSERT INTO sk_godina VALUES (2029);
