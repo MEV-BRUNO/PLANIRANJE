@@ -121,7 +121,7 @@ namespace Planiranje.Controllers
                                           join raz in baza.RazredniOdjel on nas.Id equals raz.Id_razrednik
                                           join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred
                                           where ur.Id_ucenik == id && raz.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola
-                                          select nas).ToList();
+                                          select nas).Distinct().ToList();
             ViewBag.nastavnici = nastavnici;
             ViewBag.ucenik = ucenik;
             return View(razredi);
