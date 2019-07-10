@@ -115,12 +115,12 @@ namespace Planiranje.Controllers
             }
             List<RazredniOdjel> razredi = (from raz in baza.RazredniOdjel
                                            join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred
-                                           where ur.Id_ucenik == id && raz.Id_skola == PlaniranjeSession.Trenutni.PedagogId
+                                           where ur.Id_ucenik == id && raz.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola
                                            select raz).ToList().OrderBy(o=>o.Sk_godina).ToList();
             List<Nastavnik> nastavnici = (from nas in baza.Nastavnik
                                           join raz in baza.RazredniOdjel on nas.Id equals raz.Id_razrednik
                                           join ur in baza.UcenikRazred on raz.Id equals ur.Id_razred
-                                          where ur.Id_ucenik == id && raz.Id_skola == PlaniranjeSession.Trenutni.PedagogId
+                                          where ur.Id_ucenik == id && raz.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola
                                           select nas).ToList();
             ViewBag.nastavnici = nastavnici;
             ViewBag.ucenik = ucenik;
