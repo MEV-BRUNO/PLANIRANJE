@@ -209,7 +209,7 @@ namespace Planiranje.Controllers
         }
         private IEnumerable<SelectListItem> VratiSelectListu(int godina)
         {
-            List<RazredniOdjel> odjeli = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.PedagogId
+            List<RazredniOdjel> odjeli = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola
             && w.Sk_godina == godina).ToList();
             IEnumerable<SelectListItem> select = new SelectList(odjeli, "Id", "Naziv");
             return select;
