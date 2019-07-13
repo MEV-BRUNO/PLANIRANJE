@@ -555,7 +555,7 @@ CREATE TABLE nastavnik_obrazac (
   Dijagnosticira_li_nastavnik_probleme_u_ucenju int,
   Ima_li_nastavnik_propisane_nastavne_planove int,
   Provodi_li_nastavnik_propisane_planove int,  
-  Stvara_opuštenu_atmosferu tinyint,
+  Stvara_opustenu_atmosferu tinyint,
   Djeci_se_obraca_na_pozitivan_nacin tinyint,
   Reagira_s_humorom_i_potice_humor tinyint,
   Dopusta_djeci_da_cine_pogreske tinyint,
