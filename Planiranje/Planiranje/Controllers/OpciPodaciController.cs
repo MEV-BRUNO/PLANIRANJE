@@ -390,11 +390,11 @@ namespace Planiranje.Controllers
                 {
                     db.Nastavnik.Add(model);
                     db.SaveChanges();
-                    TempData["poruka"] = "Novi nastavnik je spremljen";
+                    TempData["poruka"] = "Novi učitelj/nastavnik je spremljen";
                 }
                 catch
                 {
-                    TempData["poruka"] = "Novi nastavnik nije spremljen! Pokušajte ponovno";
+                    TempData["poruka"] = "Novi učitelj/nastavnik nije spremljen! Pokušajte ponovno";
                 }
             }
             return RedirectToAction("Nastavnik");
@@ -438,11 +438,11 @@ namespace Planiranje.Controllers
                     db.Nastavnik.Add(model);
                     db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
-                    TempData["poruka"] = "Nastavnik je promijenjen";
+                    TempData["poruka"] = "Učitelj/nastavnik je promijenjen";
                 }
                 catch
                 {
-                    TempData["poruka"] = "Nastavnik nije promijenjen! Pokušajte ponovno";
+                    TempData["poruka"] = "Učitelj/nastavnik nije promijenjen! Pokušajte ponovno";
                 }
             }
             return RedirectToAction("Nastavnik");
@@ -486,16 +486,16 @@ namespace Planiranje.Controllers
                     {
                         db.Nastavnik.Remove(result);
                         db.SaveChanges();
-                        TempData["poruka"] = "Nastavnik je obrisan";
+                        TempData["poruka"] = "Učitelj/nastavnik je obrisan";
                     }
                     else
                     {
-                        TempData["poruka"] = "Nastavnik nije pronađen";
+                        TempData["poruka"] = "Učitelj/nastavnik nije pronađen";
                     }
                 }
                 catch
                 {
-                    return View("Info", new List<string>() { "Ne možete obrisati ovog nastavnika jer ste ga Vi ili netko drugi dodijelili kao rezrednika nekom razrednom odjelu ili pratite istog."});
+                    return View("Info", new List<string>() { "Ne možete obrisati ovog učitelja/nastavnika jer ste ga Vi ili netko drugi dodijelili kao rezrednika nekom razrednom odjelu ili pratite istog."});
                 }
             }
             return RedirectToAction("Nastavnik");

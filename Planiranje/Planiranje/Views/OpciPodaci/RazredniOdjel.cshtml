@@ -5,11 +5,7 @@
     List<Planiranje.Models.Ucenici.Nastavnik> razrednici = ViewBag.razrednici as List<Planiranje.Models.Ucenici.Nastavnik>;
 }
 
-<div class="inner">
-    @if (TempData["poruka"] != null)
-    {
-        <div id="poruka" style="display:none">1</div>
-    }
+<div class="inner">    
     <div class="row">
         <div class="col-lg-12">
             <h3>Popis razrednih odjela</h3>
@@ -106,10 +102,11 @@
 </div>
 <script>
      $(document).ready(function () {
-         $("#dataTable").dataTable();  
-         if ($("#poruka").text() == "1") {
-            showSnackBar('@TempData["poruka"]');
-        }
+         $("#dataTable").dataTable();
+         @if (TempData["poruka"] != null)
+         {
+             @:showSnackBar('@TempData["poruka"]');
+         }
     });
 </script>
 <script>
