@@ -29,12 +29,10 @@ namespace Planiranje.Reports
                 BaseFont.CP1250, false);
             Font header = new Font(font, 12, Font.NORMAL, BaseColor.DARK_GRAY);
             Font naslov = new Font(font, 14, Font.BOLDITALIC, BaseColor.BLACK);
-            Font tekst = new Font(font, 10, Font.NORMAL, BaseColor.BLACK);
+            Font tekst = new Font(font, 10, Font.NORMAL, BaseColor.BLACK);	
+            
 			
-            Paragraph p = new Paragraph("IZVJEŠTAJ", header);
-            pdfDokument.Add(p);
-			
-            p = new Paragraph("Plan osnovna skola 1", naslov);
+            Paragraph p = new Paragraph("Popis okvirnih planova i programa rada stručnog suradnika pedagoga za osnovnu školu", naslov);
             p.Alignment = Element.ALIGN_CENTER;
             p.SpacingBefore = 30;
             p.SpacingAfter = 30;
@@ -53,7 +51,7 @@ namespace Planiranje.Reports
             foreach (OS_Plan_1 plan in os1_plan)
             {
                 t.AddCell(VratiCeliju((i++).ToString(), tekst, true, BaseColor.WHITE));
-                t.AddCell(VratiCeliju(plan.Ak_godina.ToString(), tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju(plan.Ak_godina.ToString()+"./"+(plan.Ak_godina+1).ToString()+".", tekst, false, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(plan.Naziv, tekst, true, BaseColor.WHITE));
                 t.AddCell(VratiCeliju(plan.Opis, tekst, true, BaseColor.WHITE));               
             }

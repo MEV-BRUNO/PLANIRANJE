@@ -27,12 +27,10 @@ namespace Planiranje.Reports
                 BaseFont.CP1250, false);
             Font header = new Font(font, 12, Font.NORMAL, BaseColor.DARK_GRAY);
             Font naslov = new Font(font, 14, Font.BOLDITALIC, BaseColor.BLACK);
-            Font tekst = new Font(font, 10, Font.NORMAL, BaseColor.BLACK);
+            Font tekst = new Font(font, 10, Font.NORMAL, BaseColor.BLACK);		
+            
 			
-            Paragraph p = new Paragraph("IZVJEŠTAJ", header);
-            pdfDokument.Add(p);
-			
-            p = new Paragraph("Plan osnovna skola 2", naslov);
+            Paragraph p = new Paragraph("Popis godišnjih planova i programa rada stručnog suradnika za osnovnu školu", naslov);
             p.Alignment = Element.ALIGN_CENTER;
             p.SpacingBefore = 30;
             p.SpacingAfter = 30;
