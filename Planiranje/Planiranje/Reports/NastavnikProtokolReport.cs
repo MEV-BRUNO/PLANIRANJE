@@ -49,7 +49,7 @@ namespace Planiranje.Reports
             p.Alignment = Element.ALIGN_LEFT;
             p.SpacingAfter = 5;
             pdfDokument.Add(p);
-            p = new Paragraph("NASTAVNIK: " + nastavnik.ImePrezime, tekst);
+            p = new Paragraph("UČITELJ/NASTAVNIK: " + nastavnik.ImePrezime, tekst);
             p.Alignment = Element.ALIGN_LEFT;
             p.SpacingAfter = 5;
             pdfDokument.Add(p);
@@ -186,7 +186,7 @@ namespace Planiranje.Reports
             t = new PdfPTable(3);
             t.WidthPercentage = 100;
             t.SetWidths(new float[] { 1, 1.25F, 1 });
-            t.AddCell(VratiCeliju2("ŠTO NASTAVNIK RADI", tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju2("ŠTO UČITELJ/NASTAVNIK RADI", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju2("STRUKTURNE KOMPONENTE I PRIBLIŽNO VREMENSKO TRAJANJE", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju2("TIJEK AKTIVNOSTI", tekst, false, BaseColor.WHITE));
             if (string.IsNullOrEmpty(model.Sto_nastavnik_radi))
@@ -245,7 +245,7 @@ namespace Planiranje.Reports
 
             select = new List<string> {"-", "ne", "donekle", "uglavnom", "potpuno" };
             select2 = new List<string> { "-", "Da", "Ne" };
-            p = new Paragraph("Procjena nastavnikove komunikacije s učenicima (ne, donekle, uglavnom, potpuno):", tekst);
+            p = new Paragraph("Procjena učiteljeve/nastavnikove komunikacije s učenicima (ne, donekle, uglavnom, potpuno):", tekst);
             p.Alignment = Element.ALIGN_LEFT;
             p.SpacingAfter = 7;
             pdfDokument.Add(p);
@@ -282,7 +282,7 @@ namespace Planiranje.Reports
             t = new PdfPTable(2);
             t.WidthPercentage = 100;
             t.SetWidths(new float[] { 2.25F, 1 });
-            t.AddCell(VratiCeliju("Nastavnik redovito provjerava uratke", tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju("Učitelj/nastavnik redovito provjerava uratke", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju(select2.ElementAt(model.Nastavnik_redovito_provjerava_uratke), tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju("Daje povratnu informaciju", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju(select2.ElementAt(model.Daje_povratnu_informaciju), tekst, false, BaseColor.WHITE));
@@ -290,12 +290,12 @@ namespace Planiranje.Reports
             t.AddCell(VratiCeliju(select2.ElementAt(model.Koristi_se_domacom_zadacom_kao_podlogom), tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju(" ", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju("Nastavnik daje ocjenu za učenje u razredu", tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju("Učitelj/nastavnik daje ocjenu za učenje u razredu", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju(select2.ElementAt(model.Daje_ocjenu_za_ucenje_u_razredu), tekst, false, BaseColor.WHITE));
             t.SpacingAfter = 15;
             pdfDokument.Add(t);
 
-            p = new Paragraph("Kratak komentar nastavnika na održani nastavni sat:", tekst);
+            p = new Paragraph("Kratak komentar učitelja/nastavnika na održani nastavni sat:", tekst);
             p.Alignment = Element.ALIGN_LEFT;
             p.SpacingAfter = 7;
             pdfDokument.Add(p);
@@ -342,7 +342,7 @@ namespace Planiranje.Reports
             t.WidthPercentage = 100;
             t.SetWidths(new int[] { 1, 1, 1 });
             t.AddCell(VratiCeliju4("Stručni suradnik:", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju4("Nastavnik:", tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju4("Učitelj/nastavnik:", tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju4("Ravnatelj:", tekst, false, BaseColor.WHITE));
             t.SpacingAfter = 17;
             pdfDokument.Add(t);
