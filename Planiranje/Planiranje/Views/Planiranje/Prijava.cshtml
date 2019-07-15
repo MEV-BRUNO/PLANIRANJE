@@ -32,7 +32,7 @@
 					}
 					else
 					{
-						<div class="alert alert-info text-center" role="alert">Upišite korisničko ime i lozinku</div>
+						<div class="alert alert-info text-center" role="alert">Upišite E-mail adresu i lozinku</div>
 					}
 					@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 					@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail adresa", style = "max-width:100%; margin:10px auto;" } })
