@@ -19,7 +19,7 @@
                     <b>Odabrani učitelj/nastavnik:</b> @nas.ImePrezime
                 </div>
 
-                <table class="table table-striped table-bordered table-hover" id="dataTable">
+                <table class="table table-striped table-bordered table-hover" id="dataTable-NastavnikAnaliza">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -56,4 +56,9 @@
         </div><!--END COL 12 -->
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#dataTable-NastavnikAnaliza").dataTable();
+    });
+</script>
 
