@@ -98,10 +98,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (string.IsNullOrWhiteSpace(model.Naziv) || model.Id_roditelj == 0 || string.IsNullOrWhiteSpace(model.Aktivnosti) ||
-                string.IsNullOrWhiteSpace(model.Boravak) || string.IsNullOrWhiteSpace(model.Gradivo) || string.IsNullOrWhiteSpace(model.Hobiji) ||
-                string.IsNullOrWhiteSpace(model.Interes) || string.IsNullOrWhiteSpace(model.Ocekivanja) || string.IsNullOrWhiteSpace(model.Odnos) ||
-                string.IsNullOrWhiteSpace(model.Opis) || string.IsNullOrWhiteSpace(model.Predmet))
+            if (!ModelState.IsValid)
             {
                 int idUR = model.Id_ucenik_razred;
                 Ucenik_razred UR = baza.UcenikRazred.SingleOrDefault(s => s.Id == idUR);
