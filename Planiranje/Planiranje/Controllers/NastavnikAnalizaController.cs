@@ -50,7 +50,7 @@ namespace Planiranje.Controllers
             Nastavnik nastavnik = baza.Nastavnik.SingleOrDefault(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
             ViewBag.nastavnik = nastavnik;
             ViewBag.godina = godina;
-            ViewBag.listaodjela = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.PedagogId &&
+            ViewBag.listaodjela = baza.RazredniOdjel.Where(w => w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola &&
             w.Sk_godina == godina).ToList();
             return View(model);
         }
