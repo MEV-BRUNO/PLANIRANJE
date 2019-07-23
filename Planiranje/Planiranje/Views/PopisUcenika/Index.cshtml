@@ -73,8 +73,8 @@
                 reloadPage(saved + "/Index");
             }
         }
-        if (window.sessionStorage.getItem("UC_popis_godina") != null) {
-            var saved = window.sessionStorage.getItem("UC_popis_godina");
+        if (window.sessionStorage.getItem(skola + "UC_popis_godina") != null) {
+            var saved = window.sessionStorage.getItem(skola + "UC_popis_godina");
             $("#selectGodina").val(saved);
             promjenaGodine();
         }
@@ -103,6 +103,7 @@
 
     function promjenaGodine() {
         var val = $("#selectGodina").val();
+        var skola = $("#selectSkola").val();
         if (val != "0") {            
             $.ajax({
                 url: '/PracenjeUcenika/OdabirRazreda?godina=' + val,
@@ -110,8 +111,8 @@
                     $("#razredi").html(data);
                     var x = document.getElementById("selectRazred");
                     x.remove(1);
-                    var saved = window.sessionStorage.getItem("UC_popis_razred");
-                    var god = window.sessionStorage.getItem("UC_popis_godina");
+                    var saved = window.sessionStorage.getItem(skola + "UC_popis_razred");
+                    var god = window.sessionStorage.getItem(skola + "UC_popis_godina");
                     if (saved != null && god == val) {
                         $("#selectRazred").val(saved);
                         promjenaRazreda();
@@ -128,10 +129,11 @@
     function promjenaRazreda() {
         var val = $("#selectRazred").val();
         var god = $("#selectGodina").val();
-        window.sessionStorage.setItem("UC_popis_godina", god);        
+        var skola = $("#selectSkola").val();
+        window.sessionStorage.setItem(skola + "UC_popis_godina", god);      
         if (val != "0") {
-            window.sessionStorage.setItem("UC_popis_godina", god); 
-            window.sessionStorage.setItem("UC_popis_razred", val);
+            window.sessionStorage.setItem(skola + "UC_popis_godina", god);
+            window.sessionStorage.setItem(skola + "UC_popis_razred", val);
             $.ajax({
                 url: '/PopisUcenika/PrikazUcenika?razred=' + val,
                 success: function (data) {
