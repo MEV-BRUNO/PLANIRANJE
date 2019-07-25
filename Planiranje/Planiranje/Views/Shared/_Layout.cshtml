@@ -289,6 +289,9 @@
                     else {
                         $("#modalContainer").html(data);
                     }
+                },
+                error: function (request, status, error) {
+                    showSnackBar("Dogodila se greška: " + error);
                 }
             }
             );
