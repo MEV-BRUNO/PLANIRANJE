@@ -46,13 +46,13 @@ namespace Planiranje.Models.Ucenici
         [DisplayName("Materijalno-tehnička priprema za nastavu")]
         public string Materijalno_tehnicka_priprema_za_nastavu { get; set; }
         //2.planiranje i programiranje odgojno-obrazovnog procesa
-        [DisplayName("Nastavnik se redovito priprema za nastavu i priprava je u pismenom obliku")]
+        [DisplayName("Učitelj/nastavnik se redovito priprema za nastavu i priprava je u pismenom obliku")]
         public string Nastavnik_se_redovito_priprema_za_nastavu { get; set; }
-        [DisplayName("Nastavnikova priprava je")]
+        [DisplayName("Učiteljeva/nastavnikova priprava je")]
         public string Nastavnikova_priprava_je { get; set; }
         [DisplayName("Priprava sadrži")]
         public string Priprava_sadrzi { get; set; }
-        [DisplayName("Pripremanje nastavnika je bilo u skladu s postignućima na nastavnom satu")]
+        [DisplayName("Pripremanje učitelja/nastavnika je bilo u skladu s postignućima na nastavnom satu")]
         public string Pripremanje_nastavnika_je_bilo_u_skladu_s_postignucima { get; set; }
         [DisplayName("Plan ploče u pisanoj pripravi")]
         public string Plan_ploce_u_pisanoj_pripravi { get; set; }
@@ -75,20 +75,20 @@ namespace Planiranje.Models.Ucenici
         public string Nastavne_metode_metodicki_postupci { get; set; }
         [DisplayName("Ciljevi, postignuća i kompetencije učenika ostvareni su")]
         public string Ciljevi_postignuca_i_kompetencije_ucenika { get; set; }
-        [DisplayName("Odnos nastavnika prema učenicima")]
+        [DisplayName("Odnos učitelja/nastavnika prema učenicima")]
         public string Odnos_nastavnika_prema_ucenicima { get; set; }
-        [DisplayName("Nastavnik posvećuje pozornost")]
+        [DisplayName("Učitelj/nastavnik posvećuje pozornost")]
         public string Nastavnik_posvecuje_pozornost { get; set; }
-        [DisplayName("Nastavnikov nastup")]
+        [DisplayName("Učiteljev/nastavnikov nastup")]
         public string Nastavnikov_nastup { get; set; }
-        [DisplayName("Govor nastavnika u skladu je")]
+        [DisplayName("Govor učitelja/nastavnika u skladu je")]
         public string Govor_nastavnika_u_skladu_je { get; set; }
-        [DisplayName("Kakvim se stilom poučavanja nastavnik koristi")]
+        [DisplayName("Kakvim se stilom poučavanja učitelj/nastavnik koristi")]
         public string Kakvim_se_stilom_poucavanja_nastavnik_koristi { get; set; }
         //4.aktivnosti učenika tijekom nastavnog procesa
         [DisplayName("Je li na satu došao do izražaja učenikov samostalan rad")]
         public string Je_li_na_satu_dosao_do_izrazaja_ucenikov_rad { get; set; }
-        [DisplayName("Postignuća učenika i produktivnost sata nastavnika je provjerio")]
+        [DisplayName("Postignuća učenika i produktivnost sata učitelj/nastavnik je provjerio")]
         public string Postignuca_ucenika_i_produktivnost_sata_nastavnika { get; set; }
         [DisplayName("Domaća zadaća zadana je")]
         public string Domaca_zadaca_zadana_je { get; set; }
@@ -105,13 +105,13 @@ namespace Planiranje.Models.Ucenici
         [DisplayName("Ostala zapažanja")]
         public string Ostala_zapazanja { get; set; }
         //5.nastavna dokumentacija
-        [DisplayName("Nastavnik ima i vodi pedagošku dokumentaciju")]
+        [DisplayName("Učitelj/nastavnik ima i vodi pedagošku dokumentaciju")]
         public string Nastavnik_ima_i_vodi_pedagosku_dokumentaciju { get; set; }
         [DisplayName("U dnevniku rada upisani su")]
         public string U_dnevniku_rada_upisani_su { get; set; }
-        [DisplayName("Pripreme nastavnika za nastavu su")]
+        [DisplayName("Pripreme učitelja/nastavnika za nastavu su")]
         public string Pripreme_nastavnika_za_nastavu_su { get; set; }
-        [DisplayName("Iz imenika je vidljivo da nastavnik")]
+        [DisplayName("Iz imenika je vidljivo da učitelj/nastavnik")]
         public string Iz_imenika_je_vidljivo_da_nastavnik { get; set; }
         [DisplayName("Ocjene u imeniku su")]
         public string Ocjene_u_imeniku_su { get; set; }

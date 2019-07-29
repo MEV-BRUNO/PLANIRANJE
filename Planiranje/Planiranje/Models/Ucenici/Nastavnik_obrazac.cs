@@ -68,7 +68,7 @@ namespace Planiranje.Models.Ucenici
         public int Provodi_li_nastavnik_propisane_planove { get; set; }
         //komentiranje ponašanja
         [DisplayName("Stvara opuštenu atmosferu")]
-        public int Stvara_opuštenu_atmosferu { get; set; }
+        public int Stvara_opustenu_atmosferu { get; set; }
         [DisplayName("Djeci se obraća na pozitivan način")]
         public int Djeci_se_obraca_na_pozitivan_nacin { get; set; }
         [DisplayName("Reagira s humorom i potiče humor")]

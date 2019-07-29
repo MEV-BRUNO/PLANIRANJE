@@ -60,7 +60,7 @@ namespace Planiranje.Controllers
                 {
                     db.OsPlan1.Add(model);
                     db.SaveChanges();
-                    TempData["note"] = "Novi plan za osnovnu školu 1 je spremljen!";
+                    TempData["note"] = "Novi plan za osnovnu školu je spremljen!";
                 }
             }
             catch
@@ -105,12 +105,12 @@ namespace Planiranje.Controllers
                     db.OsPlan1.Add(plan);
                     db.Entry(plan).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
-                    TempData["note"] = "Plan je uspješno promijenjen!";
+                    TempData["note"] = "Plan je uspješno promjenjen!";
                 }
             }
             catch
             {
-                TempData["note"] = "Plan nije promijenjen!";
+                TempData["note"] = "Plan nije promjenjen!";
             }            
 			return RedirectToAction("Index");
         }
@@ -174,57 +174,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-
-            //List<OS_Plan_1_podrucje> podrucja = new List<OS_Plan_1_podrucje>();
-            //podrucja = baza.OsPlan1Podrucje.Where(izraz => izraz.Id_glavni_plan == id).ToList();
-
-            //PlanOs1View plan = new PlanOs1View();
-            //OS_Plan_1 p = new OS_Plan_1();
-            //p = planovi_os1.ReadOS_Plan_1(id);
-
-            //List<Podrucje_rada> pod_rada = new List<Podrucje_rada>();
-            //pod_rada = podrucje_rada_db.ReadPodrucjeRada();
-            //plan.PodrucjeRada = pod_rada;
-
-            //List<Ciljevi> ciljevi = new List<Ciljevi>();
-            //ciljevi = ciljevi_db.ReadCiljevi();
-            //plan.Ciljevi = ciljevi;
-
-            //podrucja=podrucja.OrderBy(o => o.Red_br_podrucje).ToList();
-            //plan.OsPlan1 = p;
-            //plan.OsPlan1Podrucje = podrucja;
-
-
-            ///*dodatno*/
-            //List<Podrucje_rada> pr = new List<Podrucje_rada>();
-            //foreach(var i in podrucja)
-            //{
-            //    Podrucje_rada pod = new Podrucje_rada();
-            //    pod = podrucje_rada_db.ReadPodrucjeRada(i.Opis_Podrucje);
-            //    pr.Add(pod);
-            //}
-
-
-            //    List<Aktivnost> aktivnosti = new List<Aktivnost>();
-            //    aktivnosti = aktivnost_db.ReadAktivnost();
-            //    plan.Aktivnosti = aktivnosti;
-
-            //    List<OS_Plan_1_aktivnost> osPlan1Aktivnosti = new List<OS_Plan_1_aktivnost>();
-            //if (podrucja.Count != 0)
-            //{
-            //    int id_pod = podrucja.ElementAt(0).Id_plan;
-
-            //    osPlan1Aktivnosti = baza.OsPlan1Aktivnost.Where(w => w.Id_podrucje == id_pod).ToList();
-            //}
-            //    plan.OsPlan1Aktivnost = osPlan1Aktivnosti;
-
-            //    OS_Plan_1_aktivnost ak = new OS_Plan_1_aktivnost();
-            //if (podrucja.Count != 0)
-            //{
-            //    ak.Id_podrucje = podrucja.ElementAt(0).Id_plan;
-            //    plan.Id = podrucja.ElementAt(0).Id_plan;
-            //}
-            //    plan.Os_Plan_1_Aktivnost = ak;
+            
             PlanOs1View model = new PlanOs1View();
             model.OsPlan1 = baza.OsPlan1.SingleOrDefault(s => s.Id_plan == id && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
             if (model.OsPlan1 == null)

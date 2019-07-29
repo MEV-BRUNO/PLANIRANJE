@@ -15,10 +15,10 @@
                             <a onclick="showModal('@Url.Action("NoviProtokol","NastavnikProtokol",new { idNastavnik=nas.Id, godina=ViewBag.godina, id=0})')" class="btn btn-primary btn-xs btn-grad">Novi protokol</a>
                         </p>
                     </div>
-                    <b>Odabrani nastavnik:</b> @nas.ImePrezime
+                    <b>Odabrani učitelj/nastavnik:</b> @nas.ImePrezime
                 </div>
 
-                <table class="table table-striped table-bordered table-hover" id="dataTable">
+                <table class="table table-striped table-bordered table-hover" id="dataTable-NastavnikProtokol">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -57,5 +57,9 @@
         </div><!--END COL 12 -->
     </div>
 </div>
-
+<script>
+    $(document).ready(function () {
+        $("#dataTable-NastavnikProtokol").dataTable();
+    });
+</script>
 

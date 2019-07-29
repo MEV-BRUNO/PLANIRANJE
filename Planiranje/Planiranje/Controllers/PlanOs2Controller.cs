@@ -60,11 +60,11 @@ namespace Planiranje.Controllers
                 {
                     db.OsPlan2.Add(model);
                     db.SaveChanges();
-                    TempData["note"] = "Novi plan za osnovnu školu 2 je spremljen!";
+                    TempData["note"] = "Novi godišnji plan za osnovnu školu je spremljen!";
                 }
                 catch
                 {
-                    TempData["note"] = "Novi plan nije spremljen";
+                    TempData["note"] = "Novi godišnji plan za osnovnu školu nije spremljen!";
                 }
             }            
 			return RedirectToAction("Index");
@@ -109,11 +109,11 @@ namespace Planiranje.Controllers
                     db.OsPlan2.Add(plan);
                     db.Entry(plan).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
-                    TempData["note"] = "Plan je promijenjen";
+                    TempData["note"] = "Godišnji plan za osnovnu školu je promijenjen";
                 }
                 catch
                 {
-                    TempData["note"] = "Plan nije promijenjen";
+                    TempData["note"] = "Dogodila se greška! Plan nije promjenjen!";
                 }
             }            
 			return RedirectToAction("Index");
@@ -154,16 +154,16 @@ namespace Planiranje.Controllers
                     {
                         db.OsPlan2.Remove(result);
                         db.SaveChanges();
-                        TempData["note"] = "Plan je obrisan";
+                        TempData["note"] = "Godišnji plan za osnovnu školu je obrisan";
                     }
                     else
                     {
-                        TempData["note"] = "Plan nije pronađen";
+                        TempData["note"] = "Godišnji plan nije pronađen!";
                     }
                 }
                 catch
                 {
-                    TempData["note"] = "Plan nije obrisan";
+                    TempData["note"] = "Dogodila se greška! Plan nije obrisan!";
                 }
             }
             return RedirectToAction("Index");

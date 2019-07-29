@@ -16,10 +16,10 @@
                             <a onclick="showModal('@Url.Action("NovaAnaliza","NastavnikAnaliza",new { idNastavnik=nas.Id, godina=ViewBag.godina, id=0})')" class="btn btn-primary btn-xs btn-grad">Nova analiza</a>
                         </p>
                     </div>
-                    <b>Odabrani nastavnik:</b> @nas.ImePrezime
+                    <b>Odabrani učitelj/nastavnik:</b> @nas.ImePrezime
                 </div>
 
-                <table class="table table-striped table-bordered table-hover" id="dataTable">
+                <table class="table table-striped table-bordered table-hover" id="dataTable-NastavnikAnaliza">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -56,4 +56,9 @@
         </div><!--END COL 12 -->
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#dataTable-NastavnikAnaliza").dataTable();
+    });
+</script>
 

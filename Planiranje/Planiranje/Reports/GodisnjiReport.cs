@@ -28,7 +28,7 @@ namespace Planiranje.Reports
             Paragraph p = new Paragraph();
 			document.Add(p);
 			
-            p = new Paragraph("Godišnji plan za akademsku godinu " + model.GodisnjiPlan.Ak_godina, title);
+            p = new Paragraph("Godišnji plan za školsku godinu " + model.GodisnjiPlan.Ak_godina+"./"+(model.GodisnjiPlan.Ak_godina+1)+".", title);
             p.Alignment = Element.ALIGN_CENTER;
             p.SpacingBefore = 10;
             p.SpacingAfter = 10;

@@ -73,7 +73,11 @@ namespace Planiranje.Controllers
                     Dokument d = baza.Dokument.FirstOrDefault(f => f.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId &&
                     f.Path.CompareTo(fileName) == 0);                    
                     //file.SaveAs(path);
-                    string poruka = "Dokument "+fileName+" već postoji na serveru pod nazivom "+d.Opis;
+                    string poruka = "Dokument "+fileName+" već postoji na serveru pod nazivom "+d.Opis+".";
+                    if (d.Id_skola != PlaniranjeSession.Trenutni.OdabranaSkola)
+                    {
+                        poruka += "\nDokument je spremljen za školu: " + baza.Skola.SingleOrDefault(s => s.Id_skola == d.Id_skola).Naziv + ".";
+                    }
                     return RedirectToAction("Info", "OpciPodaci", new { poruka = poruka });
                 }
                 else

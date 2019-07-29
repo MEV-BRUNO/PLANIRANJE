@@ -14,20 +14,18 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="row col-lg-10" style="margin-left:10%; margin-right:10%">
+                    <div class="row col-lg-12">
+                        <div class="col-lg-12">
+                            <p>
+                                <a onclick="showModal('@Url.Action("NoviDokument","Dokument")')" class="btn btn-primary btn-xs btn-grad">Dodaj dokument</a>
+                            </p>
+                        </div>
                         <div class="table-responsive">
-                            <div class="col-lg-10">
-                                <div class="col-lg-3">
-                                    <p>
-                                        <a onclick="showModal('@Url.Action("NoviDokument","Dokument")')" class="btn btn-primary btn-xs btn-grad">Dodaj dokument</a>
-                                    </p>
-                                </div>
-                            </div>
                             <table class="table table-striped table-bordered table-hover" id="dataTableDokumenti">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Naziv</th>                                        
+                                        <th>Naziv</th>
                                         <th>Aktivnost</th>
                                     </tr>
                                 </thead>
@@ -38,7 +36,7 @@
                                     {
                                         brojac++;
                                         <tr>
-                                            <td class="col-md-1">@brojac</td>                                            
+                                            <td class="col-md-1">@brojac</td>
                                             <td class="col-md-9">@item.Opis</td>
                                             <td class="col-md-2">
                                                 <a class="btn btn-primary btn-xs btn-grad" href="@Url.Action("Download","Dokument", new { id=item.Id})">Preuzmi</a>

@@ -49,6 +49,18 @@
                     @Html.ValidationMessageFor(model => model.Licenca, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Lozinka, "Nova lozinka", htmlAttributes: new { @class = "control-label col-md-3" })*
+                <div class="col-md-5">
+                    @Html.PasswordFor(model => model.Lozinka, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Lozinka, "", new { @class = "text-danger" })                    
+                </div>
+            </div>
+            <br />
+            <br />
+            <div>
+                *Ukoliko ne želite mijenjati lozinku, ovo polje ostavite prazno
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
                 <input type="button" class="btn btn-success" value="Spremi promjene" onclick='hideModalOnly("@Url.Action("OsobniPodaci","Planiranje")","#osobniPodaciModal","Promjene su spremljene")' />

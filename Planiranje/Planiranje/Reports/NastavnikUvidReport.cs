@@ -49,7 +49,7 @@ namespace Planiranje.Reports
             p.Alignment = Element.ALIGN_LEFT;
             p.SpacingAfter = 5;
             pdfDokument.Add(p);
-            p = new Paragraph("NASTAVNIK: " + nastavnik.ImePrezime, tekst);
+            p = new Paragraph("UČITELJ/NASTAVNIK: " + nastavnik.ImePrezime, tekst);
             p.Alignment = Element.ALIGN_LEFT;
             p.SpacingAfter = 5;
             pdfDokument.Add(p);

@@ -26,11 +26,21 @@
                 @if (ViewBag.greska != null)
                 {
                     <div class="text-danger">@ViewBag.greska</div>
-                }                
+                }   
+                <br />
+                <div class="progress">
+                    <div id="trakanapretka" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+
+                    </div>
+                </div>
+                <hr />
+                <div class="col-md-12">
+                    NAPOMENA: Maksimalna dozvoljena veličina datoteke je 100 MB. Nije dozvoljen upload *.exe i *.bin datoteka iz sigurnosnih razloga.
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                <input type="button" class="btn btn-primary" value="Spremi" onclick='upload("@Url.Action("Upload","Dokument")","noviDokument", "Dokument je spremljen")' />
+                <input type="button" class="btn btn-primary" value="Spremi" onclick='upload("@Url.Action("Upload","Dokument")","noviDokument", "Dokument je spremljen", "trakanapretka")' />
             </div>
         }
     </div>

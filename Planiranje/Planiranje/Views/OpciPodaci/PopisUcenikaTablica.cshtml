@@ -34,6 +34,7 @@
                 <td class="col-md-2">
                     <a onclick="showModal('@Url.Action("UrediUcenik","OpciPodaci", new { id=item.Id_ucenik, raz=ViewBag.razred})')" class="btn btn-primary btn-xs btn-grad">Uredi</a>
                     <a onclick="showModal('@Url.Action("ObrisiUcenik", "OpciPodaci",new { id=item.Id_ucenik, raz=ViewBag.razred})')" class="btn btn-danger btn-xs btn-grad">Obriši</a>
+                    <a onclick="showModal('@Url.Action("PopisSvihRazredaUcenika","PopisUcenika", new { id=item.Id_ucenik})')" class="btn btn-info btn-xs btn-grad">Popis razreda</a>
                 </td>
             </tr>
         }

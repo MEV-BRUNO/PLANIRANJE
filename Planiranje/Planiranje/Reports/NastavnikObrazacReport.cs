@@ -163,7 +163,7 @@ namespace Planiranje.Reports
             t.AddCell(SpojiCelijeCol(VratiCeliju3("Komentirajte sljedeća ponašanja:", tekst, false, BaseColor.WHITE), 5));
             t.AddCell(SpojiCelijeRow(VratiCeliju5("Sigurno i poticajno ozračje za učenje", tekst, false, BaseColor.WHITE),18));
             t.AddCell(VratiCeliju3("... stvara opuštenu atmosferu", tekst, false, BaseColor.WHITE));
-            i = OdrediI(model.Stvara_opuštenu_atmosferu);
+            i = OdrediI(model.Stvara_opustenu_atmosferu);
             t.AddCell(VratiCeliju4(select4.ElementAt(i), tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju3("... djeci se obraća na pozitivan način", tekst, false, BaseColor.WHITE));
             i = OdrediI(model.Djeci_se_obraca_na_pozitivan_nacin);

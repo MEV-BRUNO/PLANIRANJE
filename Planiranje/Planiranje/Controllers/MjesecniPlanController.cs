@@ -64,7 +64,7 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (model.MjesecniPlan.Naziv == null)
+            if (string.IsNullOrWhiteSpace(model.MjesecniPlan.Naziv))
             {
                 return View(model);
             }
@@ -156,7 +156,7 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
-            if (model.MjesecniPlan.Naziv == null || model.MjesecniPlan.Ak_godina == 0)
+            if (string.IsNullOrWhiteSpace(model.MjesecniPlan.Naziv) || model.MjesecniPlan.Ak_godina == 0)
             {
                 model.SkolskaGodina = baza.SkolskaGodina.ToList();
                 return View("UrediNoviPlan",model);
@@ -229,8 +229,8 @@ namespace Planiranje.Controllers
                 return HttpNotFound();
             }
             DateTime date = new DateTime(1, 1, 1, 0, 0, 0);
-            if (model.mjesecniDetalj.Aktivnost == null||model.mjesecniDetalj.Subjekti==null||model.mjesecniDetalj.Suradnici==null
-                || model.mjesecniDetalj.Podrucje==null||model.mjesecniDetalj.Vrijeme.CompareTo(date)==0||model.mjesecniDetalj.Br_sati<0)
+            if (string.IsNullOrWhiteSpace(model.mjesecniDetalj.Aktivnost)||string.IsNullOrWhiteSpace(model.mjesecniDetalj.Subjekti)||string.IsNullOrWhiteSpace(model.mjesecniDetalj.Suradnici)
+                || string.IsNullOrWhiteSpace(model.mjesecniDetalj.Podrucje)||model.mjesecniDetalj.Vrijeme.CompareTo(date)==0||model.mjesecniDetalj.Br_sati<0)
             {
                 model.Aktivnosti = aktivnosti.ReadAktivnost();
                 model.Subjekti = subjekti.ReadSubjekti();
@@ -285,8 +285,8 @@ namespace Planiranje.Controllers
             {
                 return RedirectToAction("Index", "Planiranje");
             }
-            if (model.mjesecniDetalj.Aktivnost == null || model.mjesecniDetalj.Subjekti == null || model.mjesecniDetalj.Suradnici == null
-                || model.mjesecniDetalj.Podrucje == null || model.mjesecniDetalj.Vrijeme == null || model.mjesecniDetalj.Br_sati < 0)
+            if (string.IsNullOrWhiteSpace(model.mjesecniDetalj.Aktivnost) || string.IsNullOrWhiteSpace(model.mjesecniDetalj.Subjekti) || string.IsNullOrWhiteSpace(model.mjesecniDetalj.Suradnici)
+                || string.IsNullOrWhiteSpace(model.mjesecniDetalj.Podrucje) || model.mjesecniDetalj.Vrijeme == null || model.mjesecniDetalj.Br_sati < 0)
             {
                 model.Aktivnosti = aktivnosti.ReadAktivnost();
                 model.Subjekti = subjekti.ReadSubjekti();

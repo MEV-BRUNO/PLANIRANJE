@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Planiranje.Models.Ucenici;
 using Planiranje.Models;
+using System.Net;
 
 namespace Planiranje.Controllers
 {
@@ -271,6 +272,87 @@ namespace Planiranje.Controllers
             }
             return RedirectToAction("RazredniOdjel", new { godina = god });
         }
+        public ActionResult PromicanjeRazOdjel(int id)
+        {
+            //id je id razrednog odjela
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            RazredniOdjel odjel = baza.RazredniOdjel.Single(s => s.Id == id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (odjel == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            int vrstaSkole = baza.Skola.Single(s => s.Id_skola == odjel.Id_skola).Vrsta;
+            //vrsta=1 srednja škola
+            //vrsta=0 osnovna škola
+            if(vrstaSkole==0 && odjel.Razred == 8)
+            {
+                return RedirectToAction("Info", new { poruka = "Dosegnuli ste maksimalan razred (8)! Promaknuće nije moguće!" });
+            }
+            else if(vrstaSkole==1 && odjel.Razred == 4)
+            {
+                return RedirectToAction("Info", new { poruka = "Dosegnuli ste maksimalan razred (4)! Promaknuće nije moguće!" });
+            }
+            else if (odjel.Sk_godina == baza.SkolskaGodina.Max(m => m.Sk_Godina))
+            {
+                return RedirectToAction("Info", new { poruka = "Nema raspoloživih školskih godina!" });
+            }
+            ViewBag.odjel = odjel;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult PromicanjeRazOdjel(RazredniOdjel model)
+        {
+            if(PlaniranjeSession.Trenutni.PedagogId<=0 || !Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index", "Planiranje");
+            }
+            RazredniOdjel odjel = baza.RazredniOdjel.SingleOrDefault(s => s.Id == model.Id && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
+            if (odjel == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            if (string.IsNullOrWhiteSpace(model.Naziv))
+            {
+                ViewBag.odjel = odjel;
+                return View();
+            }
+            using (var db = new BazaPodataka())
+            {
+                try
+                {
+                    odjel.Id = 0;
+                    odjel.Id_pedagog = PlaniranjeSession.Trenutni.PedagogId;
+                    odjel.Naziv = model.Naziv;
+                    odjel.Sk_godina++;
+                    odjel.Razred++;
+                    db.RazredniOdjel.Add(odjel);
+                    db.SaveChanges();
+
+                    //odjel = null;
+                    //odjel = db.RazredniOdjel.Last(s => s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola && s.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId);
+                    var trenutniOdjeli = db.RazredniOdjel.Where(w => w.Id_pedagog == PlaniranjeSession.Trenutni.PedagogId && w.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola && w.Id_razrednik == odjel.Id_razrednik).OrderBy(o => o.Id).ToList();
+                    odjel = trenutniOdjeli.Last();
+                    List<Ucenik_razred> listaUcenika = db.UcenikRazred.Where(w => w.Id_razred == model.Id).ToList();
+                    foreach(var item in listaUcenika)
+                    {
+                        db.UcenikRazred.Add(new Ucenik_razred() { Id_ucenik = item.Id_ucenik, Id_razred = odjel.Id });
+                    }
+                    if (listaUcenika.Count > 0)
+                    {
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    return RedirectToAction("Info", new { poruka = "Dogodila se greška. Pokušajte ponovno nakon ponovnog učitavanja stranice." });
+                }
+            }
+            TempData["poruka"] = "Razredni odjel je promaknut u sljedeću školsku godinu";
+            return RedirectToAction("RazredniOdjel", new { godina = odjel.Sk_godina });
+        }
         public ActionResult Nastavnik()
         {
             if (PlaniranjeSession.Trenutni.PedagogId <= 0)
@@ -308,11 +390,11 @@ namespace Planiranje.Controllers
                 {
                     db.Nastavnik.Add(model);
                     db.SaveChanges();
-                    TempData["poruka"] = "Novi nastavnik je spremljen";
+                    TempData["poruka"] = "Novi učitelj/nastavnik je spremljen";
                 }
                 catch
                 {
-                    TempData["poruka"] = "Novi nastavnik nije spremljen! Pokušajte ponovno";
+                    TempData["poruka"] = "Novi učitelj/nastavnik nije spremljen! Pokušajte ponovno";
                 }
             }
             return RedirectToAction("Nastavnik");
@@ -356,11 +438,11 @@ namespace Planiranje.Controllers
                     db.Nastavnik.Add(model);
                     db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
-                    TempData["poruka"] = "Nastavnik je promijenjen";
+                    TempData["poruka"] = "Učitelj/nastavnik je promijenjen";
                 }
                 catch
                 {
-                    TempData["poruka"] = "Nastavnik nije promijenjen! Pokušajte ponovno";
+                    TempData["poruka"] = "Učitelj/nastavnik nije promijenjen! Pokušajte ponovno";
                 }
             }
             return RedirectToAction("Nastavnik");
@@ -404,16 +486,16 @@ namespace Planiranje.Controllers
                     {
                         db.Nastavnik.Remove(result);
                         db.SaveChanges();
-                        TempData["poruka"] = "Nastavnik je obrisan";
+                        TempData["poruka"] = "Učitelj/nastavnik je obrisan";
                     }
                     else
                     {
-                        TempData["poruka"] = "Nastavnik nije pronađen";
+                        TempData["poruka"] = "Učitelj/nastavnik nije pronađen";
                     }
                 }
                 catch
                 {
-                    return View("Info", new List<string>() { "Ne možete obrisati ovog nastavnika jer ste ga Vi ili netko drugi dodijelili kao rezrednika nekom razrednom odjelu ili pratite istog."});
+                    return View("Info", new List<string>() { "Ne možete obrisati ovog učitelja/nastavnika jer ste ga Vi ili netko drugi dodijelili kao rezrednika nekom razrednom odjelu ili pratite istog."});
                 }
             }
             return RedirectToAction("Nastavnik");
@@ -654,6 +736,7 @@ namespace Planiranje.Controllers
             Ucenik model = new Ucenik();
             model = baza.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
             model.Id_razred = raz;
+            ViewBag.razred = baza.RazredniOdjel.SingleOrDefault(s => s.Id == raz && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola);
             return View(model);
         }
         [HttpPost]
@@ -671,19 +754,45 @@ namespace Planiranje.Controllers
             {
                 return HttpNotFound();
             }
+            if(baza.RazredniOdjel.SingleOrDefault(s=>s.Id==model.Id_razred && s.Id_skola == PlaniranjeSession.Trenutni.OdabranaSkola) == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            string opcija = Request.Form.Get("opcija");
+            if(opcija.CompareTo("0")!=0 && opcija.CompareTo("1") != 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
+            }
             bool hasError = false;
             string tekst = "";
             using(var db = new BazaPodataka())
             {
                 try
                 {
+                    var trenutniRazredi = db.UcenikRazred.Where(w => w.Id_ucenik == id).ToList();
                     var result = db.Ucenik.SingleOrDefault(s => s.Id_ucenik == id);
-                    if (result != null)
+                    if(result!=null && trenutniRazredi.Count >= 1)
                     {
-                        db.Ucenik.Remove(result);
-                        db.SaveChanges();
-                        TempData["poruka"] = "Odabrani učenik je obrisan";
-                    }
+                        if (trenutniRazredi.Count == 1 || opcija.CompareTo("1")==0)
+                        {
+                            //db.UcenikRazred.RemoveRange(trenutniRazredi);
+                            db.Ucenik.Remove(result);
+                            db.SaveChanges();
+                            TempData["poruka"] = "Učenik je kompletno obrisan";                            
+                        }
+                        else
+                        {
+                            var result2 = db.UcenikRazred.SingleOrDefault(s => s.Id_razred == model.Id_razred && s.Id_ucenik == id);
+                            if (result2 != null)
+                            {
+                                db.UcenikRazred.Remove(result2);
+                                db.SaveChanges();
+                                TempData["poruka"] = "Učenik je obrisan samo iz ovog razreda";
+                            }
+                        }
+
+                    }                         
+                    
                 }
                 catch
                 {

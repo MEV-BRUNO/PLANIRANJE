@@ -79,7 +79,7 @@ namespace Planiranje.Models.Ucenici
         public int Odrzavanje_paznje { get; set; }
         //Motivacijska priprema učenika - KRAJ
         //Prezentacijske vještine - nastavnik
-        [DisplayName("Što nastavnik radi")]
+        [DisplayName("Što učitelj/nastavnik radi")]
         public string Sto_nastavnik_radi { get; set; }
         [DisplayName("Strukturne komponente")]
         public string Nas_strukturne_komponente { get; set; }
@@ -113,16 +113,16 @@ namespace Planiranje.Models.Ucenici
         [DisplayName("Učenik ima mogućnost i inicijativu slobodnog iznošenja stavova i mišljenja")]
         public int Ucenik_ima_mogucnost_i_inicijativu_slobodnog_iznosenja_stavova { get; set; }
         //Domaća zadaća
-        [DisplayName("Nastavnik redovito provjerava uratke")]
+        [DisplayName("Učitelj/nastavnik redovito provjerava uratke")]
         public int Nastavnik_redovito_provjerava_uratke { get; set; }
         [DisplayName("Daje povratnu informaciju")]
         public int Daje_povratnu_informaciju { get; set; }
         [DisplayName("Koristi se domaćom zadaćom kao podlogom za redovnu raspravu")]
         public int Koristi_se_domacom_zadacom_kao_podlogom { get; set; }
-        [DisplayName("Daje ocjenu za učenje u razredu")]
+        [DisplayName("Učitelj/nastavnik daje ocjenu za učenje u razredu")]
         public int Daje_ocjenu_za_ucenje_u_razredu { get; set; }
         //Domaća zadaća - KRAJ
-        [DisplayName("Kratki komentar nastavnika na održani nastavni sat")]
+        [DisplayName("Kratki komentar učitelja/nastavnika na održani nastavni sat")]
         public string Kratki_komentar_nastavnika { get; set; }
         [DisplayName("Prijedlozi za daljnje unapređenje rada")]
         public string Prijedlozi_za_daljnje_unapredjenje_rada { get; set; }
