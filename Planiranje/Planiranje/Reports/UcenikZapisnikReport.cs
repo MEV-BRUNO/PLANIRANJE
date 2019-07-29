@@ -93,7 +93,7 @@ namespace Planiranje.Reports
             p.SpacingAfter = 10;
             pdfDokument.Add(p);
 
-            List<Obitelj> skrbnici = roditelji.Where(w => w.Svojstvo == 3).ToList();
+            List<Obitelj> skrbnici = roditelji.Where(w => w.Svojstvo == 3).Take(2).ToList();
 
             int brojStupaca = 3 + skrbnici.Count;
             PdfPTable t = new PdfPTable(brojStupaca);
@@ -112,8 +112,8 @@ namespace Planiranje.Reports
                 t.AddCell(VratiCeliju3("SKRBNIK "+i, tekst, false, BaseColor.WHITE));
             }
             t.AddCell(VratiCeliju3("Ime i prezime", tekst, false, BaseColor.WHITE));
-            t.AddCell(VratiCeliju3(roditelji.FirstOrDefault(s=>s.Svojstvo==1).ImePrezime, tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju3(roditelji.FirstOrDefault(s=>s.Svojstvo==2).ImePrezime, tekst, false, BaseColor.WHITE));
+            t.AddCell(VratiCeliju3(roditelji.FirstOrDefault(s=>s.Svojstvo==1).ImePrezime, tekst, false, BaseColor.WHITE));
             for(int i = 0; i < skrbnici.Count; i++)
             {
                 t.AddCell(VratiCeliju3(skrbnici.ElementAt(i).ImePrezime, tekst, false, BaseColor.WHITE));
@@ -188,7 +188,7 @@ namespace Planiranje.Reports
             t.AddCell(VratiCeliju3("OTAC", tekst, false, BaseColor.WHITE));
             for(int i = 0; i < skrbnici.Count; i++)
             {
-                t.AddCell(VratiCeliju3("SKRBNIK "+i, tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("SKRBNIK "+(i+1), tekst, false, BaseColor.WHITE));
             }
             t.AddCell(VratiCeliju4(select.ElementAt(model.Odgojni_utjecaj_majka), tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju4(select.ElementAt(model.Odgojni_utjecaj_otac), tekst, false, BaseColor.WHITE));
@@ -242,7 +242,7 @@ namespace Planiranje.Reports
             t.AddCell(VratiCeliju3("OTAC", tekst, false, BaseColor.WHITE));
             for (int i = 0; i < skrbnici.Count; i++)
             {
-                t.AddCell(VratiCeliju3("SKRBNIK " + i, tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("SKRBNIK " + (i+1), tekst, false, BaseColor.WHITE));
             }
             t.AddCell(VratiCeliju4(select.ElementAt(model.Odnos_prema_ucenju_majka), tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju4(select.ElementAt(model.Odnos_prema_ucenju_otac), tekst, false, BaseColor.WHITE));
@@ -275,7 +275,7 @@ namespace Planiranje.Reports
             t.AddCell(VratiCeliju3("OTAC", tekst, false, BaseColor.WHITE));
             for (int i = 0; i < skrbnici.Count; i++)
             {
-                t.AddCell(VratiCeliju3("SKRBNIK " + i, tekst, false, BaseColor.WHITE));
+                t.AddCell(VratiCeliju3("SKRBNIK " + (i+1), tekst, false, BaseColor.WHITE));
             }
             t.AddCell(VratiCeliju4(select.ElementAt(model.Suradnja_roditelja_majka), tekst, false, BaseColor.WHITE));
             t.AddCell(VratiCeliju4(select.ElementAt(model.Suradnja_roditelja_otac), tekst, false, BaseColor.WHITE));
@@ -578,7 +578,7 @@ namespace Planiranje.Reports
         {
             PdfPCell c1 = new PdfPCell(new Phrase(labela, font));
             c1.BackgroundColor = boja;
-            c1.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            c1.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
             c1.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
             c1.Padding = 5;
             c1.NoWrap = nowrap;
